@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Dünyam Atlası</title>
+<meta name="theme-color" content="#0f1716">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <main id="stage" aria-label="Harita">
+    <canvas id="cv"></canvas>
+    <svg id="ov" aria-hidden="true"></svg>
+  </main>
+
+  <header class="top">
+    <div class="bar">
+      <div class="brand">
+        <h1>Dünyam</h1>
+        <span id="katman-ad">Köppen sınıfı</span>
+      </div>
+      <button class="icon" id="fit" aria-label="Kıtaya sığdır">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+    </div>
+    <nav class="chips" id="layers" aria-label="Katman"></nav>
+  </header>
+
+  <div class="ramp" id="rampbox" hidden>
+    <span id="lo"></span><i id="ramp"></i><span id="hi"></span>
+  </div>
+
+  <section class="sheet" id="sheet" data-open="false" aria-label="Bilgi paneli">
+    <button class="grip" id="grip" aria-label="Paneli aç veya kapat"><i></i></button>
+    <div class="peek" id="peek"></div>
+    <div class="tabs" role="tablist" id="tabs">
+      <button role="tab" data-t="lejant" aria-selected="true">Lejant</button>
+      <button role="tab" data-t="kunye" aria-selected="false">Künye</button>
+      <button role="tab" data-t="ayar" aria-selected="false">Ayarlar</button>
+    </div>
+    <div class="panes">
+      <div class="pane" id="p-lejant">
+        <p class="note" id="izole-not" hidden>Bir sınıf seçili, haritada ötekiler soluk.
+          <button class="link" id="izole-kapat">Hepsini göster</button></p>
+        <div id="klist"></div>
+      </div>
+      <div class="pane" id="p-kunye" hidden>
+        <div class="facts" id="facts"></div>
+        <p class="note" id="surum"></p>
+      </div>
+      <div class="pane" id="p-ayar" hidden>
+        <label class="sw"><span>Paralel ve meridyenler</span><input type="checkbox" id="grat" checked><i></i></label>
+        <label class="sw"><span>Bozkır bölgesi</span><input type="checkbox" id="roi" checked><i></i></label>
+        <label class="sw"><span>Kabartma gölgesi</span><input type="checkbox" id="shade" checked><i></i></label>
+        <details class="checks">
+          <summary>İç tutarlılık <b id="tally"></b></summary>
+          <div id="checks"></div>
+        </details>
+        <button class="wide" id="guncelle">Güncellemeleri denetle</button>
+        <p class="note">Kabartma ve kıyı sığlığı yalnızca görseldir, sayılara dokunmaz.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+  <div class="loading" id="yukleniyor">Atlas yükleniyor…</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
