@@ -27,9 +27,26 @@ Bu hem masaüstü atlası hem `mobil/data/atlas.json`'u yazar. Sonra:
 git add -A && git commit -m "Veri guncellemesi" && git push
 ```
 
-Telefonda: `tunel.bat` açıkken uygulamayı aç (ya da Ayarlar → Güncellemeleri
-denetle). Servis çalışanı ağ öncelikli olduğu için kod ve veri tazesi otomatik
-gelir; yeni veri geldiğinde üstte bildirim çıkar.
+### DİKKAT: tünel adresi her açılışta değişir
+
+Geçici Cloudflare tünelleri her seferinde yeni bir adres verir. Telefondaki
+uygulama **hangi adresten kurulduysa ona bağlıdır** — tarayıcılar her adresi
+ayrı bir site sayar. Yani dün kurduğun uygulama bugünkü tünelden habersizdir:
+açtığında ölü adrese gider, 4 saniye sonra önbelleğe düşer ve **eski veriyi**
+gösterir. Hata değil, tasarım böyle.
+
+Bu yüzden veriyi telefona getirmenin yolu:
+
+1. `tunel.bat` çalıştır, yeni adresi telefonda **tarayıcıda** aç.
+2. Ana ekrana ekle.
+3. Eski simgeyi sil (yoksa iki uygulama olur, biri eski veriyle).
+
+Kurulu uygulamanın kendini güncelleyebilmesi **sabit bir adres** ister:
+ngrok'un ücretsiz sabit alan adı, kendi alan adınla Cloudflare kalıcı tüneli,
+ya da uygulamayı claude.ai artıfaktı olarak yayınlamak (o zaman çevrimdışı
+çalışmaz). Şimdilik bilerek kurulmadı.
+
+Ayarlar → "Güncellemeleri denetle" yalnızca **aynı adres** ayaktayken işe yarar.
 
 Uygulama koduna dokunmadan yalnız veri değişebilir. `sw.js` içindeki `AD`
 sürümünü yalnızca önbelleğe alınan dosya listesi (`KABUK`) değiştiğinde artır.
