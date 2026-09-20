@@ -1,0 +1,268 @@
+# -*- coding: utf-8 -*-
+"""Dunyam Atlasi — veri ureticisi. Bu repo TEK BASINA yeterlidir.
+
+    python uret.py                 # 0.25 derece (yaklasik 20-30 dk)
+    python uret.py --res 1.0       # kaba ve hizli deneme (~1 dk)
+    python uret.py --ozet          # bitince sinif paylarini da yazar
+
+Ne yapar: dunya/dunyam.json + dunyam.currents.json + dunyam_heightmap.png
+dosyalarini okur, iklim motorunu (motor/) kosar ve uygulamanin okudugu
+data/atlas.json dosyasini yazar. Masaustune, GeoTIFF'e ya da rasterio'ya
+bagimli DEGILDIR; numpy + scipy + pillow yeter.
+
+Iklimi degistirmek icin dunya/dunyam.json duzenlenir (params blogu, donus,
+egiklik, isi...), sonra bu betik kosulur. Nedenler ayni dosyadaki "_" ile
+baslayan notlarda yazili — degisiklik yaparken oraya da yaz.
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import hashlib
+import json
+import os
+import sys
+import time
+
+import numpy as np
+
+BURASI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BURASI)
+
+from motor import grid as G, model, sanity            # noqa: E402
+
+DUNYA = os.path.join(BURASI, "dunya")
+CIKTI = os.path.join(BURASI, "data", "atlas.json")
+
+# Sinif kodu -> (kisa ad, yedek RGB, tanim). Haritanin gercek renkleri
+# uygulamanin kendi paletinden (app.js icindeki KPAL) gelir; buradaki RGB
+# yalnizca palet bulunamazsa kullanilir.
+LEG = {
+    1: ("Af", (0, 0, 255), "Tropikal, yagmur ormani"),
+    2: ("Am", (0, 120, 255), "Tropikal, muson"),
+    3: ("Aw", (70, 170, 250), "Tropikal, savan"),
+    4: ("BWh", (255, 0, 0), "Kurak, col, sicak"),
+    5: ("BWk", (255, 150, 150), "Kurak, col, soguk"),
+    6: ("BSh", (245, 165, 0), "Kurak, bozkir, sicak"),
+    7: ("BSk", (255, 220, 100), "Kurak, bozkir, soguk"),
+    8: ("Csa", (255, 255, 0), "Iliman, kuru yaz, sicak yaz"),
+    9: ("Csb", (200, 200, 0), "Iliman, kuru yaz, ilik yaz"),
+    10: ("Csc", (150, 150, 0), "Iliman, kuru yaz, serin yaz"),
+    11: ("Cwa", (150, 255, 150), "Iliman, kuru kis, sicak yaz"),
+    12: ("Cwb", (100, 200, 100), "Iliman, kuru kis, ilik yaz"),
+    13: ("Cwc", (50, 150, 50), "Iliman, kuru kis, serin yaz"),
+    14: ("Cfa", (200, 255, 80), "Iliman, kuraksiz, sicak yaz"),
+    15: ("Cfb", (100, 255, 80), "Iliman, kuraksiz, ilik yaz"),
+    16: ("Cfc", (50, 200, 0), "Iliman, kuraksiz, serin yaz"),
+    17: ("Dsa", (255, 0, 255), "Soguk, kuru yaz, sicak yaz"),
+    18: ("Dsb", (200, 0, 200), "Soguk, kuru yaz, ilik yaz"),
+    19: ("Dsc", (150, 50, 150), "Soguk, kuru yaz, serin yaz"),
+    20: ("Dsd", (150, 100, 150), "Soguk, kuru yaz, cok soguk kis"),
+    21: ("Dwa", (170, 175, 255), "Soguk, kuru kis, sicak yaz"),
+    22: ("Dwb", (90, 120, 220), "Soguk, kuru kis, ilik yaz"),
+    23: ("Dwc", (75, 80, 180), "Soguk, kuru kis, serin yaz"),
+    24: ("Dwd", (50, 0, 135), "Soguk, kuru kis, cok soguk kis"),
+    25: ("Dfa", (0, 255, 255), "Soguk, kuraksiz, sicak yaz"),
+    26: ("Dfb", (55, 200, 255), "Soguk, kuraksiz, ilik yaz"),
+    27: ("Dfc", (0, 125, 125), "Soguk, kuraksiz, serin yaz"),
+    28: ("Dfd", (0, 70, 95), "Soguk, kuraksiz, cok soguk kis"),
+    29: ("ET", (178, 178, 178), "Kutup, tundra"),
+    30: ("EF", (102, 102, 102), "Kutup, don"),
+}
+
+# Kullanicinin isaretledigi bozkir bolgesi. Poligon 2000x1000'lik gorselden
+# okundu; cevrim yukseklik haritasini ureten betikle AYNI sayilari kullanir.
+POLI = [(1180, 62), (1310, 68), (1420, 130), (1470, 210), (1475, 218),
+        (1400, 265), (1395, 290), (1330, 330), (1245, 372), (1215, 372),
+        (1100, 330), (1010, 315), (955, 300), (940, 290), (955, 200),
+        (1010, 120), (1060, 90), (1120, 68)]
+GOR_W, GOR_H, CIZ_NX, CIZ_NY = 2000, 1000, 2048, 1024
+KUZEY, DLAT, LON_SPAN = 61.473, 0.070157, 94.830
+
+
+def enlemboylam(x, y):
+    c = x * CIZ_NX / GOR_W
+    r = y * CIZ_NY / GOR_H
+    return (KUZEY - r * DLAT, -LON_SPAN / 2 + c * LON_SPAN / CIZ_NX)
+
+
+def dunya_yukle():
+    """dunya/dunyam.json'u okur, dosya yollarini bu repoya gore duzeltir.
+
+    Kaynak JSON projedeki haliyle AYNEN duruyor (senkron denetimi bozulmasin
+    diye); icindeki 'worlds/...' ve 'worldinfo/...' yollari burada bellekte
+    duzeltilip gecici bir dosyaya yaziliyor, sonra siliniyor.
+    """
+    ham = json.load(open(os.path.join(DUNYA, "dunyam.json"), encoding="utf-8"))
+    ham["currents_file"] = os.path.join(DUNYA, "dunyam.currents.json")
+    ham["heightmap"] = dict(ham["heightmap"])
+    ham["heightmap"]["file"] = os.path.join(DUNYA, "dunyam_heightmap.png")
+    gecici = os.path.join(BURASI, ".dunya_gecici.json")
+    json.dump(ham, open(gecici, "w", encoding="utf-8"), ensure_ascii=False)
+    try:
+        return G.World.load(gecici)
+    finally:
+        os.remove(gecici)
+
+
+def grid_kur(w, res):
+    hm = w.heightmap
+    return G.from_heightmap(
+        hm["file"], w,
+        sea_level_value=hm["sea_level_value"],
+        max_elev_m=hm["max_elev_m"],
+        max_depth_m=hm["max_depth_m"],
+        bounds=tuple(hm.get("bounds", (-180.0, -90.0, 180.0, 90.0))),
+        res_deg=res,
+        band=hm.get("band", 1),
+        elev_gamma=hm.get("elev_gamma", 1.0),
+    )
+
+
+def kodla(a, lo, hi):
+    q = np.clip(np.round((np.nan_to_num(a, nan=lo) - lo) / max(hi - lo, 1e-9) * 254) + 1, 1, 255)
+    return base64.b64encode(q.astype(np.uint8).tobytes()).decode()
+
+
+def kirp(r, pay_deg=22.0):
+    """Yuku karanin cevresine kirpar.
+
+    Gezegenin %93'u okyanus; tam gridi telefona gondermek bosuna, uzaktaki
+    acik okyanusun tek bilgisi 'derin'. Kara sinir kutusu + pay kadari kalir.
+    """
+    w, h = r["w"], r["h"]
+    B, D, Dg, Y = r["bounds"]
+    land = np.unpackbits(np.frombuffer(base64.b64decode(r["land"]), np.uint8))[:w * h].reshape(h, w)
+    ys, xs = np.where(land)
+    px, py = int(pay_deg / ((Dg - B) / w)), int(pay_deg / ((Y - D) / h))
+    x0, x1 = max(0, xs.min() - px), min(w, xs.max() + px + 1)
+    y0, y1 = max(0, ys.min() - py), min(h, ys.max() + py + 1)
+
+    def kes(b64):
+        a = np.frombuffer(base64.b64decode(b64), np.uint8).reshape(h, w)
+        return base64.b64encode(a[y0:y1, x0:x1].tobytes()).decode()
+
+    r["land"] = base64.b64encode(np.packbits(land[y0:y1, x0:x1]).tobytes()).decode()
+    r["elev"]["data"] = kes(r["elev"]["data"])
+    for f in r["fields"].values():
+        f["model"] = kes(f["model"])
+    dlon, dlat = (Dg - B) / w, (Y - D) / h
+    r["bounds"] = [round(B + x0 * dlon, 4), round(Y - y1 * dlat, 4),
+                   round(B + x1 * dlon, 4), round(Y - y0 * dlat, 4)]
+    r["w"], r["h"] = int(x1 - x0), int(y1 - y0)
+    return r, (w, h)
+
+
+def kunye(w, g, yillik_yagis):
+    """Kunye paylari ALAN agirlikli olmali.
+
+    Equirectangular gridde hucre alani cos(enlem) ile kuculur; hucre saymak
+    yuksek enlemleri sisirir. Bu bir kere atlanmisti ve kara yagisini 1375
+    gosteriyordu, dogrusu 1492 idi.
+    """
+    kara = g.land
+    alan = np.cos(np.radians(np.broadcast_to(g.lat[:, None], g.shape)))
+    agir = float((yillik_yagis[kara] * alan[kara]).sum() / alan[kara].sum())
+    lat = np.broadcast_to(g.lat[:, None], g.shape)[kara]
+    yon = lambda a: "%.0f°%s" % (abs(a), "K" if a >= 0 else "G")
+    return [
+        ["gün", ("%.1f" % w.rotation_period_h).rstrip("0").rstrip(".") + " saat"],
+        ["eksen eğikliği", "%.1f°" % w.axial_tilt_deg],
+        ["yıl", "%.0f gün" % w.year_length_days],
+        ["kara payı", "%%%.1f" % (100 * alan[kara].sum() / alan.sum())],
+        ["kara kuşağı", "%s – %s" % (yon(lat.max()), yon(lat.min()))],
+        ["en yüksek nokta", "%.0f m" % w.heightmap["max_elev_m"]],
+        ["kara yağışı", "%.0f mm/yıl" % agir],
+    ]
+
+
+def ozet_yaz(g, K, yillik_yagis):
+    """Sinif paylari, ALAN agirlikli. Kiyas sutunu Beck 2018 rasterinden."""
+    kara = g.land
+    alan = np.cos(np.radians(np.broadcast_to(g.lat[:, None], g.shape)))
+    pay = lambda l: 100 * alan[np.isin(K, list(l)) & kara].sum() / alan[kara].sum()
+    print()
+    print("  %-22s %8s %12s" % ("", "Dunyam", "gercek Dunya"))
+    for ad, kodlar, dunya in (("gercek col (BW)", [4, 5], 21.0),
+                              ("tundra + buz (E)", [29, 30], 11.6),
+                              ("sik orman (Af)", [1], 5.0),
+                              ("bozkir (BS)", [6, 7], 12.0)):
+        print("  %-22s %7.1f%% %11.1f%%" % (ad, pay(kodlar), dunya))
+    for ad, r, dunya in (("A", range(1, 4), 20.6), ("B", range(4, 8), 33.0),
+                         ("C", range(8, 17), 11.3), ("D", range(17, 29), 23.6),
+                         ("E", range(29, 31), 11.6)):
+        print("  ana grup %-13s %7.1f%% %11.1f%%" % (ad, pay(r), dunya))
+    print("  kara yagisi %.0f mm/yil (alan agirlikli)"
+          % float((yillik_yagis[kara] * alan[kara]).sum() / alan[kara].sum()))
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Dunyam Atlasi veri ureticisi")
+    ap.add_argument("--res", type=float, default=0.25, help="derece/hucre (varsayilan 0.25)")
+    ap.add_argument("--cikti", default=CIKTI)
+    ap.add_argument("--ozet", action="store_true", help="sinif paylarini da yaz")
+    a = ap.parse_args()
+
+    t0 = time.time()
+    w = dunya_yukle()
+    g = grid_kur(w, a.res)
+    print("%s: %dx%d hucre, kara %%%.0f, hucre %.3f derece"
+          % (w.name, g.shape[1], g.shape[0], 100 * g.land.mean(),
+             (g.bounds[2] - g.bounds[0]) / g.shape[1]))
+    r = model.run(g)
+    K, T, P = r["koppen"], r["temp"], r["precip"]
+
+    rapor = sanity.check(g, r)
+    gecen = sum(1 for _, ok, _ in rapor if ok)
+    print("ic tutarlilik: %d/%d gecti" % (gecen, len(rapor)))
+    for ad, ok, aciklama in rapor:
+        if not ok:
+            print("   DUSTU: %s — %s" % (ad, aciklama))
+
+    land = g.land
+    alanlar = {}
+    for ad, mo in (("temp_jan", T[0]), ("temp_jul", T[6]), ("prec_jan", P[0]),
+                   ("prec_jul", P[6]), ("temp_yil", T.mean(0)), ("prec_yil", P.sum(0))):
+        v = mo[land]
+        lo, hi = float(np.percentile(v, 1)), float(np.percentile(v, 99))
+        alanlar[ad] = {"lo": round(lo, 1), "hi": round(hi, 1),
+                       "model": kodla(mo, lo, hi), "obs": None}
+    alanlar["koppen"] = {"model": base64.b64encode(K.astype(np.uint8).tobytes()).decode(),
+                         "obs": None}
+    e = g.elev.copy()
+    e[~land] = np.nan
+    ust = float(np.nanmax(e)) if np.isfinite(e).any() else 1.0
+    bolge = {
+        "title": "global", "why": w.name, "w": g.shape[1], "h": g.shape[0],
+        "bounds": [round(x, 3) for x in g.bounds],
+        "land": base64.b64encode(np.packbits(land).tobytes()).decode(),
+        "elev": {"lo": 0.0, "hi": ust, "data": kodla(np.nan_to_num(e, nan=0.0), 0.0, ust)},
+        "fields": alanlar, "stats": None,
+        "sanity": [{"ad": ad, "gecti": bool(ok), "aciklama": d} for ad, ok, d in rapor],
+    }
+    bolge, ham = kirp(bolge)
+    print("kirpildi: %dx%d -> %dx%d" % (ham[0], ham[1], bolge["w"], bolge["h"]))
+
+    veri = {"world": w.name, "fictional": True, "regions": {"global": bolge},
+            "koppen_colors": {v[0]: "#%02x%02x%02x" % v[1] for v in LEG.values()},
+            "koppen_names": {v[0]: v[2] for v in LEG.values()},
+            "koppen_code": {str(k): v[0] for k, v in LEG.items()}}
+    facts = kunye(w, g, P.sum(0))
+    roi = [[round(la, 3), round(lo, 3)] for la, lo in (enlemboylam(*p) for p in POLI)]
+
+    govde = json.dumps(veri, separators=(",", ":"))
+    surum = hashlib.sha1((govde + json.dumps(facts, ensure_ascii=False)).encode("utf-8")).hexdigest()[:10]
+    os.makedirs(os.path.dirname(a.cikti), exist_ok=True)
+    with open(a.cikti, "w", encoding="utf-8") as fh:
+        fh.write('{"surum":%s,"uretim":%s,"facts":%s,"roi":%s,"data":%s}'
+                 % (json.dumps(surum), json.dumps(time.strftime("%Y-%m-%d %H:%M")),
+                    json.dumps(facts, ensure_ascii=False), json.dumps(roi), govde))
+    print("-> %s  surum %s  %.2f MB  (%.0f sn)"
+          % (a.cikti, surum, os.path.getsize(a.cikti) / 1e6, time.time() - t0))
+    print("kunye: " + ", ".join("%s %s" % (x, y) for x, y in facts))
+    if a.ozet:
+        ozet_yaz(g, K, P.sum(0))
+
+
+if __name__ == "__main__":
+    main()

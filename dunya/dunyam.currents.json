@@ -1,0 +1,397 @@
+{
+  "_comment": "Elle tanimli yuzey akintilari. path = [[lon,lat],...]. anomaly_c skaler ya da 12 elemanli aylik dizi (Ocak..Aralik). taper = yol boyunca (baslangictan sona) genlik carpani. width_km = Gauss yaricapi. Anomali ZONAL ORTALAMAYA goredir, mutlak sicaklik degil.",
+  "_neden_boyle": "Hizli donus Hadley hucresini daraltir ve gezegeni COK HUCRELI yapar. OLCULEN okyanus ustu yillik ortalama zonal ruzgar (15 saatlik gun, _kusak.py): isaret degisimleri 17N / 37N / 57N. Yani 0-17N doguludan, 17-37N batidan, 37-57N doguludan, 57N ustu batidan — Dunya'nin uc hucresi yerine burada dort kusak, dolayisiyla TEK subtropikal jir yerine UC jir ust uste ve her birinin donusu bir oncekinin tersi. Jirler kusak ORTALARI arasina oturur: Jir1 8-27N, Jir2 27-47N, Jir3 47-58N. UYARI: bu sinirlar donus periyoduna baglidir — 17 saatte 20/40/62, 14 saatte 15/35/53/71 olculmustu. Donus degisirse once _kusak.py kusaklari yeniden olcmeli, sonra _akinti_kur.py yollari yeniden turetmeli.",
+  "_havza": "Tek buyuk okyanus havzasi: kitanin dogu kiyisinden dogu yonunde 180'i gecip bati kiyisina kadar, 265 derece. Havzanin BATI siniri = kitanin DOGU kiyisi (dar/hizli/sicak), havzanin DOGU siniri = kitanin BATI kiyisi (genis/yavas/SOGUK, colleri yaratan taraf).",
+  "currents": [
+    {
+      "name": "Jir 1 bati kenari - Dogu Kiyi Akintisi (sicak)",
+      "path": [
+        [
+          26.7,
+          8.0
+        ],
+        [
+          25.4,
+          10.4
+        ],
+        [
+          24.6,
+          12.8
+        ],
+        [
+          24.6,
+          15.1
+        ],
+        [
+          23.0,
+          17.5
+        ],
+        [
+          24.6,
+          19.9
+        ],
+        [
+          26.5,
+          22.2
+        ],
+        [
+          28.1,
+          24.6
+        ],
+        [
+          32.3,
+          27.0
+        ]
+      ],
+      "anomaly_c": 4.0,
+      "taper": [
+        0.0,
+        0.4,
+        0.8,
+        1.0,
+        1.0,
+        0.9,
+        0.0
+      ],
+      "width_km": 400,
+      "note": "Dogu (0-17N) ile bati (17-37N) ruzgarlari arasindaki saat yonunde jirin BATI kenari — havzanin bati siniri, yani kitanin DOGU kiyisi. Gulf Stream / Kuroshio esdegeri: dar, hizli, sicak. Membada zayif, mansapta guclu (taper)."
+    },
+    {
+      "name": "Jir 1 dogu kenari - Bati Kiyi Akintisi (soguk)",
+      "path": [
+        [
+          -47.0,
+          27.0
+        ],
+        [
+          -46.3,
+          24.6
+        ],
+        [
+          -45.2,
+          22.2
+        ],
+        [
+          -43.9,
+          19.9
+        ],
+        [
+          -43.4,
+          17.5
+        ],
+        [
+          -42.8,
+          15.1
+        ],
+        [
+          -42.3,
+          12.8
+        ],
+        [
+          -43.6,
+          10.4
+        ],
+        [
+          -42.8,
+          8.0
+        ]
+      ],
+      "anomaly_c": -4.5,
+      "taper": [
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        0.8,
+        0.0
+      ],
+      "width_km": 300,
+      "note": "Ayni jirin DOGU kenari — havzanin dogu siniri, kitanin BATI kiyisi. Genis, yavas, soguk; kiyi yukselimi tasir ve KIYI COLLERINI YARATAN sey budur (Kaliforniya / Kanarya / Humboldt). Kalibrasyon kurali: yol kiyiya yapisik, genislik ~300 km — genis tanimlamak kiyiyi fazla sicak birakiyor."
+    },
+    {
+      "name": "Jir 2 bati kenari - Kuzeydogu Soguk Akintisi",
+      "path": [
+        [
+          43.4,
+          47.0
+        ],
+        [
+          44.7,
+          44.5
+        ],
+        [
+          44.4,
+          42.0
+        ],
+        [
+          45.5,
+          39.5
+        ],
+        [
+          45.5,
+          37.0
+        ],
+        [
+          45.7,
+          34.5
+        ],
+        [
+          44.1,
+          32.0
+        ],
+        [
+          43.1,
+          29.5
+        ],
+        [
+          40.3,
+          27.0
+        ]
+      ],
+      "anomaly_c": -3.0,
+      "taper": [
+        0.0,
+        0.6,
+        1.0,
+        0.7,
+        0.0
+      ],
+      "width_km": 350,
+      "note": "Bati (17-37N) ile dogu (37-57N) ruzgarlari arasindaki TERS donen jir. Donusu Jir 1'in tersi oldugu icin havzanin bati kenarinda soguk su asagi iner — Oyashio esdegeri."
+    },
+    {
+      "name": "Jir 2 dogu kenari - Batidaki Ilimanlik",
+      "path": [
+        [
+          -47.0,
+          27.0
+        ],
+        [
+          -39.9,
+          29.5
+        ],
+        [
+          -42.0,
+          32.0
+        ],
+        [
+          -42.8,
+          34.5
+        ],
+        [
+          -44.4,
+          37.0
+        ],
+        [
+          -41.8,
+          39.5
+        ],
+        [
+          -42.0,
+          42.0
+        ],
+        [
+          -42.0,
+          44.5
+        ],
+        [
+          -42.0,
+          47.0
+        ]
+      ],
+      "anomaly_c": 3.0,
+      "taper": [
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.8,
+        0.0
+      ],
+      "width_km": 400,
+      "note": "Ayni ters jirin dogu kenarinda su kutuplara dogru akar ve isitir. Bati kiyisinin 27-47N arasi, hemen guneyindeki soguk akintiyla keskin bir karsitlik olusturur."
+    },
+    {
+      "name": "Jir 3 bati kenari - Kuzeydogu Sicak Akintisi",
+      "path": [
+        [
+          43.4,
+          47.0
+        ],
+        [
+          41.8,
+          48.4
+        ],
+        [
+          41.5,
+          49.8
+        ],
+        [
+          40.7,
+          51.1
+        ],
+        [
+          39.9,
+          52.5
+        ],
+        [
+          38.6,
+          53.9
+        ],
+        [
+          38.9,
+          55.2
+        ],
+        [
+          38.3,
+          56.6
+        ],
+        [
+          38.6,
+          58.0
+        ]
+      ],
+      "anomaly_c": 3.5,
+      "taper": [
+        0.0,
+        0.4,
+        0.8,
+        1.0,
+        1.0,
+        0.9,
+        0.0
+      ],
+      "width_km": 450,
+      "note": "Dogu (37-57N) ile bati (57N ustu) ruzgarlari arasindaki ucuncu jir, yeniden saat yonunde. Kuzeydogu kiyisini yasanabilir tutan sey."
+    },
+    {
+      "name": "Jir 3 dogu kenari - Kuzeybati Soguk Akintisi",
+      "path": [
+        [
+          -39.1,
+          55.2
+        ],
+        [
+          -40.5,
+          53.9
+        ],
+        [
+          -40.7,
+          52.5
+        ],
+        [
+          -41.8,
+          51.1
+        ],
+        [
+          -41.8,
+          49.8
+        ],
+        [
+          -41.5,
+          48.4
+        ],
+        [
+          -42.0,
+          47.0
+        ]
+      ],
+      "anomaly_c": -3.5,
+      "taper": [
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.8,
+        0.0
+      ],
+      "width_km": 350,
+      "note": "Labrador esdegeri: kutup suyunu kuzeybati kiyisi boyunca asagi tasir ve o kiyiyi ayni enlemdeki dogu kiyisindan belirgin soguk yapar. Kitanin kuzeyi daraldigi icin yol 55N'de biter — otesinde tutunacak tutarli kiyi duvari yok."
+    },
+    {
+      "name": "Ekvatoral soguk dil",
+      "path": [
+        [
+          -144.3,
+          0
+        ],
+        [
+          -114.3,
+          0
+        ],
+        [
+          -84.3,
+          0
+        ],
+        [
+          -58.5,
+          1
+        ],
+        [
+          -41.8,
+          2
+        ]
+      ],
+      "anomaly_c": -3.0,
+      "taper": [
+        0.0,
+        0.3,
+        0.7,
+        1.0,
+        1.0,
+        0.8,
+        0.0
+      ],
+      "width_km": 450,
+      "note": "Akinti degil yukselim, ama ayni formatla temsil edilir. Alizeler ekvatorda sicak yuzey suyunu batiya suruyor, yerine soguk su cikiyor. Havzanin dogu yarisinda guclu; kitanin guney ucunu serinletir."
+    },
+    {
+      "name": "Ic Deniz - mevsimsel genlik",
+      "path": [
+        [
+          27.2,
+          58.1
+        ],
+        [
+          -7.7,
+          32.9
+        ],
+        [
+          -8.7,
+          20.4
+        ],
+        [
+          3.4,
+          7.8
+        ],
+        [
+          -25.1,
+          -4.8
+        ]
+      ],
+      "anomaly_c": [
+        -3.0,
+        -3.2,
+        -2.4,
+        -0.6,
+        1.6,
+        3.2,
+        3.8,
+        3.4,
+        2.0,
+        0.2,
+        -1.6,
+        -2.8
+      ],
+      "width_km": 350,
+      "note": "KAPATILDI. Bu terim yari-kapali SIG bir havzayi temsil ediyordu (Akdeniz yontemi: 12 elemanli mevsimsel dizi). Olculdu — kitanin ortasindaki su dunya okyanusuna ACIK bir korfez, kapali havza degil (kapali su butun sularin 0.0000'i). Acik bir korfezde sig karisim tabakasi varsayimi yanlis, o yuzden terim kaldirildi.",
+      "disabled": true
+    }
+  ],
+  "_olcek_notu": "Yollarin boylamlari kita genisligi 71.8 -> 94.8 derece degistiginde 1.3200 ile olceklendi. Enlemler degismedi.",
+  "_tasima_notu": "Kara kusagi 70N..3N iken 60N..-7N'e tasindi (dunya cok sertti). Jir ENLEMLERI degismedi: onlari ruzgar kusaklari belirler, kita degil. Yalniz Jir 3'un kiyi yollari kirpildi — kita artik 60N'in kuzeyine uzanmiyor, orada tutunacak kiyi yok.",
+  "_hizalama_notu": "Enlemler olculen ruzgar kusaklarina hizalandi (gun 15 saat, sinirlar 17N/37N/57N). Jir kapsamlari kusak ortalari arasi: Jir1 8-27N, Jir2 27-47N, Jir3 47-59N. Boylamlar degismedi — onlar kiyiya bagli. Donus periyodu her degistiginde bu yeniden yapilmali: _kusak.py kusaklari olcer.",
+  "_turetme_notu": "Yollar _akinti_kur.py ile GERCEK kiyi cizgisinden turetildi, elle yazilmadi. Kiyi, ANA KITANIN bagli bileseninden okunur — satir bazli min/max adalari kiyi saniyor ve yolu 40 derece kaydirabiliyor (olculdu). Kara ya da donus her degistiginde bu betik yeniden kosulmali; _denetim.py karada nokta kalmadigini dogrular.",
+  "_taper_notu": "Taper UCLARDA SIFIRA inmeli. Onceden hepsi 0.3-0.6 ile baslayip 0.8-0.9 ile bitiyordu: anomali denizin ortasinda birden basliyor ve tam gucunde kesiliyordu. Olculdu — akinti uclarinda tek hucrede 3.17 C'ye varan SST sicramasi, oysa okyanus genelinde tipik degisim 0.15 C/hucre (p99). Haritada bunlar cizgi/kanca olarak gorunuyordu. Gercek akintilar uclarda dagilir. Duzeltme: her aktif akintinin taper dizisinin basina ve sonuna 0.0 eklendi, ic sekil korundu. Sinamasi: _kusur.py akinti uclarindaki gradyani olcer."
+}
