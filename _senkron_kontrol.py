@@ -17,7 +17,7 @@ ESLESME = [
     ("motor", "climate", (".py",), {"reference.py"}),
     ("dunya/dunyam.json", "worlds/dunyam.json", None, None),
     ("dunya/dunyam.currents.json", "worlds/dunyam.currents.json", None, None),
-    ("dunya/dunyam_heightmap.png", "worldinfo/dunyam_heightmap.png", None, None),
+    ("dunya/dunyam_heightmap.png", "data/work/dunyam_heightmap.png", None, None),
 ]
 
 

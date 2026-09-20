@@ -116,6 +116,7 @@ def grid_kur(w, res):
         res_deg=res,
         band=hm.get("band", 1),
         elev_gamma=hm.get("elev_gamma", 1.0),
+        elev_curve=hm.get("elev_curve"),
     )
 
 

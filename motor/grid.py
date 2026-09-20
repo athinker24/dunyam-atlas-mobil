@@ -471,6 +471,46 @@ def _heightmap_oku(path, band):
         return np.asarray(kare).astype(np.float64), None
 
 
+def _egri_dogrula(egri, max_elev_m):
+    """elev_curve bir GUVEN SINIRI: elle yazilan dunya dosyasindan geliyor.
+
+    KAPSAM: egri yalnizca DENIZ USTUNU esler. Deniz alti (batimetri) her
+    zaman elev_gamma ile eslenir — bir egri verip elev_gamma=1.0 birakmak
+    okyanus tabanini dogrusal yapar. Modelde neredeyse etkisiz (hava akisi
+    okyanus uzerinde deniz seviyesine kelepcelenir) ama sessiz degil:
+    bilerek boyle.
+
+    Bicim: [[oran, metre], ...] — oran, deniz seviyesi ile en yuksek piksel
+    arasinda 0..1; metre o oranin karsiligi. Aradaki degerler dogrusal.
+
+    Neden var: tek bir elev_gamma butun araziyi ayni yonde ceker. Olculdu,
+    bu projenin kurgusal dunyasinda gamma=2 ile ova 417 m (istenen 150),
+    tarim bolgesi 1206 m (istenen 660), plato 1411 m (istenen 1580) cikiyordu
+    — yani ovayi indirmek icin gamma buyutulse plato da iniyordu. Egri her
+    araligi ayri egebildigi icin yedi bolgenin hepsi ayni anda tutturulabildi.
+    Worldbuilding araclarinin ciktisi gercek bir hipsometrik egri tasimaz
+    (bkz from_heightmap belgesi); bu, o egriyi disaridan vermenin yolu.
+    """
+    e = np.asarray(egri, dtype=np.float64)
+    if e.ndim != 2 or e.shape[1] != 2 or len(e) < 2:
+        raise ValueError(f"elev_curve [[oran, metre], ...] olmali, verilen sekil {e.shape}")
+    x, y = e[:, 0], e[:, 1]
+    if not np.all(np.isfinite(e)):
+        raise ValueError("elev_curve NaN/sonsuz iceriyor")
+    if not np.all(np.diff(x) > 0):
+        raise ValueError(f"elev_curve oranlari KESIN artmali, verilen: {x.tolist()}")
+    if np.any(np.diff(y) < 0):
+        raise ValueError(
+            f"elev_curve metreleri azalamaz (esleme monoton olmali), verilen: {y.tolist()}")
+    if abs(x[0]) > 1e-9 or abs(y[0]) > 1e-9:
+        raise ValueError(f"elev_curve 0.0 -> 0.0 ile baslamali, baslangic ({x[0]}, {y[0]})")
+    if abs(x[-1] - 1.0) > 1e-9 or abs(y[-1] - max_elev_m) > 1e-6:
+        raise ValueError(
+            f"elev_curve 1.0 -> max_elev_m ({max_elev_m}) ile bitmeli, "
+            f"bitis ({x[-1]}, {y[-1]})")
+    return x, y
+
+
 def from_heightmap(
     path: str,
     world: World,
@@ -482,6 +522,7 @@ def from_heightmap(
     res_deg: float = 1.0 / 6.0,
     band: int = 1,
     elev_gamma: float = 1.0,
+    elev_curve=None,
 ) -> Grid:
     """Cografi referansi OLMAYAN bir yukseklik goruntusunden grid kurar.
 
@@ -553,7 +594,10 @@ def from_heightmap(
     if not (np.isfinite(g) and g > 0):
         raise ValueError(f"elev_gamma={elev_gamma} pozitif ve sonlu olmali")
 
-    ust = (np.maximum(data - sea, 0.0) / (vmax - sea)) ** g
+    egri = _egri_dogrula(elev_curve, max_elev_m) if elev_curve is not None else None
+
+    _oran = np.maximum(data - sea, 0.0) / (vmax - sea)
+    ust = _oran ** g if egri is None else np.interp(_oran, egri[0], egri[1]) / max_elev_m
     alt = (np.maximum(sea - data, 0.0) / (sea - vmin)) ** g
     elev = np.where(data >= sea, ust * max_elev_m, -alt * abs(max_depth_m)) + world.sea_level_m
 

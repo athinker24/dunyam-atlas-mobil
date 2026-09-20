@@ -322,15 +322,31 @@ buraya bak.
 Dünyanın sahibi araziyi MerakMapMaker'da düzenleyip yeni bir `.glb` verdiğinde
 asıl projede şu zincir koşar:
 
-1. `python _mk_heightmap.py` — `.glb`'den gezegen tuvalini üretir. Mesh
-   düzgün bir köşe ızgarası; x/y uzanımlarının oranı çizimin **gerçek en/boy
-   oranıdır** (köşe ızgarası kare olsa bile). Kıta, `KARA_MERKEZ_LON` ile
-   boylamda sabitlenir — yoksa her yeni arazi sürümünde birkaç derece kayar ve
-   akıntılar, işaretli bölge, notlardaki bütün boylamlar sessizce yanlış olur.
-2. `sea_level_value` ve `max_depth_m` yeniden okunur (betik basar).
-3. 0.25 derecelik koşu, `_denetim.py`, atlas, `_repo_senkron.py --yaz`.
-4. Bu repoda commit + push; workflow veriyi yeniden üretir.
+1. `python _mk_heightmap.py` — `worldinfo/` içindeki **en yeni** arazi
+   dosyasından (`.glb` varsa o, yoksa 16 bit PNG) gezegen tuvalini üretir ve
+   `data/work/` altına yazar. Kıta, `KARA_MERKEZ_LON` ile boylamda sabitlenir
+   — yoksa her yeni arazi sürümünde birkaç derece kayar ve akıntılar,
+   işaretli bölge, notlardaki bütün boylamlar sessizce yanlış olur. Betik
+   `file` / `sea_level_value` / `max_depth_m` alanlarını **kendi** yazar;
+   bunlar elle taşınmaz.
+2. `python _egri_kur.py --yaz` — `elev_curve`'ü kurar. Yöntem: karanın alan
+   ağırlıklı gri ton dağılımı, ETOPO'dan **ölçülmüş** gerçek Dünya buzsuz kara
+   hipsometrisine nicelik eşlemesiyle oturtulur (`f = Q(F(v))`). Çizimin kendi
+   biçimi korunur, yalnız ölçek gerçeğe oturur. Bölge kutusu yoktur ve elle
+   taşınacak çapa yoktur.
+3. `python _akinti_kur.py` — **yalnız kıyı değiştiyse**; akıntı yollarını
+   gerçek kıyı çizgisinden yeniden türetir.
+4. 0.26 derecelik koşu, `export_viewer.py --res 0.26`, `_atlas.py`,
+   `_denetim.py`, `node _atlas_test.js`, `_repo_senkron.py --yaz`.
+5. Bu repoda commit + push; workflow veriyi yeniden üretir.
 
-Kullanıcının kendi PNG çıktısı **kaynak değildir**: okyanus tabanı orada düz
-tek bir değer (batimetri yok), tuvali 2:1 değil ve çizim keyfi bir kareye
-oturtulmuş oluyor. `.glb`'de z gerçek yüksekliktir.
+**Sıra kuralı (sert):** eğri düzelmeden nem düğmesi (`convective_c`,
+`rh_ocean`, `blocking_*`) ayarlanmaz. Bayat bir eşlemeyle ayarlanan düğme,
+eğri düzelince yanlış kalır ve yanlışlığı *arazi kusuru gibi* görünür — bu bir
+kez oldu, aynı çizim `convective_c`'ye göre kurak payını %42 ya da %8
+veriyordu ve arada geçen sürede arazi suçlandı. Ayrıntı: `docs/08` 4.5.
+
+Kaynak tercihen `.glb`'dir: orada z gerçek yüksekliktir. Sahibinin PNG çıktısı
+da **desteklenir ve kullanıldı** — kıyı sahanlığı eğimleri vardır, ama derin
+okyanus tabanı düz tek bir değerdir. Modelde neredeyse etkisiz (hava akışı
+okyanus üzerinde deniz seviyesine kelepçelenir).
