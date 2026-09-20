@@ -27,6 +27,9 @@ Bu hem masaüstü atlası hem `mobil/data/atlas.json`'u yazar. Sonra:
 git add -A && git commit -m "Veri guncellemesi" && git push
 ```
 
+Bilgisayar hiç açılmadan da olur: aşağıdaki *İklimi değiştirmek* bölümü,
+veriyi GitHub'ın kendisinde yeniden ürettiren yolu anlatır.
+
 ### DİKKAT: tünel adresi her açılışta değişir
 
 Geçici Cloudflare tünelleri her seferinde yeni bir adres verir. Telefondaki
@@ -109,7 +112,7 @@ python _senkron_kontrol.py /ana/projenin/yolu
 | dosya | ne |
 |---|---|
 | `index.html`, `style.css`, `app.js` | uygulama |
-| `data/atlas.json` | `_atlas.py`'nin ürettiği veri — elle düzenleme |
+| `data/atlas.json` | veri — `uret.py` ya da ana projedeki `_atlas.py` yazar, elle düzenleme |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
 | `uret.py` | veri üreticisi — iklimi yeniden hesaplar |
 | `motor/` | iklim motoru (ana projenin `climate/` kopyası) |

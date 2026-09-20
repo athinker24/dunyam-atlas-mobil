@@ -435,6 +435,42 @@ def ingest(tif_path: str, bounds, world: World, res_deg: float = 1.0 / 6.0) -> G
     return build(lat, lon, elev, relief, world, land=land)
 
 
+def _heightmap_oku(path, band):
+    """(float64 dizi, nodata) dondurur. rasterio varsa onu, yoksa Pillow'u kullanir.
+
+    Motor cekirdegi saf numpy+scipy olmali; rasterio yalnizca Dunya
+    dogrulamasinda (reference.py, run.py) bulunur. Kurgusal dunya yolu duz bir
+    PNG okur ve bunun icin rasterio gerekmez — mobil repo onsuz kosar.
+    Iki okuyucu da ayni diziyi verir; test_heightmap_okuyucular_ayni kilitler.
+    """
+    try:
+        import rasterio
+    except ImportError:
+        rasterio = None
+
+    if rasterio is not None:
+        import warnings
+        # duz gorseller cografi referans tasimaz; uyari beklenen durum
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", rasterio.errors.NotGeoreferencedWarning)
+            with rasterio.open(path) as src:
+                return src.read(band).astype(np.float64), src.nodatavals[band - 1]
+
+    from PIL import Image
+    with Image.open(path) as im:
+        # Saydamlik, duz bir gorselde "burasi bos" demenin tek yolu; asagidaki
+        # nodata denetiminin gorsel karsiligi. Ne ile doldurulacagini bilemeyiz.
+        if "A" in im.getbands() or "transparency" in im.info:
+            raise ValueError(
+                f"heightmap {path} saydamlik tasiyor. Saydam pikselin yuksekligi "
+                "bilinmiyor; gorseli bosluksuz doldurup tekrar dene.")
+        bantlar = im.getbands()
+        if band > len(bantlar):
+            raise ValueError(f"heightmap {len(bantlar)} bant tasiyor, band={band} istendi")
+        kare = im if len(bantlar) == 1 else im.split()[band - 1]
+        return np.asarray(kare).astype(np.float64), None
+
+
 def from_heightmap(
     path: str,
     world: World,
@@ -482,16 +518,7 @@ def from_heightmap(
     Grid.wraps True olur ve butun katmanlar dikisten gecen moda gecer.
     Goruntunun satir 0'i KUZEY kabul edilir (standart equirectangular).
     """
-    import warnings
-
-    import rasterio
-
-    # duz gorseller cografi referans tasimaz; uyari beklenen durum
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", rasterio.errors.NotGeoreferencedWarning)
-        with rasterio.open(path) as src:
-            data = src.read(band).astype(np.float64)
-            nodata = src.nodatavals[band - 1]
+    data, nodata = _heightmap_oku(path, band)
 
     # Nodata bir TRUST BOUNDARY: deger -> yukseklik eslemesi onu sirandan bir
     # piksel sanir ve genelde en derin degere oturtur. Olculdu: nodata=0 olan
