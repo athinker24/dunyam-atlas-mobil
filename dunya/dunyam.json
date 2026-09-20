@@ -17,9 +17,9 @@
   "_heightmap": "Gorsel TUM GEZEGENI kaplar: cizilen harita 61.5N..-10.4N enlem ve 94.8 derece boylam penceresine oturtulmus. En/boy 1.320: bu .glb mesh'inin dolgu disi icerik kutusundan (1218x923) olculdu ve MerakMapMaker ekraninda kitanin kapladigi alanla (~1060x820 px = 1.29) uyusuyor. 16 bit PNG 1.00 diyordu ama o dosyanin sinir kutusu bozuk kenar pikselleriyle sisiyor (ayni sebeple heightmap kaynagi olarak da reddedildi). 2.00 haritayi yatayda geriyor, 1.00 yanlardan sikistiriyor. Pencerenin disi acik okyanus; gezegen karasi ALAN olarak %6.8 (hucre sayarak %5.3 — equirectangular gridde hucre alani cos(enlem) ile kuculur, ikisi ayni sey degil; her iki cozunurlukte de ayni cikti). Enlem yerlesimi kisittan turetildi (bkz. _mk_heightmap.py): kara kutlesi 60N ile -7N arasinda kalacak. NOT: kullanicinin isaretledigi iki 'Akdeniz enlemi' cizgisi, kara guneye tasindigi icin artik 36.3N ve 19.1N'e dusuyor — Akdeniz degil subtropik. Bu, dunyayi yumusatmanin bedeli olarak bilerek verildi (bkz _yumusatma). sea_level_value = 17176, .glb'de z=0'a karsilik gelen deger. max_elev_m = 6700, dunyanin sahibi bildirdi. elev_gamma = 2.0 ZORUNLU: dogrusal eslemede (gamma=1) karanin %75'i 2000 m ustune cikiyor ve butun kita tundraya donuyordu; gamma=2 ile medyan 1330 m, isaretli plato 1653 m (Mogolistan olcegi) ve zirve 6700'de kalir. max_depth_m cizimdeki orani korur ama modelde neredeyse etkisizdir: hava akisi okyanus uzerinde deniz seviyesine kelepcelenir.",
   "heightmap": {
     "file": "worldinfo/dunyam_heightmap.png",
-    "sea_level_value": 17176,
+    "sea_level_value": 17957,
     "max_elev_m": 6700.0,
-    "max_depth_m": -2380.0,
+    "max_depth_m": -2529.0,
     "elev_gamma": 2.0,
     "bounds": [
       -180.0,
