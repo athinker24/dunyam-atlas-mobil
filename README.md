@@ -69,6 +69,13 @@ python uret.py --ozet               # gerçek çözünürlük, ~20-30 dk
 iç tutarlılık raporunu basar ve uygulamanın okuduğu `data/atlas.json`
 dosyasını yazar.
 
+**İç tutarlılık kontrollerinden biri düşerse veri yazılmaz.** Bu kontroller
+modelin kendi fiziğiyle çelişip çelişmediğine bakar (sıcaklık enlemle düşüyor
+mu, yüksek yerler soğuk mu, yarıkürelerin mevsimleri ters mi…) ve düşen bir
+kontrol neredeyse her zaman **bozuk girdi** demektir: ters çevrilmiş yükseklik
+haritası, yanlış `sea_level_value`, saçma bir parametre. Yine de yazdırmak
+için `--zorla`.
+
 ### Neyi nereden değiştirirsin
 
 | ne | dosya |

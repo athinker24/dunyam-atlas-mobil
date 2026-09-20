@@ -201,6 +201,8 @@ def main():
     ap.add_argument("--res", type=float, default=0.25, help="derece/hucre (varsayilan 0.25)")
     ap.add_argument("--cikti", default=CIKTI)
     ap.add_argument("--ozet", action="store_true", help="sinif paylarini da yaz")
+    ap.add_argument("--zorla", action="store_true",
+                    help="ic tutarlilik dusse de veriyi yine de yaz")
     a = ap.parse_args()
 
     t0 = time.time()
@@ -213,11 +215,19 @@ def main():
     K, T, P = r["koppen"], r["temp"], r["precip"]
 
     rapor = sanity.check(g, r)
-    gecen = sum(1 for _, ok, _ in rapor if ok)
-    print("ic tutarlilik: %d/%d gecti" % (gecen, len(rapor)))
-    for ad, ok, aciklama in rapor:
-        if not ok:
-            print("   DUSTU: %s — %s" % (ad, aciklama))
+    dusen = [(ad, aciklama) for ad, ok, aciklama in rapor if not ok]
+    print("ic tutarlilik: %d/%d gecti" % (len(rapor) - len(dusen), len(rapor)))
+    for ad, aciklama in dusen:
+        print("   DUSTU: %s — %s" % (ad, aciklama))
+    # Dusen bir kontrol neredeyse her zaman BOZUK GIRDI demek (ters cevrilmis
+    # yukseklik haritasi, yanlis deniz seviyesi degeri, sacma bir parametre).
+    # GitHub Actions bunu yalnizca yazdirsaydi bozuk dunyayi sessizce commit
+    # eder, telefonda ancak gozle fark edilirdi. O yuzden hata veriyoruz.
+    if dusen and not a.zorla:
+        raise SystemExit(
+            "%d ic tutarlilik kontrolu dustu, veri YAZILMADI. Once girdiyi "
+            "kontrol et (yukseklik haritasi, sea_level_value, params). "
+            "Yine de yazmak icin: --zorla" % len(dusen))
 
     land = g.land
     alanlar = {}

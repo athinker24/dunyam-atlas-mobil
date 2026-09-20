@@ -16,6 +16,12 @@ on:
         description: 'cozunurluk (derece/hucre)'
         default: '0.25'
 
+# Iki kosu ayni anda data/atlas.json'u commit etmeye kalkarsa ikincisi
+# push'ta catisir. Ust uste push'ta eskisi iptal edilir.
+concurrency:
+  group: atlas-verisi
+  cancel-in-progress: true
+
 jobs:
   uret:
     runs-on: ubuntu-latest
@@ -30,13 +36,30 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: veriyi uret
-        run: python uret.py --res "${{ github.event.inputs.res || '0.25' }}" --ozet
-      - name: degistiyse commit et
+        run: python uret.py --res "${{ github.event.inputs.res || '0.25' }}" --cikti /tmp/yeni.json --ozet
+      # Dosyayi dogrudan yazip "git diff" ile bakmak ISE YARAMAZ: her ciktida
+      # bir "uretim" zaman damgasi var, yani dosya iklim hic degismese de her
+      # kosuda farkli cikar ve 2 MB'lik bos commit'ler birikir. Icerik ozeti
+      # olan "surum" alani karsilastirilir; ayni ise dosyaya hic dokunulmaz.
+      - name: degisti mi
         run: |
-          if git diff --quiet -- data/atlas.json; then
-            echo "veri degismedi"
-            exit 0
-          fi
+          python - <<'PY'
+          import json, os, shutil
+          yeni = json.load(open("/tmp/yeni.json", encoding="utf-8"))["surum"]
+          try:
+              eski = json.load(open("data/atlas.json", encoding="utf-8"))["surum"]
+          except Exception:
+              eski = None
+          degisti = yeni != eski
+          if degisti:
+              shutil.move("/tmp/yeni.json", "data/atlas.json")
+          print("surum %s -> %s%s" % (eski, yeni, "" if degisti else "  (ayni)"))
+          with open(os.environ["GITHUB_ENV"], "a") as fh:
+              fh.write("DEGISTI=" + str(int(degisti)) + chr(10))
+          PY
+      - name: degistiyse commit et
+        if: env.DEGISTI == '1'
+        run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/atlas.json
