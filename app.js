@@ -92,6 +92,37 @@ function baslat(J){
   F.elev = {lo:R.elev.lo, hi:R.elev.hi, a:b64(R.elev.data)};
   const val = (f,i) => f.lo + (f.a[i]-1)/254*(f.hi-f.lo);
 
+  // Yagis ve yukseklik kara uzerinde carpik dagiliyor (cogu hucre alt yariya
+  // dusuyor, birkac uc deger olcegi ustlere geriyor): dogrusal renklendirme
+  // "her yer kurak, birkac nokta yagisli" gibi gorunuyordu. Yuzdelik dilim
+  // esitlemesi (her renk basamaginin kapsadigi kara payi esit) rengi verinin
+  // gercek dagilimina oturtuyor. Sicaklik carpik degil, "detayli" modda
+  // dogrusal kaliyor — carpik olmayan bir seyi esitlemenin kazanci yok.
+  //
+  // "Basit" mod ayrica her alan icin esit-nufuslu SINIF_SAYI basamaga
+  // sinifliyor (gercek dunya yagis haritalari gibi düz bantlar): genel
+  // profili tek bakista okumak icin, ince mekansal dokuyu gormek icin degil.
+  const SINIF_SAYI = 6;
+  function esitlePipelini(f){
+    const say = new Float64Array(256);
+    for(let i=0;i<N;i++) if(LAND[i]) say[f.a[i]]++;
+    let tot=0; for(let b=1;b<256;b++) tot+=say[b];
+    const q = new Float32Array(256), basit = new Float32Array(256);
+    let cum=0;
+    for(let b=1;b<256;b++){
+      q[b] = tot ? (cum+say[b]/2)/tot : (b-1)/254;
+      cum += say[b];
+      const sinif = Math.min(SINIF_SAYI-1, Math.floor(q[b]*SINIF_SAYI));
+      basit[b] = sinif/(SINIF_SAYI-1);
+    }
+    return {q, basit};
+  }
+  for(const k of Object.keys(F)){
+    const {q, basit} = esitlePipelini(F[k]);
+    F[k].basit = basit;
+    if(k.startsWith("prec") || k==="elev") F[k].q = q; // "detayli" carpik alanlarda esitlenmis, sicaklikta dogrusal
+  }
+
   const LAYERS = [
     {id:"koppen",   label:"Köppen sınıfı",    chip:"İklim",        kind:"class"},
     {id:"temp_yil", label:"Yıllık sıcaklık",  chip:"Sıcaklık",     kind:"temp", unit:"°C"},
@@ -206,6 +237,7 @@ function baslat(J){
     const ctx=cv.getContext("2d"), img=ctx.createImageData(R.w,R.h), px=img.data;
     const rim=hex(cs("--sea-rim")), mid=hex(cs("--sea-mid")), deep=hex(cs("--sea-deep"));
     const golge=$("#shade").checked;
+    const basitMod=$("#basit").checked;
     for(let i=0;i<N;i++){
       const p=i*4; let c;
       if(!LAND[i]){ const d=DIST[i];
@@ -214,7 +246,8 @@ function baslat(J){
         let sonuk=false;
         if(L.kind==="class"){ const k=KCODE[String(KVIEW[i])];
           c = k ? (KPAL[k]||hex(KCOL[k])) : mid; if(izole && k!==izole) sonuk=true; }
-        else c = rampColor(RAMPS[L.kind], (f.a[i]-1)/254);
+        else if(basitMod) c = rampColor(RAMPS[L.kind], f.basit[f.a[i]]);
+        else c = rampColor(RAMPS[L.kind], f.q ? f.q[f.a[i]] : (f.a[i]-1)/254);
         let s = golge ? SHADE[i] : 1; if(EDGE[i]) s*=0.87;
         c=[c[0]*s,c[1]*s,c[2]*s];
         if(sonuk){ const g=0.299*c[0]+0.587*c[1]+0.114*c[2];
@@ -399,6 +432,7 @@ function baslat(J){
 
   for(const id of ["grat","roi"]) $("#"+id).addEventListener("change", overlay);
   $("#shade").addEventListener("change", paint);
+  $("#basit").addEventListener("change", paint);
 
   $("#facts").innerHTML = FACTS.map(([b,v])=>`<div><b>${b}</b><span>${v}</span></div>`).join("")
     + `<div><b>hücre</b><span>${((B[2]-B[0])/R.w).toFixed(2)}°</span></div>`;
