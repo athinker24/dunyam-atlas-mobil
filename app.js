@@ -92,12 +92,13 @@ function baslat(J){
   F.elev = {lo:R.elev.lo, hi:R.elev.hi, a:b64(R.elev.data)};
   const val = (f,i) => f.lo + (f.a[i]-1)/254*(f.hi-f.lo);
 
-  // Yagis ve yukseklik kara uzerinde carpik dagiliyor (cogu hucre alt yariya
-  // dusuyor, birkac uc deger olcegi ustlere geriyor): dogrusal renklendirme
-  // "her yer kurak, birkac nokta yagisli" gibi gorunuyordu. Yuzdelik dilim
-  // esitlemesi (her renk basamaginin kapsadigi kara payi esit) rengi verinin
-  // gercek dagilimina oturtuyor. Sicaklik carpik degil, "detayli" modda
-  // dogrusal kaliyor — carpik olmayan bir seyi esitlemenin kazanci yok.
+  // Yagis, yukseklik VE sicaklik kara uzerinde carpik dagiliyor (yagis/
+  // yukseklikte cogu hucre alt yariya dusuyor; sicaklikta ise medyan ustteki
+  // dar araliga sikisiyor — karanin yarisindan fazlasi "sicak" tarafta ama
+  // rampanin yalnizca ~%28'ini paylasiyor). Dogrusal renklendirme sicak
+  // bolgeleri de birbirinden ayirt edilemez tek kirmizi gibi gosteriyordu.
+  // Yuzdelik dilim esitlemesi (her renk basamaginin kapsadigi kara payi esit)
+  // rengi hepsinde verinin gercek dagilimina oturtuyor.
   //
   // "Basit" mod ayrica her alan icin esit-nufuslu SINIF_SAYI basamaga
   // sinifliyor (gercek dunya yagis haritalari gibi düz bantlar): genel
@@ -120,7 +121,7 @@ function baslat(J){
   for(const k of Object.keys(F)){
     const {q, basit} = esitlePipelini(F[k]);
     F[k].basit = basit;
-    if(k.startsWith("prec") || k==="elev") F[k].q = q; // "detayli" carpik alanlarda esitlenmis, sicaklikta dogrusal
+    F[k].q = q;
   }
 
   const LAYERS = [
