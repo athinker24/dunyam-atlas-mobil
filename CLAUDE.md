@@ -213,8 +213,8 @@ Bu sayılar dünyanın kendisidir; değiştirmek başka bir gezegen yapar.
 | eksen eğikliği | 28° | soğutmanın tundra bedelini ödüyor (yazları ısıtır) |
 | deniz seviyesi ort. sıcaklık | 14 °C | savan payını %19'dan ~%9'a indirmek için |
 | kara kuşağı | 60°K .. −7°K | 40-70°K'de dünya çok sertti; tek işleyen kol karayı güneye taşımaktı |
-| en yüksek nokta | 6700 m | dünyanın sahibi bildirdi |
-| `elev_gamma` | 2.0 | **zorunlu**: doğrusal eşlemede karanın %75'i 2000 m üstüne çıkıyor ve bütün kıta tundraya dönüyordu |
+| en yüksek nokta | 7000 m | dünyanın sahibi bildirdi (önce 6700) |
+| yükseklik eğrisi | sahibin çapaları | ova 250-300 m, plato çanağı 800-1000 m, Büyük Duvar zirveleri 6000 m, en yüksek 7000 m; aralar PCHIP. Kıta **bilerek** Dünya'dan yüksek (kara medyanı ~950 m, Dünya 377). Ayrıntı `_elev_curve` |
 | kara payı | ~%6.8 (alan) | hücre sayarak %5.3 — ikisi aynı şey değil (§7.1) |
 
 Akıntılar: 15 saatlik gün gezegeni çok hücreli yapıyor (ölçülen kuşak
@@ -286,6 +286,13 @@ python _senkron_kontrol.py /asil/projenin/yolu
 Bu repoda `motor/` ya da `dunya/` içinde değişiklik yaparsan asıl proje geride
 kalır. Küçük bir düzeltme için sorun değil; kalıcı bir değişiklikse asıl
 projeye de taşı.
+
+**Şu an böyle bir ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
+sahibin kendi PNG'sinden, kayıtla aktarıldı) ve `elev_curve` (sahibin çapaları)
+yalnız bu repoda. Asıl projede `_repo_senkron.py --yaz` koşulursa ikisini de
+eski hâline döndürür; `_egri_kur.py --yaz` koşulursa eğriyi yeniden Dünya
+hipsometrisine zorlar. Önce bu iki dosyayı asıl projeye taşı. Ayrıntı
+`dunyam.json` → `_heightmap_kaynak`, `_elev_curve`.
 
 ---
 

@@ -18,7 +18,7 @@
   "heightmap": {
     "file": "data/work/dunyam_heightmap.png",
     "sea_level_value": 11934,
-    "max_elev_m": 6700.0,
+    "max_elev_m": 7000.0,
     "max_depth_m": -1492.0,
     "elev_gamma": 1.0,
     "bounds": [
@@ -33,80 +33,152 @@
         0.0
       ],
       [
-        0.10225,
-        26.6
+        0.03125,
+        34.5
       ],
       [
-        0.1861,
-        73.2
+        0.0625,
+        69.5
       ],
       [
-        0.24145,
-        126.1
+        0.09375,
+        105.0
       ],
       [
-        0.29779,
-        181.4
+        0.125,
+        141.0
       ],
       [
-        0.35141,
-        248.9
+        0.15625,
+        177.3
       ],
       [
-        0.39823,
-        318.7
+        0.1875,
+        214.0
       ],
       [
-        0.44094,
-        397.1
+        0.21801,
+        250.0
       ],
       [
-        0.49368,
-        492.0
+        0.21875,
+        250.9
       ],
       [
-        0.53585,
-        632.8
+        0.25,
+        285.5
       ],
       [
-        0.56832,
-        823.2
+        0.25934,
+        300.0
       ],
       [
-        0.60075,
-        1070.7
+        0.28125,
+        364.6
       ],
       [
-        0.63097,
-        1335.8
+        0.3125,
+        518.7
       ],
       [
-        0.65991,
-        1658.7
+        0.34375,
+        694.3
       ],
       [
-        0.69288,
-        2154.9
+        0.36576,
+        800.0
       ],
       [
-        0.72589,
-        3062.1
+        0.375,
+        835.2
       ],
       [
-        0.76297,
-        4378.8
+        0.40625,
+        942.5
       ],
       [
-        0.79341,
-        4907.6
+        0.41949,
+        1000.0
       ],
       [
-        0.82243,
-        5191.2
+        0.4375,
+        1099.6
+      ],
+      [
+        0.46875,
+        1319.3
+      ],
+      [
+        0.5,
+        1591.8
+      ],
+      [
+        0.53125,
+        1909.1
+      ],
+      [
+        0.5625,
+        2263.1
+      ],
+      [
+        0.59375,
+        2646.0
+      ],
+      [
+        0.625,
+        3049.7
+      ],
+      [
+        0.65625,
+        3466.2
+      ],
+      [
+        0.6875,
+        3887.5
+      ],
+      [
+        0.71875,
+        4305.6
+      ],
+      [
+        0.75,
+        4712.6
+      ],
+      [
+        0.78125,
+        5100.4
+      ],
+      [
+        0.8125,
+        5461.0
+      ],
+      [
+        0.84375,
+        5786.5
+      ],
+      [
+        0.86687,
+        6000.0
+      ],
+      [
+        0.875,
+        6069.8
+      ],
+      [
+        0.90625,
+        6325.5
+      ],
+      [
+        0.9375,
+        6563.5
+      ],
+      [
+        0.96875,
+        6787.2
       ],
       [
         1.0,
-        6700.0
+        7000.0
       ]
     ]
   },
@@ -132,10 +204,11 @@
   "_ok_seridi": "moist_crit_soft 0.0 (motor varsayilani). ONCE 0.10 idi: 43-49N 6-22Dde 659 hucrelik, cevresiyle uyumsuz bir Dwa \"oku\" olusuyordu ve bu onu kapatiyordu. Arazi o gunden beri degisti; OLCULDU, soft 0 ile ok GERI GELMIYOR (ok icinde Dwa %61, hemen cevresinde %43 — uyumsuzluk esigi 25 puan). Karsiliginda 30-45N seritliligi %49 -> %41. blocking_spread_km 1200 kaldi: 800 ve 400 denendi, seritligi hic degistirmedi (%50 ve %43 ama 15-30N kusagini kotulestirdi).",
   "_savan": "global_mean_sealevel_temp_c 20 -> 14.0 ve axial_tilt_deg 23.44 -> 28 derece. SECIM. Istek: 'savan oranini azaltalim', yerine ILIMAN kusak, hedef ~%9 (dunyanin sahibi sordugumda boyle secti; daha once 'sorun yagis, sicaklik degil' demisti, bu sefer bilerek sicaklik yolu secildi). OLCUM: savan hucrelerinde en soguk ay medyani 22.3 C, C sinifi icin <18 gerekir — yani ~4.3 C sogutma savanin yarisini cevirir. SOGUTMA TEK BASINA (0.5 der, Aw/A/C/E/yasanmaz): 20 C 19.0/26.5/29.8/4.4/6.4; 18.5 17.0/21.9/31.2/5.9/7.7; 17.5 15.4/18.8/32.5/7.0/8.6; 16.5 13.9/16.3/33.6/8.2/9.5. Savanin kaybi ILIMANA DEGIL buyuk olcude TUNDRAYA gidiyordu (A -10.2 iken C +3.8, E +3.8). EGIKLIK TEK BASINA yanlis kol: 20 C'de egik 28/32/36 -> Aw 19.2/16.3/11.7 ama C sabit ~29 ve plato colu 15.3/30.9/34.4 — savani ilimana degil KURAGA ceviriyor. ISLEYEN BILESIM: sogutma + egiklik 28. Egiklik yazlari isittigi icin sogutmanin tundra bedelini oduyor (18.5 C'de tundra tek basina 5.9, egik 28 ile 3.4). Olculen (egik 28): 16.5 C Aw 12.6 E 4.9; 15.0 Aw 10.6 E 6.3; 13.5 Aw 7.9 E 8.5. 14.0 secildi. NIHAI (0.26 der): Aw %9.5 (hedef ~9), A %10.1, C %32.1, E %7.9, yasanmaz %9.5, col %1.6, bozkir %28.5, Cs %21.4 (mavi cizgiler arasinda %37.3), plato bozkir %72.4 col %10.7, kara yagisi 727 mm. BEDELLER: (1) Gezegen Dunya'dan soguk — kara ortalamasi 9.3 C, deniz seviyesi ort 14 C (Dunya dosyasi 17.5). (2) Yagis artik Dunya'nin ALTINDA: 727 vs 753 (oran 0.97; motorun kendi islak sapmasi duzeltilince 0.70). Daha once 'yagis cok abarti' diye 1953'ten indirmistik, simdi ters yone gecildi. (3) SOL UST BOLGE COK DAHA SOGUK: Ocak -6.0 -> -13.3 C. Dunyanin sahibi orayi zaten alcaltacak (bkz _bekleyen), alcalinca isinacak. (4) Gercek col neredeyse yok (%1.6).",
   "_kapali_havza": "50-53K, -12..-8 boylamda deniz seviyesinin ALTINDA 62 hucrelik kapali bir havza var, dibi -1131 m. Hata degil: land_mask'in 'en buyuk su kutlesi' kurali okyanusa bagli olmayan bir cukuru dogru sekilde KARA sayar (Hazar gibi). Onceki arazide de vardi (61 hucre, -1017 m). _denetim.py'nin eski kontrolu 'deniz seviyesi altinda kara yok' diyordu ve bunu hata sayiyordu; kontrol OKYANUSA KOMSU kara hucresine bakacak sekilde degistirildi — asil hata odur, downsample'in kiyi hucresini deniz tabaniyla ortalamasi demektir. Olculdu: 2395 kiyi hucresinin en dusugu 0 m, yani o hata yok.",
-  "_elev_curve": "Yukseklik eslemesi NICELIK ESLEMESIYLE kurulur: karanin alan agirlikli deger orani dagilimi, gercek Dunya'nin buzsuz kara hipsometrisine (ETOPO'dan OLCULDU: medyan 377 m, 2000 m ustu %5.7) oturtulur. f = Q(F(v)). Cizimin kendi bicimi korunur, yalnizca olcek gercege oturur. SONUC: medyan 378/377, 500 m ustu %39.6/%39.4, 1000 m %20.1/%20.0, 2000 m %5.8/%5.7, 3000 m %3.1/%3.1. ONCEKI YONTEM BIRAKILDI: capalar yedi bolgenin enlem/boylam KUTUSUNDAN aliniyordu. Kutu bolgeyi tarif etmiyor (olculdu: guneybati yaylasi kutuyla 0.54 M km2, gercek sirt siniriyla 2.02 M km2) ve arazi her degistiginde elle tasinmak zorundaydi. Capalar kumulatifte esit araliklı OLAMAZ: 14 esit capayla ust kuyruk tek dogru parcasina dusuyor ve p99 3435 m cikiyordu (gercek 4716). Bkz docs/08 ve _egri_kur.py.",
+  "_elev_curve": "Yukseklik eslemesi DUNYANIN SAHIBININ CAPALARIYLA kurulur (onceki yontem: gri ton dagilimini gercek Dunya hipsometrisine nicelik eslemesiyle zorlamak). SIKAYET: 'dunya benim yaptigimdan alcak — 300 dedigim 130, 800 dedigim 350, bozkir platosu 800-1000 olmaliydi 300-400 giriyor'. TESHIS: pismis tuval ile sahibin PNG'si ayni gri olcegi kullaniyor (korelasyon 0.93, egim 0.98); alcakligin sebebi YALNIZ egri: Dunya hipsometrisine zorlamak, Dunya'dan daha yuksek tasarlanmis bir kitayi sikistiriyordu. CAPALAR (kaynak kesri s = (gri-kiyi)/(65535-kiyi), kiyi ~12000): ova duz cekirdegi (24-31K 8-32D, p25/p50) 0.211->250 m, 0.251->300 m; plato canagi ici (ROI, 25 px iceriden, p10/p75) 0.354->800 m, 0.406->1000 m; Buyuk Duvar zirveleri (30-40K -5..44D, p99.9) 0.839->6000 m; en yuksek nokta (57.1K 28.8D) 0.968->7000 m. Aralar PCHIP (monoton, yumusak) — sahibi 'yumusak egri' secti; duz cizgi 2000 m ustunu %26'ya cikariyordu, PCHIP %20. SONUC HIPSOMETRI (alan agirlikli, >500/>1000/>2000/>3000 m, medyan): Dunya 39.4/20.0/5.7/3.1/377; eski egri 39.9/20.2/5.8/3.1/395; YENI 69/46/20/7.1/951. Yani kita BILEREK Dunya'dan yuksek — kurgu fizikten once gelir. BEDEL: kara ortalamasi ~3 C soguk (5.2 K/km); savan/Akdeniz/muson ayarlari eski alcak araziyle yapilmisti, kayabilir. SIRA KURALI geregi nem dugmeleri egriden SONRA yeniden olculur.",
   "_params_notu": "Nem dugmeleri BAYAT EGRIYLE ayarlanmisti ve dunyayi kurak tutuyordu (convective_c 0.12 = Dunya kalibrasyonunun %29u, blocking_dz_m 3600 = 4x zayif engelleme). Hipsometri artik Dunyaya oturdugundan (medyan 378 m / 377 m) varsayilanlar dogru baslangic oldu. 1 derecede olculdu, kurak (B) pay: kisilmis %42.4, motor varsayilani %8.1, yari yol %19.9. Yari yol secildi: ic havzada bozkir cekirdegi kaliyor, cevresi cesitleniyor.",
   "_muson": "monsoon_k_hpa_per_k 1.3 (motor varsayilani 1.3). SECIM, kural degisikligi. Istek: 3 numara Ganj/Cin ovasi gibi devasa ve verimli olacak. Muson kapaliyken orasi Csa %64 idi (Akdeniz), 2.0 ile Ganj sinifi %71. Once 2.0 secilmisti; SERITLILIK olcumu onu duzeltti — 2.0 30-45N baskinligini 4 puan artiriyor (%37 -> %41), 1.3te seritlilik muson hic yokmus gibi kaliyor. 1.3te |dP|max ~20 hPa, gercek Dunyanin en guclu muson alcagi 23.68 hPa: yani ALTINDA, fizik sinirlari icinde. Bedel: 3 numaranin Ganj sinifi payi %71 yerine %61. Gerekce: 15 saatlik gun Hadley hucresini 18.8 dereceye daraltiyor ve gezegende tek super kita var. monsoon_max_hpa 45 bir EMNIYET SINIRI, ayar dugmesi degil: gozlenen en buyuk anomali ~31 hPa oldugu icin BAGLAMIYOR (baglarsa sanity doyma kontrolu duser). OLCULEN YAN ETKI ve neden kacinilmaz oldugu: muson alcagi GUNEY OVASININ degil IC HAVZANIN ustunde oturuyor (aylik anomali salinimi ic havza 56 hPa, guney ovasi 17 hPa) cunku ic havza gezegenin kiyidan en uzak yeri (1912 km) ve kara-deniz karsitligi orada en buyuk. Bu yuzden muson ic havzayi da isliyor: 290 -> 448 mm, BSk %94 -> Dwa %56 / BSk %44. Duvarin gecirgenligi DEGIL: blocking_dz_m 900/1200/1800 denendi, ic havzayi 2 puan oynatti. Dwa (kisi kuru sicak yazli karasal) Ic Mogolistan/Mancurya karsiligi, yani dunyanin sahibinin istedigi \"biraz daha yesil bozkir\" ile uyumlu.",
   "_seritlilik": "SIKAYET: bazi yerlerde iklim seritleri cok keskin bolunuyor. OLCUM (her enlem satirindaki karanin yuzde kaci TEK sinifta; Beck rasteriyle ayni yontem): 0-15N %54/%49, 15-30N %52/%58, 30-45N %49/%28, 45-60N %39/%40. Yani sorun TEK kusakta: 30-45N. SEBEP Koppen ikinci harfi: o kusakta C+D hucrelerinin %78ine motor \"w\" (kuru kis) diyor, gercek Dunyada %20 ve orada baskin harf \"f\". Hepsi ayni harfi alinca hepsi ayni sinifa dusuyor. Bu CLAUDE.mdde yazili motor sinirlamasi (kuresel: model %79.6 w, Beck %18.5; aylik yagis genligi 163.8 mm / gozlenen 80.9). ARAZININ SUCU DEGIL: 30-45Nde boylam boyunca yukseklik std 994 m, gercek Dunyada 1245 m (%80). SEVK COZUNURLUGUNDE (0.26) OLCULEN SONUC: 0-15N %54->%50, 15-30N %52->%55, 30-45N %49->%43, 45-60N %39->%44 (Dunya 49/58/28/40). Dort kusagin ucu yaklasti, 45-60N 4 puan uzaklasti. 1 derecede tahmin edilen kazancin YARISI: kaba izgarada 30-45N %37e iniyordu. CLAUDE.mdnin yazdigi tuzak — engelleme cozunurluge bagli, ayar sevk cozunurlugunde yapilmali. 1 DERECELIK AYRISMA (baskinlik / w payi): muson 2.0 + soft 0.1 = %49/%78; soft 0 = %41/%71; muson 1.3 + soft 0 = %37/%69; muson 0 + soft 0 = %37/%40; Dunya %28/%20. Yani soft 8 puan, muson 2.0->1.3 4 puan, kalan 9 puan motorun kendi siniri — yeni bir kuru-mevsim terimi ister, parametre degil (docs/06).",
   "_isaretli_bolge_m": 793,
-  "_isaretli_bolge": "_bolge.py POLI ile isaretlenen bozkir poligonunun 0.26 gridindeki ORTALAMA yuksekligi, metre. Denetim bunu olcup dosyadakiyle karsilastirir; arazi ya da elev_curve degisip bu not guncellenmezse duser. Onceki deger 1613 m idi ve gamma=2 doneminden kalmaydi — egri hipsometriye oturtulunca 793 m oldu. NOT: bu poligon, yapisal olarak tanimlanan \"ic havza\"dan (kiyiya en uzak alcak bagli govde, 1.64 M km2, ortalama 396 m) DAHA GENIS ve daha yuksek; ikisini karistirma."
+  "_isaretli_bolge": "_bolge.py POLI ile isaretlenen bozkir poligonunun 0.26 gridindeki ORTALAMA yuksekligi, metre. Denetim bunu olcup dosyadakiyle karsilastirir; arazi ya da elev_curve degisip bu not guncellenmezse duser. Onceki deger 1613 m idi ve gamma=2 doneminden kalmaydi — egri hipsometriye oturtulunca 793 m oldu. NOT: bu poligon, yapisal olarak tanimlanan \"ic havza\"dan (kiyiya en uzak alcak bagli govde, 1.64 M km2, ortalama 396 m) DAHA GENIS ve daha yuksek; ikisini karistirma.",
+  "_heightmap_kaynak": "Tuvaldeki KARA piksellerinin degeri artik sahibinin kendi 16 bit PNG ciktisindan (4096x1976, cizim 1423x1423 kare, okyanus 3598, dis dolgu 11308) geliyor; .glb kaynakli tuval CERCEVE olarak korundu. Yontem: kara maskelerinin IoU'su en buyuk olacak sekilde izotropik olcek+kayma ile kayit (kiyi esigi 12000, olcek 0.754/0.754, kayma x 1511.9 y 162.7 tuval pikseli, IoU 0.991). Yalniz eski tuvalde deniz ustu olan pikseller degisti; okyanus, batimetri ve kapali havza (deniz alti kara) pikselleri AYNEN kaldi -> kara maskesi, ROI, akintilar, KARA_MERKEZ_LON gecerli. Kiyida kaynagin okyanus dedigi 2833/454364 tuval-kara pikseli deniz seviyesinin 1 gri ustune kondu. Neden: .glb meshi 821x821 koseliydi, PNG 1423x1423; ince detay 1 px olcekte %58, 2 px'te %29 fazla, belirgin zirve 1377 -> 1483. SENKRON: bu degisiklik asil projede (Proje 3) YOK; kalici olacaksa oraya tasinmali (_senkron_kontrol.py farki gosterir)."
 }
