@@ -103,26 +103,39 @@ function baslat(J){
   // "Basit" mod ayrica her alan icin esit-nufuslu SINIF_SAYI basamaga
   // sinifliyor (gercek dunya yagis haritalari gibi düz bantlar): genel
   // profili tek bakista okumak icin, ince mekansal dokuyu gormek icin degil.
+  //
+  // Ayni buyuklugun katmanlari ORTAK bir olcek paylasir: yillik, Ocak ve
+  // Temmuz sicakligi tek bir aralikta; Ocak ve Temmuz yagisi tek bir aralikta.
+  // Her katman kendi dagilimina gore esitlendiginde Temmuz'un 20 °C'si ile
+  // Ocak'in 20 °C'si farkli renk aliyordu ve Temmuz'un dar araligi (karanin
+  // yarisi 16.6-23.9 °C) 2-3 derecelik farklari maviden kirmiziya sicratiyordu.
+  // Yillik yagis mm/yil, aylik yagis mm/ay — ayni aralikta olamaz, kendi
+  // olcegini tutar. Yukseklik de oyle.
   const SINIF_SAYI = 6;
-  function esitlePipelini(f){
-    const say = new Float64Array(256);
-    for(let i=0;i<N;i++) if(LAND[i]) say[f.a[i]]++;
-    let tot=0; for(let b=1;b<256;b++) tot+=say[b];
-    const q = new Float32Array(256), basit = new Float32Array(256);
-    let cum=0;
-    for(let b=1;b<256;b++){
-      q[b] = tot ? (cum+say[b]/2)/tot : (b-1)/254;
-      cum += say[b];
-      const sinif = Math.min(SINIF_SAYI-1, Math.floor(q[b]*SINIF_SAYI));
-      basit[b] = sinif/(SINIF_SAYI-1);
+  const GRUPLAR = [["temp_yil","temp_jan","temp_jul"], ["prec_jan","prec_jul"]];
+  function esitleGrup(anahtarlar){
+    // grubun butun kara degerleri tek havuzda (fiziksel birimde)
+    const havuz = [];
+    for(const k of anahtarlar){ const f=F[k];
+      for(let i=0;i<N;i++) if(LAND[i]) havuz.push(val(f,i)); }
+    const s = Float64Array.from(havuz).sort(), n = s.length;
+    const altSinir = x => { let a=0,b=n; while(a<b){ const m=(a+b)>>1; if(s[m]<x) a=m+1; else b=m; } return a; };
+    const ustSinir = x => { let a=0,b=n; while(a<b){ const m=(a+b)>>1; if(s[m]<=x) a=m+1; else b=m; } return a; };
+    let lo=Infinity, hi=-Infinity;
+    for(const k of anahtarlar){ lo=Math.min(lo,F[k].lo); hi=Math.max(hi,F[k].hi); }
+    for(const k of anahtarlar){ const f=F[k];
+      const q = new Float32Array(256), basit = new Float32Array(256);
+      for(let b=1;b<256;b++){
+        const x = f.lo + (b-1)/254*(f.hi-f.lo);
+        q[b] = n ? (altSinir(x)+ustSinir(x))/2/n : (b-1)/254;   // havuzdaki orta sira
+        basit[b] = Math.min(SINIF_SAYI-1, Math.floor(q[b]*SINIF_SAYI))/(SINIF_SAYI-1);
+      }
+      f.q=q; f.basit=basit; f.olcekLo=lo; f.olcekHi=hi;
     }
-    return {q, basit};
   }
-  for(const k of Object.keys(F)){
-    const {q, basit} = esitlePipelini(F[k]);
-    F[k].basit = basit;
-    F[k].q = q;
-  }
+  const gruplu = new Set();
+  for(const g of GRUPLAR){ const var_ = g.filter(k=>F[k]); if(var_.length){ esitleGrup(var_); var_.forEach(k=>gruplu.add(k)); } }
+  for(const k of Object.keys(F)) if(!gruplu.has(k)) esitleGrup([k]);
 
   const LAYERS = [
     {id:"koppen",   label:"Köppen sınıfı",    chip:"İklim",        kind:"class"},
@@ -353,7 +366,7 @@ function baslat(J){
     for(const b of $("#layers").children) b.setAttribute("aria-pressed", b.dataset.l===id);
     const sinif=L.kind==="class"; $("#rampbox").hidden=sinif;
     if(!sinif){ const f=F[id]; $("#ramp").style.background=cssRamp(RAMPS[L.kind]);
-      $("#lo").textContent=fmt(f.lo,L.unit); $("#hi").textContent=fmt(f.hi,L.unit); }
+      $("#lo").textContent=fmt(f.olcekLo,L.unit); $("#hi").textContent=fmt(f.olcekHi,L.unit); }
     paint(); apply(); hucre();
   }
   $("#layers").innerHTML = LAYERS.map(l=>`<button data-l="${l.id}" aria-pressed="${l.id===layerId}">${l.chip}</button>`).join("");
