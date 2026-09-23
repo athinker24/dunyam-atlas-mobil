@@ -66,6 +66,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | "dünya çok sert, yaşanabilir olsun" | kara 60°K..−7°K'ye taşındı | `_yumusatma` |
 | "en üst 60 olsun, orta olsun" | `KUZEY_KARA, GUNEY_KARA = 60, -7` | `_mk_heightmap.py` |
 | "sol üstteki bölge çok soğuk" | dünyanın sahibi araziyi kendisi alçalttı | `_bekleyen` |
+| "kış yağışı dünya genelinde çok az, kar da" | fırtına yolu terimi, `storm_c` 60 (yeni parametre) | `_firtina` |
 
 ### 2.3 Çalışma biçimi istekleri
 
@@ -308,9 +309,14 @@ buraya bak.
   olduğu için ulaşılabilecek en iyi mevsimsel oran çarpanların kendi
   oranlarının çarpımıdır. Yakınsama çekilince modelde devreye girecek başka
   bir mekanizma yok, o yüzden mevsim dışı yağış sıfıra çöküyor.
-- **Gezici siklon / jet akımı yok.** Bu dünyada Akdeniz'in kış yağışı gerçek
-  fırtına yolundan değil, basınç kuşaklarının salınımından geliyor. Bu yüzden
-  kuşak tek parça bir kıyı şeridi değil, lekeler hâlinde.
+- **Gezici siklon / jet akımı yok — yalnız bir yaklaşığı var.** `storm_c`
+  (motor/moisture.py) siklonları tek tek çözmez: kara-okyanus sıcaklık
+  karşıtlığından bir kış yağışı kuşağı kurar ve okyanus havasını termal
+  rüzgârdan türetilen üst seviye akışla, sırtlarda engellenerek taşır. Kıyı
+  ve iç deniz çevresinin kışını ıslatır; kıta içini pek ıslatamaz (40-50°K
+  kış ayı ~19 mm, Moskova 55). Varsayılan 0 = kapalı. Terim olmadan Akdeniz'in
+  kış yağışı yalnız basınç kuşaklarının salınımından gelir ve kuşak lekeler
+  hâlinde kalır. Ayrıntı ve elenen dört kol: `_firtina`.
 - **60-70° kuşağında mevsim genliği yetersiz** (en soğuk ay fazla ılık).
   `transport_seasonal_lat_deg` bunu düzeltir ama 70° üstünde aşırı büyütür;
   karası 70°'nin altında biten bir dünyada açmaya değer, büyük kutup kıtası

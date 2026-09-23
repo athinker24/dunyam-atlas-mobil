@@ -136,6 +136,32 @@ DEFAULTS = dict(
     blocking_spread_km=800.0,
  # bariyerin yukari-akis etki mesafesi
     min_wind_ms=1.5,
+    # [K] FIRTINA YOLU yagisi — gezici orta enlem siklonlari.
+    # Motorda siklon yok; kusak ve muson cekilince orta enlem kisinda yagis
+    # uretecek surec kalmiyordu (Dunyam 40-50K kis ayi 16 mm, ayni enlemde
+    # Moskova 55). Kis siklonlarini besleyen, soguk kita havasinin ilik
+    # okyanusla karsilasmasidir; terim bu KARSITLIKTAN kurulur:
+    #   P = storm_c * (f/1e-4 1/s) * max(0, T_okyanus - T_kara)/10 K
+    #           * (W_okyanus/W_ref)^conv_w_pow * S
+    # T'ler deniz seviyesine indirilmis sicakligin o enlemdeki okyanus ve kara
+    # ortalamalari; W_okyanus o enlemdeki okyanusun denge buhari. Takvim YOK:
+    # kara okyanustan sicaksa (yaz) terim kendiliginden sifirdir, yarimkureyi
+    # ve mevsim gecisini sicaklik alani belirler. f tropikte soner.
+    # S = firtina havasi kesri: okyanustan UST SEVIYE akisla (termal ruzgar)
+    # tasinir, adim basina exp(-ds/storm_reach_km) soner ve nemle ayni
+    # engellenme hesabiyla sirtlarda kesilir. Elenenler (1 derece): oklit kiyi
+    # mesafesi platoyu acik ova gibi islatti (plato bozkiri %51 -> %21, c=30);
+    # YUZEY ruzgari kisin kitadan denize estigi icin firtina havasi ic kesime
+    # giremedi (40-50K Ocak 20 -> 22 mm, c=100).
+    # ELENEN IKI SURUM (1 derece, olculdu): yerel egim + yerel W -> terim yazin
+    # buyudu; zonal Eady olcegi f*|dT/dy| -> bu dunyada egim kisin buyumuyor
+    # (35-60K farki Ocak 13.7, Temmuz 16.6 K; kara %7, ortalamayi okyanus
+    # belirliyor), terim yil boyu esit ekledi ve plato bozkirini %51 -> %5'e
+    # indirdi. 0 = KAPALI (bit-birebir eski davranis).
+    storm_c=0.0,
+    storm_smooth_km=1000.0,  # karsitligin enlem boyunca yumusatma olcegi
+    storm_reach_km=1500.0,  # firtina havasinin ruzgar boyunca e-katlama mesafesi
+    storm_spread_km=400.0,  # firtina yolunun kuzey-guney yalpalamasi (toplam yayilma)
 )
 
 SECONDS_PER_MONTH = 365.25 * 86400.0 / 12.0
@@ -432,6 +458,55 @@ def solve_month(grid: Grid, temp, sst, ocean_ref, u, v, p: dict):
         Ws = grid.smooth(W, p["eddy_smooth_km"] / grid.cell_km)
         lap = grid.ddx(grid.ddx(Ws)) + grid.ddy(grid.ddy(Ws))
         p_conv = p_conv + np.maximum(0.0, p["eddy_diff_m2s"] * lap) * SECONDS_PER_MONTH
+    storm_c = float(p.get("storm_c", 0.0))
+    if storm_c < 0 or not np.isfinite(storm_c):
+        raise ValueError(f"storm_c={storm_c} negatif olamaz")
+    if storm_c > 0:
+        # havanin uzerinden aktigi yuzeye kelepce: okyanusta elev deniz tabani
+        z = np.maximum(np.asarray(grid.elev), grid.world.sea_level_m) - grid.world.sea_level_m
+        t_ds = np.asarray(temp) + temperature_lapse(grid) * z / 1000.0
+        land = grid.land
+        n_k, n_o = land.sum(axis=1), ocean.sum(axis=1)
+        t_k = np.where(land, t_ds, 0.0).sum(axis=1) / np.maximum(n_k, 1)
+        t_o = np.where(ocean, t_ds, 0.0).sum(axis=1) / np.maximum(n_o, 1)
+        karsit = np.where((n_k > 0) & (n_o > 0), t_o - t_k, 0.0)
+        karsit = ndimage.gaussian_filter1d(karsit, p["storm_smooth_km"] / grid.cell_km, mode="nearest")
+        f = 2.0 * grid.world.omega * np.abs(np.sin(np.radians(grid.lat))) / 1.0e-4
+        w_ok = np.where(n_o > 0, np.where(ocean, w_eq32, 0.0).sum(axis=1) / np.maximum(n_o, 1),
+                        float(w_eq32[ocean].mean()))
+        kusak = f * np.maximum(karsit, 0.0) / 10.0 * np.power(w_ok / p["cwv_ref_mm"], p["conv_w_pow"])
+        # YONLENDIRME: siklonlar yuzey ruzgariyla degil ~500 hPa akisiyla
+        # tasinir. Kisin kita ustundeki yuksek basinc SIGDIR; yuzeyde ruzgari
+        # denize cevirir ama ustteki bati akisini degistirmez. Ust akis termal
+        # ruzgardan TURETILIR (basinc koordinatinda, g gerektirmez):
+        #   u_500 = <u_yuzey> - (R/f) ln(1000/500) dT/dy
+        # <.> zonal ortalama, T deniz seviyesine indirilmis. f ekvatora yakin
+        # sifira gittigi icin |f| 10 derecedeki degerle tabanlanir (termal
+        # ruzgar orada tanimsiz; kusak zaten f ile sondugu icin etkisiz).
+        t_z = ndimage.gaussian_filter1d(t_ds.mean(axis=1), p["storm_smooth_km"] / grid.cell_km, mode="nearest")
+        dtdy = -np.gradient(t_z) / grid.dy_m                  # lat kuzeyden guneye azalir
+        om2 = 2.0 * grid.world.omega
+        f_s = np.sin(np.radians(grid.lat)) * om2 * grid.world.rotation_sign
+        f_s = np.where(f_s >= 0, 1.0, -1.0) * np.maximum(np.abs(f_s), om2 * math.sin(math.radians(10.0)))
+        u_ust = np.asarray(u).mean(axis=1) - 287.0 / f_s * math.log(2.0) * dtdy
+        u_st = np.broadcast_to(u_ust[:, None], grid.shape)
+        src2 = _upwind_sampler(grid, u_st, np.zeros(grid.shape), ds)
+        ornek2 = grid.sampler(src2, dtype=F)
+        dz2 = surf - grid.sample(surf, src2)
+        through2 = np.exp(-np.maximum(0.0, dz2 - p["blocking_free_dz_m"]) / p["blocking_dz_m"]).astype(F)
+        st_decay = F(math.exp(-ds / p["storm_reach_km"]))
+        S = ocean.astype(F)
+        # Siklonlar ust akisa tam paralel gitmez, kuzey-guney yalpalar. Bu
+        # olmadan zonal yonlendirme her sirtin dogusuna CETVEL GIBI yatay bir
+        # golge ciziyordu (olculdu, 1 derece). Her adimda enlem yonunde kucuk
+        # bir Gauss yayilmasi: toplam yayilma storm_reach_km yolda
+        # storm_spread_km olur (difuzyon: adim sigmasi * sqrt(adim sayisi)).
+        sig_adim = p["storm_spread_km"] * math.sqrt(ds / p["storm_reach_km"]) / (grid.dy_m / 1000.0)
+        for _ in range(_needed_iters(grid, p)):
+            S = np.where(ocean, F(1.0), ornek2(S) * through2 * st_decay)
+            if sig_adim > 0.3:
+                S = np.where(ocean, F(1.0), ndimage.gaussian_filter1d(S, sig_adim, axis=0, mode="nearest"))
+        p_conv = p_conv + storm_c * kusak[:, None] * S
     if p["conv_tau_min_days"] > 0:
         p_max = W * SECONDS_PER_MONTH / (p["conv_tau_min_days"] * 86400.0)
         p_conv = np.minimum(p_conv, p_max)
