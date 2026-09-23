@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Dunyam Atlasi — veri ureticisi. Bu repo TEK BASINA yeterlidir.
 
-    python uret.py                 # 0.25 derece (yaklasik 20-30 dk)
+    python uret.py                 # 0.25 derece (olculdu ~13-15 dk, 4 cekirdek)
     python uret.py --res 1.0       # kaba ve hizli deneme (~1 dk)
     python uret.py --ozet          # bitince sinif paylarini da yazar
 
@@ -22,6 +22,7 @@ import hashlib
 import json
 import os
 import sys
+import tempfile
 import time
 
 import numpy as np
@@ -93,13 +94,18 @@ def dunya_yukle():
     diye); icindeki 'worlds/...' ve 'worldinfo/...' yollari burada bellekte
     duzeltilip gecici bir dosyaya yaziliyor, sonra siliniyor.
     """
-    ham = json.load(open(os.path.join(DUNYA, "dunyam.json"), encoding="utf-8"))
+    with open(os.path.join(DUNYA, "dunyam.json"), encoding="utf-8") as fh:
+        ham = json.load(fh)
     ham["currents_file"] = os.path.join(DUNYA, "dunyam.currents.json")
     ham["heightmap"] = dict(ham["heightmap"])
     ham["heightmap"]["file"] = os.path.join(DUNYA, "dunyam_heightmap.png")
-    gecici = os.path.join(BURASI, ".dunya_gecici.json")
-    json.dump(ham, open(gecici, "w", encoding="utf-8"), ensure_ascii=False)
+    # Her koşu KENDİ geçici dosyasını alır: sabit bir ad (.dunya_gecici.json)
+    # aynı anda koşan iki üreticide birinin dosyasını ötekine sildiriyordu
+    # (FileNotFoundError, ölçüldü).
+    fd, gecici = tempfile.mkstemp(prefix="dunya_", suffix=".json")
     try:
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            json.dump(ham, fh, ensure_ascii=False)
         return G.World.load(gecici)
     finally:
         os.remove(gecici)
@@ -120,8 +126,18 @@ def grid_kur(w, res):
     )
 
 
-def kodla(a, lo, hi):
-    q = np.clip(np.round((np.nan_to_num(a, nan=lo) - lo) / max(hi - lo, 1e-9) * 254) + 1, 1, 255)
+def kodla(a, lo, hi, olcek="lin"):
+    """1..255 bayta kodlar; uygulama val() ile ayni formulle geri acar.
+
+    olcek="kok": x = ((v-lo)/(hi-lo))**0.5 kodlanir, acarken karesi alinir.
+    Yagista kullanilir: aralik 0..7000 mm'ye uzaninca dogrusal bir basamak
+    28 mm olur ve kurak hucreler birbirinden ayrilamaz; kok olcekte dusuk
+    ucta basamak ~0.1 mm, yuksek ucta ~55 mm.
+    """
+    x = np.clip((np.nan_to_num(a, nan=lo) - lo) / max(hi - lo, 1e-9), 0.0, 1.0)
+    if olcek == "kok":
+        x = np.sqrt(x)
+    q = np.clip(np.round(x * 254) + 1, 1, 255)
     return base64.b64encode(q.astype(np.uint8).tobytes()).decode()
 
 
@@ -172,7 +188,8 @@ def kunye(w, g, yillik_yagis):
         ["yıl", "%.0f gün" % w.year_length_days],
         ["kara payı", "%%%.1f" % (100 * alan[kara].sum() / alan.sum())],
         ["kara kuşağı", "%s – %s" % (yon(lat.max()), yon(lat.min()))],
-        ["en yüksek nokta", "%.0f m" % w.heightmap["max_elev_m"]],
+        ["en yüksek nokta", "%.0f m (hücre ortalamasında %.0f m)"
+         % (w.heightmap["max_elev_m"], float(g.elev[kara].max()))],
         ["kara yağışı", "%.0f mm/yıl" % agir],
     ]
 
@@ -232,22 +249,31 @@ def main():
 
     land = g.land
     alanlar = {}
+    # TAM kara araligi kodlanir. Onceden %1-%99 yuzdelikleri kullaniliyordu ve
+    # karanin ~%2'si sinira kirpiliyordu: hucre karti Temmuz'un en soguk
+    # hucresini -24.7 yerine -3.1 C, en yagisli hucreyi 2221 yerine 758 mm
+    # gosteriyordu (olculdu). Renk dagilimi uygulamada yuzdelik esitlemeyle
+    # kuruldugu icin uc degerler rengi bozmaz.
     for ad, mo in (("temp_jan", T[0]), ("temp_jul", T[6]), ("prec_jan", P[0]),
                    ("prec_jul", P[6]), ("temp_yil", T.mean(0)), ("prec_yil", P.sum(0))):
         v = mo[land]
-        lo, hi = float(np.percentile(v, 1)), float(np.percentile(v, 99))
-        alanlar[ad] = {"lo": round(lo, 1), "hi": round(hi, 1),
-                       "model": kodla(mo, lo, hi), "obs": None}
+        lo, hi = float(np.floor(v.min() * 10) / 10), float(np.ceil(v.max() * 10) / 10)
+        olcek = "kok" if ad.startswith("prec") else "lin"
+        alanlar[ad] = {"lo": lo, "hi": hi, "olcek": olcek,
+                       "model": kodla(mo, lo, hi, olcek), "obs": None}
     alanlar["koppen"] = {"model": base64.b64encode(K.astype(np.uint8).tobytes()).decode(),
                          "obs": None}
+    # Alt sinir karanin EN DUSUK noktasi: kapali havza deniz seviyesinin
+    # altinda (-673 m); 0'dan kodlanirken hucre kartinda 0 m gorunuyordu.
     e = g.elev.copy()
     e[~land] = np.nan
     ust = float(np.nanmax(e)) if np.isfinite(e).any() else 1.0
+    alt = min(0.0, float(np.floor(np.nanmin(e)))) if np.isfinite(e).any() else 0.0
     bolge = {
         "title": "global", "why": w.name, "w": g.shape[1], "h": g.shape[0],
         "bounds": [round(x, 3) for x in g.bounds],
         "land": base64.b64encode(np.packbits(land).tobytes()).decode(),
-        "elev": {"lo": 0.0, "hi": ust, "data": kodla(np.nan_to_num(e, nan=0.0), 0.0, ust)},
+        "elev": {"lo": alt, "hi": ust, "data": kodla(np.nan_to_num(e, nan=alt), alt, ust)},
         "fields": alanlar, "stats": None,
         "sanity": [{"ad": ad, "gecti": bool(ok), "aciklama": d} for ad, ok, d in rapor],
     }

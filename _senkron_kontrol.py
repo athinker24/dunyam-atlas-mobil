@@ -33,16 +33,21 @@ def main(proje):
         r = os.path.join(burasi, repo_yol)
         p = os.path.join(proje, proje_yol)
         if os.path.isdir(r):
+            def uyar(ad):
+                return (not uzanti or ad.endswith(uzanti)) and not (haric and ad in haric)
             for ad in sorted(os.listdir(r)):
-                if uzanti and not ad.endswith(uzanti):
-                    continue
-                if haric and ad in haric:
+                if not uyar(ad):
                     continue
                 pr, pp = os.path.join(r, ad), os.path.join(p, ad)
                 if not os.path.exists(pp):
                     fark.append("%s/%s projede yok" % (repo_yol, ad))
                 elif ozet(pr) != ozet(pp):
                     fark.append("%s/%s FARKLI" % (repo_yol, ad))
+            # ters yon: projeye eklenmis ama repoya kopyalanmamis dosya
+            if os.path.isdir(p):
+                for ad in sorted(os.listdir(p)):
+                    if uyar(ad) and not os.path.exists(os.path.join(r, ad)):
+                        fark.append("%s/%s repoda yok" % (repo_yol, ad))
         else:
             if not os.path.exists(p):
                 fark.append("%s projede yok" % proje_yol)

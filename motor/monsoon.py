@@ -13,7 +13,6 @@ yuzden ruzgari basinc gradyanindan turetecek sekilde yazilmisti.
 from __future__ import annotations
 
 import numpy as np
-from scipy import ndimage
 
 from .grid import Grid, World
 

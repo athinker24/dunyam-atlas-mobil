@@ -285,13 +285,23 @@ def land_mask(elev: np.ndarray, sea_level: float, wraps: bool = False) -> np.nda
 
     if wraps:
         # ndimage.label dikis yerini bilmez: diziyi iki kez yan yana koyup
-        # etiketleriz, dikisten gecen kutleler tek bilesen olur.
+        # etiketleriz. Ayni fiziksel hucrenin iki kopyasi (j ve j+nx) farkli
+        # etiket alabilir — dikisten gecen bir kutlenin bati parcasi ilk
+        # kopyada, dogu parcasi ikinci kopyada birlesir. Iki kopyanin
+        # etiketleri esdeger sayilip birlestirilir; yalniz ilk yariya bakmak
+        # dikisten gecen kutleyi iki parca sayiyor ve boyutunu bolüyordu.
+        from scipy.sparse import coo_matrix
+        from scipy.sparse.csgraph import connected_components
         nx = below.shape[1]
         lbl2, n = ndimage.label(np.concatenate([below, below], axis=1))
-        lbl = lbl2[:, :nx]
         if n == 0:
             return np.ones(elev.shape, dtype=bool)
-        sizes = np.bincount(lbl.ravel(), minlength=n + 1)
+        a, b = lbl2[:, :nx].ravel(), lbl2[:, nx:].ravel()
+        m = (a > 0) & (b > 0)
+        graf = coo_matrix((np.ones(m.sum()), (a[m], b[m])), shape=(n + 1, n + 1))
+        _, esit = connected_components(graf, directed=False)
+        lbl = np.where(lbl2[:, :nx] > 0, esit[lbl2[:, :nx]] + 1, 0)
+        sizes = np.bincount(lbl.ravel())
         sizes[0] = 0
         ocean_ids = np.flatnonzero(sizes >= OCEAN_SIZE_FRAC * sizes.max())
     else:
@@ -607,8 +617,20 @@ def from_heightmap(
     if ny == 0 or nx == 0:
         raise ValueError(f"goruntu cok kucuk: {data.shape} / blok {block}")
 
+    # Kaynak blok boyuna tam bolunmuyorsa artan satir/sutunlar ATILMAZ, kaynak
+    # en yakin komsu indeksle ny x nx'e esit aralikla yeniden orneklenir.
+    # Onceden sondaki satirlar atiliyor ama hucre enlemleri yine tam araliga
+    # yayiliyordu: 2048 satirin 2046'si kullanilip 180 dereceye gerildiginden
+    # hucreler guneye dogru kayiyordu (en guneyde 0.18 derece, olculdu).
+    # Simdi her kaynak pikselin konum hatasi en fazla yarim piksel. Tam
+    # bolunen kaynakta (Dunya dogrulamasi) hicbir sey degismez.
+    if ny != ny_src or nx != nx_src:
+        ri = np.minimum(((np.arange(ny) + 0.5) * ny_src / ny).astype(int), ny_src - 1)
+        ci = np.minimum(((np.arange(nx) + 0.5) * nx_src / nx).astype(int), nx_src - 1)
+        elev = elev[ri][:, ci]
+
     wraps = abs(span_x - 360.0) < 1e-6
-    ev, relief, land = downsample(elev[:ny, :nx], block, world.sea_level_m, wraps)
+    ev, relief, land = downsample(elev, block, world.sea_level_m, wraps)
 
     dlat, dlon = span_y / (ny // block), span_x / (nx // block)
     lat = n - (np.arange(ny // block) + 0.5) * dlat

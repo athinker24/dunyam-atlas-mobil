@@ -62,7 +62,7 @@ bağımlı değildir; `numpy`, `scipy`, `pillow` yeter.
 ```bash
 pip install -r requirements.txt
 python uret.py --res 1.0 --ozet     # kaba deneme, ~1 dk
-python uret.py --ozet               # gerçek çözünürlük, ~20-30 dk
+python uret.py --ozet               # gerçek çözünürlük, ~13-15 dk
 ```
 
 `uret.py` dünyayı `dunya/` klasöründen okur, iklim motorunu (`motor/`) koşar,

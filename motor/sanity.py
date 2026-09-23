@@ -60,7 +60,9 @@ def check(grid: Grid, r: dict) -> list:
     # (Ocak %13.2, Temmuz %13.2); sentetik gezegende hedef +17.5 -> %15.4,
     # +5 -> %31.5, 0 -> %41.7, -10 -> %60.0. Esik %35, Dunya'ya 3 kat pay.
     ice = world.params.get("sea_ice_temp", -1.8)
-    donmus = float((np.abs(sst - ice) < 0.01).mean())
+    # Yalniz OKYANUS hucreleri: sst dizisi kara hucrelerinde de dolu (zonal
+    # profil) ve onceden onlar da sayiliyordu.
+    donmus = float((np.abs(sst[:, ocean] - ice) < 0.01).mean())
     add("okyanus buyuk olcude donmus degil", donmus < 0.35,
         f"okyanus-aylarin %{100 * donmus:.0f}'i donma noktasinda ({ice} C); "
         "buz yuzeyi ve buz-albedo modelde yok")
@@ -85,7 +87,7 @@ def check(grid: Grid, r: dict) -> list:
         # ortalama asagi cekilemez. Olculdu — taban devre disi birakilinca
         # (sea_ice_temp: -60) hedef -25 C'de bile 0.05 C icinde tutuluyor;
         # tabanla birlikte ulasilan deger -2.9 C'de tikaniyor.
-        tabanda = float((np.abs(sst - ice) < 0.01).mean())
+        tabanda = float((np.abs(sst[:, ocean] - ice) < 0.01).mean())
         nicin = (f"; okyanus-aylarin %{100 * tabanda:.0f}'i donma noktasinda "
                  "(buz yuzeyi modellenmiyor)") if tabanda > 0.25 else ""
         add("kuresel ortalama sicaklik hedefte", abs(gm - hedef) < 3.0,

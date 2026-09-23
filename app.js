@@ -3,7 +3,8 @@
    AYNI palet, AYNI on hesaplar; yalnizca etkilesim ve yerlesim telefona gore.
 
    Veri HTML'e gomulu degil, data/atlas.json'dan gelir: dunya yeniden
-   kosuldugunda _atlas.py o dosyayi yazar, uygulama koduna dokunmak gerekmez.
+   kosuldugunda uret.py (masaustunde _atlas.py) o dosyayi yazar, uygulama
+   koduna dokunmak gerekmez.
 
    KPAL ve KREF bloklari masaustu sablonla BIREBIR ayni olmali. _atlas.py
    ikisini karsilastirir ve farkliysa durur — iki kopya sessizce ayrismasin. */
@@ -88,9 +89,12 @@ function baslat(J){
   const N = R.w*R.h, B = R.bounds;
   const LAND = unpackBits(b64(R.land), N);
   const F = {};
-  for(const [k,v] of Object.entries(R.fields)) F[k] = {lo:v.lo, hi:v.hi, a:b64(v.model)};
+  for(const [k,v] of Object.entries(R.fields)) F[k] = {lo:v.lo, hi:v.hi, kok:v.olcek==="kok", a:b64(v.model)};
   F.elev = {lo:R.elev.lo, hi:R.elev.hi, a:b64(R.elev.data)};
-  const val = (f,i) => f.lo + (f.a[i]-1)/254*(f.hi-f.lo);
+  // olcek "kok": uret.py karekok olcekte kodlar (yagis), burada karesi alinir.
+  // Alan yoksa (eski veri) dogrusal.
+  const bayt = (f,b) => { const x=(b-1)/254; return f.lo + (f.kok ? x*x : x)*(f.hi-f.lo); };
+  const val = (f,i) => bayt(f, f.a[i]);
 
   // Yagis, yukseklik VE sicaklik kara uzerinde carpik dagiliyor (yagis/
   // yukseklikte cogu hucre alt yariya dusuyor; sicaklikta ise medyan ustteki
@@ -126,7 +130,7 @@ function baslat(J){
     for(const k of anahtarlar){ const f=F[k];
       const q = new Float32Array(256), basit = new Float32Array(256);
       for(let b=1;b<256;b++){
-        const x = f.lo + (b-1)/254*(f.hi-f.lo);
+        const x = bayt(f, b);
         q[b] = n ? (altSinir(x)+ustSinir(x))/2/n : (b-1)/254;   // havuzdaki orta sira
         basit[b] = Math.min(SINIF_SAYI-1, Math.floor(q[b]*SINIF_SAYI))/(SINIF_SAYI-1);
       }
@@ -313,7 +317,10 @@ function baslat(J){
     const lat=B[3]-(y+0.5)*(B[3]-B[1])/R.h, lon=B[0]+(x+0.5)*(B[2]-B[0])/R.w;
     const konum=`${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`;
     if(!LAND[i]){ peek.innerHTML=`<div class="cell-top"><i class="cell-sw" style="background:${cs("--sea-mid")}"></i><b>Okyanus</b><span class="code mono">${konum}</span></div>`; return; }
-    const k=KCODE[String(KVIEW[i])], L=LAYERS.find(l=>l.id===layerId);
+    // Kart hucrenin KENDI sinifini gosterir. Haritadaki KVIEW tek hucrelik
+    // gurultuyu komsu cogunluguna ceviren gorsel bir yumusatma; karta
+    // yansiyinca karanin ~%1.5'inde dokunulan hucre baska sinif gosteriyordu.
+    const k=KCODE[String(F.koppen.a[i])], L=LAYERS.find(l=>l.id===layerId);
     const jan=F.temp_jan?val(F.temp_jan,i):null, jul=F.temp_jul?val(F.temp_jul,i):null;
     const yaz=lat>=0?jul:jan, kis=lat>=0?jan:jul, n=[];
     if(F.temp_yil) n.push(`<span><em>${val(F.temp_yil,i).toFixed(0)}°C</em> ort</span>`);
@@ -334,11 +341,15 @@ function baslat(J){
     const c={}; let tot=0;
     for(let i=0;i<N;i++){ if(!LAND[i]) continue;
       const lat=B[3]-(((i/R.w)|0)+0.5)*(B[3]-B[1])/R.h, w_=Math.cos(lat*Math.PI/180);
-      tot+=w_; const k=KCODE[String(KVIEW[i])]; if(k) c[k]=(c[k]||0)+w_; }
-    const ks=Object.keys(c).filter(k=>c[k]/tot>0.004), aile={};
+      // paylar HAM siniftan (uret.py ozetiyle ayni), gorsel yumusatmadan degil
+      tot+=w_; const k=KCODE[String(F.koppen.a[i])]; if(k) c[k]=(c[k]||0)+w_; }
+    // %0.4'un altindaki siniflar listelenmez ama grup toplamina GIRER;
+    // onceden girmiyordu ve "Kurak" basligi col payini (BWk) disarida birakiyordu.
+    const ks=Object.keys(c).filter(k=>c[k]/tot>0.004), aile={}, grupTop={};
+    for(const k of Object.keys(c)) grupTop[k[0]]=(grupTop[k[0]]||0)+c[k];
     for(const k of ks) (aile[k[0]]=aile[k[0]]||[]).push(k);
     $("#klist").innerHTML = Object.keys(GRUP).filter(g=>aile[g]).map(g=>{
-      const pay=aile[g].reduce((a,k)=>a+c[k],0)/tot;
+      const pay=grupTop[g]/tot;
       return `<div class="kgroup"><h3>${GRUP[g]}<em>%${(100*pay).toFixed(0)}</em></h3>`
         + aile[g].sort((a,b)=>c[b]-c[a]).map(k=>
           `<button class="krow${izole===k?" on":""}" data-k="${k}">

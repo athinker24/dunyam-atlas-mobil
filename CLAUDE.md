@@ -57,11 +57,11 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 
 | istek | nasıl karşılandı | not |
 |---|---|---|
-| "yağış olayları çok abartı, her yer muson/yağmur ormanı" | `convective_c` 0.42 → 0.12, `rh_ocean` 0.80 → 0.70 | `_yagis_ayari` |
-| "gerçek ve büyük bir Akdeniz kuşağı istiyordum, hiç yok" | `k_itcz` 0.20 → 0.60, muson kapatıldı | `_akdeniz` |
+| "yağış olayları çok abartı, her yer muson/yağmur ormanı" | önce `convective_c` 0.42 → 0.12, `rh_ocean` 0.80 → 0.70; bayat eğriyle ayarlandığı anlaşılınca **şimdi 0.27 / 0.75** (yarı yol) | `_yagis_ayari`, `_params_notu` |
+| "gerçek ve büyük bir Akdeniz kuşağı istiyordum, hiç yok" | `k_itcz` 0.20 → 0.60; muson o zaman kapatıldı, sonra **yeniden açıldı** (`monsoon_k_hpa_per_k` 1.3) | `_akdeniz`, `_muson` |
 | "savan oranını azaltalım, yerine ılıman kuşak, ~%9" | deniz seviyesi sıcaklığı 20 → 14 °C, eksen eğikliği 23.44° → 28° | `_savan` |
-| "orta hattında mor ok gibi bir kuşak var" | `moist_crit_soft` 0.10 (yeni parametre), `blocking_spread_km` 1600 | `_ok_seridi` |
-| "batıdaki kama da düzelsin" | `blocking_dz_m` 900 → 3600 | `_ok_seridi` |
+| "orta hattında mor ok gibi bir kuşak var" | önce `moist_crit_soft` 0.10, `blocking_spread_km` 1600; arazi değişince ok geri gelmedi, **şimdi 0 / 1200** | `_ok_seridi` |
+| "batıdaki kama da düzelsin" | önce `blocking_dz_m` 900 → 3600; **şimdi 900** (motor varsayılanı) | `_ok_seridi`, `_yagis_ayari` |
 | "işaretli platoda at göçebesi bozkırı olsun, ortası hardcore çöl olmasın" | gün uzunluğu 15 saat | `_donus` |
 | "dünya çok sert, yaşanabilir olsun" | kara 60°K..−7°K'ye taşındı | `_yumusatma` |
 | "en üst 60 olsun, orta olsun" | `KUZEY_KARA, GUNEY_KARA = 60, -7` | `_mk_heightmap.py` |
@@ -81,7 +81,8 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
   PNG olarak karşılaştır. Bir kez sınıf tablosunda görünen kazanç haritada
   görünmedi: atlas paletinde Af/Am/Aw aynı turkuazın üç tonuydu (ton farkı
   8 derece). Karar yanlış ölçütle verilmişti.
-- **Uzun koşu sırasında boş bekleme.** 0.25 derecelik koşu ~40 dakika.
+- **Uzun koşu sırasında boş bekleme.** 0.25 derecelik koşu ~13-15 dakika
+  (4 çekirdekli bulut makinesinde ölçüldü; eski masaüstünde ~40 dk sürüyordu).
   Arka plana al, o sırada bağımsız işi yap. Çıktıyı dosyaya yönlendirdiğinde
   tamponlanır — koşu bitene kadar dosya boş görünebilir, bu normal.
 - **Yüzdeler alan ağırlıklı olacak.** Kullanıcıya gösterilen her oran.
@@ -115,7 +116,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 ```bash
 pip install -r requirements.txt
 python uret.py --res 1.0 --ozet     # kaba deneme, ~1 dk
-python uret.py --ozet               # gerçek çözünürlük (0.25), ~20-30 dk
+python uret.py --ozet               # gerçek çözünürlük (0.25), ~13-15 dk
 ```
 
 `uret.py` dünyayı `dunya/`'dan okur, motoru koşar, iç tutarlılık raporunu
@@ -150,8 +151,9 @@ işe yarayan alışkanlık bu oldu. Notla veri çelişiyorsa bu bir hatadır.
 `dunya/`, `motor/` ya da `uret.py` değişip push edilince
 `.github/workflows/veri.yml` `uret.py`'yi koşar ve değişen `data/atlas.json`'u
 commit eder. Actions sekmesinden **atlas verisi → Run workflow** ile elle de
-başlatılır (çözünürlük orada seçilir). Ölçüldü: 1365×682 hücre, 11/11
-tutarlılık, GitHub koşucusunda ~12 dk.
+başlatılır (çözünürlük orada seçilir). Ölçüldü: 1365×682 hücre, 12/12
+tutarlılık, GitHub koşucusunda ~12 dk. Koşu sırasında dala başka commit
+gelirse iş akışı push'tan önce `git pull --rebase` yapar.
 
 ---
 
@@ -288,7 +290,12 @@ Bu repoda `motor/` ya da `dunya/` içinde değişiklik yaparsan asıl proje geri
 kalır. Küçük bir düzeltme için sorun değil; kalıcı bir değişiklikse asıl
 projeye de taşı.
 
-**Şu an böyle bir ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
+**Şu an böyle bir ayrışma VAR** (motor tarafı): `motor/moisture.py` fırtına
+yolu terimi (`storm_c`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
+ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı
+yalnız bu repoda. Asıl projeye taşınmalı.
+
+**Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
 sahibin kendi PNG'sinden, kayıtla aktarıldı) ve `elev_curve` (sahibin çapaları)
 yalnız bu repoda. Asıl projede `_repo_senkron.py --yaz` koşulursa ikisini de
 eski hâline döndürür; `_egri_kur.py --yaz` koşulursa eğriyi yeniden Dünya
@@ -342,7 +349,10 @@ asıl projede şu zincir koşar:
    işaretli bölge, notlardaki bütün boylamlar sessizce yanlış olur. Betik
    `file` / `sea_level_value` / `max_depth_m` alanlarını **kendi** yazar;
    bunlar elle taşınmaz.
-2. `python _egri_kur.py --yaz` — `elev_curve`'ü kurar. Yöntem: karanın alan
+2. **ŞU AN KOŞMA** (§6, §7.6): `elev_curve` artık sahibin çapalarıyla kurulu
+   ve bu betik onu siler. Aşağıdaki yöntem eski yoldur, çapalar asıl projeye
+   taşınmadan kullanılmaz.
+   `python _egri_kur.py --yaz` — `elev_curve`'ü kurar. Yöntem: karanın alan
    ağırlıklı gri ton dağılımı, ETOPO'dan **ölçülmüş** gerçek Dünya buzsuz kara
    hipsometrisine nicelik eşlemesiyle oturtulur (`f = Q(F(v))`). Çizimin kendi
    biçimi korunur, yalnız ölçek gerçeğe oturur. Bölge kutusu yoktur ve elle
