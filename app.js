@@ -759,17 +759,19 @@ function baslat(J, resimler){
       ox = orta.x-(g0.orta.x-g0.ox)*k; oy = orta.y-(g0.orta.y-g0.oy)*k; ciz(); } });
   function birak(e){ if(!ptr.has(e.pointerId)) return; const q = ptr.get(e.pointerId); ptr.delete(e.pointerId);
     if(dokun && e.type==="pointerup" && performance.now()-dokun.t < 350){ const now = performance.now();
-      // cift dokunma yakinlastirir; tek dokunma hucreyi secer ama ikinci
-      // dokunusu beklemek icin kisa bir sure ertelenir (yoksa yakinlastirmak
-      // isteyen her cift dokunus once kart acardi)
+      // Tek dokunma hucreyi HEMEN secer (onceden ikinci dokunusu beklemek icin
+      // 290 ms ertelenirdi; kart gec geliyordu). Cift dokunma gelirse ilk
+      // dokunusun etkisi (secim, kart, kaydirma) geri alinir ve yakinlastirilir.
       if(sonDokun && now-sonDokun.t < 300 && Math.hypot(q.x-sonDokun.x, q.y-sonDokun.y) < 30){
-        clearTimeout(sonDokun.z); yakinlas(q.x, q.y, 2); sonDokun = null; }
-      else { const oxs = ox, oys = oy, os_ = olcek;
-        sonDokun = {...q, t:now, z:setTimeout(() => {
-          const x = Math.floor((q.x-oxs)/os_), y = Math.floor((q.y-oys)/os_);
-          const i = (x<0||y<0||x>=W||y>=H) ? null : y*W+x;
-          if(i===null || (!D.land[i] && katman!=="dolasim")) kartKapat();
-          else { sec = i; D.land[i] ? kartYaz() : denizKartYaz(); gorunurYap(q.y); ciz(); } }, 290)}; } }
+        const o = sonDokun.once; ox = o.ox; oy = o.oy; sec = o.sec;
+        if(sec === null) $("#kart").hidden = true; else (D.land[sec] ? kartYaz() : denizKartYaz());
+        yakinlas(q.x, q.y, 2); sonDokun = null; }
+      else {
+        sonDokun = {...q, t:now, once:{ox, oy, sec}};
+        const x = Math.floor((q.x-ox)/olcek), y = Math.floor((q.y-oy)/olcek);
+        const i = (x<0||y<0||x>=W||y>=H) ? null : y*W+x;
+        if(i===null || (!D.land[i] && katman!=="dolasim")) kartKapat();
+        else { sec = i; D.land[i] ? kartYaz() : denizKartYaz(); gorunurYap(q.y); ciz(); } } }
     dokun = null; hareketBasla(); }
   harita.addEventListener("pointerup", birak); harita.addEventListener("pointercancel", birak);
   harita.addEventListener("wheel", e => { e.preventDefault(); const q = yerel(e); yakinlas(q.x, q.y, Math.exp(-e.deltaY*0.0015)); }, {passive:false});
