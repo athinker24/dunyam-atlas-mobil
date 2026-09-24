@@ -57,6 +57,8 @@ const GRUP_RENK = {A:"#3f8c7c", B:"#c9ae7b", C:"#6e9650", D:"#5780ad", E:"#b8bec
 // Gokkusagi degil; koyu zeminde iki ucu da secilir kalir.
 const RAMPA = {
   sicaklik:["#2b3a6e","#34599a","#4c84ae","#83aec0","#c3d3cb","#e3d4a3","#e0ab67","#cf7c46","#b0503a","#852d33"],
+  // ruzgar hizi: sakin koyu mavi -> ruzgarli sicak tonlar; koyu zeminde okunur
+  ruzgar:["#28345a","#2c5f86","#2f8a93","#5aa77f","#a2b865","#d7b957","#dc8b47","#c75a44","#99405d"],
   yagis:["#5f5139","#86724a","#a3955a","#8aa86a","#5d9f79","#3f8d83","#2f7489","#2b5a86","#2d4478","#2a3163"],
 };
 // Arazi: yuzdelik degil MUTLAK metre duraklari (hipsometrik renk)
@@ -88,7 +90,8 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
   clearTimeout(bildir._z); bildir._z=setTimeout(()=>{ t.hidden=true; }, ms); }
 
 const AYAR_ANAHTAR = "dunyam-ayar";
-const ayar = Object.assign({kabartma:true, kabartmaKaynak:"editor", piksel:false, izgara:true, bant:false},
+const ayar = Object.assign({kabartma:true, kabartmaKaynak:"editor", piksel:false, izgara:true, bant:false,
+  dolZemin:"sst", parcacik:false},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 const ayarYaz = () => { try{ localStorage.setItem(AYAR_ANAHTAR, JSON.stringify(ayar)); }catch(_){} };
 
@@ -142,10 +145,41 @@ function veriHazirla(J){
   const tYil = karaDeger(tyil), pYil = karaDeger(pyil);
 
   return { J, R, W, H, N, B:R.bounds, land, kop, tyil, pyil, elev, karaSira, n, Tk, Pk, Tm, Pm, tAy, pAy, tYil, pYil,
+    dol: null, akintilar: R.akintilar || [],
     yakin, agirlik, enlem,
     havuzT: havuz([...tAy, tYil]), havuzP: havuz(pAy), havuzPY: havuz([pYil]),
     doku: R.doku, KCODE: J.data.koppen_code, KNAME: J.data.koppen_names };
 }
+
+/* Dolasim: uret.py dolasim.png'si (12 ay alt alta; R,G = ruzgar u,v; B = deniz
+   yuzeyi sicakligi) kaba bir gridde. Buradan m/s ve C olarak acilir; "yil"
+   (-1) 12 ayin ortalamasi. */
+function dolasimHazirla(D, resim){
+  const k = D.R.dolasim; if(!k || !resim) return null;
+  const cv = document.createElement("canvas"); cv.width = k.w; cv.height = k.h*12;
+  const c = cv.getContext("2d"); c.drawImage(resim, 0, 0);
+  const px = c.getImageData(0, 0, k.w, k.h*12).data, n = k.w*k.h;
+  const ay = (kanal, f) => { const o = []; for(let m=0;m<13;m++) o.push(new Float32Array(n));
+    for(let m=0;m<12;m++) for(let j=0;j<n;j++){ const v = f(px[(m*n + j)*4 + kanal]); o[m][j] = v; o[12][j] += v/12; }
+    return o; };
+  const ruz = b => (b-128)/127*k.ruzgar_ust, sic = b => k.sst_lo + (b-1)/254*(k.sst_hi-k.sst_lo);
+  const u = ay(0, ruz), v = ay(1, ruz);
+  // hiz: aylik vektorlerin buyuklugu (yillik: 12 ayin hizlarinin ortalamasi,
+  // ortalama vektorun boyu degil; zit mevsimler birbirini silmesin)
+  const hiz = []; for(let m=0;m<13;m++) hiz.push(new Float32Array(n));
+  for(let m=0;m<12;m++) for(let j=0;j<n;j++){ const h = Math.hypot(u[m][j], v[m][j]); hiz[m][j] = h; hiz[12][j] += h/12; }
+  let hizUst = 0; for(let m=0;m<12;m++) for(let j=0;j<n;j++) hizUst = Math.max(hizUst, hiz[m][j]);
+  return {...k, u, v, hiz, hizUst: Math.ceil(hizUst), sst: ay(2, sic)};
+}
+// kaba griddeki alani ince hucre koordinatinda (x, y: hucre birimi) cift dogrusal oku
+function dolOrnek(D, a, x, y){
+  const k = D.dol, f = k.blok, gx = Math.max(0, Math.min(k.w-1.001, (x+0.5)/f - 0.5)),
+        gy = Math.max(0, Math.min(k.h-1.001, (y+0.5)/f - 0.5)), x0 = gx|0, y0 = gy|0, fx = gx-x0, fy = gy-y0, i = y0*k.w + x0;
+  return (a[i]*(1-fx) + a[i+1]*fx)*(1-fy) + (a[i+k.w]*(1-fx) + a[i+k.w+1]*fx)*fy;
+}
+const PUSULA = ["kuzeyden","kuzeydoğudan","doğudan","güneydoğudan","güneyden","güneybatıdan","batıdan","kuzeybatıdan"];
+// ruzgar geldigi yonle adlandirilir: akis guneye ise "kuzeyden"
+const nereden = (u, v) => PUSULA[Math.round(((Math.atan2(-u, -v)*180/Math.PI) + 360) % 360 / 45) % 8];
 
 // yuzdelik: havuzdaki orta sira (esit degerler ortadan)
 function yuzdelik(s, x){ const n=s.length; if(!n) return 0.5;
@@ -156,6 +190,17 @@ function yuzdelik(s, x){ const n=s.length; if(!n) return 0.5;
 /* Gosterilen alan: tam grid bayt dizisi + 256'lik renk tablosu + lejant. */
 function gorunumKur(D, katman, donem, bant){
   const {N, yakin, karaSira, n} = D, a = new Uint8Array(N), lut = new Uint8Array(256*3);
+  if(katman==="dolasim"){
+    // deniz yuzeyi sicakligi; ince gride aradegerlenir, renk dogrusal
+    // zemin: deniz yuzeyi sicakligi (yalniz okyanus) ya da ruzgar hizi (her yer)
+    const k = D.dol, m = donem<0 ? 12 : donem, hizZ = ayar.dolZemin==="hiz";
+    const alanD = hizZ ? k.hiz[m] : k.sst[m], lo = hizZ ? 0 : k.sst_lo, hi = hizZ ? k.hizUst : k.sst_hi, dur = RAMPA[hizZ ? "ruzgar" : "sicaklik"];
+    for(let i=0;i<N;i++) a[i] = Math.round(Math.max(0, Math.min(1, (dolOrnek(D, alanD, i%D.W, (i/D.W)|0)-lo)/(hi-lo)))*255);
+    for(let b=0;b<256;b++) lut.set(rampa(dur, b/255).map(v=>(v*0.82)|0), b*3);
+    const adim = [lo, lo+(hi-lo)/4, lo+(hi-lo)/2, lo+(hi-lo)*3/4, hi];
+    return {a, lut, olcek:{serit: cssRampa(dur), birim: hizZ ? "m/s" : "°C",
+      etiket: adim.map((v,k2)=>({x:k2/4, t:eksi(Math.round(v))}))}};
+  }
   if(katman==="arazi"){
     const ust = D.doku.yukseklik_ust;
     for(let i=0;i<N;i++){ const e=D.elev[yakin[i]]; a[i] = Math.round(Math.sqrt(Math.max(e,0)/ust)*255); }
@@ -190,7 +235,7 @@ const FS = `
 precision highp float;
 uniform vec2 uRes; uniform float uDpr; uniform vec3 uView; uniform vec2 uGrid; uniform vec4 uBounds;
 uniform sampler2D tAlan, tLut, tKop, tPal, tDoku, tDokuN, tYuk, tKab;
-uniform int uMod; uniform float uPiksel, uKabartma, uIzgara, uIzole, uOlcek;
+uniform int uMod; uniform float uPiksel, uKabartma, uIzgara, uIzole, uOlcek, uZemin;
 const vec3 DERIN = vec3(${vec3s(OKYANUS_DERIN)});
 const vec3 KIYI = vec3(${vec3s(OKYANUS_KIYI)});
 void main(){
@@ -201,6 +246,9 @@ void main(){
   bool icinde = uv.x >= 0.0 && uv.y >= 0.0 && uv.x < 1.0 && uv.y < 1.0;
   vec4 dk = texture2D(tDoku, uv);
   vec3 renk = icinde ? mix(KIYI, DERIN, dk.g) : DERIN;
+  if(uMod == 3 && icinde){   // dolasim: okyanus deniz yuzeyi sicakligiyla
+    float sv = uPiksel > 0.5 ? texture2D(tAlan, muv).r : texture2D(tAlan, uv).r;
+    renk = texture2D(tLut, vec2((sv * 255.0 + 0.5) / 256.0, 0.5)).rgb; }
   // kiyi kenarinin genisligi: ekranda ~1 piksel, yakinlik ne olursa olsun keskin
   float w = clamp(0.5 * uOlcek / uView.z, 0.015, 0.5);
   float a = 0.0, kod = 0.0;
@@ -214,6 +262,12 @@ void main(){
       c = texture2D(tPal, vec2((kod + 0.5) / 32.0, 0.5)).rgb;
       if(uIzole > 0.5 && abs(kod - uIzole) > 0.5){ float g = dot(c, vec3(0.299, 0.587, 0.114));
         c = mix(vec3(g), vec3(0.13, 0.16, 0.18), 0.62); }
+    } else if(uMod == 3){
+      // dolasim: deniz sicakliginda kara notr (yalniz kabartma); ruzgar
+      // hizinda alan karayi da kaplar
+      if(uZemin > 0.5){ float hv = uPiksel > 0.5 ? texture2D(tAlan, muv).r : texture2D(tAlan, uv).r;
+        c = texture2D(tLut, vec2((hv * 255.0 + 0.5) / 256.0, 0.5)).rgb; }
+      else c = vec3(0.37, 0.36, 0.33);
     } else {
       float v = uPiksel > 0.5 ? texture2D(tAlan, muv).r : (uMod == 2 ? texture2D(tYuk, uv).r : texture2D(tAlan, uv).r);
       c = texture2D(tLut, vec2((v * 255.0 + 0.5) / 256.0, 0.5)).rgb;
@@ -258,7 +312,7 @@ function glKur(canvas){
   gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE);
   gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
   const U = {}; for(const ad of ["uRes","uDpr","uView","uGrid","uBounds","tAlan","tLut","tKop","tPal","tDoku","tDokuN","tYuk","tKab",
-    "uMod","uPiksel","uKabartma","uIzgara","uIzole","uOlcek"]) U[ad] = gl.getUniformLocation(pr, ad);
+    "uMod","uPiksel","uKabartma","uIzgara","uIzole","uOlcek","uZemin"]) U[ad] = gl.getUniformLocation(pr, ad);
   const birimler = {tAlan:0, tLut:1, tKop:2, tPal:3, tDoku:4, tDokuN:5, tYuk:6, tKab:7};
   const doku = {};
   function kur(ad, veri, w, h, bicim, suz){
@@ -278,6 +332,8 @@ function glKur(canvas){
 /* ================================================================ uygulama */
 function baslat(J, resimler){
   const D = veriHazirla(J), {W, H, N, B} = D;
+  D.dol = dolasimHazirla(D, resimler.dolasim);
+  if(!D.dol) $("[data-k=dolasim]").hidden = true;   // eski veride dolasim yok
   const canvas = $("#gl"), kaplama = $("#kaplama");
   let G = null;
   try { G = glKur(canvas); if(G && G.enBuyuk < Math.max(D.doku.w, D.doku.h)) G = null; }
@@ -344,7 +400,8 @@ function baslat(J, resimler){
     yedekTuval.width = W; yedekTuval.height = H;
     const c2 = yedekTuval.getContext("2d"), img = c2.createImageData(W, H), px = img.data, dz = hex(OKYANUS_DERIN);
     for(let i=0;i<N;i++){ let c = dz;
-      if(D.land[i]){ if(katman==="iklim") c = [palet[D.kop[i]*4], palet[D.kop[i]*4+1], palet[D.kop[i]*4+2]];
+      if(katman==="dolasim"){ const b = gor.a[i]; c = D.land[i] && ayar.dolZemin!=="hiz" ? [94,92,84] : [gor.lut[b*3], gor.lut[b*3+1], gor.lut[b*3+2]]; }
+      else if(D.land[i]){ if(katman==="iklim") c = [palet[D.kop[i]*4], palet[D.kop[i]*4+1], palet[D.kop[i]*4+2]];
         else { const b = gor.a[i]; c = [gor.lut[b*3], gor.lut[b*3+1], gor.lut[b*3+2]]; } }
       px[i*4]=c[0]; px[i*4+1]=c[1]; px[i*4+2]=c[2]; px[i*4+3]=255; }
     c2.putImageData(img, 0, 0);
@@ -357,19 +414,22 @@ function baslat(J, resimler){
         gl.uniform2f(U.uRes, canvas.width, canvas.height); gl.uniform1f(U.uDpr, dpr);
         gl.uniform3f(U.uView, ox, oy, olcek); gl.uniform2f(U.uGrid, W, H);
         gl.uniform4f(U.uBounds, B[0], B[1], B[2], B[3]);
-        gl.uniform1i(U.uMod, katman==="iklim" ? 0 : (katman==="arazi" ? 2 : 1));
+        gl.uniform1i(U.uMod, {iklim:0, arazi:2, dolasim:3}[katman] ?? 1);
         gl.uniform1f(U.uPiksel, ayar.piksel ? 1 : 0);
-        gl.uniform1f(U.uKabartma, ayar.kabartma ? (katman==="arazi" ? 0.8 : 0.5) : 0);
+        gl.uniform1f(U.uKabartma, ayar.kabartma ? (katman==="arazi" || katman==="dolasim" ? 0.8 : 0.5) : 0);
         gl.uniform1f(U.uIzgara, ayar.izgara ? 1 : 0);
         gl.uniform1f(U.uIzole, izole ? kodNo[izole] : 0);
         gl.uniform1f(U.uOlcek, D.doku.olcek);
+        gl.uniform1f(U.uZemin, ayar.dolZemin==="hiz" ? 1 : 0);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
       } else {
         const c = yedek; c.setTransform(1,0,0,1,0,0); c.fillStyle = OKYANUS_DERIN; c.fillRect(0,0,canvas.width,canvas.height);
         c.imageSmoothingEnabled = false; c.setTransform(dpr*olcek,0,0,dpr*olcek,dpr*ox,dpr*oy); c.drawImage(yedekTuval, 0, 0);
       }
+      parcacik.gorunumDegisti();   // once: kaplama parcacik acikken akis cizgisi cizmesin
       kaplamaCiz();
     }
+    parcacik.adim();
     requestAnimationFrame(kare);
   }
 
@@ -379,10 +439,136 @@ function baslat(J, resimler){
     if(ayar.izgara){ const g = gorunen();
       for(const la of [60,30,0,-30]){ const y = oy + (B[3]-la)/(B[3]-B[1])*H*olcek;
         if(y > g.ust + 10 && y < g.alt - 4) s += `<text x="10" y="${(y-4).toFixed(1)}">${la===0 ? "EKVATOR" : Math.abs(la)+"°"+(la>0?"K":"G")}</text>`; } }
+    if(katman==="dolasim" && D.dol) s += dolasimCiz();
     if(sec !== null){ const x = ox + (sec%W)*olcek, y = oy + ((sec/W)|0)*olcek, k = Math.max(olcek, 6), d = (k-olcek)/2;
       s += `<rect x="${(x-d-1).toFixed(1)}" y="${(y-d-1).toFixed(1)}" width="${(k+2).toFixed(1)}" height="${(k+2).toFixed(1)}" fill="none" stroke="#0b1116" stroke-width="3" stroke-opacity=".7"/>`
         + `<rect x="${(x-d).toFixed(1)}" y="${(y-d).toFixed(1)}" width="${k.toFixed(1)}" height="${k.toFixed(1)}" fill="none" stroke="#d2a45c" stroke-width="1.5"/>`; }
     kaplama.innerHTML = s;
+  }
+
+  /* --- dolasim kaplamasi: akinti yollari ve ruzgar oklari (SVG) --- */
+  const ekranX = lon => ox + (lon-B[0])/(B[2]-B[0])*W*olcek, ekranY = lat => oy + (B[3]-lat)/(B[3]-B[1])*H*olcek;
+  function dolasimCiz(){
+    const r = canvas.getBoundingClientRect(), g = gorunen(), km = olcek/((B[2]-B[0])/W*111.2);   // ekran px / km
+    let s = "";
+    // akintilar: genisligi kadar soluk bir serit + yonunu gosteren cekirdek cizgi
+    for(const a of D.akintilar){
+      const p = a.yol.map(([lo,la]) => [ekranX(lo), ekranY(la)]);
+      let d = `M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
+      for(let i=0;i<p.length-1;i++){ const a0=p[Math.max(0,i-1)], a1=p[i], a2=p[i+1], a3=p[Math.min(p.length-1,i+2)];
+        d += `C${(a1[0]+(a2[0]-a0[0])/6).toFixed(1)},${(a1[1]+(a2[1]-a0[1])/6).toFixed(1)} ${(a2[0]-(a3[0]-a1[0])/6).toFixed(1)},${(a2[1]-(a3[1]-a1[1])/6).toFixed(1)} ${a2[0].toFixed(1)},${a2[1].toFixed(1)}`; }
+      const sicak = a.anomali >= 0, renk = sicak ? "#e39a63" : "#86b9d8";
+      s += `<path d="${d}" fill="none" stroke="${renk}" stroke-opacity=".13" stroke-linecap="round" stroke-width="${Math.max(6, a.genislik_km*km*1.6).toFixed(1)}"/>`
+        + `<path d="${d}" fill="none" stroke="#0b1116" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>`
+        + `<path d="${d}" fill="none" stroke="${renk}" stroke-width="2" stroke-linecap="round" stroke-dasharray="10 7" marker-end="url(#ak-${sicak?"s":"k"})"><title>${a.ad}</title></path>`;
+    }
+    if(!(ayar.parcacik && parcacik.calisiyor)) s += ruzgarCiz(r, g);
+    return `<defs>${["s","k"].map(t=>`<marker id="ak-${t}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${t==="s"?"#e39a63":"#86b9d8"}"/></marker>`).join("")}</defs>` + s;
+  }
+
+  /* Hareketli ruzgar: Windy/earth.nullschool usulu parcaciklar. Her parcacik
+     hucre koordinatinda durur, her karede bulundugu yerdeki ruzgar kadar
+     ilerler ve kisa bir iz birakir; iz her karede biraz soner. Parcaciklar
+     60-110 karelik omurden sonra gorunen alanda rastgele yeniden dogar.
+     Canvas2D ve CPU: en fazla 2000 parcacik telefonda rahat; hesap yalniz Dolasim
+     sekmesi acik ve anahtar aciksa, sayfa gorunurken (rAF) doner. Harita
+     kaydirilinca izler silinir, yoksa eski yerlerinde bulasik kalirlar. */
+  const parcacik = (() => {
+    const cv = $("#parcacik"), c = cv.getContext("2d");
+    let P = null, sayi = 0, calisiyor = false, son = null;
+    const ac = () => katman==="dolasim" && ayar.parcacik && D.dol;
+    function dogur(i){ const g = gorunen(), r = cv.getBoundingClientRect();
+      const sx = Math.random()*r.width, sy = g.ust + Math.random()*(g.alt-g.ust);
+      P[i*4] = (sx-ox)/olcek - 0.5; P[i*4+1] = (sy-oy)/olcek - 0.5; P[i*4+2] = 0; P[i*4+3] = 60 + Math.random()*50; }
+    function kur(){ const r = cv.getBoundingClientRect();
+      cv.width = Math.round(r.width*dpr); cv.height = Math.round(r.height*dpr);
+      sayi = Math.min(2000, Math.round(r.width*r.height/300)); P = new Float32Array(sayi*4);
+      for(let i=0;i<sayi;i++){ dogur(i); P[i*4+2] = Math.random()*P[i*4+3]; } c.clearRect(0, 0, cv.width, cv.height); }
+    return {
+      get calisiyor(){ return calisiyor; },
+      gorunumDegisti(){ const g = ac();
+        if(!g){ if(calisiyor){ calisiyor = false; c.clearRect(0, 0, cv.width, cv.height); cv.hidden = true; } return; }
+        const imza = `${ox.toFixed(1)},${oy.toFixed(1)},${olcek.toFixed(4)},${canvas.width},${donem}`;
+        if(!calisiyor){ calisiyor = true; cv.hidden = false; kur(); }
+        else if(imza !== son){ if(cv.width !== canvas.width) kur(); else c.clearRect(0, 0, cv.width, cv.height);
+          for(let i=0;i<sayi;i++) dogur(i); }
+        son = imza; },
+      adim(){ if(!calisiyor) return;
+        const m = donem<0 ? 12 : donem, U = D.dol.u[m], V = D.dol.v[m], ust = D.dol.ruzgar_ust, k = 0.38/olcek;
+        // eski izleri sondur (hedef-icinde: yalniz alfa azalir, renk karismaz)
+        c.globalCompositeOperation = "destination-in"; c.fillStyle = "rgba(0,0,0,0.86)"; c.fillRect(0, 0, cv.width, cv.height);
+        c.globalCompositeOperation = "source-over"; c.lineWidth = 1.1*dpr; c.lineCap = "round";
+        const kova = [[], [], []];   // hiza gore uc parlaklik; ayni stille toplu cizim hizli
+        for(let i=0;i<sayi;i++){ const j = i*4, x = P[j], y = P[j+1];
+          if(++P[j+2] > P[j+3] || x < 0 || y < 0 || x > W-1 || y > H-1){ dogur(i); continue; }
+          const u = dolOrnek(D, U, x, y), v = dolOrnek(D, V, x, y), h = Math.hypot(u, v);
+          const nx = x + u*k, ny = y - v*k;   // ekranda ~0.38 px/kare her m/s icin
+          kova[h < ust*0.25 ? 0 : h < ust*0.5 ? 1 : 2].push(ox + (x+0.5)*olcek, oy + (y+0.5)*olcek, ox + (nx+0.5)*olcek, oy + (ny+0.5)*olcek);
+          P[j] = nx; P[j+1] = ny; }
+        const g = gorunen();
+        kova.forEach((a, t) => { c.strokeStyle = `rgba(240,236,226,${[0.4, 0.62, 0.85][t]})`; c.beginPath();
+          for(let q=0;q<a.length;q+=4){ if(a[q+1] < g.ust || a[q+1] > g.alt) continue;
+            c.moveTo(a[q]*dpr, a[q+1]*dpr); c.lineTo(a[q+2]*dpr, a[q+3]*dpr); }
+          c.stroke(); });
+      },
+    };
+  })();
+
+  /* Ruzgar: akis cizgileri. Ekranda esit aralikli tohumlardan akis yonunde
+     ileri-geri izlenir; bir cizgi baskasina ~d px yaklasinca durur (Jobard-
+     Lefer'in sade hali), boylece cizgiler ust uste binmez ve alani esit
+     doldurur. Hiz, cizginin kalinligi ve parlakligiyla okunur; yon, ucundaki
+     kucuk okla. */
+  function ruzgarCiz(r, g){
+    const bicim = window.__ruzgarBicim || "cizgi";
+    const m = donem<0 ? 12 : donem, U = D.dol.u[m], V = D.dol.v[m], ust = D.dol.ruzgar_ust;
+    const hiz = (x, y) => { const hx = (x-ox)/olcek - 0.5, hy = (y-oy)/olcek - 0.5;
+      if(hx < 0 || hy < 0 || hx > W-1 || hy > H-1 || y < g.ust || y > g.alt || x < 0 || x > r.width) return null;
+      return [dolOrnek(D, U, hx, hy), -dolOrnek(D, V, hx, hy)]; };   // ekranda y asagi
+    if(bicim === "ok"){
+      const adim = 34; let ok = "";
+      for(let y=g.ust+adim/2; y<g.alt; y+=adim) for(let x=adim/2; x<r.width; x+=adim){
+        const w = hiz(x, y); if(!w) continue; const h = Math.hypot(w[0], w[1]); if(h < 0.3) continue;
+        const L = Math.min(1, 0.35 + h/ust*1.3)*adim*0.78, dx = w[0]/h*L/2, dy = w[1]/h*L/2;
+        const x2 = x+dx, y2 = y+dy, bx = -dx/L*2*5, by = -dy/L*2*5;
+        ok += `M${(x-dx).toFixed(1)},${(y-dy).toFixed(1)}L${x2.toFixed(1)},${y2.toFixed(1)}`
+          + `M${(x2+bx-by*0.6).toFixed(1)},${(y2+by+bx*0.6).toFixed(1)}L${x2.toFixed(1)},${y2.toFixed(1)}L${(x2+bx+by*0.6).toFixed(1)},${(y2+by-bx*0.6).toFixed(1)}`;
+      }
+      return `<path d="${ok}" fill="none" stroke="#0b1116" stroke-opacity=".6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>`
+        + `<path class="ruzgar" d="${ok}" fill="none" stroke="#ebe6dc" stroke-opacity=".9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    const d = 15, ADIM = 2.5, EN = 90, gw = Math.ceil(r.width/d)+1, gh = Math.ceil(r.height/d)+1;
+    const dolu = new Uint8Array(gw*gh), hucre = (x, y) => ((y/d)|0)*gw + ((x/d)|0);
+    const bos = (x, y, sahip) => { const cx = (x/d)|0, cy = (y/d)|0;
+      for(let j=-1;j<=1;j++) for(let i=-1;i<=1;i++){ const k = (cy+j)*gw + cx+i;
+        if(cy+j<0 || cx+i<0 || cy+j>=gh || cx+i>=gw) continue;
+        if(dolu[k] && dolu[k] !== sahip){ const dx = (cx+i+0.5)*d - x, dy = (cy+j+0.5)*d - y; if(dx*dx+dy*dy < d*d*0.55) return false; } }
+      return true; };
+    const kademe = [[], [], [], []];   // hiza gore 4 kalinlik
+    let no = 1;
+    for(let sy = g.ust + d/2; sy < g.alt; sy += d*1.3) for(let sx = d/2 + ((sy/d)|0)%2*d*0.6; sx < r.width; sx += d*1.3){
+      if(!bos(sx, sy, 0) || !hiz(sx, sy)) continue;
+      const sahip = (no = no % 250 + 1), iz = (yon) => { const p = []; let x = sx, y = sy;
+        for(let k=0;k<EN/ADIM;k++){ const w = hiz(x, y); if(!w) break; const h = Math.hypot(w[0], w[1]); if(h < 0.2) break;
+          const nx = x + yon*w[0]/h*ADIM, ny = y + yon*w[1]/h*ADIM;
+          if(!bos(nx, ny, sahip)) break; p.push([nx, ny, h]); x = nx; y = ny; }
+        return p; };
+      const geri = iz(-1).reverse(), ileri = iz(1), yol = [...geri, [sx, sy, 0], ...ileri];
+      if(yol.length*ADIM < 14) continue;
+      for(const [x, y] of yol) dolu[hucre(x, y)] = sahip;
+      let hs = 0, n = 0; for(const q of yol) if(q[2]){ hs += q[2]; n++; } const hh = n ? hs/n : 0;
+      let dd = `M${yol[0][0].toFixed(1)},${yol[0][1].toFixed(1)}`; for(let k=1;k<yol.length;k+=2) dd += `L${yol[k][0].toFixed(1)},${yol[k][1].toFixed(1)}`;
+      // ucta ok: son iki noktanin yonunde
+      const a = yol[yol.length-1], b = yol[Math.max(0, yol.length-3)], ax = a[0]-b[0], ay = a[1]-b[1], al = Math.hypot(ax, ay) || 1;
+      const ux = ax/al*4.5, uy = ay/al*4.5;
+      dd += `M${(a[0]-ux-uy*0.7).toFixed(1)},${(a[1]-uy+ux*0.7).toFixed(1)}L${a[0].toFixed(1)},${a[1].toFixed(1)}L${(a[0]-ux+uy*0.7).toFixed(1)},${(a[1]-uy-ux*0.7).toFixed(1)}`;
+      kademe[Math.min(3, Math.floor(hh/ust*5))].push(dd);
+    }
+    let out = "";
+    kademe.forEach((yollar, k) => { if(!yollar.length) return; const dd = yollar.join("");
+      out += `<path d="${dd}" fill="none" stroke="#0b1116" stroke-opacity=".45" stroke-width="${(2.6+k*0.5).toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"/>`
+        + `<path class="ruzgar" d="${dd}" fill="none" stroke="#ebe6dc" stroke-opacity="${(0.55+k*0.13).toFixed(2)}" stroke-width="${(0.9+k*0.35).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"/>`; });
+    return out;
   }
 
   /* --- katman ve donem --- */
@@ -391,17 +577,19 @@ function baslat(J, resimler){
     if(k==="iklim" || k==="arazi") donem = -1;
     if(k!=="iklim") izole = null;
     for(const b of $("#sekmeler").children) b.setAttribute("aria-selected", String(b.dataset.k===k));
-    $("#donem").hidden = !(k==="sicaklik" || k==="yagis");
+    $("#donem").hidden = !(k==="sicaklik" || k==="yagis" || k==="dolasim");
     for(const b of $("#donem").children) b.setAttribute("aria-checked", String(+b.dataset.d===donem));
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
     if(!G) yedekBoya();
     $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi:"Arazi, yükseklik",
       sicaklik:"Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
-      yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem])}[k];
+      yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
+      dolasim:"Rüzgâr ve akıntılar, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem])}[k];
     aciklamaYaz(); boyut();
     // ay seridi acilinca dok ve kart yukselir; secili hucre kartin altinda kalmasin
-    if(sec!==null){ kartYaz(); gorunurYap(oy + (((sec/W)|0) + 0.5)*olcek); }
+    if(sec!==null && !D.land[sec] && k!=="dolasim"){ sec = null; $("#kart").hidden = true; }
+    if(sec!==null){ D.land[sec] ? kartYaz() : denizKartYaz(); gorunurYap(oy + (((sec/W)|0) + 0.5)*olcek); }
   }
   $("#donem").innerHTML = `<button role="radio" data-d="-1" aria-checked="true">Yıl</button>` +
     AY_HARF.map((h,m)=>`<button role="radio" data-d="${m}" aria-checked="false" aria-label="${AYLAR[m]}">${h}</button>`).join("");
@@ -431,10 +619,21 @@ function baslat(J, resimler){
       return;
     }
     const o = gor.olcek;
-    el.innerHTML = `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
+    const dolNot = katman==="dolasim" ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Zemin">`
+      + `<button role="radio" data-zemin="sst" aria-checked="${ayar.dolZemin!=="hiz"}">Deniz sıcaklığı</button>`
+      + `<button role="radio" data-zemin="hiz" aria-checked="${ayar.dolZemin==="hiz"}">Rüzgâr hızı</button></div>`
+      + `<button class="canli" id="parcacik-ac" aria-pressed="${ayar.parcacik}">Hareketli</button></div>`
+      + `<div class="dol-not"><span><i class="ok-ruzgar"></i>rüzgâr</span><span><i class="ak s"></i>sıcak akıntı</span><span><i class="ak k"></i>soğuk akıntı</span></div>` : "";
+    el.innerHTML = dolNot + `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
       + o.etiket.map((e,k)=>`<span style="left:${e.x*100}%">${e.t}${k===o.etiket.length-1?` <span class="birim">${o.birim}</span>`:""}</span>`).join("")
       + `</div></div>`;
   }
+
+  $("#aciklama").addEventListener("click", e => {
+    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac");
+    if(z){ ayar.dolZemin = z.dataset.zemin; ayarYaz(); katmanSec("dolasim"); }
+    if(p){ ayar.parcacik = !ayar.parcacik; ayarYaz(); aciklamaYaz(); ciz(); }
+  });
 
   function listeYaz(){
     const aile = {}; for(const k of Object.keys(paylar).sort((a,b)=>paylar[b]-paylar[a])) (aile[k[0]] = aile[k[0]]||[]).push(k);
@@ -493,6 +692,20 @@ function baslat(J, resimler){
       + klimagram(T, P, donem)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
   }
+  // Dolasim sekmesinde okyanusa dokununca: deniz yuzeyi sicakligi ve ruzgar
+  function denizKartYaz(){
+    const i = sec, x = i%W, y = (i/W)|0, lat = D.enlem(y), lon = B[0] + (x+0.5)*(B[2]-B[0])/W, m = donem<0 ? 12 : donem;
+    const konum = `${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`;
+    const u = dolOrnek(D, D.dol.u[m], x, y), v = dolOrnek(D, D.dol.v[m], x, y), T = D.dol.sst.slice(0,12).map(a=>dolOrnek(D, a, x, y));
+    const r1 = v => eksi(Math.round(v*10)/10).replace(".", ",");
+    $("#kart").hidden = false;
+    $("#kart-icerik").innerHTML = `<div class="k-ust"><i style="background:#2b4a5a"></i><div><h3>Açık deniz</h3>`
+      + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]}</small></div></div>`
+      + `<div class="k-sayilar"><div><em>${r1(donem<0 ? T.reduce((p,c)=>p+c,0)/12 : T[donem])}°</em><span>yüzey</span></div>`
+      + `<div><em>${r1(Math.max(...T))}°</em><span>en sıcak ay</span></div><div><em>${r1(Math.min(...T))}°</em><span>en soğuk ay</span></div>`
+      + `<div><em>${r1(Math.hypot(u,v))}</em><span>m/s rüzgâr</span></div></div>`
+      + `<div class="k-alt"><span>${konum}</span><span>rüzgâr ${nereden(u,v)} esiyor</span></div>`;
+  }
   function kartKapat(){ sec = null; $("#kart").hidden = true; ciz(); }
   // secilen hucre acilan kartin altinda kaldiysa haritayi yukari kaydir
   function gorunurYap(y){ const ust = $("#kart").getBoundingClientRect().top - 24, bas = $(".marka").getBoundingClientRect().bottom + 24;
@@ -527,7 +740,8 @@ function baslat(J, resimler){
         sonDokun = {...q, t:now, z:setTimeout(() => {
           const x = Math.floor((q.x-oxs)/os_), y = Math.floor((q.y-oys)/os_);
           const i = (x<0||y<0||x>=W||y>=H) ? null : y*W+x;
-          if(i===null || !D.land[i]) kartKapat(); else { sec = i; kartYaz(); gorunurYap(q.y); ciz(); } }, 290)}; } }
+          if(i===null || (!D.land[i] && katman!=="dolasim")) kartKapat();
+          else { sec = i; D.land[i] ? kartYaz() : denizKartYaz(); gorunurYap(q.y); ciz(); } }, 290)}; } }
     dokun = null; hareketBasla(); }
   harita.addEventListener("pointerup", birak); harita.addEventListener("pointercancel", birak);
   harita.addEventListener("wheel", e => { e.preventDefault(); const q = yerel(e); yakinlas(q.x, q.y, Math.exp(-e.deltaY*0.0015)); }, {passive:false});
@@ -569,10 +783,11 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, dolasim] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
-      resimYukle("data/kabartma_gri.jpg").catch(() => null)]);   // eski veride yok
-    resimler = {doku, yukseklik, kabartma, kabartmaGri};
+      resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
+      resimYukle("data/dolasim.png").catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, dolasim};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk kurulum için sunucu açık olmalı.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+J.uretim), 600);

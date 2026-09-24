@@ -15,7 +15,9 @@ Kurgusal bir gezegenin iklim atlası. İki parçası var:
 - **Uygulama** (`index.html`, `app.js`, `style.css`, `sw.js`) — telefona
   kurulan bir PWA, koyu tema. Haritayı WebGL ile çizer (yumuşak ya da piksel
   görünüm, kabartma gölgesi), sınıf dağılımını, 12 aylık klimagramlı hücre
-  kartını ve iç tutarlılık raporunu gösterir. Veriyi `data/atlas.json`'dan,
+  kartını, Dolaşım sekmesinde aylık rüzgârı (akış çizgileri ya da hareketli
+  parçacıklar), zemin olarak deniz yüzeyi sıcaklığını ya da rüzgâr hızını ve
+  akıntı yollarını, bir de iç tutarlılık raporunu gösterir. Veriyi `data/atlas.json`'dan,
   harita dokularını `data/doku.png`, `yukseklik.png`, `kabartma.jpg`'den okur.
 - **Üretici** (`uret.py` + `motor/` + `dunya/`) — iklim motorunun ve dünya
   tanımının kopyası. O `data/atlas.json`'u üretir.
@@ -100,6 +102,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
 | `data/atlas.json` | uygulamanın veri dosyası (yıllık alanlar, 12 aylık kara verisi, sınıflar) |
 | `data/doku.png`, `yukseklik.png`, `kabartma.jpg`, `kabartma_gri.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; editör görselinden kabartma; gri tonlu yükseklik haritasından kabartma — uygulamada ikisinden biri seçilir) |
+| `data/dolasim.png` | Dolaşım sekmesi: 12 ay alt alta, R/G = yüzey rüzgârı u/v, B = deniz yüzeyi sıcaklığı; ~0.75° bloklar. Akıntı yolları `atlas.json`'da, motora giren dosyadan olduğu gibi |
 | `uret.py` | dünyayı koşup `data/`'yı yazan tek giriş noktası |
 | `doku.py` | harita dokularını üretir (`uret.py` çağırır) |
 | `kabartma_kaydet.py` | sahibin editör görselini kabartma kaynağı olarak repoya alır ve araziye oturtur |

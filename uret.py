@@ -30,7 +30,7 @@ import numpy as np
 BURASI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BURASI)
 
-from motor import grid as G, model, sanity            # noqa: E402
+from motor import grid as G, model, sanity, temperature   # noqa: E402
 import doku                                           # noqa: E402
 
 DUNYA = os.path.join(BURASI, "dunya")
@@ -171,6 +171,54 @@ def kirp(r, pay_deg=22.0):
     return r, (w, h), (y0, y1, x0, x1)
 
 
+def dolasim(r, g, w, pencere, cikti_dir):
+    """Ruzgar, deniz yuzeyi sicakligi ve akinti yollari: uygulamanin Dolasim
+    sekmesi icin.
+
+    data/dolasim.png, RGB, 12 ay alt alta (ay m = satir m*h .. (m+1)*h):
+        R, G = yuzey ruzgari u (dogu+), v (kuzey+): 128 + deger/ust*127
+        B    = deniz yuzeyi sicakligi, 1..255 dogrusal [lo, hi]; kara
+               hucreleri en yakin okyanusun degeriyle dolu (kiyida cift
+               dogrusal aradegerleme karanin sicakligini denize sizdirmasin)
+    Alanlar puruzsuz: ~0.75 derecelik bloklara ortalanir (0.25'te 3x3). Tam
+    cozunurlukte 12 ay x 3 alan 7.5 MB'lik PNG olurdu, bu ~150 KB.
+
+    Akinti yollari motora giren dosyadan (dunya/dunyam.currents.json)
+    oldugu gibi gecer: uygulama motorun kullandigi yolu cizer, turetilmis
+    bir sey degil.
+    """
+    from PIL import Image
+    from scipy import ndimage
+    y0, y1, x0, x1 = pencere
+    hucre = (g.bounds[2] - g.bounds[0]) / g.shape[1]
+    f = max(1, int(round(0.75 / hucre)))
+    h, wd = (y1 - y0) // f, (x1 - x0) // f
+
+    def blok(a):
+        a = a[..., y0:y0 + h * f, x0:x0 + wd * f]
+        return a.reshape(a.shape[:-2] + (h, f, wd, f)).mean(axis=(-3, -1))
+
+    u, v, sst = blok(r["u"]), blok(r["v"]), blok(r["sst"])
+    kara = blok(g.land.astype(float)) > 0.5
+    ust = float(np.ceil(max(np.abs(u).max(), np.abs(v).max())))
+    deniz_sst = sst[:, ~kara]
+    slo, shi = float(np.floor(deniz_sst.min())), float(np.ceil(deniz_sst.max()))
+    _, (iy, ix) = ndimage.distance_transform_edt(kara, return_indices=True)
+    sst = sst[:, iy, ix]
+    bayt = lambda a: np.clip(np.round(128 + a / ust * 127), 1, 255).astype(np.uint8)
+    sb = np.clip(np.round(1 + (sst - slo) / (shi - slo) * 254), 1, 255).astype(np.uint8)
+    img = np.stack([bayt(u), bayt(v), sb], axis=-1).reshape(12 * h, wd, 3)
+    Image.fromarray(img).save(os.path.join(cikti_dir, "dolasim.png"), optimize=True)
+
+    akintilar = []
+    for c in temperature.load_currents(w):
+        a = np.asarray(c["anomaly_c"], dtype=float)
+        akintilar.append({"ad": c.get("name", ""), "yol": [[round(x, 2), round(y, 2)] for x, y in c["path"]],
+                          "anomali": round(float(a.mean()), 2), "genislik_km": float(c["width_km"]),
+                          "taper": c.get("taper", [1.0, 1.0])})
+    return {"w": int(wd), "h": int(h), "blok": int(f), "ruzgar_ust": ust, "sst_lo": slo, "sst_hi": shi}, akintilar
+
+
 def kunye(w, g, yillik_yagis):
     """Kunye paylari ALAN agirlikli olmali.
 
@@ -309,6 +357,8 @@ def main():
     print("dokular: %dx%d, kabartma kaynagi %s, ortusme %s"
           % (dokubilgi["w"], dokubilgi["h"], dokubilgi["kabartma"], dokubilgi["kabartma_ortusme"]))
     bolge["doku"] = dokubilgi
+    bolge["dolasim"], bolge["akintilar"] = dolasim(r, g, w, (y0, y1, x0, x1),
+                                                   os.path.dirname(os.path.abspath(a.cikti)))
 
     veri = {"world": w.name, "fictional": True, "regions": {"global": bolge},
             "koppen_colors": {v[0]: "#%02x%02x%02x" % v[1] for v in LEG.values()},
@@ -320,7 +370,7 @@ def main():
     ozet_h = hashlib.sha1((govde + json.dumps(facts, ensure_ascii=False)).encode("utf-8"))
     # dokular JSON'da degil ayri dosyada; icerikleri de surume girer, yoksa
     # yalniz kabartma degistiginde is akisi "ayni" deyip commit etmezdi
-    for ad in ("doku.png", "yukseklik.png", "kabartma.jpg", "kabartma_gri.jpg"):
+    for ad in ("doku.png", "yukseklik.png", "kabartma.jpg", "kabartma_gri.jpg", "dolasim.png"):
         with open(os.path.join(os.path.dirname(os.path.abspath(a.cikti)), ad), "rb") as fh:
             ozet_h.update(fh.read())
     surum = ozet_h.hexdigest()[:10]

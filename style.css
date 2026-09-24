@@ -34,6 +34,7 @@ svg{display:block}
 /* ---- harita ---- */
 #harita{position:fixed;inset:0;touch-action:none;user-select:none;-webkit-user-select:none}
 #gl{position:absolute;inset:0;width:100%;height:100%}
+#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #kaplama{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #kaplama text{font:500 10px var(--sans);letter-spacing:.06em;fill:rgba(228,223,211,.5)}
 
@@ -61,6 +62,18 @@ svg{display:block}
 .olcek .etiketler>span:last-child{transform:translateX(-100%)}
 .olcek .birim{color:var(--soluk)}
 
+.dol-ust{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dol-ust .secim{flex:1;margin:0}
+.secim.kucuk button{height:30px;font-size:12px}
+.canli{height:32px;padding:0 12px;border:1px solid var(--cizgi-2);border-radius:4px;font-size:12px;color:var(--yazi-2)}
+.canli[aria-pressed="true"]{color:var(--yazi);background:var(--vurgu-zemin);border-color:rgba(210,164,92,.5)}
+.dol-not{display:flex;gap:14px;margin-bottom:7px;font-size:11px;color:var(--yazi-2)}
+.dol-not span{display:flex;align-items:center;gap:6px}
+.dol-not i{display:block;width:18px;height:2px;border-radius:1px}
+.dol-not .ok-ruzgar{background:#ebe6dc}
+.dol-not .ak{height:0;border-top:2px dashed}
+.dol-not .ak.s{border-color:#e39a63}
+.dol-not .ak.k{border-color:#86b9d8}
 .gruplar{display:flex;align-items:center;gap:12px;width:100%;text-align:left}
 .gruplar .cubuk{flex:1;display:flex;height:7px;border-radius:1px;overflow:hidden}
 .gruplar .cubuk i{display:block;height:100%}
@@ -76,8 +89,8 @@ svg{display:block}
 #donem button[aria-checked="true"]{color:var(--yazi);background:var(--vurgu-zemin)}
 #donem button[aria-checked="true"]::after{content:"";position:absolute;left:25%;right:25%;bottom:0;height:2px;background:var(--vurgu)}
 
-#sekmeler{display:grid;grid-template-columns:repeat(4,1fr);margin:6px -16px 0;border-top:1px solid var(--cizgi)}
-#sekmeler button{position:relative;height:50px;font-size:14px;color:var(--soluk);letter-spacing:.01em}
+#sekmeler{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));margin:6px -16px 0;border-top:1px solid var(--cizgi)}
+#sekmeler button{position:relative;height:50px;font-size:13.5px;color:var(--soluk);letter-spacing:.01em}
 #sekmeler button[aria-selected="true"]{color:var(--yazi)}
 #sekmeler button[aria-selected="true"]::before{content:"";position:absolute;top:-1px;left:22%;right:22%;height:2px;background:var(--vurgu)}
 

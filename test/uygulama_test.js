@@ -50,7 +50,8 @@ const OLC = () => {
     gl.readPixels(Math.round(x * dpr), cv.height - 1 - Math.round(y * dpr), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
     return 0.299 * px[0] + 0.587 * px[1] + 0.114 * px[2]; };
   const kara = [], deniz = [];
-  for (let i = 0; i < D.N && (kara.length < 400 || deniz.length < 400); i += 97) {
+  const adim = Math.max(1, Math.floor(D.N / 5000)) | 1;   // kaba veride (--res 1.0) de yeterli orneklem
+  for (let i = 0; i < D.N && (kara.length < 400 || deniz.length < 400); i += adim) {
     if (D.land[i] ? kara.length >= 400 : deniz.length >= 400) continue;
     if (!ic(i, D.land[i] ? 2 : 6)) continue;
     const v = oku(i); if (v === null) continue; (D.land[i] ? kara : deniz).push(v);
@@ -58,7 +59,7 @@ const OLC = () => {
   const ort = a => a.reduce((p, c) => p + c, 0) / Math.max(a.length, 1);
   // karada dokunulacak bir hucrenin ekran noktasi
   let hedef = null;
-  for (let i = 0; i < D.N && !hedef; i += 131) if (D.land[i] && ic(i, 3)) {
+  for (let i = 0; i < D.N && !hedef; i += adim) if (D.land[i] && ic(i, 3)) {
     const x = s.ox + ((i % D.W) + 0.5) * s.olcek, y = s.oy + (((i / D.W) | 0) + 0.5) * s.olcek;
     if (x > 30 && x < cv.clientWidth - 30 && y > ust + 30 && y < alt - 30) hedef = { x, y, i };
   }
@@ -74,7 +75,11 @@ const OLC = () => {
   const p = await ctx.newPage();
   const hatalar = [];
   p.on("pageerror", e => hatalar.push(e.message));
-  p.on("console", m => { if (m.type() === "error") hatalar.push(m.text()); });
+  // 404 konsolda adresiz "Failed to load resource" olarak da duser; onu yanit
+  // olayindan adresiyle yakalariz. Eski veride olmayan istege bagli dokular muaf.
+  const ISTEGE_BAGLI = /data\/(kabartma_gri\.jpg|dolasim\.png)$/;
+  p.on("console", m => { if (m.type() === "error" && !/^Failed to load resource/.test(m.text())) hatalar.push(m.text()); });
+  p.on("response", y => { if (y.status() >= 400 && !ISTEGE_BAGLI.test(y.url())) hatalar.push(`${y.status()} ${y.url()}`); });
   const bekle = ms => p.waitForTimeout(ms);
   try {
     await p.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: "networkidle" });
@@ -109,6 +114,24 @@ const OLC = () => {
     for (const k of ["sicaklik", "yagis", "arazi", "iklim"]) {
       await p.evaluate(k => document.querySelector(`[data-k=${k}]`).click(), k); await bekle(250);
       if (k === "sicaklik" || k === "yagis") { await p.evaluate(() => document.querySelectorAll("#donem button")[7].click()); await bekle(250); }
+    }
+    // Dolasim sekmesi (veride varsa): ruzgar oklari ve akinti yollari cizilmeli
+    const dol = await p.evaluate(() => !document.querySelector("[data-k=dolasim]").hidden);
+    if (dol) {
+      await p.evaluate(() => document.querySelector("[data-k=dolasim]").click()); await bekle(400);
+      await p.evaluate(() => document.querySelectorAll("#donem button")[1].click()); await bekle(400);
+      const d = await p.evaluate(() => ({ cizgi: [...document.querySelectorAll("#kaplama path.ruzgar")].reduce((t, e) => t + e.getAttribute("d").split("M").length - 1, 0),
+        akinti: document.querySelectorAll("#kaplama marker").length ? window.__atlas.D.akintilar.length : 0 }));
+      denetle("dolasim: ruzgar cizgileri ve akintilar ciziliyor", d.cizgi > 20 && d.akinti > 0, `${d.cizgi} parca, ${d.akinti} akinti`);
+      // hareketli ruzgar: parcacik tuvaline bir saniyede bir seyler cizilmeli
+      await p.evaluate(() => document.querySelector("#parcacik-ac").click()); await bekle(1200);
+      const pc = await p.evaluate(() => { const c = document.querySelector("#parcacik"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 40) n++; return { n, gizli: c.hidden }; });
+      denetle("dolasim: hareketli ruzgar parcaciklari ciziliyor", !pc.gizli && pc.n > 500, `${pc.n} piksel`);
+      await p.evaluate(() => document.querySelector("[data-zemin=hiz]").click()); await bekle(300);
+      await p.evaluate(() => document.querySelector("#parcacik-ac").click()); await bekle(200);
+      await p.evaluate(() => document.querySelector("[data-zemin=sst]").click()); await bekle(200);
+      await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);
     if (kaynak) { await p.evaluate(() => document.querySelector("[data-kaynak=gri]").click()); await bekle(250);

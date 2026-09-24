@@ -11,10 +11,10 @@
 
    AD'yi yalnizca KABUK listesi degistiginde artir. Kod ve veri guncellemesi
    icin gerekmez: ag-once zaten tazesini getirir. */
-const AD = 'dunyam-atlas-v3';   // v3: gri tonlu kabartma dokusu
+const AD = 'dunyam-atlas-v4';   // v4: dolasim dokusu (ruzgar, deniz sicakligi)
 const KABUK = [
   './', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'data/atlas.json',
-  'data/doku.png', 'data/yukseklik.png', 'data/kabartma.jpg', 'data/kabartma_gri.jpg',
+  'data/doku.png', 'data/yukseklik.png', 'data/kabartma.jpg', 'data/kabartma_gri.jpg', 'data/dolasim.png',
   'icons/icon-192.png', 'icons/icon-512.png',
   'icons/icon-maskable-192.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png',
 ];
