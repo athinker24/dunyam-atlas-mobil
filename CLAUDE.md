@@ -107,6 +107,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `dunya/` | `dunyam.json`, `dunyam.currents.json`, `dunyam_heightmap.png`, `kabartma_kaynak.jpg` |
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
+| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış, iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart, çevrimdışı. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
 | `baslat.bat` | yalnız bilgisayarda aç (http://localhost:8778) |

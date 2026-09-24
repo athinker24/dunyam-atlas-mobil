@@ -61,6 +61,17 @@ jobs:
           with open(os.environ["GITHUB_ENV"], "a") as fh:
               fh.write("DEGISTI=" + str(int(degisti)) + chr(10))
           PY
+      # Yeni veriyle uygulama gercekten aciliyor mu? Dusen test commit'i
+      # durdurur: bozuk veri telefona gitmez (test/uygulama_test.js).
+      - uses: actions/setup-node@v4
+        if: env.DEGISTI == '1'
+        with:
+          node-version: '22'
+      - name: uygulama testi
+        if: env.DEGISTI == '1'
+        run: |
+          npm install --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
+          node test/uygulama_test.js
       - name: degistiyse commit et
         if: env.DEGISTI == '1'
         run: |

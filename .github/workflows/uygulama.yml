@@ -1,0 +1,31 @@
+# Uygulama kodu ya da verisi degisince tarayici testini kosar
+# (test/uygulama_test.js). Dusen denetim push'u geri almaz ama Actions
+# sekmesinde kirmizi gorunur; Cloudflare yine yayinlar, yani bu bir uyari.
+# Veri is akisi (veri.yml) ayni testi commit ONCESI kosar ve dusunce veriyi
+# commit etmez: orasi gercek kapidir.
+name: uygulama testi
+
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - 'style.css'
+      - 'sw.js'
+      - 'manifest.webmanifest'
+      - 'data/**'
+      - 'test/**'
+      - '.github/workflows/uygulama.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
+      - run: node test/uygulama_test.js
