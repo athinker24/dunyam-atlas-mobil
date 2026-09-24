@@ -1,7 +1,9 @@
 # Dünyam Atlası — mobil
 
-Kurgusal dünyanın iklim atlasının telefona kurulan (PWA) sürümü. Masaüstü
-atlasla aynı veri ve aynı palet; yerleşim ve etkileşim dokunmatik için.
+Kurgusal dünyanın iklim atlasının telefona kurulan (PWA) sürümü. Koyu tema,
+WebGL harita (yumuşak ya da piksel görünüm, sahibin editör görselinden
+kabartma gölgesi), 12 aylık klimagramlı hücre kartı. Eylül 2026'dan beri
+paleti ve veri biçimi masaüstü atlastan AYRI (bkz CLAUDE.md 7.4).
 
 ## Telefona kurmak
 
@@ -15,13 +17,16 @@ Tünel adresi her açılışta değişir ve bilgisayar açık, pencere açıkken
 
 ## Güncellemek
 
-Dünya yeniden koşulduğunda `Proje 3` kökünde:
+Veriyi bu repodaki `uret.py` üretir (`data/atlas.json` + harita dokuları):
 
 ```
-python _atlas.py
+python uret.py --ozet
 ```
 
-Bu hem masaüstü atlası hem `mobil/data/atlas.json`'u yazar. Sonra:
+`Proje 3`'teki `_atlas.py` artık bu uygulamanın verisini YAZMAMALI: eski
+biçimde (12 aylık veri ve dokular olmadan) yazar ve uygulama açılmaz.
+Masaüstü tarafı yeni biçime taşınana kadar mobil veri yalnız `uret.py`'den.
+Sonra:
 
 ```
 git add -A && git commit -m "Veri guncellemesi" && git push
@@ -119,7 +124,7 @@ python _senkron_kontrol.py /ana/projenin/yolu
 | dosya | ne |
 |---|---|
 | `index.html`, `style.css`, `app.js` | uygulama |
-| `data/atlas.json` | veri — `uret.py` ya da ana projedeki `_atlas.py` yazar, elle düzenleme |
+| `data/atlas.json` + dokular | veri — yalnız `uret.py` yazar, elle düzenleme |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
 | `uret.py` | veri üreticisi — iklimi yeniden hesaplar |
 | `motor/` | iklim motoru (ana projenin `climate/` kopyası) |

@@ -13,8 +13,10 @@ Belgeler ve kod yorumları **Türkçe**. Kullanıcı Türkçe çalışıyor.
 Kurgusal bir gezegenin iklim atlası. İki parçası var:
 
 - **Uygulama** (`index.html`, `app.js`, `style.css`, `sw.js`) — telefona
-  kurulan bir PWA. Haritayı, sınıf dağılımını, hücre kartını ve iç tutarlılık
-  raporunu gösterir. Veriyi tek bir dosyadan okur: `data/atlas.json`.
+  kurulan bir PWA, koyu tema. Haritayı WebGL ile çizer (yumuşak ya da piksel
+  görünüm, kabartma gölgesi), sınıf dağılımını, 12 aylık klimagramlı hücre
+  kartını ve iç tutarlılık raporunu gösterir. Veriyi `data/atlas.json`'dan,
+  harita dokularını `data/doku.png`, `yukseklik.png`, `kabartma.jpg`'den okur.
 - **Üretici** (`uret.py` + `motor/` + `dunya/`) — iklim motorunun ve dünya
   tanımının kopyası. O `data/atlas.json`'u üretir.
 
@@ -96,10 +98,13 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 |---|---|
 | `index.html`, `style.css`, `app.js` | uygulama (dokunmatik pan/pinch, hücre kartı, alt panel) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
-| `data/atlas.json` | uygulamanın okuduğu tek veri dosyası |
-| `uret.py` | dünyayı koşup `data/atlas.json`'u yazan tek dosya |
+| `data/atlas.json` | uygulamanın veri dosyası (yıllık alanlar, 12 aylık kara verisi, sınıflar) |
+| `data/doku.png`, `yukseklik.png`, `kabartma.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; kabartma) |
+| `uret.py` | dünyayı koşup `data/`'yı yazan tek giriş noktası |
+| `doku.py` | harita dokularını üretir (`uret.py` çağırır) |
+| `kabartma_kaydet.py` | sahibin editör görselini kabartma kaynağı olarak repoya alır ve araziye oturtur |
 | `motor/` | iklim motoru — asıl projedeki `climate/` kopyası |
-| `dunya/` | `dunyam.json`, `dunyam.currents.json`, `dunyam_heightmap.png` |
+| `dunya/` | `dunyam.json`, `dunyam.currents.json`, `dunyam_heightmap.png`, `kabartma_kaynak.jpg` |
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
@@ -260,12 +265,18 @@ bakmak bu yüzden her zaman "evet" der ve 2 MB'lık boş commit'ler birikir.
 (viewer.json'dan) ve buradaki `uret.py` (kendi koşusundan) aynı içerik özetini
 üretti, yalnız zaman damgası farklıydı.
 
-### 7.4 Palet iki yerde duruyor
+### 7.4 Palet iki yerde duruyor — ŞU AN AYRIŞIK
 
 `app.js` içindeki `KPAL` (renkler) ve `KREF` (Dünya karşılıkları) blokları
-masaüstü şablonuyla birebir aynı olmalı. Asıl projedeki `_atlas.py` ikisini
+masaüstü şablonuyla birebir aynı olmalıydı; asıl projedeki `_atlas.py` ikisini
 karşılaştırır ve farklıysa durur. İki kopyanın sessizce ayrışması bu projede
 zaten bir kez gerçek bir hataya yol açtı.
+
+**Eylül 2026'da bilerek ayrıştırıldı:** yeni koyu arayüz için `KPAL` yeniden
+kuruldu (düşük doygunluk, kabartmayla okunur; ana grup ton aileleri aynı).
+`KREF` değişmedi. Masaüstü şablonu yeni palete taşınana kadar `_atlas.py`'nin
+palet karşılaştırması DURACAK; bu beklenen bir sonuç, hata değil. Karar:
+dünyanın sahibi onayladı.
 
 ### 7.5 Kurulu PWA kurulduğu adrese bağlıdır
 
@@ -359,8 +370,15 @@ asıl projede şu zincir koşar:
    taşınacak çapa yoktur.
 3. `python _akinti_kur.py` — **yalnız kıyı değiştiyse**; akıntı yollarını
    gerçek kıyı çizgisinden yeniden türetir.
+3b. **Kabartma görseli:** editörden aynı çerçevede yeni bir renkli görsel al ve
+   bu repoda `python kabartma_kaydet.py <görsel>` koş. Görsel yenilenmezse
+   uygulamadaki gölge eski dağları gösterir; `uret.py` görselin karaya
+   oturmasını her koşuda ölçer ve %95'in altındaysa uyarır.
 4. 0.26 derecelik koşu, `export_viewer.py --res 0.26`, `_atlas.py`,
    `_denetim.py`, `node _atlas_test.js`, `_repo_senkron.py --yaz`.
+   **DİKKAT:** `_atlas.py` mobil `data/atlas.json`'u eski biçimde yazar (aylık
+   veri ve dokular yok) ve yeni uygulama açılmaz. Mobil veri yalnız bu
+   repodaki `uret.py`'den üretilir.
 5. Bu repoda commit + push; workflow veriyi yeniden üretir.
 
 **Sıra kuralı (sert):** eğri düzelmeden nem düğmesi (`convective_c`,

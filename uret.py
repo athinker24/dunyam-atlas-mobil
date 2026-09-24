@@ -31,6 +31,7 @@ BURASI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BURASI)
 
 from motor import grid as G, model, sanity            # noqa: E402
+import doku                                           # noqa: E402
 
 DUNYA = os.path.join(BURASI, "dunya")
 CIKTI = os.path.join(BURASI, "data", "atlas.json")
@@ -39,36 +40,36 @@ CIKTI = os.path.join(BURASI, "data", "atlas.json")
 # uygulamanin kendi paletinden (app.js icindeki KPAL) gelir; buradaki RGB
 # yalnizca palet bulunamazsa kullanilir.
 LEG = {
-    1: ("Af", (0, 0, 255), "Tropikal, yagmur ormani"),
+    1: ("Af", (0, 0, 255), "Tropikal, yağmur ormanı"),
     2: ("Am", (0, 120, 255), "Tropikal, muson"),
     3: ("Aw", (70, 170, 250), "Tropikal, savan"),
-    4: ("BWh", (255, 0, 0), "Kurak, col, sicak"),
-    5: ("BWk", (255, 150, 150), "Kurak, col, soguk"),
-    6: ("BSh", (245, 165, 0), "Kurak, bozkir, sicak"),
-    7: ("BSk", (255, 220, 100), "Kurak, bozkir, soguk"),
-    8: ("Csa", (255, 255, 0), "Iliman, kuru yaz, sicak yaz"),
-    9: ("Csb", (200, 200, 0), "Iliman, kuru yaz, ilik yaz"),
-    10: ("Csc", (150, 150, 0), "Iliman, kuru yaz, serin yaz"),
-    11: ("Cwa", (150, 255, 150), "Iliman, kuru kis, sicak yaz"),
-    12: ("Cwb", (100, 200, 100), "Iliman, kuru kis, ilik yaz"),
-    13: ("Cwc", (50, 150, 50), "Iliman, kuru kis, serin yaz"),
-    14: ("Cfa", (200, 255, 80), "Iliman, kuraksiz, sicak yaz"),
-    15: ("Cfb", (100, 255, 80), "Iliman, kuraksiz, ilik yaz"),
-    16: ("Cfc", (50, 200, 0), "Iliman, kuraksiz, serin yaz"),
-    17: ("Dsa", (255, 0, 255), "Soguk, kuru yaz, sicak yaz"),
-    18: ("Dsb", (200, 0, 200), "Soguk, kuru yaz, ilik yaz"),
-    19: ("Dsc", (150, 50, 150), "Soguk, kuru yaz, serin yaz"),
-    20: ("Dsd", (150, 100, 150), "Soguk, kuru yaz, cok soguk kis"),
-    21: ("Dwa", (170, 175, 255), "Soguk, kuru kis, sicak yaz"),
-    22: ("Dwb", (90, 120, 220), "Soguk, kuru kis, ilik yaz"),
-    23: ("Dwc", (75, 80, 180), "Soguk, kuru kis, serin yaz"),
-    24: ("Dwd", (50, 0, 135), "Soguk, kuru kis, cok soguk kis"),
-    25: ("Dfa", (0, 255, 255), "Soguk, kuraksiz, sicak yaz"),
-    26: ("Dfb", (55, 200, 255), "Soguk, kuraksiz, ilik yaz"),
-    27: ("Dfc", (0, 125, 125), "Soguk, kuraksiz, serin yaz"),
-    28: ("Dfd", (0, 70, 95), "Soguk, kuraksiz, cok soguk kis"),
+    4: ("BWh", (255, 0, 0), "Kurak, çöl, sıcak"),
+    5: ("BWk", (255, 150, 150), "Kurak, çöl, soğuk"),
+    6: ("BSh", (245, 165, 0), "Kurak, bozkır, sıcak"),
+    7: ("BSk", (255, 220, 100), "Kurak, bozkır, soğuk"),
+    8: ("Csa", (255, 255, 0), "Ilıman, kurak yaz, sıcak yaz"),
+    9: ("Csb", (200, 200, 0), "Ilıman, kurak yaz, ılık yaz"),
+    10: ("Csc", (150, 150, 0), "Ilıman, kurak yaz, serin yaz"),
+    11: ("Cwa", (150, 255, 150), "Ilıman, kurak kış, sıcak yaz"),
+    12: ("Cwb", (100, 200, 100), "Ilıman, kurak kış, ılık yaz"),
+    13: ("Cwc", (50, 150, 50), "Ilıman, kurak kış, serin yaz"),
+    14: ("Cfa", (200, 255, 80), "Ilıman, kuraksız, sıcak yaz"),
+    15: ("Cfb", (100, 255, 80), "Ilıman, kuraksız, ılık yaz"),
+    16: ("Cfc", (50, 200, 0), "Ilıman, kuraksız, serin yaz"),
+    17: ("Dsa", (255, 0, 255), "Soğuk, kurak yaz, sıcak yaz"),
+    18: ("Dsb", (200, 0, 200), "Soğuk, kurak yaz, ılık yaz"),
+    19: ("Dsc", (150, 50, 150), "Soğuk, kurak yaz, serin yaz"),
+    20: ("Dsd", (150, 100, 150), "Soğuk, kurak yaz, çok soğuk kış"),
+    21: ("Dwa", (170, 175, 255), "Soğuk, kurak kış, sıcak yaz"),
+    22: ("Dwb", (90, 120, 220), "Soğuk, kurak kış, ılık yaz"),
+    23: ("Dwc", (75, 80, 180), "Soğuk, kurak kış, serin yaz"),
+    24: ("Dwd", (50, 0, 135), "Soğuk, kurak kış, çok soğuk kış"),
+    25: ("Dfa", (0, 255, 255), "Soğuk, kuraksız, sıcak yaz"),
+    26: ("Dfb", (55, 200, 255), "Soğuk, kuraksız, ılık yaz"),
+    27: ("Dfc", (0, 125, 125), "Soğuk, kuraksız, serin yaz"),
+    28: ("Dfd", (0, 70, 95), "Soğuk, kuraksız, çok soğuk kış"),
     29: ("ET", (178, 178, 178), "Kutup, tundra"),
-    30: ("EF", (102, 102, 102), "Kutup, don"),
+    30: ("EF", (102, 102, 102), "Kutup, buzul"),
 }
 
 # Kullanicinin isaretledigi bozkir bolgesi. Poligon 2000x1000'lik gorselden
@@ -167,7 +168,7 @@ def kirp(r, pay_deg=22.0):
     r["bounds"] = [round(B + x0 * dlon, 4), round(Y - y1 * dlat, 4),
                    round(B + x1 * dlon, 4), round(Y - y0 * dlat, 4)]
     r["w"], r["h"] = int(x1 - x0), int(y1 - y0)
-    return r, (w, h)
+    return r, (w, h), (y0, y1, x0, x1)
 
 
 def kunye(w, g, yillik_yagis):
@@ -247,6 +248,7 @@ def main():
             "kontrol et (yukseklik haritasi, sea_level_value, params). "
             "Yine de yazmak icin: --zorla" % len(dusen))
 
+    os.makedirs(os.path.dirname(os.path.abspath(a.cikti)), exist_ok=True)
     land = g.land
     alanlar = {}
     # TAM kara araligi kodlanir. Onceden %1-%99 yuzdelikleri kullaniliyordu ve
@@ -254,8 +256,9 @@ def main():
     # hucresini -24.7 yerine -3.1 C, en yagisli hucreyi 2221 yerine 758 mm
     # gosteriyordu (olculdu). Renk dagilimi uygulamada yuzdelik esitlemeyle
     # kuruldugu icin uc degerler rengi bozmaz.
-    for ad, mo in (("temp_jan", T[0]), ("temp_jul", T[6]), ("prec_jan", P[0]),
-                   ("prec_jul", P[6]), ("temp_yil", T.mean(0)), ("prec_yil", P.sum(0))):
+    # Ocak/Temmuz ayri alan olarak TASINMAZ: 12 ayin tamami asagida "aylik"
+    # blokta, yalniz kara hucreleri icin paketli geliyor.
+    for ad, mo in (("temp_yil", T.mean(0)), ("prec_yil", P.sum(0))):
         v = mo[land]
         lo, hi = float(np.floor(v.min() * 10) / 10), float(np.ceil(v.max() * 10) / 10)
         olcek = "kok" if ad.startswith("prec") else "lin"
@@ -277,23 +280,54 @@ def main():
         "fields": alanlar, "stats": None,
         "sanity": [{"ad": ad, "gecti": bool(ok), "aciklama": d} for ad, ok, d in rapor],
     }
-    bolge, ham = kirp(bolge)
+    bolge, ham, (y0, y1, x0, x1) = kirp(bolge)
     print("kirpildi: %dx%d -> %dx%d" % (ham[0], ham[1], bolge["w"], bolge["h"]))
+
+    # 12 AYLIK sicaklik ve yagis, yalniz KARA hucreleri, satir sirasiyla
+    # (kirpilmis gridde land bitlerinin sirasi). Klimagram ve ay kaydiricisi
+    # icin. Tam grid 24 x 209 bin bayt (6.7 MB base64) olurdu; kara ~%24'u.
+    kl = land[y0:y1, x0:x1]
+    Tk = T[:, y0:y1, x0:x1][:, kl]
+    Pk = P[:, y0:y1, x0:x1][:, kl]
+    tlo, thi = float(np.floor(Tk.min() * 10) / 10), float(np.ceil(Tk.max() * 10) / 10)
+    phi = float(np.ceil(Pk.max() * 10) / 10)
+    bolge["aylik"] = {
+        "n": int(kl.sum()),
+        "T": {"lo": tlo, "hi": thi, "olcek": "lin", "data": kodla(Tk, tlo, thi)},
+        "P": {"lo": 0.0, "hi": phi, "olcek": "kok", "data": kodla(Pk, 0.0, phi, "kok")},
+    }
+    # doku cozunurlugu veri cozunurlugunden bagimsiz ~0.066 derece: kaba
+    # denemede (--res 1.0) de harita kiyisi ayni incelikte cizilir
+    hucre = (g.bounds[2] - g.bounds[0]) / g.shape[1]
+    dokubilgi = doku.uret(w, bolge, K[y0:y1, x0:x1], (y0, y1, x0, x1),
+                          os.path.dirname(os.path.abspath(a.cikti)),
+                          olcek=max(1, int(round(hucre / 0.066))))
+    if dokubilgi["kabartma_ortusme"] is not None and dokubilgi["kabartma_ortusme"] < 0.95:
+        print("UYARI: kabartma gorseli karaya %.1f%% oturuyor (<%%95). Arazi degistiyse "
+              "editor gorselini yeniden al: python kabartma_kaydet.py <gorsel>"
+              % (100 * dokubilgi["kabartma_ortusme"]))
+    print("dokular: %dx%d, kabartma kaynagi %s, ortusme %s"
+          % (dokubilgi["w"], dokubilgi["h"], dokubilgi["kabartma"], dokubilgi["kabartma_ortusme"]))
+    bolge["doku"] = dokubilgi
 
     veri = {"world": w.name, "fictional": True, "regions": {"global": bolge},
             "koppen_colors": {v[0]: "#%02x%02x%02x" % v[1] for v in LEG.values()},
             "koppen_names": {v[0]: v[2] for v in LEG.values()},
             "koppen_code": {str(k): v[0] for k, v in LEG.items()}}
     facts = kunye(w, g, P.sum(0))
-    roi = [[round(la, 3), round(lo, 3)] for la, lo in (enlemboylam(*p) for p in POLI)]
 
     govde = json.dumps(veri, separators=(",", ":"))
-    surum = hashlib.sha1((govde + json.dumps(facts, ensure_ascii=False)).encode("utf-8")).hexdigest()[:10]
-    os.makedirs(os.path.dirname(a.cikti), exist_ok=True)
+    ozet_h = hashlib.sha1((govde + json.dumps(facts, ensure_ascii=False)).encode("utf-8"))
+    # dokular JSON'da degil ayri dosyada; icerikleri de surume girer, yoksa
+    # yalniz kabartma degistiginde is akisi "ayni" deyip commit etmezdi
+    for ad in ("doku.png", "yukseklik.png", "kabartma.jpg"):
+        with open(os.path.join(os.path.dirname(os.path.abspath(a.cikti)), ad), "rb") as fh:
+            ozet_h.update(fh.read())
+    surum = ozet_h.hexdigest()[:10]
     with open(a.cikti, "w", encoding="utf-8") as fh:
-        fh.write('{"surum":%s,"uretim":%s,"facts":%s,"roi":%s,"data":%s}'
+        fh.write('{"surum":%s,"uretim":%s,"facts":%s,"data":%s}'
                  % (json.dumps(surum), json.dumps(time.strftime("%Y-%m-%d %H:%M")),
-                    json.dumps(facts, ensure_ascii=False), json.dumps(roi), govde))
+                    json.dumps(facts, ensure_ascii=False), govde))
     print("-> %s  surum %s  %.2f MB  (%.0f sn)"
           % (a.cikti, surum, os.path.getsize(a.cikti) / 1e6, time.time() - t0))
     print("kunye: " + ", ".join("%s %s" % (x, y) for x, y in facts))

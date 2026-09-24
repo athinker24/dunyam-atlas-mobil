@@ -9,6 +9,7 @@ on:
       - 'dunya/**'
       - 'motor/**'
       - 'uret.py'
+      - 'doku.py'
       - '.github/workflows/veri.yml'
   workflow_dispatch:
     inputs:
@@ -36,7 +37,9 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: veriyi uret
-        run: python uret.py --res "${{ github.event.inputs.res || '0.25' }}" --cikti /tmp/yeni.json --ozet
+        # uret.py dokulari (doku.png, yukseklik.png, kabartma.jpg) ciktinin
+        # yanina yazar; hepsi birlikte tasinir.
+        run: python uret.py --res "${{ github.event.inputs.res || '0.25' }}" --cikti /tmp/yeni/atlas.json --ozet
       # Dosyayi dogrudan yazip "git diff" ile bakmak ISE YARAMAZ: her ciktida
       # bir "uretim" zaman damgasi var, yani dosya iklim hic degismese de her
       # kosuda farkli cikar ve 2 MB'lik bos commit'ler birikir. Icerik ozeti
@@ -45,14 +48,15 @@ jobs:
         run: |
           python - <<'PY'
           import json, os, shutil
-          yeni = json.load(open("/tmp/yeni.json", encoding="utf-8"))["surum"]
+          yeni = json.load(open("/tmp/yeni/atlas.json", encoding="utf-8"))["surum"]
           try:
               eski = json.load(open("data/atlas.json", encoding="utf-8"))["surum"]
           except Exception:
               eski = None
           degisti = yeni != eski
           if degisti:
-              shutil.move("/tmp/yeni.json", "data/atlas.json")
+              for ad in os.listdir("/tmp/yeni"):
+                  shutil.move(os.path.join("/tmp/yeni", ad), os.path.join("data", ad))
           print("surum %s -> %s%s" % (eski, yeni, "" if degisti else "  (ayni)"))
           with open(os.environ["GITHUB_ENV"], "a") as fh:
               fh.write("DEGISTI=" + str(int(degisti)) + chr(10))
@@ -62,7 +66,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/atlas.json
+          git add data/
           git commit -m "Veri: uret.py ile yeniden uretildi (${GITHUB_SHA::7})"
           # Kosu ~12 dk suruyor. O arada bu yolu tetiklemeyen bir commit
           # (or. yalniz app.js) dala gelirse duz push reddediliyordu ve veri
