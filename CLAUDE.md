@@ -101,7 +101,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `index.html`, `style.css`, `app.js` | uygulama (dokunmatik pan/pinch, hücre kartı, alt panel) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
 | `data/atlas.json` | uygulamanın veri dosyası (yıllık alanlar, 12 aylık kara verisi, sınıflar) |
-| `data/doku.png`, `yukseklik.png`, `kabartma.jpg`, `kabartma_gri.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; editör görselinden kabartma; gri tonlu yükseklik haritasından kabartma — uygulamada ikisinden biri seçilir) |
+| `data/doku.png`, `yukseklik.png`, `kabartma.jpg`, `kabartma_gri.jpg`, `kabartma_bir.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; üç kabartma: editör görselinden, gri tonlu yükseklik haritasından ve ikisinin birleşimi — büyük biçim griden, ince doku editörden; uygulamada varsayılan birleşik). Editör görseli sahibin KONTURSUZ çıktısı olmalı: konturlu görselde tırtık gölgeye geçiyor |
 | `data/dolasim.png` | Dolaşım sekmesi: 12 ay alt alta, R/G = yüzey rüzgârı u/v, B = deniz yüzeyi sıcaklığı; ~0.75° bloklar. Akıntı yolları `atlas.json`'da, motora giren dosyadan olduğu gibi |
 | `uret.py` | dünyayı koşup `data/`'yı yazan tek giriş noktası |
 | `doku.py` | harita dokularını üretir (`uret.py` çağırır) |

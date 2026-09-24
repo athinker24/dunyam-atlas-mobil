@@ -17,6 +17,10 @@ OLCEK kati cozunurlukte uc doku yazar (varsayilan 4x, ~0.066 derece):
                       gorselinden (dunya/kabartma_kaynak.jpg) renk tonu
                       ayrilarak cikarilir; gorsel yoksa yukseklikten
                       hesaplanan golgeye duser.
+  data/kabartma_gri.jpg L, gri tonlu yukseklik haritasindan tepe golgesi.
+  data/kabartma_bir.jpg L, birlesik (uygulamada varsayilan): buyuk bicim gri
+                      golgeden, ince doku editor gorselinden. Uygulamada uc
+                      kaynak arasinda secilir.
 
 Yumusak Koppen: her sinifin tek-sicak maskesi yuksek cozunurlukte Gauss ile
 bulaniklastirilip en buyugu secilir. Sinirlar hucre kosesinden degil egriden
@@ -118,6 +122,25 @@ def _kabartma_griden(w, kara, metre, cy, cx, hedef_std):
     return 1.0 + (k - 1.0) * (hedef_std / s if s > 0 else 1.0)
 
 
+def _kabartma_birlesik(k_editor, k_gri, kara_hi, olcek):
+    """Iki kaynagi olcege gore ayirip birlestirir.
+
+    Buyuk bicim (dag sirasinin hangi yone baktigi, yamacin golgesi) gri
+    yukseklik haritasindan gelir: isik tek ve tutarli yonden, arazinin
+    gercek geometrisinden. Ince doku (yamac kirisikligi, puruz) editor
+    gorselinin yuksek geciren bileseninden: gri golge o olcekte plastik
+    kadar puruzsuz. Esik ~4 doku pikseli. Sonuc editor golgesiyle ayni
+    genlige olceklenir. Sahibin KONTURSUZ gorseliyle kuruldu (Eylul 2026);
+    konturlu gorselde tirtik ince dokuya tasinir.
+    """
+    s = 4.0 * olcek / 4
+    ince = (k_editor - 1.0) - ndimage.gaussian_filter(k_editor - 1.0, s)
+    k = (k_gri - 1.0) * 0.75 + ince * 0.8
+    m = kara_hi > 0.5
+    hedef, sd = float((k_editor - 1.0)[m].std()), float(k[m].std())
+    return 1.0 + k * (hedef / sd if sd > 0 else 1.0)
+
+
 def _kabartma_yaz(k, kara_hi, yol):
     k = 1.0 + 0.42 * np.tanh((k - 1.0) / 0.42)          # parlak benekleri bastir
     k = np.where(kara_hi > 0.02, k, 1.0)
@@ -174,6 +197,7 @@ def uret(w, bolge: dict, K: np.ndarray, pencere, cikti_dir: str, olcek: int = OL
         k, kaynak, iou = kg, "gri ton yukseklik haritasi (editor gorseli yok)", None
     _kabartma_yaz(k, kara_hi, os.path.join(cikti_dir, "kabartma.jpg"))
     _kabartma_yaz(kg, kara_hi, os.path.join(cikti_dir, "kabartma_gri.jpg"))
+    _kabartma_yaz(_kabartma_birlesik(k, kg, kara_hi, olcek), kara_hi, os.path.join(cikti_dir, "kabartma_bir.jpg"))
 
     return {"olcek": olcek, "w": W, "h": H, "yukseklik_ust": round(ust, 1),
             "kabartma": kaynak, "kabartma_ortusme": None if iou is None else round(iou, 4)}

@@ -90,9 +90,12 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
   clearTimeout(bildir._z); bildir._z=setTimeout(()=>{ t.hidden=true; }, ms); }
 
 const AYAR_ANAHTAR = "dunyam-ayar";
-const ayar = Object.assign({kabartma:true, kabartmaKaynak:"editor", piksel:false, izgara:true, bant:false,
+const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
   dolZemin:"sst", parcacik:false},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
+// Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
+// kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
+if(ayar.kabSurum !== 2){ if(ayar.kabartmaKaynak === "editor") ayar.kabartmaKaynak = "bir"; ayar.kabSurum = 2; }
 const ayarYaz = () => { try{ localStorage.setItem(AYAR_ANAHTAR, JSON.stringify(ayar)); }catch(_){} };
 
 function resimYukle(src){
@@ -333,6 +336,9 @@ function glKur(canvas){
 function baslat(J, resimler){
   const D = veriHazirla(J), {W, H, N, B} = D;
   D.dol = dolasimHazirla(D, resimler.dolasim);
+  // kabartma kaynaklari (kabartmaKur GL kurulurken cagrilir, once tanimli olmali)
+  const KAB = {bir: resimler.kabartmaBir, editor: resimler.kabartma, gri: resimler.kabartmaGri};
+  if(!KAB[ayar.kabartmaKaynak]) ayar.kabartmaKaynak = KAB.bir ? "bir" : "editor";
   if(!D.dol) $("[data-k=dolasim]").hidden = true;   // eski veride dolasim yok
   const canvas = $("#gl"), kaplama = $("#kaplama");
   let G = null;
@@ -647,20 +653,42 @@ function baslat(J, resimler){
     izole = izole===b.dataset.sinif ? null : b.dataset.sinif; listeYaz(); sayfaKapat(); katmanSec("iklim"); });
 
   /* --- sayfalar --- */
-  function sayfaAc(ad){ $("#sayfa-"+ad).hidden = false; }
+  function sayfaAc(ad){ if(ad === "ayar") return cekmeceAc(); $("#sayfa-"+ad).hidden = false; }
   function sayfaKapat(){ for(const s of document.querySelectorAll(".sayfa")) s.hidden = true; }
+
+  /* Ayarlar asagidan kayan bir cekmece: yarida durur, harita ustte gorunur
+     kalir ve ayar degisikligi aninda gorulur. Tutamaktan (ya da basliktan)
+     yukari cekilince tam ekrana acilir, asagi itilince kapanir. */
+  const cek = $("#sayfa-ayar");
+  const cekUst = () => window.innerHeight - ($(".marka").getBoundingClientRect().bottom + 12);
+  const cekYari = () => Math.round(window.innerHeight * 0.48);
+  function cekYukseklik(h, anim){ cek.style.transition = anim ? "height .22s ease" : "none"; cek.style.height = h + "px"; }
+  function cekmeceAc(){ cek.hidden = false; cekYukseklik(0, false); cek.getBoundingClientRect(); cekYukseklik(cekYari(), true); }
+  { let bas = null;
+    const tut = e => { const b = e.target.closest(".tutamak, #sayfa-ayar > header");
+      if(!b || e.target.closest("button")) return; bas = {y: e.clientY, h: cek.getBoundingClientRect().height};
+      cek.setPointerCapture(e.pointerId); };
+    cek.addEventListener("pointerdown", tut);
+    cek.addEventListener("pointermove", e => { if(!bas) return;
+      cekYukseklik(Math.max(60, Math.min(cekUst(), bas.h - (e.clientY - bas.y))), false); });
+    const birak = e => { if(!bas) return; const h = cek.getBoundingClientRect().height, hiz = bas.h - h; bas = null;
+      if(h < cekYari()*0.55){ cekYukseklik(0, true); setTimeout(() => { cek.hidden = true; }, 220); return; }
+      // en yakin durak: yari ya da tam
+      cekYukseklik(Math.abs(h - cekYari()) < Math.abs(h - cekUst()) ? cekYari() : cekUst(), true); };
+    cek.addEventListener("pointerup", birak); cek.addEventListener("pointercancel", birak); }
   for(const b of document.querySelectorAll("[data-kapat]")) b.addEventListener("click", sayfaKapat);
   $("#menu").addEventListener("click", () => sayfaAc("ayar"));
   $("#sigdir").addEventListener("click", sigdir);
 
   // iki kabartma kaynagi: editor gorseli ya da gri tonlu yukseklik haritasi.
   // Gri doku eski veride yoksa secenek kapali kalir.
-  function kabartmaKur(){ if(!G) return;
-    const gri = ayar.kabartmaKaynak==="gri" && resimler.kabartmaGri;
-    G.kur("tKab", gri ? resimler.kabartmaGri : resimler.kabartma, 0, 0, "L", true); }
+  // uc kabartma kaynagi: birlesik (varsayilan), editor gorseli, gri yukseklik
+  // haritasi. Veride olmayanin dugmesi gizlenir, secim olana duser.
+  function kabartmaKur(){ if(!G) return; G.kur("tKab", KAB[ayar.kabartmaKaynak] || resimler.kabartma, 0, 0, "L", true); }
   const kaynakDugme = [...document.querySelectorAll("#kabartma-kaynak button")];
   function kaynakYaz(){ for(const b of kaynakDugme) b.setAttribute("aria-checked", String(b.dataset.kaynak===ayar.kabartmaKaynak)); }
-  if(!resimler.kabartmaGri){ ayar.kabartmaKaynak = "editor"; $("#kabartma-kaynak").hidden = true; }
+  for(const b of kaynakDugme) b.hidden = !KAB[b.dataset.kaynak];
+  if(kaynakDugme.filter(b=>!b.hidden).length < 2) $("#kabartma-kaynak").hidden = true;
   for(const b of kaynakDugme) b.addEventListener("click", () => {
     ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); ciz(); });
   kaynakYaz();
@@ -783,11 +811,12 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, dolasim] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
+      resimYukle("data/kabartma_bir.jpg").catch(() => null),
       resimYukle("data/dolasim.png").catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, dolasim};
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk kurulum için sunucu açık olmalı.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+J.uretim), 600);

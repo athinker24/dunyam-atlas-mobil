@@ -77,7 +77,7 @@ const OLC = () => {
   p.on("pageerror", e => hatalar.push(e.message));
   // 404 konsolda adresiz "Failed to load resource" olarak da duser; onu yanit
   // olayindan adresiyle yakalariz. Eski veride olmayan istege bagli dokular muaf.
-  const ISTEGE_BAGLI = /data\/(kabartma_gri\.jpg|dolasim\.png)$/;
+  const ISTEGE_BAGLI = /data\/(kabartma_gri\.jpg|kabartma_bir\.jpg|dolasim\.png)$/;
   p.on("console", m => { if (m.type() === "error" && !/^Failed to load resource/.test(m.text())) hatalar.push(m.text()); });
   p.on("response", y => { if (y.status() >= 400 && !ISTEGE_BAGLI.test(y.url())) hatalar.push(`${y.status()} ${y.url()}`); });
   const bekle = ms => p.waitForTimeout(ms);
@@ -135,7 +135,8 @@ const OLC = () => {
     }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);
     if (kaynak) { await p.evaluate(() => document.querySelector("[data-kaynak=gri]").click()); await bekle(250);
-      await p.evaluate(() => document.querySelector("[data-kaynak=editor]").click()); }
+      await p.evaluate(() => document.querySelector("[data-kaynak=editor]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-kaynak=bir]")?.click()); }
     denetle("katman, ay ve kabartma gecisleri hatasiz", hatalar.length === 0, hatalar.slice(0, 3).join(" | "));
 
     // cevrimdisi: service worker her seyi onbellege almis olmali

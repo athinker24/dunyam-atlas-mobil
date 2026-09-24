@@ -8,5 +8,5 @@ rm -rf site
 mkdir -p site/data
 cp index.html app.js style.css sw.js manifest.webmanifest site/
 cp -R icons site/
-cp data/atlas.json data/doku.png data/yukseklik.png data/kabartma.jpg data/kabartma_gri.jpg data/dolasim.png site/data/
+cp data/atlas.json data/doku.png data/yukseklik.png data/kabartma.jpg data/kabartma_gri.jpg data/kabartma_bir.jpg data/dolasim.png site/data/
 echo "site/ hazir: $(find site -type f | wc -l) dosya"

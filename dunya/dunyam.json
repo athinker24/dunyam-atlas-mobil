@@ -183,11 +183,11 @@
     ],
     "kabartma": {
       "file": "dunya/kabartma_kaynak.jpg",
-      "sx": 0.423761,
-      "sy": 0.423713,
-      "ox": 1533.116,
-      "oy": 170.902,
-      "iou": 0.9835,
+      "sx": 0.437054,
+      "sy": 0.437127,
+      "ox": 1516.746,
+      "oy": 324.15,
+      "iou": 0.9859,
       "_not": "Tuval pikseli (satir, sutun) -> gorsel pikseli: ((satir-oy)/sy, (sutun-ox)/sx). kabartma_kaydet.py yazar; elle degistirme."
     }
   },
