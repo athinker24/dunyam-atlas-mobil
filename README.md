@@ -5,7 +5,23 @@ WebGL harita (yumuşak ya da piksel görünüm, sahibin editör görselinden
 kabartma gölgesi), 12 aylık klimagramlı hücre kartı. Eylül 2026'dan beri
 paleti ve veri biçimi masaüstü atlastan AYRI (bkz CLAUDE.md 7.4).
 
-## Telefona kurmak
+## Telefona kurmak (sabit adres, Cloudflare)
+
+Cloudflare bu repoyu okur ve her push'ta uygulamayı yayınlar: derleme komutu
+`sh yayinla.sh` yalnız uygulama dosyalarını `site/`'ye kopyalar,
+`npx wrangler deploy` onu yayınlar (`wrangler.jsonc`). Motor ve dünya tanımı
+yayına girmez. Önünde Cloudflare Access durur; site yalnız sahibin
+e-postasına gelen kodla açılır.
+
+1. Yayın adresini telefonda tarayıcıda aç, e-postana gelen kodla gir.
+2. Tarayıcı menüsünden **Ana ekrana ekle**.
+3. Sonrası kendiliğinden: adres sabit olduğu için uygulama her açılışta
+   yeni sürümü alır, internet yoksa önbellekten çalışır.
+
+Yayınlanan dal Cloudflare panelinde Settings → Build → Branch control'dan
+seçilir. Diğer dalların ayrı önizleme adresi olur.
+
+## Telefona kurmak (eski yol, geçici tünel)
 
 1. `tunel.bat` çalıştır. Pencerede `https://….trycloudflare.com` adresi çıkar.
 2. Adresi telefonda aç. Cloudflare ara sayfası çıkarsa devam et.
