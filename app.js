@@ -345,6 +345,11 @@ function baslat(J, resimler){
   try { G = glKur(canvas); if(G && G.enBuyuk < Math.max(D.doku.w, D.doku.h)) G = null; }
   catch(e){ console.error(e); G = null; }
   const yedek = G ? null : canvas.getContext("2d");
+  // Android arka plandaki sekmenin GPU bagini koparabilir (context lost);
+  // o zaman dokular gider ve harita siyah kalir. Geri gelince sayfa yeniden
+  // kurulur: veri ve dokular onbellekte, acilis kisa.
+  canvas.addEventListener("webglcontextlost", e => e.preventDefault());
+  canvas.addEventListener("webglcontextrestored", () => location.reload());
 
   const palet = new Uint8Array(32*4);
   for(const [kod, ad] of Object.entries(D.KCODE)){ const c = hex(KPAL[ad] || D.J.data.koppen_colors[ad]);
@@ -675,7 +680,12 @@ function baslat(J, resimler){
       if(h < cekYari()*0.55){ cekYukseklik(0, true); setTimeout(() => { cek.hidden = true; }, 220); return; }
       // en yakin durak: yari ya da tam
       cekYukseklik(Math.abs(h - cekYari()) < Math.abs(h - cekUst()) ? cekYari() : cekUst(), true); };
-    cek.addEventListener("pointerup", birak); cek.addEventListener("pointercancel", birak); }
+    cek.addEventListener("pointerup", birak); cek.addEventListener("pointercancel", birak);
+    // ekran donunce cekmece yeni ekrana sigmali: yatayda eski yukseklik ekrani
+    // asiyor, tutamak ustte gorunmez kaliyordu (olculdu: 405 px, ekran 390)
+    addEventListener("resize", () => { if(cek.hidden) return;
+      const h = cek.getBoundingClientRect().height;
+      cekYukseklik(h >= cekUst() - 2 ? cekUst() : Math.min(cekYari(), cekUst()), false); }); }
   for(const b of document.querySelectorAll("[data-kapat]")) b.addEventListener("click", sayfaKapat);
   $("#menu").addEventListener("click", () => sayfaAc("ayar"));
   $("#sigdir").addEventListener("click", sigdir);

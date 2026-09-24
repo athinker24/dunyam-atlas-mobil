@@ -18,7 +18,8 @@ Kurgusal bir gezegenin iklim atlası. İki parçası var:
   kartını, Dolaşım sekmesinde aylık rüzgârı (akış çizgileri ya da hareketli
   parçacıklar), zemin olarak deniz yüzeyi sıcaklığını ya da rüzgâr hızını ve
   akıntı yollarını, bir de iç tutarlılık raporunu gösterir. Veriyi `data/atlas.json`'dan,
-  harita dokularını `data/doku.png`, `yukseklik.png`, `kabartma.jpg`'den okur.
+  harita dokularını `data/doku.png`, `yukseklik.png`, `kabartma*.jpg`,
+  `dolasim.png`'den okur.
 - **Üretici** (`uret.py` + `motor/` + `dunya/`) — iklim motorunun ve dünya
   tanımının kopyası. O `data/atlas.json`'u üretir.
 
@@ -51,8 +52,9 @@ Bunlar oturumlar boyunca tekrarlanmış, kalıcı istekler. Bir değişiklik
   yapmak… şu an masaüstüne bağımlı, bunu istemiyorum."* Bu yüzden `motor/`
   ve `dunya/` burada kopya olarak duruyor ve GitHub Actions veriyi kendisi
   üretebiliyor.
-- **Mobil uygulama hızlı güncellenebilir olmalı**, private repo, tünelle
-  telefona kurulur. Veri değişince uygulama koduna dokunulmaz.
+- **Mobil uygulama hızlı güncellenebilir olmalı**, private repo. Cloudflare
+  her push'ta yayınlar (sabit adres, önünde Access), telefondaki uygulama
+  kendini günceller (§7.5). Veri değişince uygulama koduna dokunulmaz.
 
 ### 2.2 İklim istekleri (dünyanın nasıl hissettirmesi gerektiği)
 
@@ -110,7 +112,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `dunya/` | `dunyam.json`, `dunyam.currents.json`, `dunyam_heightmap.png`, `kabartma_kaynak.jpg` |
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
-| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış, iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart, çevrimdışı. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
+| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış, iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart, Dolaşım (çizgiler, akıntılar, parçacıklar), katman/ay/kabartma geçişleri, çevrimdışı. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
 | `baslat.bat` | yalnız bilgisayarda aç (http://localhost:8778) |
@@ -158,9 +160,12 @@ işe yarayan alışkanlık bu oldu. Notla veri çelişiyorsa bu bir hatadır.
 
 ### GitHub üzerinden, bilgisayar açmadan
 
-`dunya/`, `motor/` ya da `uret.py` değişip push edilince
-`.github/workflows/veri.yml` `uret.py`'yi koşar ve değişen `data/atlas.json`'u
-commit eder. Actions sekmesinden **atlas verisi → Run workflow** ile elle de
+`dunya/`, `motor/`, `uret.py` ya da `doku.py` değişip push edilince
+`.github/workflows/veri.yml` `uret.py`'yi koşar, yeni veriyle uygulama testini
+koşar ve test geçerse değişen `data/`'yı commit eder. Motor belirlenimci:
+girdi aynıysa `surum` aynı çıkar ve commit atılmaz (bu yüzden test adımı
+şimdiye dek yalnız yerelde koştu; iş akışında ilk gerçek veri değişikliğinde
+çalışacak). Actions sekmesinden **atlas verisi → Run workflow** ile elle de
 başlatılır (çözünürlük orada seçilir). Ölçüldü: 1365×682 hücre, 12/12
 tutarlılık, GitHub koşucusunda ~12 dk. Koşu sırasında dala başka commit
 gelirse iş akışı push'tan önce `git pull --rebase` yapar.
@@ -289,10 +294,9 @@ Geçici Cloudflare tünelleri her açılışta yeni adres verir. Telefondaki
 uygulama hangi adresten kurulduysa ona bağlıdır — tarayıcılar her adresi ayrı
 bir site sayar. Dünkü tünelden kurulan uygulama bugünkü tünelden habersizdir:
 ölü adrese gider, 4 saniye sonra önbelleğe düşer ve **eski veriyi** gösterir.
-Hata değil, tasarım. Kendini güncelleyebilmesi sabit bir adres ister; şimdilik
-bilerek kurulmadı.
+Hata değil, tasarım. Kendini güncelleyebilmesi sabit bir adres ister.
 
-**Eylül 2026: sabit adres Cloudflare ile kuruluyor** (Workers, yalnız statik
+**Eylül 2026: sabit adres Cloudflare ile KURULDU** (Workers, yalnız statik
 dosya; `wrangler.jsonc`). Cloudflare private repoyu okur, her push'ta
 `sh yayinla.sh` koşar ve `npx wrangler deploy` `site/`'yi yayınlar; diğer
 dalların ayrı önizleme adresi olur. Önünde Cloudflare Access durur (yalnız
@@ -320,13 +324,16 @@ projeye de taşı.
 
 **Şu an böyle bir ayrışma VAR** (motor tarafı): `motor/moisture.py` fırtına
 yolu terimi (`storm_c`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
-ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı
-yalnız bu repoda. Asıl projeye taşınmalı.
+ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
+alan ağırlıklı kara yağışı / sınıf payı yalnız bu repoda. Asıl projeye
+taşınmalı.
 
 **Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
 sahibin kendi PNG'sinden, kayıtla aktarıldı) ve `elev_curve` (sahibin çapaları)
-yalnız bu repoda. Asıl projede `_repo_senkron.py --yaz` koşulursa ikisini de
-eski hâline döndürür; `_egri_kur.py --yaz` koşulursa eğriyi yeniden Dünya
+yalnız bu repoda; 24 Eylül'de açılan kanal ve üç kıyı girintisi de
+(`_heightmap_kaynak`), kontursuz editör görseli `kabartma_kaynak.jpg` ve
+`heightmap.kabartma` kaydı da. Asıl projede `_repo_senkron.py --yaz`
+koşulursa hepsini eski hâline döndürür; `_egri_kur.py --yaz` koşulursa eğriyi yeniden Dünya
 hipsometrisine zorlar. Önce bu iki dosyayı asıl projeye taşı. Ayrıntı
 `dunyam.json` → `_heightmap_kaynak`, `_elev_curve`.
 
@@ -356,6 +363,10 @@ buraya bak.
   `transport_seasonal_lat_deg` bunu düzeltir ama 70° üstünde aşırı büyütür;
   karası 70°'nin altında biten bir dünyada açmaya değer, büyük kutup kıtası
   varsa kapalı bırak. Varsayılan 0 = kapalı.
+- **Deniz buzu yok.** Okyanus sıcaklığı donma noktasında kelepçelenir ama buz
+  yüzeyi ve buz-albedo geri beslemesi modellenmez; okyanus-ayların ~%15'i
+  kelepçede (iç tutarlılık raporunda görünür; eşik %35). Yüksek enlem
+  kıyılarının kışı bu yüzden gerçekte olacağından ılık olabilir.
 - **`gravity_ms2` hiçbir şey tarafından okunmuyor.** Bilerek: ait olduğu üç
   yer de Dünya'ya uydurulmuş sabitler taşıyor. `test_gravity_is_inert` yarım
   bağlamayı engelliyor.
@@ -387,7 +398,8 @@ asıl projede şu zincir koşar:
    taşınacak çapa yoktur.
 3. `python _akinti_kur.py` — **yalnız kıyı değiştiyse**; akıntı yollarını
    gerçek kıyı çizgisinden yeniden türetir.
-3b. **Kabartma görseli:** editörden aynı çerçevede yeni bir renkli görsel al ve
+3b. **Kabartma görseli:** editörden aynı çerçevede yeni bir renkli görsel al
+   (**konturlar kapalı**; konturlu görselde tırtık gölgeye geçer) ve
    bu repoda `python kabartma_kaydet.py <görsel>` koş. Görsel yenilenmezse
    uygulamadaki gölge eski dağları gösterir; `uret.py` görselin karaya
    oturmasını her koşuda ölçer ve %95'in altındaysa uyarır.

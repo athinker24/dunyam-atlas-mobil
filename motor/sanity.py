@@ -156,15 +156,24 @@ def check(grid: Grid, r: dict) -> list:
             f"okyanus {ao:.1f} C, kara {al:.1f} C")
 
     # --- yagis kaynagi var mi ---
+    # Kullaniciya gosterilen deger ALAN AGIRLIKLI: hucre ortalamasi yuksek
+    # enlemleri sisirir ve kunyedeki kara yagisiyla celisiyordu (olculdu: 924
+    # hucre ortalamasi, 1005 alan agirlikli). Esik (50 mm) gevsek, sonucu degismez.
+    agirlik = np.cos(np.radians(grid.lat2d))
     if land.any():
         yillik = precip.sum(0)[land]
-        add("kara yagis aliyor", yillik.mean() > 50,
-            f"ortalama {yillik.mean():.0f} mm/yil, medyan {np.median(yillik):.0f}")
+        wl = agirlik[land]
+        ort = float((yillik * wl).sum() / wl.sum())
+        sira = np.argsort(yillik); kum = np.cumsum(wl[sira]) / wl.sum()
+        medyan = float(yillik[sira][np.searchsorted(kum, 0.5)])
+        add("kara yagis aliyor", ort > 50,
+            f"alan agirlikli ortalama {ort:.0f} mm/yil, medyan {medyan:.0f}")
 
     # --- sinif dagilimi dejenere degil ---
     if "koppen" in r and land.any():
-        kod, adet = np.unique(r["koppen"][land], return_counts=True)
-        pay = adet / adet.sum()
+        # paylar alan agirlikli (bkz CLAUDE.md 7.1)
+        kod, ters = np.unique(r["koppen"][land], return_inverse=True)
+        pay = np.bincount(ters.ravel(), weights=agirlik[land].ravel()) / agirlik[land].sum()
         en = pay.max()
         add("iklim sinifi dagilimi dejenere degil", en < 0.6,
             f"{len(kod)} sinif, en yaygin {CODES[int(kod[pay.argmax()])]} %{100 * en:.0f}")

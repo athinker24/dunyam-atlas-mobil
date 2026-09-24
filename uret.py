@@ -21,6 +21,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import time
@@ -140,6 +141,29 @@ def kodla(a, lo, hi, olcek="lin"):
         x = np.sqrt(x)
     q = np.clip(np.round(x * 254) + 1, 1, 255)
     return base64.b64encode(q.astype(np.uint8).tobytes()).decode()
+
+
+# Motorun rapor metinleri ASCII (motor/ asil projeyle ortak, orada boyle).
+# Uygulamada gosterilirken Turkce karakterlerle yazilir; yalniz bu gosterim.
+_TURKCE = [
+    ("sayisal saglik", "sayısal sağlık"), ("negatif degil", "negatif değil"), ("en dusuk", "en düşük"),
+    ("buyuk olcude donmus degil", "büyük ölçüde donmuş değil"), ("okyanus-aylarin", "okyanus-ayların"),
+    ("donma noktasinda", "donma noktasında"), ("buz yuzeyi", "buz yüzeyi"), ("ust siniri", "üst sınırı"),
+    ("en yuksek", "en yüksek"), ("kuresel", "küresel"), ("sicaklik", "sıcaklık"), ("dusuyor", "düşüyor"),
+    ("ARTIYOR", "ARTIYOR"), ("asiri egiklik", "aşırı eğiklik"), ("yukseklikle sogume", "yükseklikle soğuma"),
+    ("yukseklik", "yükseklik"), ("esdogrusalligi", "eşdoğrusallığı"), ("esdogrusallik", "eşdoğrusallık"),
+    ("iyi kosullu dunyada", "iyi koşullu dünyada"), ("genligi", "genliği"), ("kucuk", "küçük"),
+    ("yagis aliyor", "yağış alıyor"), ("yagis", "yağış"), ("alan agirlikli", "alan ağırlıklı"),
+    ("mm/yil", "mm/yıl"), ("sinifi dagilimi", "sınıfı dağılımı"), ("degil", "değil"), ("sinif", "sınıf"),
+    ("yaygin", "yaygın"), ("basinci kelepceye dayanmiyor", "basıncı kelepçeye dayanmıyor"),
+    ("kelepce", "kelepçe"), ("hucre", "hücre"), ("buyuk", "büyük"), ("isinim", "ışınım"), ("egiklik", "eğiklik"),
+]
+
+
+def turkce(metin: str) -> str:
+    for a, b in _TURKCE:
+        metin = metin.replace(a, b)
+    return re.sub(r"(\d) C\b", r"\1 °C", metin)
 
 
 def kirp(r, pay_deg=22.0):
@@ -326,7 +350,7 @@ def main():
         "land": base64.b64encode(np.packbits(land).tobytes()).decode(),
         "elev": {"lo": alt, "hi": ust, "data": kodla(np.nan_to_num(e, nan=alt), alt, ust)},
         "fields": alanlar, "stats": None,
-        "sanity": [{"ad": ad, "gecti": bool(ok), "aciklama": d} for ad, ok, d in rapor],
+        "sanity": [{"ad": turkce(ad), "gecti": bool(ok), "aciklama": turkce(d)} for ad, ok, d in rapor],
     }
     bolge, ham, (y0, y1, x0, x1) = kirp(bolge)
     print("kirpildi: %dx%d -> %dx%d" % (ham[0], ham[1], bolge["w"], bolge["h"]))

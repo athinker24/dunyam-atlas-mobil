@@ -1,9 +1,11 @@
 # Dünyam Atlası — mobil
 
 Kurgusal dünyanın iklim atlasının telefona kurulan (PWA) sürümü. Koyu tema,
-WebGL harita (yumuşak ya da piksel görünüm, sahibin editör görselinden
-kabartma gölgesi), 12 aylık klimagramlı hücre kartı. Eylül 2026'dan beri
-paleti ve veri biçimi masaüstü atlastan AYRI (bkz CLAUDE.md 7.4).
+WebGL harita (yumuşak ya da piksel görünüm, kabartma gölgesi: birleşik,
+editör görseli ya da yükseklik haritası), 12 aylık klimagramlı hücre kartı,
+Dolaşım sekmesinde rüzgâr (akış çizgileri ya da hareketli parçacıklar),
+deniz yüzeyi sıcaklığı ve akıntılar. Eylül 2026'dan beri paleti ve veri
+biçimi masaüstü atlastan AYRI (bkz CLAUDE.md 7.4).
 
 ## Telefona kurmak (sabit adres, Cloudflare)
 
@@ -33,47 +35,16 @@ Tünel adresi her açılışta değişir ve bilgisayar açık, pencere açıkken
 
 ## Güncellemek
 
-Veriyi bu repodaki `uret.py` üretir (`data/atlas.json` + harita dokuları):
-
-```
-python uret.py --ozet
-```
+Veriyi bu repodaki `uret.py` üretir (`data/atlas.json` + harita dokuları).
+Push'tan sonrası kendiliğinden: GitHub gerekirse veriyi yeniden üretir
+(aşağıda), Cloudflare yayınlar, telefondaki uygulama bir sonraki açılışta
+yeni sürümü alır. Ayarlar → "Güncellemeleri denetle" bunu hemen yaptırır.
 
 `Proje 3`'teki `_atlas.py` artık bu uygulamanın verisini YAZMAMALI: eski
 biçimde (12 aylık veri ve dokular olmadan) yazar ve uygulama açılmaz.
-Masaüstü tarafı yeni biçime taşınana kadar mobil veri yalnız `uret.py`'den.
-Sonra:
 
-```
-git add -A && git commit -m "Veri guncellemesi" && git push
-```
-
-Bilgisayar hiç açılmadan da olur: aşağıdaki *İklimi değiştirmek* bölümü,
-veriyi GitHub'ın kendisinde yeniden ürettiren yolu anlatır.
-
-### DİKKAT: tünel adresi her açılışta değişir
-
-Geçici Cloudflare tünelleri her seferinde yeni bir adres verir. Telefondaki
-uygulama **hangi adresten kurulduysa ona bağlıdır** — tarayıcılar her adresi
-ayrı bir site sayar. Yani dün kurduğun uygulama bugünkü tünelden habersizdir:
-açtığında ölü adrese gider, 4 saniye sonra önbelleğe düşer ve **eski veriyi**
-gösterir. Hata değil, tasarım böyle.
-
-Bu yüzden veriyi telefona getirmenin yolu:
-
-1. `tunel.bat` çalıştır, yeni adresi telefonda **tarayıcıda** aç.
-2. Ana ekrana ekle.
-3. Eski simgeyi sil (yoksa iki uygulama olur, biri eski veriyle).
-
-Kurulu uygulamanın kendini güncelleyebilmesi **sabit bir adres** ister:
-ngrok'un ücretsiz sabit alan adı, kendi alan adınla Cloudflare kalıcı tüneli,
-ya da uygulamayı claude.ai artıfaktı olarak yayınlamak (o zaman çevrimdışı
-çalışmaz). Şimdilik bilerek kurulmadı.
-
-Ayarlar → "Güncellemeleri denetle" yalnızca **aynı adres** ayaktayken işe yarar.
-
-Uygulama koduna dokunmadan yalnız veri değişebilir. `sw.js` içindeki `AD`
-sürümünü yalnızca önbelleğe alınan dosya listesi (`KABUK`) değiştiğinde artır.
+`sw.js` içindeki `AD` sürümünü yalnızca önbelleğe alınan dosya listesi
+(`KABUK`) değiştiğinde artır; kod ve veri güncellemesi için gerekmez.
 
 ## İklimi değiştirmek — yalnız bu repoyla
 
@@ -115,9 +86,10 @@ nedenini bilemez.
 
 ### GitHub üzerinden, bilgisayar açmadan
 
-`dunya/`, `motor/` ya da `uret.py` değişip push edilince
-`.github/workflows/veri.yml` kendiliğinden `uret.py`'yi koşar ve değişen
-`data/atlas.json`'u commit eder. Actions sekmesinden **atlas verisi →
+`dunya/`, `motor/`, `uret.py` ya da `doku.py` değişip push edilince
+`.github/workflows/veri.yml` kendiliğinden `uret.py`'yi koşar, uygulamayı
+yeni veriyle tarayıcıda test eder (`test/uygulama_test.js`) ve test geçerse
+değişen veriyi commit eder. Veri değişmediyse commit atmaz. Actions sekmesinden **atlas verisi →
 Run workflow** ile elle de başlatabilirsin (çözünürlüğü orada seçebilirsin).
 
 Yani telefondan GitHub'da `dunyam.json` içindeki bir sayıyı değiştirip
@@ -140,16 +112,18 @@ python _senkron_kontrol.py /ana/projenin/yolu
 | dosya | ne |
 |---|---|
 | `index.html`, `style.css`, `app.js` | uygulama |
-| `data/atlas.json` + dokular | veri — yalnız `uret.py` yazar, elle düzenleme |
+| `data/atlas.json` + dokular (`doku.png`, `yukseklik.png`, `kabartma*.jpg`, `dolasim.png`) | veri — yalnız `uret.py` yazar, elle düzenleme |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
-| `uret.py` | veri üreticisi — iklimi yeniden hesaplar |
+| `uret.py`, `doku.py` | veri üreticisi ve harita dokuları |
+| `kabartma_kaydet.py` | editör görselini kabartma kaynağı olarak alır ve araziye oturtur |
 | `motor/` | iklim motoru (ana projenin `climate/` kopyası) |
-| `dunya/` | dünya tanımı, akıntılar, yükseklik haritası |
+| `dunya/` | dünya tanımı, akıntılar, yükseklik haritası, kabartma kaynağı |
+| `test/uygulama_test.js` | uygulamanın tarayıcı testi |
+| `.github/workflows/veri.yml`, `uygulama.yml` | GitHub'da yeniden üretim ve test |
+| `yayinla.sh`, `wrangler.jsonc` | Cloudflare yayını |
 | `_senkron_kontrol.py` | kopyalar ana projeyle aynı mı |
-| `.github/workflows/veri.yml` | GitHub'da otomatik yeniden üretim |
 | `baslat.bat` | yalnız bilgisayarda aç (http://localhost:8778) |
-| `tunel.bat` | telefona kurmak/güncellemek için geçici HTTPS tünel |
+| `tunel.bat` | yedek: geçici HTTPS tünel |
 
-`app.js` içindeki `KPAL` (palet) ve `KREF` (Dünya karşılıkları) blokları
-masaüstü şablonla (`atlas/atlas_tmpl.html`) birebir aynı olmalı. `_atlas.py`
-ikisini karşılaştırır ve farklıysa durur.
+`app.js` içindeki `KPAL` (palet) masaüstü şablondan bilerek ayrıştı (CLAUDE.md
+7.4); `_atlas.py`'nin palet karşılaştırması bu yüzden durur.
