@@ -88,7 +88,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
   clearTimeout(bildir._z); bildir._z=setTimeout(()=>{ t.hidden=true; }, ms); }
 
 const AYAR_ANAHTAR = "dunyam-ayar";
-const ayar = Object.assign({kabartma:true, piksel:false, izgara:true, bant:false},
+const ayar = Object.assign({kabartma:true, kabartmaKaynak:"editor", piksel:false, izgara:true, bant:false},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 const ayarYaz = () => { try{ localStorage.setItem(AYAR_ANAHTAR, JSON.stringify(ayar)); }catch(_){} };
 
@@ -298,7 +298,7 @@ function baslat(J, resimler){
     G.kur("tDoku", resimler.doku, 0, 0, "RGB", true);
     G.kur("tDokuN", resimler.doku, 0, 0, "RGB", false);
     G.kur("tYuk", resimler.yukseklik, 0, 0, "L", true);
-    G.kur("tKab", resimler.kabartma, 0, 0, "L", true);
+    kabartmaKur();
     // WebGL1 her ornekleyicinin bir dokusu olmasini ister; alan dokulari
     // katman secilince dolar, o zamana kadar bos durur
     G.kur("tAlan", new Uint8Array(W*H), W, H, "L", true);
@@ -454,6 +454,17 @@ function baslat(J, resimler){
   $("#menu").addEventListener("click", () => sayfaAc("ayar"));
   $("#sigdir").addEventListener("click", sigdir);
 
+  // iki kabartma kaynagi: editor gorseli ya da gri tonlu yukseklik haritasi.
+  // Gri doku eski veride yoksa secenek kapali kalir.
+  function kabartmaKur(){ if(!G) return;
+    const gri = ayar.kabartmaKaynak==="gri" && resimler.kabartmaGri;
+    G.kur("tKab", gri ? resimler.kabartmaGri : resimler.kabartma, 0, 0, "L", true); }
+  const kaynakDugme = [...document.querySelectorAll("#kabartma-kaynak button")];
+  function kaynakYaz(){ for(const b of kaynakDugme) b.setAttribute("aria-checked", String(b.dataset.kaynak===ayar.kabartmaKaynak)); }
+  if(!resimler.kabartmaGri){ ayar.kabartmaKaynak = "editor"; $("#kabartma-kaynak").hidden = true; }
+  for(const b of kaynakDugme) b.addEventListener("click", () => {
+    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); ciz(); });
+  kaynakYaz();
   for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-bant","bant"]]){
     const el = $("#"+id); el.checked = ayar[k];
     el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); katmanSec(katman); });
@@ -558,8 +569,10 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma] = await Promise.all(["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle));
-    resimler = {doku, yukseklik, kabartma};
+    const [doku, yukseklik, kabartma, kabartmaGri] = await Promise.all([
+      ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
+      resimYukle("data/kabartma_gri.jpg").catch(() => null)]);   // eski veride yok
+    resimler = {doku, yukseklik, kabartma, kabartmaGri};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk kurulum için sunucu açık olmalı.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+J.uretim), 600);

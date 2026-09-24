@@ -61,7 +61,11 @@
 <section class="sayfa" id="sayfa-ayar" aria-label="Ayarlar ve veri" hidden>
   <header><h2>Görünüm ve veri</h2><button class="ikon kapat" data-kapat aria-label="Kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
   <h3>Görünüm</h3>
-  <label class="anahtar"><span>Kabartma gölgesi<small>Editör görselinden çıkarılan arazi gölgesi</small></span><input type="checkbox" id="ay-kabartma" checked><i></i></label>
+  <label class="anahtar"><span>Kabartma gölgesi<small>Kaynak: editör görseli ya da gri tonlu yükseklik haritası</small></span><input type="checkbox" id="ay-kabartma" checked><i></i></label>
+  <div class="secim" id="kabartma-kaynak" role="radiogroup" aria-label="Kabartma kaynağı">
+    <button role="radio" data-kaynak="editor" aria-checked="true">Editör görseli</button>
+    <button role="radio" data-kaynak="gri" aria-checked="false">Yükseklik haritası</button>
+  </div>
   <label class="anahtar"><span>Piksel görünümü<small>Yumuşatma yok, modelin hücreleri olduğu gibi</small></span><input type="checkbox" id="ay-piksel"><i></i></label>
   <label class="anahtar"><span>Enlem ve boylam<small>30° aralıklı, yakınlaşınca 10°</small></span><input type="checkbox" id="ay-izgara" checked><i></i></label>
   <label class="anahtar"><span>Bantlı renk<small>Sıcaklık ve yağış altı eşit alanlı banda iner</small></span><input type="checkbox" id="ay-bant"><i></i></label>

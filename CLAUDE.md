@@ -99,7 +99,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `index.html`, `style.css`, `app.js` | uygulama (dokunmatik pan/pinch, hücre kartı, alt panel) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
 | `data/atlas.json` | uygulamanın veri dosyası (yıllık alanlar, 12 aylık kara verisi, sınıflar) |
-| `data/doku.png`, `yukseklik.png`, `kabartma.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; kabartma) |
+| `data/doku.png`, `yukseklik.png`, `kabartma.jpg`, `kabartma_gri.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; editör görselinden kabartma; gri tonlu yükseklik haritasından kabartma — uygulamada ikisinden biri seçilir) |
 | `uret.py` | dünyayı koşup `data/`'yı yazan tek giriş noktası |
 | `doku.py` | harita dokularını üretir (`uret.py` çağırır) |
 | `kabartma_kaydet.py` | sahibin editör görselini kabartma kaynağı olarak repoya alır ve araziye oturtur |

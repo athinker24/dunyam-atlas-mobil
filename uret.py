@@ -320,7 +320,7 @@ def main():
     ozet_h = hashlib.sha1((govde + json.dumps(facts, ensure_ascii=False)).encode("utf-8"))
     # dokular JSON'da degil ayri dosyada; icerikleri de surume girer, yoksa
     # yalniz kabartma degistiginde is akisi "ayni" deyip commit etmezdi
-    for ad in ("doku.png", "yukseklik.png", "kabartma.jpg"):
+    for ad in ("doku.png", "yukseklik.png", "kabartma.jpg", "kabartma_gri.jpg"):
         with open(os.path.join(os.path.dirname(os.path.abspath(a.cikti)), ad), "rb") as fh:
             ozet_h.update(fh.read())
     surum = ozet_h.hexdigest()[:10]

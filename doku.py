@@ -86,14 +86,42 @@ def _kabartma_gorselden(w, cy, cx, kara_hi):
     return k, iou
 
 
-def _kabartma_yukseklikten(metre_hi, piksel_m):
-    """Yedek: yukseklikten klasik tepe golgesi (isik kuzeybatidan)."""
-    gy, gx = np.gradient(metre_hi, piksel_m)
-    az, alt = np.radians(315.0), np.radians(45.0)
-    egim = np.arctan(np.hypot(gx, gy) * 2.0)
-    yon = np.arctan2(-gx, gy)
-    h = np.sin(alt) * np.cos(egim) + np.cos(alt) * np.sin(egim) * np.cos(az - yon)
-    return 1.0 + (h - np.sin(alt)) * 0.9
+def _kabartma_griden(w, kara, metre, cy, cx, hedef_std):
+    """Gri tonlu yukseklik haritasindan tepe golgesi, TUVAL cozunurlugunde.
+
+    Egim metre cinsinden, enleme gore daralan boylam adimiyla hesaplanir
+    (equirectangular'da dogu-bati piksel boyu cos(enlem) ile kisalir).
+    Isik agirlikla kuzeybatidan, bati ve kuzeyden iki zayif isik golgeleri
+    yumusatir. Duz ovada golge yoktur (editor gorselindeki doku gurultusu
+    burada olmaz). Genlik editor golgesinin kara ustundeki sapmasina
+    esitlenir; iki secenek ayni sertlikte gorunsun diye.
+    """
+    CH, CW = kara.shape
+    Rm = w.radius_km * 1000.0
+    dy = Rm * np.radians(180.0 / CH)
+    enlem = 90.0 - (np.arange(CH) + 0.5) * 180.0 / CH
+    dx = Rm * np.radians(360.0 / CW) * np.maximum(np.cos(np.radians(enlem)), 0.05)[:, None]
+    z = ndimage.gaussian_filter(np.where(kara, metre, 0.0), 0.7)   # 16 bit basamaklarini yumusat
+    gy, gx = np.gradient(z)
+    gx, gy = gx / dx * 6.0, -gy / dy * 6.0                          # 6x dusey abartma, kuzey yukari
+    n = np.sqrt(gx * gx + gy * gy + 1.0)
+
+    def isik(az, yuk):
+        az, yuk = np.radians(az), np.radians(yuk)
+        return (-gx * np.cos(yuk) * np.sin(az) - gy * np.cos(yuk) * np.cos(az) + np.sin(yuk)) / n
+
+    h = 0.6 * isik(315, 45) + 0.2 * isik(270, 55) + 0.2 * isik(0, 55)
+    k = h / (0.6 * np.sin(np.radians(45)) + 0.4 * np.sin(np.radians(55)))
+    k = ndimage.map_coordinates(k, [cy, cx], order=1, cval=1.0)
+    kara_hi = ndimage.map_coordinates(kara.astype(np.float32), [cy, cx], order=1, mode="nearest") > 0.5
+    s = float(k[kara_hi].std()) if kara_hi.any() else 0.0
+    return 1.0 + (k - 1.0) * (hedef_std / s if s > 0 else 1.0)
+
+
+def _kabartma_yaz(k, kara_hi, yol):
+    k = 1.0 + 0.42 * np.tanh((k - 1.0) / 0.42)          # parlak benekleri bastir
+    k = np.where(kara_hi > 0.02, k, 1.0)
+    Image.fromarray(np.clip(np.round(128 + (k - 1.0) * 255), 0, 255).astype(np.uint8)).save(yol, quality=86)
 
 
 def uret(w, bolge: dict, K: np.ndarray, pencere, cikti_dir: str, olcek: int = OLCEK) -> dict:
@@ -137,17 +165,15 @@ def uret(w, bolge: dict, K: np.ndarray, pencere, cikti_dir: str, olcek: int = OL
     Y = np.clip(np.round(np.sqrt(np.clip(m_hi, 0, None) / ust) * 255), 0, 255).astype(np.uint8)
     Image.fromarray(Y).save(os.path.join(cikti_dir, "yukseklik.png"), optimize=True)
 
-    # kabartma
+    # kabartma: editor gorseli ve gri tonlu yukseklik haritasi, iki ayri doku
     k, iou = _kabartma_gorselden(w, cy, cx, kara_hi)
+    hedef = float((k - 1.0)[kara_hi > 0.5].std()) if k is not None else 0.094
+    kg = _kabartma_griden(w, kara, metre, cy, cx, hedef)
     kaynak = "editor gorseli"
     if k is None:
-        piksel_m = w.radius_km * 1000 * np.radians((B[3] - B[1]) / H)
-        k = _kabartma_yukseklikten(m_hi, piksel_m)
-        kaynak, iou = "yukseklik haritasi (editor gorseli yok)", None
-    k = 1.0 + 0.42 * np.tanh((k - 1.0) / 0.42)          # parlak benekleri bastir
-    k = np.where(kara_hi > 0.02, k, 1.0)
-    KB = np.clip(np.round(128 + (k - 1.0) * 255), 0, 255).astype(np.uint8)
-    Image.fromarray(KB).save(os.path.join(cikti_dir, "kabartma.jpg"), quality=86)
+        k, kaynak, iou = kg, "gri ton yukseklik haritasi (editor gorseli yok)", None
+    _kabartma_yaz(k, kara_hi, os.path.join(cikti_dir, "kabartma.jpg"))
+    _kabartma_yaz(kg, kara_hi, os.path.join(cikti_dir, "kabartma_gri.jpg"))
 
     return {"olcek": olcek, "w": W, "h": H, "yukseklik_ust": round(ust, 1),
             "kabartma": kaynak, "kabartma_ortusme": None if iou is None else round(iou, 4)}
