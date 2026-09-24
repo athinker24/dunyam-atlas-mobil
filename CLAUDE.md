@@ -163,9 +163,9 @@ işe yarayan alışkanlık bu oldu. Notla veri çelişiyorsa bu bir hatadır.
 `dunya/`, `motor/`, `uret.py` ya da `doku.py` değişip push edilince
 `.github/workflows/veri.yml` `uret.py`'yi koşar, yeni veriyle uygulama testini
 koşar ve test geçerse değişen `data/`'yı commit eder. Motor belirlenimci:
-girdi aynıysa `surum` aynı çıkar ve commit atılmaz (bu yüzden test adımı
-şimdiye dek yalnız yerelde koştu; iş akışında ilk gerçek veri değişikliğinde
-çalışacak). Actions sekmesinden **atlas verisi → Run workflow** ile elle de
+girdi aynıysa `surum` aynı çıkar ve commit atılmaz; test adımı da yalnız veri
+değiştiğinde koşar (ilk kez 24 Eylül'de, rapor metni değişikliğinde koştu ve
+geçti). Actions sekmesinden **atlas verisi → Run workflow** ile elle de
 başlatılır (çözünürlük orada seçilir). Ölçüldü: 1365×682 hücre, 12/12
 tutarlılık, GitHub koşucusunda ~12 dk. Koşu sırasında dala başka commit
 gelirse iş akışı push'tan önce `git pull --rebase` yapar.
