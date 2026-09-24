@@ -287,7 +287,10 @@ function baslat(J, resimler){
   const kodNo = {}; for(const [kod, ad] of Object.entries(D.KCODE)) kodNo[ad] = +kod;
 
   if(G){
-    G.kur("tKop", D.kop, W, H, "L", false);
+    // model okyanus hucrelerine de sinif yazar; piksel gorunumu karayi
+    // "kod > 0" diye ayirdigi icin dokuda okyanus 0 olmali
+    const kopKara = new Uint8Array(N); for(let i=0;i<N;i++) if(D.land[i]) kopKara[i] = D.kop[i];
+    G.kur("tKop", kopKara, W, H, "L", false);
     G.kur("tPal", palet, 32, 1, "RGBA", false);
     G.kur("tDoku", resimler.doku, 0, 0, "RGB", true);
     G.kur("tDokuN", resimler.doku, 0, 0, "RGB", false);
