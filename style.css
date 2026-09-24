@@ -92,6 +92,7 @@ svg{display:block}
 #sekmeler{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));margin:6px -16px 0;border-top:1px solid var(--cizgi)}
 #sekmeler button{position:relative;height:50px;font-size:13.5px;color:var(--soluk);letter-spacing:.01em}
 #sekmeler button[aria-selected="true"]{color:var(--yazi)}
+@media (max-width:350px){#sekmeler button{font-size:12px}}
 #sekmeler button[aria-selected="true"]::before{content:"";position:absolute;top:-1px;left:22%;right:22%;height:2px;background:var(--vurgu)}
 
 /* ---- hucre karti ---- */
@@ -111,6 +112,8 @@ svg{display:block}
 .k-sayilar span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--soluk)}
 .klimagram{width:100%;height:auto}
 .klimagram text{font:10px var(--sans);fill:var(--soluk)}
+.k-kar{font-size:12px;color:var(--soluk);margin:2px 0 2px}
+.k-kar b{color:var(--yazi);font-weight:500;margin-right:2px}
 .k-alt{display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--soluk)}
 .k-deniz{font:500 17px var(--serif)}
 

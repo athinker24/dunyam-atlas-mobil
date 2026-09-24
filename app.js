@@ -59,6 +59,8 @@ const RAMPA = {
   sicaklik:["#2b3a6e","#34599a","#4c84ae","#83aec0","#c3d3cb","#e3d4a3","#e0ab67","#cf7c46","#b0503a","#852d33"],
   // ruzgar hizi: sakin koyu mavi -> ruzgarli sicak tonlar; koyu zeminde okunur
   ruzgar:["#28345a","#2c5f86","#2f8a93","#5aa77f","#a2b865","#d7b957","#dc8b47","#c75a44","#99405d"],
+  // kar: soluk mavi -> beyaz; karsiz kara ayrica notr gri
+  kar:["#3e5572","#56718f","#7892ad","#a0b6c9","#c9d6e1","#eef2f5"],
   yagis:["#5f5139","#86724a","#a3955a","#8aa86a","#5d9f79","#3f8d83","#2f7489","#2b5a86","#2d4478","#2a3163"],
 };
 // Arazi: yuzdelik degil MUTLAK metre duraklari (hipsometrik renk)
@@ -146,8 +148,9 @@ function veriHazirla(J){
   const tAy = ayDegerleri(Tk, Tm), pAy = ayDegerleri(Pk, Pm);
   const karaDeger = f => { const a=new Float32Array(n); for(let i=0;i<N;i++) if(land[i]) a[karaSira[i]]=kodCoz(f, f.a[i]); return a; };
   const tYil = karaDeger(tyil), pYil = karaDeger(pyil);
+  const karV = karHesapla(tAy, pAy, n);
 
-  return { J, R, W, H, N, B:R.bounds, land, kop, tyil, pyil, elev, karaSira, n, Tk, Pk, Tm, Pm, tAy, pAy, tYil, pYil,
+  return { kar: karV, J, R, W, H, N, B:R.bounds, land, kop, tyil, pyil, elev, karaSira, n, Tk, Pk, Tm, Pm, tAy, pAy, tYil, pYil,
     dol: null, akintilar: R.akintilar || [],
     yakin, agirlik, enlem,
     havuzT: havuz([...tAy, tYil]), havuzP: havuz(pAy), havuzPY: havuz([pYil]),
@@ -190,6 +193,36 @@ function yuzdelik(s, x){ const n=s.length; if(!n) return 0.5;
   b=n; while(a<b){ const m=(a+b)>>1; if(s[m]<=x) a=m+1; else b=m; }
   return (alt+a)/2/n; }
 
+/* Kar: motor kar hesaplamaz; burada aylik ortalama sicaklik ve yagistan
+   turetilir (aylik su dengesi modellerindeki kar kovasi). Yagisin kar payi
+   KAR_ALT'ta 1, KAR_UST'te 0, arada dogrusal (aylik ORTALAMA sicaklik: +2
+   derecelik bir ayda da karli gunler olur). Erime derece-gun: ayda
+   ERIME mm su esdegeri / derece. Denge icin uc yil dondurulur. Sonuc su
+   esdegeri mm; ORTU_ESIK (~3-5 cm kar) ay ortasinda asilirsa "ortu var". */
+const KAR_ALT = -2, KAR_UST = 4, ERIME = 75, ORTU_ESIK = 10, YAGAR_ESIK = 5;
+function karHesapla(tAy, pAy, n){
+  const swe = [], kar = [];   // ay ortasi kar ortusu, ayda yagan kar (mm su)
+  for(let m=0;m<12;m++){ swe.push(new Float32Array(n)); kar.push(new Float32Array(n)); }
+  const ortu = new Uint8Array(n), yagar = new Uint16Array(n), ortuAy = new Uint16Array(n);
+  for(let j=0;j<n;j++){ let s = 0;
+    for(let tur=0;tur<3;tur++) for(let m=0;m<12;m++){ const T = tAy[m][j];
+      const k = pAy[m][j]*Math.max(0, Math.min(1, (KAR_UST-T)/(KAR_UST-KAR_ALT)));
+      const bas = s; s += k; s -= Math.min(s, ERIME*Math.max(0, T));
+      if(tur===2){ kar[m][j] = k; swe[m][j] = (bas+s)/2; } }
+    for(let m=0;m<12;m++){
+      if(swe[m][j] >= ORTU_ESIK){ ortu[j]++; ortuAy[j] |= 1<<m; }
+      if(kar[m][j] >= YAGAR_ESIK) yagar[j] |= 1<<m; } }
+  return {swe, kar, ortu, yagar, ortuAy};
+}
+// ay maskesinden "Kasım–Mart" gibi bir aralik (yil donumunu asan dahil)
+function ayAraligi(mask){
+  if(!mask) return null; if(mask === 0xfff) return "bütün yıl";
+  const var_ = m => (mask >> ((m+12)%12)) & 1, par = [];
+  for(let m=0;m<12;m++) if(var_(m) && !var_(m-1)){ let e = m; while(var_(e+1)) e++; par.push([m, e%12, e-m+1]); }
+  par.sort((a,b)=>b[2]-a[2]);
+  return par.map(([a,b,u]) => u===1 ? AYLAR[a] : AYLAR[a]+"–"+AYLAR[b]).join(", ");
+}
+
 /* Gosterilen alan: tam grid bayt dizisi + 256'lik renk tablosu + lejant. */
 function gorunumKur(D, katman, donem, bant){
   const {N, yakin, karaSira, n} = D, a = new Uint8Array(N), lut = new Uint8Array(256*3);
@@ -203,6 +236,19 @@ function gorunumKur(D, katman, donem, bant){
     const adim = [lo, lo+(hi-lo)/4, lo+(hi-lo)/2, lo+(hi-lo)*3/4, hi];
     return {a, lut, olcek:{serit: cssRampa(dur), birim: hizZ ? "m/s" : "°C",
       etiket: adim.map((v,k2)=>({x:k2/4, t:eksi(Math.round(v))}))}};
+  }
+  if(katman==="kar"){
+    // yil: kar ortusunun kac ay yerde kaldigi; ay: o ayin ortasinda yerdeki
+    // kar (mm su esdegeri, kok olcek). Karsiz kara notr gri.
+    const K = D.kar, yil = donem<0, UST = 300;
+    for(let i=0;i<N;i++){ const j = karaSira[yakin[i]];
+      a[i] = yil ? Math.round(K.ortu[j]/12*255) : Math.round(Math.sqrt(Math.min(1, K.swe[donem][j]/UST))*255); }
+    const esik = yil ? 255/24 : Math.sqrt(ORTU_ESIK/UST)*255;
+    for(let b=0;b<256;b++) lut.set(b < esik ? [94,92,86] : rampa(RAMPA.kar, b/255).map(v=>v|0), b*3);
+    const etiket = yil ? [0,3,6,9,12].map(m=>({x:m/12, t:String(m)}))
+      : [0,10,50,150,300].map(v=>({x:Math.sqrt(v/UST), t:String(v)}));
+    return {a, lut, olcek:{serit:`linear-gradient(90deg,#5e5c56 0% ${(esik/2.55).toFixed(1)}%,${RAMPA.kar.join(",")})`,
+      birim: yil ? "ay örtü" : "mm su", etiket}};
   }
   if(katman==="arazi"){
     const ust = D.doku.yukseklik_ust;
@@ -588,7 +634,7 @@ function baslat(J, resimler){
     if(k==="iklim" || k==="arazi") donem = -1;
     if(k!=="iklim") izole = null;
     for(const b of $("#sekmeler").children) b.setAttribute("aria-selected", String(b.dataset.k===k));
-    $("#donem").hidden = !(k==="sicaklik" || k==="yagis" || k==="dolasim");
+    $("#donem").hidden = !(k==="sicaklik" || k==="yagis" || k==="kar" || k==="dolasim");
     for(const b of $("#donem").children) b.setAttribute("aria-checked", String(+b.dataset.d===donem));
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
@@ -596,6 +642,7 @@ function baslat(J, resimler){
     $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi:"Arazi, yükseklik",
       sicaklik:"Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
+      kar:donem<0 ? "Kar örtüsü, yerde kaldığı ay sayısı" : "Yerdeki kar, "+AYLAR[donem]+" ortası",
       dolasim:"Rüzgâr ve akıntılar, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem])}[k];
     aciklamaYaz(); boyut();
     // ay seridi acilinca dok ve kart yukselir; secili hucre kartin altinda kalmasin
@@ -727,8 +774,17 @@ function baslat(J, resimler){
       + `<div><em>${r(T[sicak])}°</em><span>${AYLAR[sicak]}</span></div>`
       + `<div><em>${r(T[soguk])}°</em><span>${AYLAR[soguk]}</span></div>`
       + `<div><em>${Math.round(D.pYil[j]).toLocaleString("tr-TR")}</em><span>mm/yıl</span></div></div>`
-      + klimagram(T, P, donem)
+      + klimagram(T, P, donem, D.kar.ortuAy[j], D.kar.kar.map(a=>a[j]))
+      + karSatiri(j)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
+  }
+  // "Kar: Kasım–Mart yağar · örtü 4 ay, en çok Şubat'ta 120 mm su"
+  function karSatiri(j){
+    const K = D.kar, yag = ayAraligi(K.yagar[j]);
+    if(!yag && !K.ortu[j]) return `<div class="k-kar yok">Kar yok</div>`;
+    const sw = K.swe.map(a=>a[j]), en = sw.indexOf(Math.max(...sw));
+    const ortu = K.ortu[j] ? `örtü ${K.ortu[j]===12 ? "bütün yıl" : K.ortu[j]+" ay"} · en kalın ${AYLAR[en]}, ${Math.round(sw[en])} mm su` : "yerde tutunmuyor";
+    return `<div class="k-kar"><b>Kar</b> ${yag ? yag+" yağar" : "seyrek"} · ${ortu}</div>`;
   }
   // Dolasim sekmesinde okyanusa dokununca: deniz yuzeyi sicakligi ve ruzgar
   function denizKartYaz(){
@@ -793,7 +849,7 @@ function baslat(J, resimler){
 }
 
 /* 12 aylik iklim grafigi: cubuk yagis, cizgi sicaklik. Secili ay vurgulu. */
-function klimagram(T, P, secili){
+function klimagram(T, P, secili, ortuAy = 0, kar = null){
   const w = 330, h = 92, sol = 28, sag = 34, ust = 6, alt = 16, iw = w-sol-sag, ih = h-ust-alt;
   const guzel = v => { for(const x of [10,20,25,50,100,150,200,250,300,400,500,750,1000,1500,2000,3000]) if(v <= x) return x;
     return Math.ceil(v/1000)*1000; };
@@ -805,6 +861,11 @@ function klimagram(T, P, secili){
   if(t0 < 0 && t1 > 0) s += `<line x1="${sol}" x2="${w-sag}" y1="${Yt(0)}" y2="${Yt(0)}" stroke="rgba(214,205,186,.28)" stroke-dasharray="2 3"/>`;
   P.forEach((p,i) => { const bh = p/pm*ih;
     s += `<rect x="${(X(i)-bw/2).toFixed(1)}" y="${(ust+ih-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(bh,0.5).toFixed(1)}" fill="#3f7f8c" fill-opacity="${i===secili?1:.72}"${i===secili?' stroke="#d2a45c" stroke-width="1.2"':""}/>`; });
+  // yagisin kar olan kismi cubugun ustunde beyaz; kar ortusu aylarin altinda serit
+  if(kar) kar.forEach((k,i) => { const kh = Math.min(k, P[i])/pm*ih; if(kh < 0.5) return;
+    s += `<rect x="${(X(i)-bw/2).toFixed(1)}" y="${(ust+ih-P[i]/pm*ih).toFixed(1)}" width="${bw.toFixed(1)}" height="${kh.toFixed(1)}" fill="#e8eef3" fill-opacity=".82"/>`; });
+  for(let i=0;i<12;i++) if(ortuAy>>i & 1)
+    s += `<rect x="${(X(i)-iw/24).toFixed(1)}" y="${ust+ih+1}" width="${(iw/12).toFixed(1)}" height="2" fill="#e8eef3" fill-opacity=".7"/>`;
   s += `<polyline fill="none" stroke="#d2a45c" stroke-width="1.7" stroke-linejoin="round" points="${T.map((t,i)=>`${X(i).toFixed(1)},${Yt(t).toFixed(1)}`).join(" ")}"/>`;
   T.forEach((t,i) => { s += `<circle cx="${X(i).toFixed(1)}" cy="${Yt(t).toFixed(1)}" r="${i===secili?3:1.8}" fill="#d2a45c"/>`; });
   s += `<text x="${sol-5}" y="${Yt(t1)+3}" text-anchor="end">${eksi(t1)}°</text><text x="${sol-5}" y="${Yt(t0)+3}" text-anchor="end">${eksi(t0)}°</text>`;

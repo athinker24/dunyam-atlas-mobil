@@ -107,13 +107,13 @@ const OLC = () => {
       await p.touchscreen.tap(yum.hedef.x, yum.hedef.y); await bekle(700);
       const kart = await p.evaluate(() => ({ acik: !document.querySelector("#kart").hidden,
         metin: document.querySelector("#kart-icerik").textContent, sec: window.__atlas.durum().sec }));
-      denetle("karaya dokununca kart aciliyor", kart.acik && kart.sec === yum.hedef.i && /\d/.test(kart.metin));
+      denetle("karaya dokununca kart aciliyor", kart.acik && kart.sec === yum.hedef.i && /\d/.test(kart.metin) && /Kar/.test(kart.metin));
       await p.click("#kart-kapat"); await bekle(300);
     } else denetle("karaya dokununca kart aciliyor", false, "ekranda uygun kara hucresi yok");
 
-    for (const k of ["sicaklik", "yagis", "arazi", "iklim"]) {
+    for (const k of ["sicaklik", "yagis", "kar", "arazi", "iklim"]) {
       await p.evaluate(k => document.querySelector(`[data-k=${k}]`).click(), k); await bekle(250);
-      if (k === "sicaklik" || k === "yagis") { await p.evaluate(() => document.querySelectorAll("#donem button")[7].click()); await bekle(250); }
+      if (k === "sicaklik" || k === "yagis" || k === "kar") { await p.evaluate(() => document.querySelectorAll("#donem button")[7].click()); await bekle(250); }
     }
     // Dolasim sekmesi (veride varsa): ruzgar oklari ve akinti yollari cizilmeli
     const dol = await p.evaluate(() => !document.querySelector("[data-k=dolasim]").hidden);
