@@ -1,0 +1,9 @@
+// Cloudflare Workers (yalniz statik dosya). Derleme komutu "sh yayinla.sh"
+// site/'yi kurar, "npx wrangler deploy" onu yayinlar. Motor ve dunya
+// tanimi site/'ye girmez. Onunde Cloudflare Access durur (panelden acildi).
+{
+  "name": "dunyam-atlas-mobil",
+  "compatibility_date": "2026-06-01",
+  "assets": { "directory": "./site" },
+  "preview_urls": true
+}

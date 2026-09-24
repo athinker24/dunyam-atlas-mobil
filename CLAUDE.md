@@ -108,7 +108,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
-| `yayinla.sh` | Cloudflare Pages derleme komutu: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
+| `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
 | `baslat.bat` | yalnız bilgisayarda aç (http://localhost:8778) |
 | `tunel.bat` | telefona kurmak için geçici HTTPS tünel |
 
@@ -288,9 +288,10 @@ bir site sayar. Dünkü tünelden kurulan uygulama bugünkü tünelden habersizd
 Hata değil, tasarım. Kendini güncelleyebilmesi sabit bir adres ister; şimdilik
 bilerek kurulmadı.
 
-**Eylül 2026: sabit adres Cloudflare Pages ile kuruluyor.** Pages private
-repoyu okur, her push'ta `sh yayinla.sh` koşar ve `site/`'yi yayınlar; her
-dalın ayrı önizleme adresi olur. Önünde Cloudflare Access durur (yalnız
+**Eylül 2026: sabit adres Cloudflare ile kuruluyor** (Workers, yalnız statik
+dosya; `wrangler.jsonc`). Cloudflare private repoyu okur, her push'ta
+`sh yayinla.sh` koşar ve `npx wrangler deploy` `site/`'yi yayınlar; diğer
+dalların ayrı önizleme adresi olur. Önünde Cloudflare Access durur (yalnız
 sahibin e-postası). Access'in çerezi manifest isteğine gitsin diye
 `index.html`'de manifest bağlantısı `crossorigin="use-credentials"` taşır;
 kaldırılırsa telefona kurulum sessizce bozulur. Tünel ve Termux yolu yedek
