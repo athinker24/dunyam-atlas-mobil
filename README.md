@@ -4,7 +4,8 @@ Kurgusal dünyanın iklim atlasının telefona kurulan (PWA) sürümü. Koyu tem
 WebGL harita (yumuşak ya da piksel görünüm, kabartma gölgesi: birleşik,
 editör görseli ya da yükseklik haritası), 12 aylık klimagramlı hücre kartı,
 Dolaşım sekmesinde rüzgâr (akış çizgileri ya da hareketli parçacıklar),
-deniz yüzeyi sıcaklığı ve akıntılar. Eylül 2026'dan beri paleti ve veri
+deniz yüzeyi sıcaklığı ve akıntılar, Kar sekmesinde kar örtüsü (aylık
+sıcaklık ve yağıştan uygulama içinde türetilir). Eylül 2026'dan beri paleti ve veri
 biçimi masaüstü atlastan AYRI (bkz CLAUDE.md 7.4).
 
 ## Telefona kurmak (sabit adres, Cloudflare)
