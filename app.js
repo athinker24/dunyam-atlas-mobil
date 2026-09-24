@@ -220,7 +220,10 @@ void main(){
     }
     if(uKabartma > 0.0){ float s = (texture2D(tKab, uv).r - 0.5) * 2.0;
       c = s < 0.0 ? c * (1.0 + uKabartma * s * 0.85) : c + (1.0 - c) * uKabartma * s * 0.45; }
-    if(uPiksel < 0.5){ float e = 1.0 - smoothstep(0.5, 0.5 + 7.0 * w, dk.r); c *= 1.0 - 0.3 * e; }
+    // kiyi seridi: yalniz kara oraninin 1'den kucuk oldugu kenar teksellerinde.
+    // Ust sinir 1'i gecerse (uzak yakinlastirmada w buyur) ic kara da
+    // koyulasiyordu: yumusak gorunum piksel gorunumden ~%28 karanlikti.
+    if(uPiksel < 0.5){ float e = 1.0 - smoothstep(0.5, min(0.5 + 7.0 * w, 1.0), dk.r); c *= 1.0 - 0.3 * e; }
     renk = mix(renk, c, a);
   }
   if(uIzgara > 0.5){
