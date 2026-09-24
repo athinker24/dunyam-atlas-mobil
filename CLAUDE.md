@@ -294,7 +294,10 @@ dosya; `wrangler.jsonc`). Cloudflare private repoyu okur, her push'ta
 dalların ayrı önizleme adresi olur. Önünde Cloudflare Access durur (yalnız
 sahibin e-postası). Access'in çerezi manifest isteğine gitsin diye
 `index.html`'de manifest bağlantısı `crossorigin="use-credentials"` taşır;
-kaldırılırsa telefona kurulum sessizce bozulur. Tünel ve Termux yolu yedek
+kaldırılırsa telefona kurulum sessizce bozulur. Access oturumu dolunca `sw.js`
+sayfa isteğindeki yönlendirmeyi tarayıcıya bırakır (giriş sayfası açılır);
+önbellekten eski sayfayı verseydi uygulama sessizce eski veride kalırdı.
+İnternet yoksa önbellekten açılır. Tünel ve Termux yolu yedek
 olarak duruyor.
 
 ### 7.6 Kopyalar ayrışabilir

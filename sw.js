@@ -46,6 +46,10 @@ self.addEventListener('fetch', e => {
     try {
       const r = await zamanAsimliFetch(e.request, AG_ZAMAN_ASIMI_MS);
       if (r.ok) { c.put(e.request, r.clone()); return r; }
+      // Cloudflare Access oturumu dolunca sayfa istegi giris sayfasina
+      // yonlendirilir. Onbellekten eski sayfayi vermek yerine yonlendirmeyi
+      // tarayiciya birak: yoksa uygulama sessizce eski veride kalir.
+      if (r.type === 'opaqueredirect') return r;
       return hit || r;   // sunucu hata dondu (or. olu tunel 502) ama onbellek varsa ondan
     } catch (err) {
       if (hit) return hit;
