@@ -325,7 +325,8 @@ projeye de taşı.
 **Şu an böyle bir ayrışma VAR** (motor tarafı): `motor/moisture.py` fırtına
 yolu terimi (`storm_c`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
 ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
-alan ağırlıklı kara yağışı / sınıf payı yalnız bu repoda. Asıl projeye
+alan ağırlıklı kara yağışı / sınıf payı, `motor/maritime.py` hafif deniz buzu
+(`sea_ice_air`) yalnız bu repoda. Asıl projeye
 taşınmalı.
 
 **Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
@@ -363,10 +364,12 @@ buraya bak.
   `transport_seasonal_lat_deg` bunu düzeltir ama 70° üstünde aşırı büyütür;
   karası 70°'nin altında biten bir dünyada açmaya değer, büyük kutup kıtası
   varsa kapalı bırak. Varsayılan 0 = kapalı.
-- **Deniz buzu yok.** Okyanus sıcaklığı donma noktasında kelepçelenir ama buz
-  yüzeyi ve buz-albedo geri beslemesi modellenmez; okyanus-ayların ~%15'i
-  kelepçede (iç tutarlılık raporunda görünür; eşik %35). Yüksek enlem
-  kıyılarının kışı bu yüzden gerçekte olacağından ılık olabilir.
+- **Deniz buzu yalnız hafif sürümde var.** Okyanus sıcaklığı donma noktasında
+  kelepçelenir (okyanus-ayların ~%15'i; eşik %35). `sea_ice_air` (Dünyam'da
+  1, motor varsayılanı 0) donmuş denizin kıyıya buz üstü havası taşımasını
+  sağlar: kuzey kıyı şeridinin kışı soğur (en çok −18.6 °C), sınıflar
+  neredeyse değişmez. Buz-albedo ve buharlaşma kesintisi **bilerek yok**
+  (kendini besleyen döngü, Dünya doğrulaması). Ayrıntı: `_deniz_buzu`.
 - **`gravity_ms2` hiçbir şey tarafından okunmuyor.** Bilerek: ait olduğu üç
   yer de Dünya'ya uydurulmuş sabitler taşıyor. `test_gravity_is_inert` yarım
   bağlamayı engelliyor.

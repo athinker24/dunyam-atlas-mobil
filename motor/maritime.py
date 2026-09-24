@@ -25,6 +25,12 @@ DEFAULTS = dict(
     maritime_local_km=130.0,  # yerel terimin e-katlama mesafesi
     trace_step_km=25.0,
     trace_max_km=2500.0,
+    # Deniz buzu, HAFIF surum (0 = kapali, motorun Dunya'da dogrulanmis hali).
+    # Acikken donma noktasindaki (sea_ice_temp) deniz kiyiya -1.8 C'lik
+    # deniz havasi degil, buz ustu havasi tasir: o enlemin kita ici taban
+    # sicakligi. Buz-albedo geri beslemesi ve buharlasma kesintisi YOK; kendini
+    # besleyen dongu kurulmaz. Ayrinti: dunyam.json _deniz_buzu.
+    sea_ice_air=0.0,
 )
 
 
@@ -167,5 +173,11 @@ def apply(land_temp, sst, grid: Grid, u, v, p: dict | None = None, trace=None):
         f = fraction_from_trace(grid, tr["land_km"][m], tr["found"][m], tr["coast_km"], p)
         frac[m] = f
         src_sst = grid.sample(sst[m], tr["src"][m])
+        if p["sea_ice_air"] > 0:
+            # kaynak noktada ne kadar buz var (cift dogrusal ornek: buz kenari yumusak)
+            ice = grid.world.params.get("sea_ice_temp", -1.8)
+            buz = grid.sample((np.abs(sst[m] - ice) < 0.01).astype(float), tr["src"][m])
+            buz_hava = np.minimum(src_sst, grid.sample(land_temp[m], tr["src"][m]))
+            src_sst = src_sst + p["sea_ice_air"] * buz * (buz_hava - src_sst)
         out[m] = np.where(grid.land, land_temp[m] + f * (src_sst - land_temp[m]), sst[m])
     return out, frac
