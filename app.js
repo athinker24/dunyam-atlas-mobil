@@ -994,8 +994,10 @@ function klimagram(T, P, secili, ortuAy = 0, kar = null){
 }
 
 /* ---- acilis ve guncelleme ---- */
-async function veriCek(){
-  const r = await fetch("data/atlas.json", {cache:"no-cache"});
+// taze: service worker onbellege dusmesin. Dusunce "Guncellemeleri denetle"
+// cevrimdisiyken de "Guncel" diyordu (gece denetimi).
+async function veriCek(taze){
+  const r = await fetch("data/atlas.json", {cache:"no-cache", headers: taze ? {"X-Taze": "1"} : {}});
   if(!r.ok) throw new Error("data/atlas.json okunamadı ("+r.status+")");
   return r.json();
 }
@@ -1030,8 +1032,11 @@ if("serviceWorker" in navigator){
 }
 document.addEventListener("click", async e => {
   if(e.target.id !== "guncelle") return;
-  try { const r = await navigator.serviceWorker?.getRegistration(); await r?.update();
-    const J = await veriCek(); let once = null; try{ once = localStorage.getItem("veri-surum"); }catch(_){}
+  // service worker guncellemesi beklenmez: cevrimdisiyken uzun asili kalip
+  // eski "Guncel" bildirimini ekranda birakiyordu (gece denetimi)
+  navigator.serviceWorker?.getRegistration().then(r => r?.update()).catch(() => {});
+  bildir("Denetleniyor…");
+  try { const J = await veriCek(true); let once = null; try{ once = localStorage.getItem("veri-surum"); }catch(_){}
     if(once && once!==J.surum){ try{ localStorage.setItem("veri-surum", J.surum); }catch(_){} location.reload(); }
     else bildir("Güncel · veri "+J.surum);
   } catch(err){ bildir("Sunucuya ulaşılamadı, önbellekteki sürüm açık"); }

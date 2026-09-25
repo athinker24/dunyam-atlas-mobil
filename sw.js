@@ -40,9 +40,12 @@ function zamanAsimliFetch(istek, ms) {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) return;
+  // X-Taze: uygulamanin "Guncellemeleri denetle" istegi; onbellege dusulmez,
+  // yoksa cevrimdisiyken de "Guncel" deniyordu (gece denetimi).
+  const taze = e.request.headers.get('X-Taze') === '1';
   e.respondWith(caches.open(AD).then(async c => {
     // ?v=... gibi sorgu parametreleri ayni dosyayi farkli anahtara bolmesin
-    const hit = await c.match(e.request, { ignoreSearch: true });
+    const hit = taze ? undefined : await c.match(e.request, { ignoreSearch: true });
     try {
       const r = await zamanAsimliFetch(e.request, AG_ZAMAN_ASIMI_MS);
       if (r.ok) { c.put(e.request, r.clone()); return r; }

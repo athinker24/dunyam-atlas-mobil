@@ -167,6 +167,16 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     geçirmede bulundu, düzeltildi; en üst satır artık ilk karalı satırın
     uçlarını alıyor (doğrulandı: 0. satır = 83. satır = [318, 377]). Test
     16/16.
+25. **'Güncellemeleri denetle' internetsizken 'Güncel' diyordu.** Service
+    worker bağlantı yoksa sessizce önbellekteki veriyi veriyor, düğme de onu
+    sunucudaki sanıyordu; yeni veri çıkmış olsa bile kullanıcı güncel
+    olduğunu düşünürdü. Düğmenin isteği artık X-Taze işareti taşıyor,
+    service worker bu istekte önbelleğe düşmüyor; güncelleme denetimi de
+    beklenmiyor (çevrimdışı asılı kalabiliyordu), 'Denetleniyor…' hemen
+    görünüyor. Doğrulama: eski kod çevrimdışı ['Güncel · veri 65cf9d017d'],
+    yeni kod ['Denetleniyor…', 'Sunucuya ulaşılamadı, önbellekteki sürüm
+    açık']; çevrimdışı açılış testi geçiyor. Not: sw.js değiştiği için
+    telefonda ilk açılışta sayfa bir kez yenilenir (beklenen).
 
 ## Yalnız raporlanan (senin kararın)
 
