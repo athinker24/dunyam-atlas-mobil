@@ -232,3 +232,5 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
 - Safari uyumu (statik tarama): yeni API yok; yalnız :has() (Safari 15.4+), daha eskide yalnız 'çekmece açıkken kart gizli' çalışmaz.
 - WebGL bağlam kaybı taklidi (Android arka plan): kayıp sırasında sekme/yakınlaştırma hatasız; bağlam dönünce sayfa bir kez yeniden yükleniyor ve WebGL'le açılıyor.
 - Kod gözden geçirme (bu gecenin bütün app.js farkı): bir hata bulundu ve düzeltildi (madde 24); yüzdelik/kantil ikili aramaları, geri tuşu, kaplama dönüşümü, klavye doğru.
+- Rastgele etkileşim taraması, geri tuşu ve klavye dahil, iki ek tohumla
+  (99, 31337): 0 hata, uygulama sayfada kalıyor.
