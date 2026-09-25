@@ -145,3 +145,13 @@ bulundu, ne yapıldı, nasıl doğrulandı.
 17. **CLAUDE.md'ye tuzak eklendi (§7.7):** bulut makinesinde çizim
     performansı yanıltır (yazılım GPU); JS maliyeti CPU ×4 ile ve profille
     ölçülür, çizim telefonda doğrulanır.
+18. **Kar örtüsü süresi fazla hesaplanıyordu.** Eşikleri Dünya istasyonlarıyla
+    kaba sınadım (Moskova ve Ulan Batur aylık normalleri, uygulamanın kendi
+    `karHesapla`'sı). Moskova 6 ay örtü veriyordu (gerçekte kabaca Kasım
+    sonu–Nisan başı, ~4.5 ay); Nisan ortasında 109 mm su görünüyordu. Sebep
+    tanım: "ay ortası" ayın başı ile sonunun ortalamasıydı; kar ayın başında
+    eriyip bitse de başlangıç büyükse ay örtülü sayılıyordu. Artık ay içi
+    yağış ve erime doğrusal kabul edilip ayın ortasındaki durum hesaplanıyor.
+    Moskova 5 ay (Kas–Mar), Ulan Batur 4 ay ince örtü. Dünyam: örtülü kara
+    payı aynı (%41.9), ortalama örtü süresi 2.55 → 2.23 ay. Test 15/15.
+    CLAUDE.md §1'deki kar tanımı güncellendi.

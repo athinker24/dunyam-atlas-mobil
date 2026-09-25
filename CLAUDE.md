@@ -20,8 +20,10 @@ Kurgusal bir gezegenin iklim atlası. İki parçası var:
   akıntı yollarını, Kar sekmesinde kar örtüsünü, bir de iç tutarlılık
   raporunu gösterir. Kar motordan gelmez: `app.js` `karHesapla` aylık
   sıcaklık ve yağıştan bir kar kovası döndürür (kar payı −2..+4 °C arası
-  doğrusal, erime 75 mm/°C/ay, örtü eşiği 10 mm su). Eşikler seçimdir,
-  kalibre edilmedi. Veriyi `data/atlas.json`'dan,
+  doğrusal, erime 75 mm/°C/ay, örtü eşiği ay ortasında 10 mm su; ay ortası
+  ay içi doğrusal yağış/erimeyle hesaplanır). Eşikler seçimdir; kaba bir
+  sınama: Moskova normalleriyle 5 ay örtü (gerçekte ~4.5), Ulan Batur 4 ay
+  ince örtü. Hiç erimeyen hücreler kartta "kalıcı (buzul)". Veriyi `data/atlas.json`'dan,
   harita dokularını `data/doku.png`, `yukseklik.png`, `kabartma*.jpg`,
   `dolasim.png`'den okur.
 - **Üretici** (`uret.py` + `motor/` + `dunya/`) — iklim motorunun ve dünya

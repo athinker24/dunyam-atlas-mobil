@@ -222,8 +222,12 @@ function karHesapla(tAy, pAy, n){
   for(let j=0;j<n;j++){ let s = 0, gecen = 0;
     for(let tur=0;tur<3;tur++){ for(let m=0;m<12;m++){ const T = tAy[m][j];
       const k = pAy[m][j]*Math.max(0, Math.min(1, (KAR_UST-T)/(KAR_UST-KAR_ALT)));
-      const bas = s; s += k; s -= Math.min(s, ERIME*Math.max(0, T));
-      if(tur===2){ kar[m][j] = k; swe[m][j] = (bas+s)/2; } }
+      const bas = s, M = ERIME*Math.max(0, T); s += k; s -= Math.min(s, M);
+      // Ay ortasi: ay icinde yagis ve erime dogrusal. Once (bas+son)/2
+      // aliniyordu; kar ayin basinda eriyip bitse de (son=0) bas buyukse ay
+      // "ortulu" sayiliyordu: Moskova normallerinde 6 ay (gercekte ~4.5),
+      // Nisan ortasinda 109 mm. Simdi Moskova 5 ay (gece denetimi).
+      if(tur===2){ kar[m][j] = k; swe[m][j] = Math.max(0, bas + (k - M)/2); } }
       if(tur===1) gecen = s; }
     if(s > gecen + 1) kalici[j] = 1;
     for(let m=0;m<12;m++){
