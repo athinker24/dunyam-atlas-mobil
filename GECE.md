@@ -112,3 +112,8 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     kesiliyordu** (veri karanın ~22° ötesinde biter). Son %4'te koyu zemine
     yumuşak geçiş eklendi; diğer katmanlarda uzak okyanus zaten zemine
     karışıyordu. Test 15/15.
+15. **Metin düzeltmeleri.** Deniz kartı her okyanus hücresine "Açık deniz"
+    yazıyordu (kıyı suları ve iç deniz dahil); artık "Deniz" ve en yakın
+    kıyıya yaklaşık uzaklık ("kıyıya ~250 km", 30 km altı "kıyıya yakın").
+    Yükleme hatası "İlk kurulum için sunucu açık olmalı" diyordu (eski tünel
+    dönemi); artık "İlk açılış için internet bağlantısı gerekli".

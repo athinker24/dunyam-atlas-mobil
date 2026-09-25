@@ -856,8 +856,14 @@ function baslat(J, resimler){
     const u = dolOrnek(D, D.dol.u[m], x, y), v = dolOrnek(D, D.dol.v[m], x, y), T = D.dol.sst.slice(0,12).map(a=>dolOrnek(D, a, x, y));
     const r1 = v => eksi(Math.round(v*10)/10).replace(".", ",");
     $("#kart").hidden = false;
-    $("#kart-icerik").innerHTML = `<div class="k-ust"><i style="background:#2b4a5a"></i><div><h3>Açık deniz</h3>`
-      + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]}</small></div></div>`
+    // en yakin kara hucresine buyuk daire uzakligi: "acik deniz" her
+    // okyanus hucresine, kiyi sularina ve ic denize de yaziliyordu (gece denetimi)
+    const k = D.yakin[i], kx = k%W, kyy = (k/W)|0, rad = Math.PI/180;
+    const klat = D.enlem(kyy)*rad, klon = (B[0] + (kx+0.5)*(B[2]-B[0])/W)*rad, la1 = lat*rad, lo1 = lon*rad;
+    const km = 6371*Math.acos(Math.min(1, Math.sin(la1)*Math.sin(klat) + Math.cos(la1)*Math.cos(klat)*Math.cos(lo1-klon)));
+    const kiyi = km < 30 ? "kıyıya yakın" : `kıyıya ~${(km < 200 ? Math.round(km/10)*10 : Math.round(km/50)*50).toLocaleString("tr-TR")} km`;
+    $("#kart-icerik").innerHTML = `<div class="k-ust"><i style="background:#2b4a5a"></i><div><h3>Deniz</h3>`
+      + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]} · ${kiyi}</small></div></div>`
       + `<div class="k-sayilar"><div><em>${r1(donem<0 ? T.reduce((p,c)=>p+c,0)/12 : T[donem])}°</em><span>yüzey</span></div>`
       + `<div><em>${r1(Math.max(...T))}°</em><span>en sıcak ay</span></div><div><em>${r1(Math.min(...T))}°</em><span>en soğuk ay</span></div>`
       + `<div><em>${r1(Math.hypot(u,v))}</em><span>m/s rüzgâr</span></div></div>`
@@ -954,7 +960,7 @@ async function acilis(){
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
       resimYukle("data/dolasim.png").catch(() => null)]);
     resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim};
-  } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk kurulum için sunucu açık olmalı.</small></span>`; return; }
+  } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+J.uretim), 600);
     localStorage.setItem("veri-surum", J.surum); } catch(_){}
