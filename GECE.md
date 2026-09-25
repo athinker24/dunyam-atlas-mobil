@@ -299,6 +299,13 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     Bildirim kutusu white-space:nowrap idi; uzun metin 390 px ekrandan
     taşardı. Artık ekran genişliği −32 px'te sarıyor (16..374 px, iki
     satır).
+44. **Güncelleme denetimi yerel kayda dayanıyordu.** Yeni veri olup olmadığı
+    localStorage'daki sürümle karşılaştırılıyordu; kayıt engelliyse (gizli
+    sekme, bazı Safari ayarları) sunucudaki yeni veri 'Güncel' diye
+    geçiliyordu. Artık ekranda açık olan verinin sürümüyle
+    karşılaştırılıyor. Doğrulama: depolama engelli + sunucuda sürüm
+    değiştirilmiş taklitte sayfa yenilendi; normal yol (bildirim) de
+    çalışıyor.
 
 ## Yalnız raporlanan (senin kararın)
 

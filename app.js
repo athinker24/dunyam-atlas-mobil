@@ -1060,9 +1060,11 @@ document.addEventListener("click", async e => {
   // eski "Guncel" bildirimini ekranda birakiyordu (gece denetimi)
   navigator.serviceWorker?.getRegistration().then(r => r?.update()).catch(() => {});
   bildir("Denetleniyor…");
-  try { const J = await veriCek(true); let once = null; try{ once = localStorage.getItem("veri-surum"); }catch(_){}
-    // veri-surum burada yazilmaz: acilis farki gorup "Yeni veri yuklendi"
-    // desin. Once yaziliyordu ve elle guncellemede sayfa sessizce yenileniyordu.
+  try { const J = await veriCek(true);
+    // karsilastirma ekrandaki veriyle: yerel kayit engelliyse (gizli sekme)
+    // yeni veri "Guncel" diye geciliyordu (gece denetimi). veri-surum burada
+    // yazilmaz: acilis farki gorup "Yeni veri yuklendi" desin.
+    let once = window.__atlas?.D?.J?.surum ?? null; if(!once) try{ once = localStorage.getItem("veri-surum"); }catch(_){}
     if(once && once!==J.surum) location.reload();
     else bildir("Güncel · veri "+J.surum);
   } catch(err){
