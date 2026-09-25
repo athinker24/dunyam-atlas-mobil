@@ -515,7 +515,11 @@ function baslat(J, resimler){
     const c2 = yedekTuval.getContext("2d"), img = c2.createImageData(W, H), px = img.data, dz = hex(OKYANUS_DERIN);
     for(let i=0;i<N;i++){ let c = dz;
       if(katman==="dolasim"){ const b = gor.a[i]; c = D.land[i] && ayar.dolZemin!=="hiz" ? [94,92,84] : [gor.lut[b*3], gor.lut[b*3+1], gor.lut[b*3+2]]; }
-      else if(D.land[i]){ if(katman==="iklim") c = [palet[D.kop[i]*4], palet[D.kop[i]*4+1], palet[D.kop[i]*4+2]];
+      else if(D.land[i]){ if(katman==="iklim"){ c = [palet[D.kop[i]*4], palet[D.kop[i]*4+1], palet[D.kop[i]*4+2]];
+          // yalitilmis sinif: shader'daki gibi otekiler gri-koyu (gece denetimi:
+          // yedekte yalitma hic yoktu, butun siniflar gorunuyordu)
+          if(izole && D.kop[i] !== kodNo[izole]){ const g = 0.299*c[0] + 0.587*c[1] + 0.114*c[2];
+            c = [g*0.38 + 33*0.62, g*0.38 + 41*0.62, g*0.38 + 46*0.62]; } }
         else { const b = gor.a[i]; c = [gor.lut[b*3], gor.lut[b*3+1], gor.lut[b*3+2]]; } }
       px[i*4]=c[0]; px[i*4+1]=c[1]; px[i*4+2]=c[2]; px[i*4+3]=255; }
     c2.putImageData(img, 0, 0);
@@ -751,7 +755,7 @@ function baslat(J, resimler){
     const el = $("#aciklama");
     if(katman==="iklim"){
       if(izole){ el.innerHTML = `<div class="izole"><span><b>${izole}</b> · ${D.KNAME[izole]||""} · %${virgul((paylar[izole]*100).toFixed(1))}</span><button id="izole-kaldir">Hepsi</button></div>`;
-        $("#izole-kaldir").onclick = () => { izole=null; listeYaz(); aciklamaYaz(); ciz(); }; return; }
+        $("#izole-kaldir").onclick = () => { izole=null; listeYaz(); aciklamaYaz(); if(!G) yedekBoya(); ciz(); }; return; }
       const g = Object.keys(GRUP).filter(g=>grupPay[g]);
       el.innerHTML = `<button class="gruplar" id="siniflar-ac"><span class="cubuk">${g.map(k=>`<i style="width:${grupPay[k]*100}%;background:${GRUP_RENK[k]}"></i>`).join("")}</span><span class="ok">Sınıflar</span></button>`
         + `<div class="gruplar-etiket">${g.map(k=>`<span>${GRUP[k]} <b>%${Math.round(grupPay[k]*100)}</b></span>`).join("")}</div>`;

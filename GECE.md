@@ -244,6 +244,12 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     DOĞRULANAMADI: headless Chromium'da sayfa yakınlaştırması kapalı;
     standart önlem, iPhone'da bakılmalı. Testler 19/19, ay taraması
     etkilenmedi.
+38. **Canvas2D yedeğinde sınıf yalıtma yoktu.** Sınıf listesinden bir sınıfa
+    dokununca WebGL'de yalnız o sınıf renkli kalıyor, yedek çizimde bütün
+    sınıflar olduğu gibi görünüyordu ve 'Hepsi' yedeği yeniden boyamıyordu.
+    Yedek artık shader'la aynı karartmayı uyguluyor. Doğrulama: WebGL
+    engellenmiş sayfada Cwa yalıtılınca yalnız Cwa yeşil, gerisi gri (ekran
+    görüntüsü); 'Hepsi' ile 21 renge geri dönüyor.
 
 ## Yalnız raporlanan (senin kararın)
 
