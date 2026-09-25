@@ -92,8 +92,10 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
   PNG olarak karşılaştır. Bir kez sınıf tablosunda görünen kazanç haritada
   görünmedi: atlas paletinde Af/Am/Aw aynı turkuazın üç tonuydu (ton farkı
   8 derece). Karar yanlış ölçütle verilmişti.
-- **Uzun koşu sırasında boş bekleme.** 0.25 derecelik koşu ~13-15 dakika
-  (4 çekirdekli bulut makinesinde ölçüldü; eski masaüstünde ~40 dk sürüyordu).
+- **Uzun koşu sırasında boş bekleme.** 0.25 derecelik koşu 4 çekirdekli bulut
+  makinesinde ~35 dakika (nem korunumu açıkken ölçüldü, 25 Eylül; kapalıyken
+  ~14 dk idi, eski masaüstünde ~40 dk). Yavaşlığın yarısından fazlası
+  `grid.smooth`: korunum her adımda bir Gauss yumuşatması daha ekliyor.
   Arka plana al, o sırada bağımsız işi yap. Çıktıyı dosyaya yönlendirdiğinde
   tamponlanır — koşu bitene kadar dosya boş görünebilir, bu normal.
 - **Yüzdeler alan ağırlıklı olacak.** Kullanıcıya gösterilen her oran.
@@ -117,7 +119,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `dunya/` | `dunyam.json`, `dunyam.currents.json`, `dunyam_heightmap.png`, `kabartma_kaynak.jpg` |
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
-| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış, iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart, Dolaşım (çizgiler, akıntılar, parçacıklar), katman/ay/kabartma geçişleri, çevrimdışı. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
+| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış (tek yükleme), iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart (kar satırı dahil), Kar katmanı, Dolaşım (çizgiler, akıntılar, parçacıklar), katman/ay/kabartma geçişleri, yakınken pan sınırı, çevrimdışı. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
 | `mevsim_olc.py` | yağışın mevsimselliğini ölçer (kara min/max ay oranı, 36°K kuzeyinde f/s/w payları, korunan istekler) ve harita çizer; `--p` ile params denemesi, `--kod`/`--kiyas` ile sınıfı değişen kara payı. Veri yazmaz |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
@@ -134,7 +136,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 ```bash
 pip install -r requirements.txt
 python uret.py --res 1.0 --ozet     # kaba deneme, ~1 dk
-python uret.py --ozet               # gerçek çözünürlük (0.25), ~13-15 dk
+python uret.py --ozet               # gerçek çözünürlük (0.25), ~35 dk (GitHub'da ~20)
 ```
 
 `uret.py` dünyayı `dunya/`'dan okur, motoru koşar, iç tutarlılık raporunu
@@ -173,7 +175,7 @@ girdi aynıysa `surum` aynı çıkar ve commit atılmaz; test adımı da yalnız
 değiştiğinde koşar (ilk kez 24 Eylül'de, rapor metni değişikliğinde koştu ve
 geçti). Actions sekmesinden **atlas verisi → Run workflow** ile elle de
 başlatılır (çözünürlük orada seçilir). Ölçüldü: 1365×682 hücre, 12/12
-tutarlılık, GitHub koşucusunda ~12 dk. Koşu sırasında dala başka commit
+tutarlılık, GitHub koşucusunda ~20 dk (nem korunumundan önce ~12). Koşu sırasında dala başka commit
 gelirse iş akışı push'tan önce `git pull --rebase` yapar.
 
 ---

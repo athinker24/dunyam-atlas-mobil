@@ -43,3 +43,23 @@ bulundu, ne yapıldı, nasıl doğrulandı.
    ilk açılışta tek yükleme, kar katmanının çizilmesi (tuval tek renk
    değil, lejant doğru), çok yakınken aşırı sürüklemede karanın ekranda
    kalması. Test 15/15.
+5. **Karar notlarında okuma tuzağı.** `_su_butcesi` notunun başı "DEGISIKLIKLER:
+   evap_max_mm_month=106" diye başlıyordu; sonradan kaldırılan tavan şu anki
+   ayar gibi okunuyordu. "İLK DENEME (sonra değişti)" olarak düzeltildi.
+   Eski notlardaki "NIHAI" sınıf payları (örn. `_akdeniz` Cs %10.8) kendi
+   tarihlerinin ölçümü; bugün Cs %14.9. Tek yerde güncel durum için
+   `_guncel_durum` notu eklendi (veri sürümü 65cf9d017d'nin ölçümleri).
+6. **Belgelerdeki koşu süreleri eskimişti.** Nem korunumu motoru yavaşlattı:
+   0.25° bu makinede ~14 → ~35 dk, GitHub'da ~12 → ~20 dk (ölçüldü).
+   CLAUDE.md ve README güncellendi. Test satırı da yeni denetimleri anıyor.
+
+## Yalnız raporlanan (senin kararın)
+
+- **Motor yavaşlığı.** Profil (0.5°, bir ay): 18.3 s'nin 10 s'si Gauss
+  yumuşatması; korunum her adımda bir yumuşatma daha ekliyor. Adım içindeki
+  iki yumuşatmadan birini yeniden kullanmak hızı ~%30-40 artırır ama sonucu
+  çok az değiştirir (veri sürümü değişir). Bit bit aynı kalan bir hızlandırma
+  bulamadım. GitHub'da 20 dk kabul edilebilir göründüğü için dokunmadım.
+- **Dolaşım sekmesinde deniz sıcaklığı alanı** verinin kesildiği yerde
+  (karanın 22° ötesi) keskin dikdörtgen kenarla bitiyor. Veri yok, doğru
+  gösterim; kenar yumuşatılabilir, zevk meselesi.
