@@ -33,6 +33,8 @@ PLATO = dict(lat=(43.0, 49.0), lon=(6.0, 18.0))
 # Akdeniz istegi "mavi cizgiler arasi" kusakta olculmustu (_akdeniz)
 AKDENIZ_BANT = (19.0, 36.0)
 KIS_AYLARI_K = [10, 11, 0, 1, 2]    # Kasim..Mart (kuzey yarimkure)
+YAZ_AYLARI_K = [4, 5, 6, 7, 8]      # Mayis..Eylul
+KUZEY_ALT = 36.0
 
 # Harita: kurak mevsimin tipi. Koppen'in ikinci harfi (f/s/w, A'da f/m/w).
 TIP_RENK = {
@@ -77,6 +79,8 @@ def olc(g, r):
     ilik = kara & np.isin(np.vectorize(lambda s: s[0])(kodlar), ["C"])
     soguk = kara & np.isin(np.vectorize(lambda s: s[0])(kodlar), ["D"])
     k2 = np.vectorize(lambda s: s[:2])(kodlar)
+    # asil hedef: 36K kuzeyi (Akdeniz bandinin ve tropiklerin disi)
+    kuzey = kara & (LA >= KUZEY_ALT)
 
     s = {
         "olcut": {
@@ -87,6 +91,14 @@ def olc(g, r):
             "C_icinde_f_s_w": [pay(k2 == "Cf", ilik), pay(k2 == "Cs", ilik), pay(k2 == "Cw", ilik)],
             "D_icinde_f_s_w": [pay(k2 == "Df", soguk), pay(k2 == "Ds", soguk), pay(k2 == "Dw", soguk)],
             "kara_tip_payi": {t: pay(tipler == t) for t in TIP_RENK},
+        },
+        "kuzey36": {
+            "minmax_ort": round(ort(oran, kuzey), 3),
+            "kis_yagisi_mm": round(sum(ort(P[m], kuzey) for m in KIS_AYLARI_K), 1),
+            "yaz_yagisi_mm": round(sum(ort(P[m], kuzey) for m in YAZ_AYLARI_K), 1),
+            "C_icinde_f_s_w": [pay(k2 == "Cf", ilik & kuzey), pay(k2 == "Cs", ilik & kuzey), pay(k2 == "Cw", ilik & kuzey)],
+            "D_icinde_f_s_w": [pay(k2 == "Df", soguk & kuzey), pay(k2 == "Ds", soguk & kuzey), pay(k2 == "Dw", soguk & kuzey)],
+            "tip_payi": {t: pay(tipler == t, kuzey) for t in TIP_RENK},
         },
         "korunan": {
             "Cs_kara": pay(k2 == "Cs"),
@@ -202,9 +214,10 @@ def main():
             json.dump(s, fh, ensure_ascii=False, indent=1)
     if a.harita:
         o = s["olcut"]
-        baslik = "%s%.2f° · min/max %.3f (Dünya %.3f) · Cf %.1f / Cw %.1f (C içinde)" % (
+        k = s["kuzey36"]
+        baslik = "%s%.2f° · min/max %.3f (Dünya %.3f) · 36°K+ kış %.0f mm, f payı C %.0f / D %.0f" % (
             (a.etiket + " · ") if a.etiket else "", a.res, o["kara_minmax_ort"], DUNYA_MINMAX,
-            o["C_icinde_f_s_w"][0], o["C_icinde_f_s_w"][2])
+            k["kis_yagisi_mm"], k["C_icinde_f_s_w"][0], k["D_icinde_f_s_w"][0])
         harita(h, a.harita, baslik)
         print("harita:", a.harita)
 
