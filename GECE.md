@@ -283,7 +283,9 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     hatası sayılır; uret.py durur (--zorla ile geçilir), mevsim_olc.py
     durur. Bugünkü dunyam.json'da bilinmeyen ad yok (1 derecelik koşu
     12/12). kabartma_kaydet.py yanlış yolda iz yerine 'gorsel bulunamadi'
-    diyor.
+    diyor. heightmap anahtarları da denetleniyor (elev_curv gibi bir hata
+    eğriyi sessizce kapatırdı). Yapay yazım hatasıyla denendi: "storm_C,
+    heightmap.elev_curv" diye durdu.
 
 ## Yalnız raporlanan (senin kararın)
 
