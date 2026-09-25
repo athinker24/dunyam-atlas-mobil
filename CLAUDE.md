@@ -370,7 +370,7 @@ buraya bak.
   sıfıra inince terim tamamen sönüyordu ve 36°K kuzeyinde en kurak ay Mart
   çıkıyordu. Yalnız geçiş aylarına yağış ekler. Kıta içine yine ulaşmaz:
   orada darboğaz sırtlardaki engellenme.
-- **Yağış hâlâ çok mevsimsel.** Kara min/max ay oranı ~0.075 (Dünya gözlemi
+- **Yağış hâlâ çok mevsimsel.** Kara min/max ay oranı 0.078 (Dünya gözlemi
   0.249); ılıman kuşakta Cf azınlık, Cw baskın. Yaz tepesini indirmek
   (`convective_c`, muson) karanın %13-16'sının sınıfını değiştirip bozkır
   üretiyor, o yüzden seçilmedi. Ölçmek için `mevsim_olc.py`.
