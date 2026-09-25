@@ -250,6 +250,11 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     Yedek artık shader'la aynı karartmayı uyguluyor. Doğrulama: WebGL
     engellenmiş sayfada Cwa yalıtılınca yalnız Cwa yeşil, gerisi gri (ekran
     görüntüsü); 'Hepsi' ile 21 renge geri dönüyor.
+39. **Fare tekerleği Firefox'ta neredeyse yakınlaştırmıyordu.** Tekerlek
+    olayının deltaMode'u hesaba katılmıyordu; satır kipinde (Firefox, deltaY
+    ≈ 3) tık başına ~%0.5 yakınlaşma. Satır 16 px, sayfa 400 px sayılıyor.
+    Chromium'da değişiklik yok (piksel kipi); Firefox bu makinede yok,
+    formülle doğrulandı.
 
 ## Yalnız raporlanan (senin kararın)
 

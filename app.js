@@ -950,7 +950,10 @@ function baslat(J, resimler){
         else { sec = i; D.land[i] ? kartYaz() : denizKartYaz(); gorunurYap(q.y); ciz(); } } }
     dokun = null; hareketBasla(); }
   harita.addEventListener("pointerup", birak); harita.addEventListener("pointercancel", birak);
-  harita.addEventListener("wheel", e => { e.preventDefault(); sonTeker = performance.now(); const q = yerel(e); yakinlas(q.x, q.y, Math.exp(-e.deltaY*0.0015));
+  // deltaMode 1 = satir (Firefox): piksele cevrilir, yoksa tik basina ~%0.5
+  // yakinlasiyordu (gece denetimi)
+  harita.addEventListener("wheel", e => { e.preventDefault(); sonTeker = performance.now(); const q = yerel(e);
+    yakinlas(q.x, q.y, Math.exp(-e.deltaY*(e.deltaMode===1 ? 16 : e.deltaMode===2 ? 400 : 1)*0.0015));
     clearTimeout(harita.tekerSon); harita.tekerSon = setTimeout(ciz, 170); }, {passive:false});
 
   // Bilgisayarda (baslat.bat) klavye: Esc acik olani kapatir, oklar kaydirir,
