@@ -117,6 +117,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
 | `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış, iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart, Dolaşım (çizgiler, akıntılar, parçacıklar), katman/ay/kabartma geçişleri, çevrimdışı. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
+| `mevsim_olc.py` | yağışın mevsimselliğini ölçer (kara min/max ay oranı, 36°K kuzeyinde f/s/w payları, korunan istekler) ve harita çizer; `--p` ile params denemesi, `--kod`/`--kiyas` ile sınıfı değişen kara payı. Veri yazmaz |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
 | `baslat.bat` | yalnız bilgisayarda aç (http://localhost:8778) |
@@ -327,7 +328,7 @@ kalır. Küçük bir düzeltme için sorun değil; kalıcı bir değişiklikse a
 projeye de taşı.
 
 **Şu an böyle bir ayrışma VAR** (motor tarafı): `motor/moisture.py` fırtına
-yolu terimi (`storm_c`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
+yolu terimi (`storm_c`) ve karşıtlığın ay içi dağılımı (`storm_contrast_sigma_k`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
 ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
 alan ağırlıklı kara yağışı / sınıf payı, `motor/maritime.py` hafif deniz buzu
 (`sea_ice_air`) yalnız bu repoda. Asıl projeye
@@ -364,6 +365,15 @@ buraya bak.
   kış ayı ~19 mm, Moskova 55). Varsayılan 0 = kapalı. Terim olmadan Akdeniz'in
   kış yağışı yalnız basınç kuşaklarının salınımından gelir ve kuşak lekeler
   hâlinde kalır. Ayrıntı ve elenen dört kol: `_firtina`.
+  Karşıtlık aylık ortalamaya değil ay içi dağılıma uygulanır
+  (`storm_contrast_sigma_k`, Dünyam'da 10 K, motor 0): ilkbaharda ortalama
+  sıfıra inince terim tamamen sönüyordu ve 36°K kuzeyinde en kurak ay Mart
+  çıkıyordu. Yalnız geçiş aylarına yağış ekler. Kıta içine yine ulaşmaz:
+  orada darboğaz sırtlardaki engellenme.
+- **Yağış hâlâ çok mevsimsel.** Kara min/max ay oranı ~0.075 (Dünya gözlemi
+  0.249); ılıman kuşakta Cf azınlık, Cw baskın. Yaz tepesini indirmek
+  (`convective_c`, muson) karanın %13-16'sının sınıfını değiştirip bozkır
+  üretiyor, o yüzden seçilmedi. Ölçmek için `mevsim_olc.py`.
 - **60-70° kuşağında mevsim genliği yetersiz** (en soğuk ay fazla ılık).
   `transport_seasonal_lat_deg` bunu düzeltir ama 70° üstünde aşırı büyütür;
   karası 70°'nin altında biten bir dünyada açmaya değer, büyük kutup kıtası

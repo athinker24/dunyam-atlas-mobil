@@ -162,6 +162,16 @@ DEFAULTS = dict(
     storm_smooth_km=1000.0,  # karsitligin enlem boyunca yumusatma olcegi
     storm_reach_km=1500.0,  # firtina havasinin ruzgar boyunca e-katlama mesafesi
     storm_spread_km=400.0,  # firtina yolunun kuzey-guney yalpalamasi (toplam yayilma)
+    # [K] Kara-okyanus karsitliginin AY ICI dagilimi, K. Karsitlik aylik
+    # ORTALAMAYA uygulaniyordu: ilkbaharda ortalama sifira inince terim
+    # tamamen sonuyor, oysa ay icindeki soguk dalgalarda karsitlik yine
+    # pozitif ve siklon kaynagi acik. Esik dagilima uygulanir (_soft_pos,
+    # div_var_frac ile ayni Jensen argumani): kisin (buyuk karsitlik) ve yazin
+    # (kuvvetle negatif) degisiklik yok denecek kadar az, yalniz GECIS
+    # aylarinda yagis ekler. Olculdu (Dunyam, 0.5 der, 10 K): 36K kuzeyinde
+    # en kurak ay Mart'ti (yakinsama yagisi Mayis'ta basliyor, firtina Mart'ta
+    # sonuyor). 0 = KAPALI (bit-birebir eski davranis).
+    storm_contrast_sigma_k=0.0,
 )
 
 SECONDS_PER_MONTH = 365.25 * 86400.0 / 12.0
@@ -474,7 +484,10 @@ def solve_month(grid: Grid, temp, sst, ocean_ref, u, v, p: dict):
         f = 2.0 * grid.world.omega * np.abs(np.sin(np.radians(grid.lat))) / 1.0e-4
         w_ok = np.where(n_o > 0, np.where(ocean, w_eq32, 0.0).sum(axis=1) / np.maximum(n_o, 1),
                         float(w_eq32[ocean].mean()))
-        kusak = f * np.maximum(karsit, 0.0) / 10.0 * np.power(w_ok / p["cwv_ref_mm"], p["conv_w_pow"])
+        sig_t = float(p.get("storm_contrast_sigma_k", 0.0))
+        if sig_t < 0 or not np.isfinite(sig_t):
+            raise ValueError(f"storm_contrast_sigma_k={sig_t} negatif olamaz")
+        kusak = f * _soft_pos(karsit, sig_t) / 10.0 * np.power(w_ok / p["cwv_ref_mm"], p["conv_w_pow"])
         # YONLENDIRME: siklonlar yuzey ruzgariyla degil ~500 hPa akisiyla
         # tasinir. Kisin kita ustundeki yuksek basinc SIGDIR; yuzeyde ruzgari
         # denize cevirir ama ustteki bati akisini degistirmez. Ust akis termal
