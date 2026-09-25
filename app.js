@@ -568,7 +568,7 @@ function baslat(J, resimler){
      kaydirilinca izler silinir, yoksa eski yerlerinde bulasik kalirlar. */
   const parcacik = (() => {
     const cv = $("#parcacik"), c = cv.getContext("2d");
-    let P = null, sayi = 0, calisiyor = false, son = null;
+    let P = null, sayi = 0, calisiyor = false, son = null, sonZaman = 0;
     const ac = () => katman==="dolasim" && ayar.parcacik && D.dol;
     function dogur(i){ const g = gorunen(), r = cv.getBoundingClientRect();
       const sx = Math.random()*r.width, sy = g.ust + Math.random()*(g.alt-g.ust);
@@ -582,18 +582,23 @@ function baslat(J, resimler){
       gorunumDegisti(){ const g = ac();
         if(!g){ if(calisiyor){ calisiyor = false; c.clearRect(0, 0, cv.width, cv.height); cv.hidden = true; } return; }
         const imza = `${ox.toFixed(1)},${oy.toFixed(1)},${olcek.toFixed(4)},${canvas.width},${donem}`;
-        if(!calisiyor){ calisiyor = true; cv.hidden = false; kur(); }
+        if(!calisiyor){ calisiyor = true; cv.hidden = false; sonZaman = 0; kur(); }
         else if(imza !== son){ if(cv.width !== canvas.width) kur(); else c.clearRect(0, 0, cv.width, cv.height);
           for(let i=0;i<sayi;i++) dogur(i); }
         son = imza; },
       adim(){ if(!calisiyor) return;
-        const m = donem<0 ? 12 : donem, U = D.dol.u[m], V = D.dol.v[m], ust = D.dol.ruzgar_ust, k = 0.38/olcek;
+        // Hiz ve iz uzunlugu 60 Hz'lik kareye gore tanimli; 90/120 Hz ekranda
+        // parcaciklar 1.5-2 kat hizli akip izleri kisaliyordu (gece denetimi).
+        // Adim gecen sureyle olceklenir; arka plandan donuste sicrama olmasin
+        // diye 3 kareyle sinirli.
+        const simdi = performance.now(), f = sonZaman ? Math.min(3, Math.max(0.25, (simdi - sonZaman)/16.67)) : 1; sonZaman = simdi;
+        const m = donem<0 ? 12 : donem, U = D.dol.u[m], V = D.dol.v[m], ust = D.dol.ruzgar_ust, k = 0.38*f/olcek;
         // eski izleri sondur (hedef-icinde: yalniz alfa azalir, renk karismaz)
-        c.globalCompositeOperation = "destination-in"; c.fillStyle = "rgba(0,0,0,0.86)"; c.fillRect(0, 0, cv.width, cv.height);
+        c.globalCompositeOperation = "destination-in"; c.fillStyle = `rgba(0,0,0,${Math.pow(0.86, f).toFixed(3)})`; c.fillRect(0, 0, cv.width, cv.height);
         c.globalCompositeOperation = "source-over"; c.lineWidth = 1.1*dpr; c.lineCap = "round";
         const kova = [[], [], []];   // hiza gore uc parlaklik; ayni stille toplu cizim hizli
         for(let i=0;i<sayi;i++){ const j = i*4, x = P[j], y = P[j+1];
-          if(++P[j+2] > P[j+3] || x < 0 || y < 0 || x > W-1 || y > H-1){ dogur(i); continue; }
+          if((P[j+2] += f) > P[j+3] || x < 0 || y < 0 || x > W-1 || y > H-1){ dogur(i); continue; }
           const u = dolOrnek(D, U, x, y), v = dolOrnek(D, V, x, y), h = Math.hypot(u, v);
           const nx = x + u*k, ny = y - v*k;   // ekranda ~0.38 px/kare her m/s icin
           kova[h < ust*0.25 ? 0 : h < ust*0.5 ? 1 : 2].push(ox + (x+0.5)*olcek, oy + (y+0.5)*olcek, ox + (nx+0.5)*olcek, oy + (ny+0.5)*olcek);

@@ -76,3 +76,8 @@ bulundu, ne yapıldı, nasıl doğrulandı.
    durur ki ayar değişikliği haritada görülsün; kart tam o alanı kapatıyordu.
    Çekmece açıkken kart gizleniyor (kapanmıyor), çekmece kapanınca geri
    geliyor. Doğrulama: 360×640'ta aç/kapa.
+9. **Hareketli rüzgâr yüksek yenileme hızlı ekranda hızlı akıyordu.**
+   Parçacık hızı ve iz sönümü kare başına tanımlıydı; 90/120 Hz ekranda
+   parçacıklar 1.5-2 kat hızlı akıp izleri kısalıyordu. Adım artık geçen
+   süreyle ölçekleniyor (60 Hz'de davranış aynı), arka plandan dönüşte
+   sıçrama olmasın diye en fazla 3 kare. Test 15/15.
