@@ -141,19 +141,29 @@ function veriHazirla(J){
   // ortak olcek havuzlari (yalniz kara): 12 ay + yillik sicaklik birlikte,
   // 12 aylik yagis birlikte, yillik yagis kendi basina (mm/yil ile mm/ay
   // ayni aralikta olamaz)
-  const havuz = parcalar => { let t=0; for(const p of parcalar) t+=p.length;
-    const s = new Float64Array(t); let k=0; for(const p of parcalar) for(let j=0;j<p.length;j++) s[k++]=p[j]; return s.sort(); };
+  // Havuz, bayt KODLARINDAN sayilarak kurulur: her kodlamada en fazla 256
+  // deger var. Once 650 bin Float32 deger siralaniyordu (orta sinif telefonda
+  // ~yarim saniye) ve Float32'ye yuvarlanan havuz tam hassas sorguyla
+  // karsilastirildigi icin esit degerler "ortadan" degil bir yandan
+  // sayilabiliyordu (gece denetimi). parcalar: [kodlama, kod dizisi] ciftleri.
+  const havuz = parcalar => { const say = new Map(); let t = 0;
+    for(const [enc, kodlar] of parcalar){ const h = new Float64Array(256);
+      for(let j=0;j<kodlar.length;j++) h[kodlar[j]]++;
+      for(let b=0;b<256;b++) if(h[b]){ const v = kodCoz(enc, b); say.set(v, (say.get(v)||0) + h[b]); t += h[b]; } }
+    const vals = Float64Array.from(say.keys()).sort(), cum = new Float64Array(vals.length + 1);
+    for(let i=0;i<vals.length;i++) cum[i+1] = cum[i] + say.get(vals[i]);
+    return {n: t, vals, cum}; };
+  const karaKod = f => { const a = new Uint8Array(n); for(let i=0;i<N;i++) if(land[i]) a[karaSira[i]] = f.a[i]; return a; };
   const ayDegerleri = (enc, ham) => { const o=[]; for(let m=0;m<12;m++){ const a=new Float32Array(n);
       for(let j=0;j<n;j++) a[j]=kodCoz(enc, ham[m*n+j]); o.push(a); } return o; };
   const tAy = ayDegerleri(Tk, Tm), pAy = ayDegerleri(Pk, Pm);
   const karaDeger = f => { const a=new Float32Array(n); for(let i=0;i<N;i++) if(land[i]) a[karaSira[i]]=kodCoz(f, f.a[i]); return a; };
   const tYil = karaDeger(tyil), pYil = karaDeger(pyil);
-  const karV = karHesapla(tAy, pAy, n);
 
-  return { kar: karV, J, R, W, H, N, B:R.bounds, land, kop, tyil, pyil, elev, karaSira, n, Tk, Pk, Tm, Pm, tAy, pAy, tYil, pYil,
+  return { kar: null, J, R, W, H, N, B:R.bounds, land, kop, tyil, pyil, elev, karaSira, n, Tk, Pk, Tm, Pm, tAy, pAy, tYil, pYil,
     dol: null, akintilar: R.akintilar || [],
     yakin, agirlik, enlem,
-    havuzT: havuz([...tAy, tYil]), havuzP: havuz(pAy), havuzPY: havuz([pYil]),
+    havuzT: havuz([[Tk, Tm], [tyil, karaKod(tyil)]]), havuzP: havuz([[Pk, Pm]]), havuzPY: havuz([[pyil, karaKod(pyil)]]),
     doku: R.doku, KCODE: J.data.koppen_code, KNAME: J.data.koppen_names };
 }
 
@@ -188,10 +198,13 @@ const PUSULA = ["kuzeyden","kuzeydoğudan","doğudan","güneydoğudan","güneyde
 const nereden = (u, v) => PUSULA[Math.round(((Math.atan2(-u, -v)*180/Math.PI) + 360) % 360 / 45) % 8];
 
 // yuzdelik: havuzdaki orta sira (esit degerler ortadan)
-function yuzdelik(s, x){ const n=s.length; if(!n) return 0.5;
-  let a=0,b=n; while(a<b){ const m=(a+b)>>1; if(s[m]<x) a=m+1; else b=m; } const alt=a;
-  b=n; while(a<b){ const m=(a+b)>>1; if(s[m]<=x) a=m+1; else b=m; }
-  return (alt+a)/2/n; }
+function yuzdelik(h, x){ if(!h.n) return 0.5; const v = h.vals;
+  let a=0,b=v.length; while(a<b){ const m=(a+b)>>1; if(v[m]<x) a=m+1; else b=m; } const alt=h.cum[a];
+  b=v.length; while(a<b){ const m=(a+b)>>1; if(v[m]<=x) a=m+1; else b=m; }
+  return (alt+h.cum[a])/2/h.n; }
+// kantil: sirasi round(q*(n-1)) olan deger (lejant etiketleri)
+function kantil(h, q){ const r = Math.round(q*(h.n-1)); let a=0, b=h.vals.length-1;
+  while(a<b){ const m=(a+b)>>1; if(h.cum[m+1] > r) b=m; else a=m+1; } return h.vals[a]; }
 
 /* Kar: motor kar hesaplamaz; burada aylik ortalama sicaklik ve yagistan
    turetilir (aylik su dengesi modellerindeki kar kovasi). Yagisin kar payi
@@ -214,6 +227,11 @@ function karHesapla(tAy, pAy, n){
       if(kar[m][j] >= YAGAR_ESIK) yagar[j] |= 1<<m; } }
   return {swe, kar, ortu, yagar, ortuAy};
 }
+// Kar alani ilk ihtiyacta kurulur. Acilista hesaplamak orta sinif telefonda
+// (CPU 4 kat yavas) ~360 ms ekliyordu ve ilk ekran kar gostermiyor; baslat
+// ilk kareden sonra bos zamanda cagirir, sekme ya da kart daha once isterse
+// o an hesaplanir (gece denetimi).
+function karAl(D){ return D.kar || (D.kar = karHesapla(D.tAy, D.pAy, D.n)); }
 // ay maskesinden "Kasım–Mart" gibi bir aralik (yil donumunu asan dahil)
 function ayAraligi(mask){
   if(!mask) return null; if(mask === 0xfff) return "bütün yıl";
@@ -240,7 +258,7 @@ function gorunumKur(D, katman, donem, bant){
   if(katman==="kar"){
     // yil: kar ortusunun kac ay yerde kaldigi; ay: o ayin ortasinda yerdeki
     // kar (mm su esdegeri, kok olcek). Karsiz kara notr gri.
-    const K = D.kar, yil = donem<0, UST = 300;
+    const K = karAl(D), yil = donem<0, UST = 300;
     for(let i=0;i<N;i++){ const j = karaSira[yakin[i]];
       a[i] = yil ? Math.round(K.ortu[j]/12*255) : Math.round(Math.sqrt(Math.min(1, K.swe[donem][j]/UST))*255); }
     const esik = yil ? 255/24 : Math.sqrt(ORTU_ESIK/UST)*255;
@@ -274,7 +292,7 @@ function gorunumKur(D, katman, donem, bant){
     ? `linear-gradient(90deg,${Array.from({length:BANT},(_,k)=>{ const c=css(rampa(dur,k/(BANT-1))); return `${c} ${(k/BANT*100).toFixed(2)}% ${((k+1)/BANT*100).toFixed(2)}%`; }).join(",")})`
     : cssRampa(dur);
   return {a, lut, olcek:{serit, birim,
-    etiket:[0,.25,.5,.75,1].map(q=>({x:q, t:fmt(hv[Math.min(hv.length-1, Math.round(q*(hv.length-1)))])}))}};
+    etiket:[0,.25,.5,.75,1].map(q=>({x:q, t:fmt(kantil(hv, q))}))}};
 }
 
 /* ================================================================ cizim */
@@ -781,13 +799,13 @@ function baslat(J, resimler){
       + `<div><em>${r(T[sicak])}°</em><span>${AYLAR[sicak]}</span></div>`
       + `<div><em>${r(T[soguk])}°</em><span>${AYLAR[soguk]}</span></div>`
       + `<div><em>${Math.round(D.pYil[j]).toLocaleString("tr-TR")}</em><span>mm/yıl</span></div></div>`
-      + klimagram(T, P, donem, D.kar.ortuAy[j], D.kar.kar.map(a=>a[j]))
+      + klimagram(T, P, donem, karAl(D).ortuAy[j], karAl(D).kar.map(a=>a[j]))
       + karSatiri(j)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
   }
   // "Kar: Kasım–Mart yağar · örtü 4 ay, en çok Şubat'ta 120 mm su"
   function karSatiri(j){
-    const K = D.kar, yag = ayAraligi(K.yagar[j]);
+    const K = karAl(D), yag = ayAraligi(K.yagar[j]);
     if(!yag && !K.ortu[j]) return `<div class="k-kar yok">Kar yok</div>`;
     const sw = K.swe.map(a=>a[j]), en = sw.indexOf(Math.max(...sw));
     const ortu = K.ortu[j] ? `örtü ${K.ortu[j]===12 ? "bütün yıl" : K.ortu[j]+" ay"} · en kalın ${AYLAR[en]}, ${Math.round(sw[en])} mm su` : "yerde tutunmuyor";
@@ -852,6 +870,7 @@ function baslat(J, resimler){
   addEventListener("resize", () => { boyut(); sigdir(); });
   listeYaz(); katmanSec("iklim"); sigdir(); requestAnimationFrame(kare);
   $("#yukleniyor").hidden = true;
+  (window.requestIdleCallback || (f => setTimeout(f, 300)))(() => karAl(D));
   window.__atlas = {D, durum:()=>({katman, donem, ox, oy, olcek, sec, webgl:!!G})};   // dogrulama betikleri icin
 }
 

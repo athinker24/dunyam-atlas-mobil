@@ -20,3 +20,17 @@ bulundu, ne yapıldı, nasıl doğrulandı.
    yalnız açılışta zaten bir service worker varsa yeniliyor. Doğrulama:
    Playwright'ta açılıştan sonraki `evaluate` "context destroyed" hatası
    vermiyor.
+3. **Açılışta veri hazırlığı yavaştı.** CPU 4 kat yavaşlatılmış (orta sınıf
+   telefon yaklaşığı) ölçümde `veriHazirla` 989 ms sürüyordu. İki sebep:
+   - Kar alanı açılışta hesaplanıyordu (~360 ms), ilk ekran kar göstermediği
+     halde. Artık ilk kareden sonra boşta hesaplanıyor; Kar sekmesi ya da
+     kart daha önce isterse o an (`karAl`).
+   - Yüzdelik renk ölçeği için ~650 bin değer sıralanıyordu. Değerler bayt
+     kodlarından geldiği için (kodlama başına en fazla 256 değer) havuz
+     artık kodlardan sayılarak kuruluyor.
+   Sonuç: `veriHazirla` 989 → 239 ms.
+   Yan düzeltme: eski havuz Float32'ye yuvarlanmış değer tutup tam hassas
+   değerle sorgulandığı için eşit değerler "ortadan" değil bir yandan
+   sayılabiliyordu. Renk tablosu farkı en fazla 6/255 (görünmez); lejant
+   etiketleri birebir aynı; yalnız bantlı yıllık yağışta bant sınırındaki
+   3 kod komşu banda geçti. Test 12/12.
