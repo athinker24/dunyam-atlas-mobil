@@ -10,7 +10,7 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 - **Telefonda bakman gerekenler:** Dolaşım sekmesinde kaydırma akıcılığı
   (madde 16), çok yakınken kaydırma sınırı (1), dar ekranda lejant (7),
-  ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), deniz
+  ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), klavye (22), deniz
   kartı (15).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
 - `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
@@ -213,4 +213,4 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
 - Yeniden keşif taraması (bütün değişikliklerden sonra): 6 sekme × 13 dönem × rastgele dokunma, döndürme, aşırı yakınlaştırma: JS hatası yok, boş ekran bulgusu artık çıkmıyor; açılış 934 ms (yavaşlatmasız). Kalan tek uyarı 'NaN/sonsuz yok' tutarlılık kontrolünün adı (yanlış alarm).
 - Safari uyumu (statik tarama): yeni API yok; yalnız :has() (Safari 15.4+), daha eskide yalnız 'çekmece açıkken kart gizli' çalışmaz.
 - WebGL bağlam kaybı taklidi (Android arka plan): kayıp sırasında sekme/yakınlaştırma hatasız; bağlam dönünce sayfa bir kez yeniden yükleniyor ve WebGL'le açılıyor.
-- Kod gözden geçirme (bu gecenin bütün app.js farkı): bir hata bulundu ve düzeltildi (madde 23); yüzdelik/kantil ikili aramaları, geri tuşu, kaplama dönüşümü, klavye doğru.
+- Kod gözden geçirme (bu gecenin bütün app.js farkı): bir hata bulundu ve düzeltildi (madde 24); yüzdelik/kantil ikili aramaları, geri tuşu, kaplama dönüşümü, klavye doğru.
