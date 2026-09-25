@@ -225,7 +225,9 @@ dolasim -> SST -> taban kara sicakligi -> denizellik -> muson
   fonksiyonun muson rüzgârını üretmesi bu yüzden.
 - **Elle yazılan dünya dosyaları bir güven sınırıdır.** `load_currents` her
   akıntıyı doğrular (yol ≥ 2 nokta, `width_km` > 0), çünkü bir yazım hatası
-  eskiden sessizce yutuluyordu.
+  eskiden sessizce yutuluyordu. Aynı sebeple `uret.py` ve `mevsim_olc.py`
+  motorun okumadığı `params` adında durur (`bilinmeyen_params`; yeni bir
+  parametre katmanın `DEFAULTS`'una ya da `params.get("..")` ile eklenmeli).
 - Motor çekirdeği **saf numpy + scipy**. `grid.from_heightmap` bir zamanlar
   koşulsuz `import rasterio` yapıyordu ve bu repo GitHub Actions'ta tam o
   satırda düştü; artık `_heightmap_oku` Pillow'a düşüyor ve iki okuyucu
