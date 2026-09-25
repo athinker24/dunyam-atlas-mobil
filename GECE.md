@@ -60,9 +60,6 @@ bulundu, ne yapıldı, nasıl doğrulandı.
   iki yumuşatmadan birini yeniden kullanmak hızı ~%30-40 artırır ama sonucu
   çok az değiştirir (veri sürümü değişir). Bit bit aynı kalan bir hızlandırma
   bulamadım. GitHub'da 20 dk kabul edilebilir göründüğü için dokunmadım.
-- **Dolaşım sekmesinde deniz sıcaklığı alanı** verinin kesildiği yerde
-  (karanın 22° ötesi) keskin dikdörtgen kenarla bitiyor. Veri yok, doğru
-  gösterim; kenar yumuşatılabilir, zevk meselesi.
 
 ## Düzeltilenler (devam)
 
@@ -111,3 +108,7 @@ bulundu, ne yapıldı, nasıl doğrulandı.
 13. **README eksikleri.** Dosya tablosuna `mevsim_olc.py` eklendi; test
     satırı `site/` kümesini anıyor; dal önizlemesinin adres biçimi,
     `"previews": {}` gereği ve Access uyarısı yazıldı.
+14. **Dolaşım sekmesinde deniz sıcaklığı alanı dikdörtgen kenarla
+    kesiliyordu** (veri karanın ~22° ötesinde biter). Son %4'te koyu zemine
+    yumuşak geçiş eklendi; diğer katmanlarda uzak okyanus zaten zemine
+    karışıyordu. Test 15/15.

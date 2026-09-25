@@ -319,7 +319,10 @@ void main(){
   vec3 renk = icinde ? mix(KIYI, DERIN, dk.g) : DERIN;
   if(uMod == 3 && icinde){   // dolasim: okyanus deniz yuzeyi sicakligiyla
     float sv = uPiksel > 0.5 ? texture2D(tAlan, muv).r : texture2D(tAlan, uv).r;
-    renk = texture2D(tLut, vec2((sv * 255.0 + 0.5) / 256.0, 0.5)).rgb; }
+    // veri karanin ~22 derece otesinde biter; alan orada dikdortgen bir
+    // kenarla kesiliyordu, son %4'te zemine karisir (gece denetimi)
+    float kenar = smoothstep(0.0, 0.04, min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y)));
+    renk = mix(DERIN, texture2D(tLut, vec2((sv * 255.0 + 0.5) / 256.0, 0.5)).rgb, kenar); }
   // kiyi kenarinin genisligi: ekranda ~1 piksel, yakinlik ne olursa olsun keskin
   float w = clamp(0.5 * uOlcek / uView.z, 0.015, 0.5);
   float a = 0.0, kod = 0.0;
