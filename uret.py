@@ -290,11 +290,15 @@ def ozet_yaz(g, K, yillik_yagis):
 def main():
     ap = argparse.ArgumentParser(description="Dunyam Atlasi veri ureticisi")
     ap.add_argument("--res", type=float, default=0.25, help="derece/hucre (varsayilan 0.25)")
-    ap.add_argument("--cikti", default=CIKTI)
+    ap.add_argument("--cikti", default=CIKTI, help="atlas.json yolu ya da klasor (dokular yanina yazilir)")
     ap.add_argument("--ozet", action="store_true", help="sinif paylarini da yaz")
     ap.add_argument("--zorla", action="store_true",
                     help="ic tutarlilik dusse de veriyi yine de yaz")
     a = ap.parse_args()
+    # klasor verilirse icine atlas.json (once dosya yolu bekleniyordu ve
+    # hesap bittikten sonra yazarken IsADirectoryError ile dusuyordu)
+    if os.path.isdir(a.cikti):
+        a.cikti = os.path.join(a.cikti, "atlas.json")
 
     t0 = time.time()
     w = dunya_yukle()
