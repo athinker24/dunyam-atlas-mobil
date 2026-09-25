@@ -300,7 +300,9 @@ function gorunumKur(D, katman, donem, bant){
     ? `linear-gradient(90deg,${Array.from({length:BANT},(_,k)=>{ const c=css(rampa(dur,k/(BANT-1))); return `${c} ${(k/BANT*100).toFixed(2)}% ${((k+1)/BANT*100).toFixed(2)}%`; }).join(",")})`
     : cssRampa(dur);
   return {a, lut, olcek:{serit, birim,
-    etiket:[0,.25,.5,.75,1].map(q=>({x:q, t:fmt(kantil(hv, q))}))}};
+    // bantliyken etiketler bant sinirlarinda; ceyreklikler bantlarin ortasina
+    // dusuyor ve hangi degerin bandi boldugu okunmuyordu (gece denetimi)
+    etiket:(bant ? Array.from({length:BANT+1}, (_,k)=>k/BANT) : [0,.25,.5,.75,1]).map(q=>({x:q, t:fmt(kantil(hv, q))}))}};
 }
 
 /* ================================================================ cizim */
@@ -825,7 +827,9 @@ function baslat(J, resimler){
   // haritasi. Veride olmayanin dugmesi gizlenir, secim olana duser.
   function kabartmaKur(){ if(!G) return; G.kur("tKab", KAB[ayar.kabartmaKaynak] || resimler.kabartma, 0, 0, "L", true); }
   const kaynakDugme = [...document.querySelectorAll("#kabartma-kaynak button")];
-  function kaynakYaz(){ for(const b of kaynakDugme) b.setAttribute("aria-checked", String(b.dataset.kaynak===ayar.kabartmaKaynak)); }
+  // golge kapaliyken kaynak secimi etkisiz: soluk ve dokunulmaz (gece denetimi)
+  function kaynakYaz(){ for(const b of kaynakDugme){ b.setAttribute("aria-checked", String(b.dataset.kaynak===ayar.kabartmaKaynak)); b.disabled = !ayar.kabartma; }
+    $("#kabartma-kaynak").classList.toggle("pasif", !ayar.kabartma); }
   for(const b of kaynakDugme) b.hidden = !KAB[b.dataset.kaynak];
   if(kaynakDugme.filter(b=>!b.hidden).length < 2) $("#kabartma-kaynak").hidden = true;
   for(const b of kaynakDugme) b.addEventListener("click", () => {
@@ -833,7 +837,7 @@ function baslat(J, resimler){
   kaynakYaz();
   for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-bant","bant"]]){
     const el = $("#"+id); el.checked = ayar[k];
-    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); katmanSec(katman); });
+    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); katmanSec(katman); });
   }
   $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${v}</dd>`).join("")
     + `<dt>hücre</dt><dd>${((B[2]-B[0])/W).toFixed(2)}°</dd>`;

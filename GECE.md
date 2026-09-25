@@ -185,6 +185,12 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
     ve ağın gerçekten kapalı olduğu kontrol ediliyor. Uygulama bu gerçek
     kesintide de önbellekten açılıyor. Aynı kesintiye 'Güncellemeleri
     denetle' denetimi eklendi (madde 25). Test 17/17.
+27. Bantlı renk açıkken lejant etiketleri çeyrekliklerde duruyordu (%25,
+    %50, %75), bantlar ise altıda bir sınırlarında; etiketler bantların
+    ortasına düşüyor, hangi değerin bandı böldüğü okunmuyordu. Bantlıyken
+    etiketler artık 7 bant sınırında (çakışan ara etiket gizlenir). Ayrıca
+    kabartma gölgesi kapalıyken kaynak seçimi (Birleşik/Editör/Yükseklik)
+    hâlâ etkin görünüyordu; şimdi soluk ve dokunulmaz.
 
 ## Yalnız raporlanan (senin kararın)
 
