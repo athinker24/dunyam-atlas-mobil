@@ -245,7 +245,7 @@ Bu sayılar dünyanın kendisidir; değiştirmek başka bir gezegen yapar.
 | kara kuşağı | 60°K .. −7°K | 40-70°K'de dünya çok sertti; tek işleyen kol karayı güneye taşımaktı |
 | en yüksek nokta | 7000 m | dünyanın sahibi bildirdi (önce 6700) |
 | yükseklik eğrisi | sahibin çapaları | ova 250-300 m, plato çanağı 800-1000 m, Büyük Duvar zirveleri 6000 m, en yüksek 7000 m; aralar PCHIP. Kıta **bilerek** Dünya'dan yüksek (kara medyanı ~950 m, Dünya 377). Ayrıntı `_elev_curve` |
-| kara payı | ~%6.8 (alan) | hücre sayarak %5.3 — ikisi aynı şey değil (§7.1) |
+| kara payı | ~%6.9 (alan) | hücre sayarak %5.4 — ikisi aynı şey değil (§7.1) |
 
 Akıntılar: 15 saatlik gün gezegeni çok hücreli yapıyor (ölçülen kuşak
 sınırları 17°K/37°K/57°K), o yüzden Dünya'daki tek subtropikal jir yerine
@@ -392,7 +392,7 @@ buraya bak.
   sıfıra inince terim tamamen sönüyordu ve 36°K kuzeyinde en kurak ay Mart
   çıkıyordu. Yalnız geçiş aylarına yağış ekler. Kıta içine yine ulaşmaz:
   orada darboğaz sırtlardaki engellenme.
-- **Yağış hâlâ çok mevsimsel.** Kara min/max ay oranı 0.078 (Dünya gözlemi
+- **Yağış hâlâ çok mevsimsel.** Kara min/max ay oranı 0.076 (Dünya gözlemi
   0.249); ılıman kuşakta Cf azınlık, Cw baskın. Yaz tepesini indirmek
   (`convective_c`, muson) karanın %13-16'sının sınıfını değiştirip bozkır
   üretiyor, o yüzden seçilmedi. Ölçmek için `mevsim_olc.py`.

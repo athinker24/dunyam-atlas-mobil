@@ -217,6 +217,9 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
     10° aralığa geçiyor ama etiket kalmıyordu (30'un katları ekrandan
     çıkınca hiç enlem yazmıyordu). Etiket adımı artık çizgiyle aynı: uzakta
     30°, yakında 10°.
+27. CLAUDE.md eski sayılar taşıyordu: kara payı %6.8 alan / %5.3 hücre (0.25
+    derecede yeniden ölçüldü: %6.95 / %5.40; uygulama künyesi %6.9 diyor),
+    kara min/max ay oranı 0.078 (güncel veri 0.076). Düzeltildi.
 
 ## Yalnız raporlanan (senin kararın)
 
