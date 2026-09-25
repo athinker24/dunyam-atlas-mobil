@@ -128,7 +128,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |
 | `baslat.bat` | yalnız bilgisayarda aç (http://localhost:8778) |
-| `tunel.bat` | telefona kurmak için geçici HTTPS tünel |
+| `tunel.bat` | telefona kurmak için geçici HTTPS tünel (yedek yol; yalnız `yayinla.sh` kümesini `site/`den sunar, liste iki dosyada aynı olmalı) |
 
 `motor/reference.py` **yoktur ve olmamalı**: o dosya Dünya doğrulamasına
 özeldir, `rasterio` ister ve kurgusal dünyada hiç koşmaz.

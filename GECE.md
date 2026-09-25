@@ -260,6 +260,17 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
 40. **Simge değişikliği testi tetiklemiyordu.** uygulama.yml'nin yol
     listesinde icons/ yoktu; simgeler yayınlanan kümede (yayinla.sh) olduğu
     halde değişince test koşmuyordu. Eklendi.
+41. **Tünel ve yerel sunucu depo kökünü açıyordu.** tunel.bat python
+    http.server'ı depo kökünde başlatıyordu: tünel adresi açıkken .git
+    (bütün geçmiş), motor/, dunya/ internetten indirilebiliyordu; yayinla.sh
+    bunları bilerek yayından hariç tutuyor. tunel.bat artık yayinla.sh'deki
+    dosyaları site/'ye kopyalayıp yalnız onu sunuyor (listelerin aynı
+    kalması iki dosyada ve CLAUDE.md'de not edildi). baslat.bat sunucuyu
+    0.0.0.0'da açıyordu (yerel ağdaki her cihaz depo kökünü görebiliyordu);
+    127.0.0.1'e bağlandı, adres aynı (localhost). DOĞRULANAMADI: Windows
+    yok; --bind ve --directory bayrakları burada Python ile denendi, toplu
+    iş sözdizimi elle okundu. Tünel artık yedek yol olduğundan etkisi
+    sınırlı.
 
 ## Yalnız raporlanan (senin kararın)
 

@@ -3,6 +3,7 @@
 # kopyalar. Motor, dunya tanimi, kabartma kaynagi ve belgeler yayinlanmaz.
 # Ayar: derleme komutu "sh yayinla.sh", yayin "npx wrangler deploy"
 # (wrangler.jsonc assets.directory = ./site). uygulama.yml testi site/'de kosar.
+# Dosya listesi tunel.bat ile ayni olmali (tunel de yalniz bu kumeyi sunar).
 set -eu
 cd "$(dirname "$0")"
 rm -rf site
