@@ -71,7 +71,8 @@ jobs:
         if: env.DEGISTI == '1'
         run: |
           npm install --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
-          node test/uygulama_test.js
+          # yayinlanan kume (site/) test edilir; site/ .gitignore'da, commit'e girmez
+          sh yayinla.sh && node test/uygulama_test.js site
       - name: degistiyse commit et
         if: env.DEGISTI == '1'
         run: |
@@ -79,7 +80,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/
           git commit -m "Veri: uret.py ile yeniden uretildi (${GITHUB_SHA::7})"
-          # Kosu ~12 dk suruyor. O arada bu yolu tetiklemeyen bir commit
+          # Kosu ~20 dk suruyor (nem korunumundan once ~12). O arada bu yolu tetiklemeyen bir commit
           # (or. yalniz app.js) dala gelirse duz push reddediliyordu ve veri
           # guncellenmeden is dusuyordu. Once uzaktakinin ustune tasi.
           for i in 1 2 3; do

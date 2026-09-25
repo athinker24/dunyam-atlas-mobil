@@ -101,3 +101,10 @@ bulundu, ne yapıldı, nasıl doğrulandı.
   dosyasında aylık sıcaklık 0.32 °C adımla saklanıyor. Motorun sınıfı
   doğru; eşiğin hemen yanındaki hücrelerde gösterilen değer yuvarlanmış.
   Düzeltme: sıcaklığı 2 baytla saklamak (atlas.json ~0.6 MB büyür).
+12. **GitHub testi yayınlanan dosyaları değil repo kökünü test ediyordu.**
+    Cloudflare yalnız `yayinla.sh`'nin `site/`'ye kopyaladıklarını yayınlıyor;
+    oraya eklenmesi unutulan bir dosya telefonda eksik kalır ama kökte test
+    geçerdi. `uygulama.yml` ve `veri.yml` artık `sh yayinla.sh && node
+    test/uygulama_test.js site` koşuyor; `yayinla.sh` değişince de test
+    tetikleniyor. `yayinla.sh` yorumu "Pages" yerine Workers'ı anlatıyor.
+    Doğrulama: yerelde `site/` üzerinde 15/15.

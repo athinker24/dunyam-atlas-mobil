@@ -1,7 +1,8 @@
 #!/bin/sh
-# Cloudflare Pages derleme komutu: yalniz uygulamanin dosyalarini site/'ye
+# Cloudflare Workers derleme komutu: yalniz uygulamanin dosyalarini site/'ye
 # kopyalar. Motor, dunya tanimi, kabartma kaynagi ve belgeler yayinlanmaz.
-# Pages ayari: derleme komutu "sh yayinla.sh", cikti klasoru "site".
+# Ayar: derleme komutu "sh yayinla.sh", yayin "npx wrangler deploy"
+# (wrangler.jsonc assets.directory = ./site). uygulama.yml testi site/'de kosar.
 set -eu
 cd "$(dirname "$0")"
 rm -rf site

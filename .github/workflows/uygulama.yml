@@ -15,6 +15,7 @@ on:
       - 'manifest.webmanifest'
       - 'data/**'
       - 'test/**'
+      - 'yayinla.sh'
       - '.github/workflows/uygulama.yml'
   workflow_dispatch:
 
@@ -28,4 +29,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
-      - run: node test/uygulama_test.js
+      # Cloudflare'in yayinladigi kume (yayinla.sh -> site/) test edilir, repo
+      # koku degil: yayinla.sh'ye eklenmesi unutulan bir dosya telefonda
+      # eksik kalirdi ama kokte test gecerdi (gece denetimi).
+      - run: sh yayinla.sh && node test/uygulama_test.js site
