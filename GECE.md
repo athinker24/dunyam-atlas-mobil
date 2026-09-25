@@ -4,14 +4,15 @@ Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmele
 bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
 değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
 bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
-adımda koştu (şimdi 18 denetim, hepsi geçiyor; GitHub'da da yeşil).
+adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
 - **Telefonda bakman gerekenler:** Dolaşım sekmesinde kaydırma akıcılığı
   (madde 16), çok yakınken kaydırma sınırı (1), dar ekranda lejant (7),
   ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), klavye (22), deniz
-  kartı (15).
+  kartı (15, 34), ay şeridinde parmağı kaydırarak ay tarama (36), bantlı renk
+  lejantı (27).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
 - `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
 
@@ -185,24 +186,24 @@ adımda koştu (şimdi 18 denetim, hepsi geçiyor; GitHub'da da yeşil).
     ve ağın gerçekten kapalı olduğu kontrol ediliyor. Uygulama bu gerçek
     kesintide de önbellekten açılıyor. Aynı kesintiye 'Güncellemeleri
     denetle' denetimi eklendi (madde 25). Test 17/17.
-27. Bantlı renk açıkken lejant etiketleri çeyrekliklerde duruyordu (%25,
+27. **Bantlı lejant ve kabartma seçimi.** Bantlı renk açıkken lejant etiketleri çeyrekliklerde duruyordu (%25,
     %50, %75), bantlar ise altıda bir sınırlarında; etiketler bantların
     ortasına düşüyor, hangi değerin bandı böldüğü okunmuyordu. Bantlıyken
     etiketler artık 7 bant sınırında (çakışan ara etiket gizlenir). Ayrıca
     kabartma gölgesi kapalıyken kaynak seçimi (Birleşik/Editör/Yükseklik)
     hâlâ etkin görünüyordu; şimdi soluk ve dokunulmaz.
-27. Ondalık ayırıcı karışıktı: lejant ve deniz kartı virgül (17,6), sınıf
+28. **Ondalık ayırıcı.** Ondalık ayırıcı karışıktı: lejant ve deniz kartı virgül (17,6), sınıf
     payları, koordinatlar, künye ve iç tutarlılık metinleri nokta (%11.5,
     41.2°K, 0.26°) yazıyordu. Hepsi Türkçe virgüle çekildi; tutarlılık
     metinlerindeki eksi işareti tipografik eksi oldu (tire içeren sözcüklere
     dokunmadan).
-27. İç tutarlılık raporu donmuş okyanus satırında 'buz yüzeyi ve buz-albedo
+29. **Donmuş okyanus metni eskimişti.** İç tutarlılık raporu donmuş okyanus satırında 'buz yüzeyi ve buz-albedo
     modelde yok' diyordu; sea_ice_air açık olduğundan buz üstü havası artık
     var. Metin anahtara bağlandı: açıkken 'buz üstü havası kıyıya taşınıyor,
     buz-albedo modelde yok'. Yalnız metin; sayılar değişmez ama surum
     değişeceği için veri iş akışı gece dalında veriyi yeniden üretecek (1
     derecede doğrulandı, 12/12).
-27. 'Güncellemeleri denetle' yeni veri bulunca sürümü yerel kayda yazıp
+30. **Elle güncellemede bildirim yoktu; zaman damgası.** 'Güncellemeleri denetle' yeni veri bulunca sürümü yerel kayda yazıp
     sayfayı yeniliyordu; açılış farkı göremediği için 'Yeni veri yüklendi'
     bildirimi hiç çıkmıyor, sayfa sessizce yenileniyordu. Kayıt artık
     açılışa bırakıldı (tarayıcıda doğrulandı: bildirim çıkıyor). Üretim
@@ -210,24 +211,32 @@ adımda koştu (şimdi 18 denetim, hepsi geçiyor; GitHub'da da yeşil).
     edilemiyordu): artık UTC yazılıyor, uygulama telefonun saatine çevirip
     '25 Eylül 2026 22:29' biçiminde gösteriyor; eski biçim olduğu gibi. Veri
     satırındaki 'editor gorseli' Türkçe harflerle.
-27. Testin kar katmanı denetimi tuvalden rastgele 80 nokta okuyordu; sonuç
+31. **Kar testi rastgeleydi.** Testin kar katmanı denetimi tuvalden rastgele 80 nokta okuyordu; sonuç
     koşudan koşuya değişebilirdi. Sabit 10×8 ızgaraya çevrildi (44 farklı
     renk, eşik 5).
-27. Enlem etiketleri yalnız 60/30/0/−30'da yazılıyordu; yakınlaşınca ızgara
+32. **Yakınken enlem etiketi yoktu.** Enlem etiketleri yalnız 60/30/0/−30'da yazılıyordu; yakınlaşınca ızgara
     10° aralığa geçiyor ama etiket kalmıyordu (30'un katları ekrandan
     çıkınca hiç enlem yazmıyordu). Etiket adımı artık çizgiyle aynı: uzakta
     30°, yakında 10°.
-27. CLAUDE.md eski sayılar taşıyordu: kara payı %6.8 alan / %5.3 hücre (0.25
+33. **Belgede eski sayılar.** CLAUDE.md eski sayılar taşıyordu: kara payı %6.8 alan / %5.3 hücre (0.25
     derecede yeniden ölçüldü: %6.95 / %5.40; uygulama künyesi %6.9 diyor),
     kara min/max ay oranı 0.078 (güncel veri 0.076). Düzeltildi.
-27. Deniz kartında en sıcak/en soğuk ay değerlerinin altında yalnız 'en
+34. **Deniz kartında ay adı.** Deniz kartında en sıcak/en soğuk ay değerlerinin altında yalnız 'en
     sıcak ay' yazıyordu, hangi ay olduğu yoktu; kara kartındaki gibi ayın
     adı yazılıyor (ör. AĞUSTOS, OCAK).
-27. Canvas2D yedek çizimi (telefonda WebGL reddedilirse tek yol) CI'da hiç
+35. **Canvas2D yedeği testte yoktu.** Canvas2D yedek çizimi (telefonda WebGL reddedilirse tek yol) CI'da hiç
     sınanmıyordu, yalnız bir kez elle denetlenmişti. Teste eklendi: WebGL
     bağlamı engellenmiş ikinci sayfa açılıyor, 2D tuvalde en az 6 farklı
     renk ve sayfa hatası yok bekleniyor. Yedeği bilerek bozunca denetim
     düşüyor (doğrulandı). 18/18.
+36. **Ay şeridinde parmakla tarama telefonda hiç çalışmıyordu.** Şeritte
+    parmağı kaydırarak ayları tarama kodu var, ama şeritte touch-action
+    tanımlı değildi: tarayıcı hareketi sayfa kaydırması sayıp ikinci adımda
+    pointercancel gönderiyor, ay ilk dokunulanda kalıyordu. CDP dokunma
+    olaylarıyla ölçüldü: Şubat'tan Kasım'a 20 adımlık kaydırmada 2 hareket,
+    1 iptal, ay Şubat'ta kaldı. #donem'e touch-action:none: 20 hareket, 0
+    iptal, ay Kasım. Teste eklendi; düzeltme kaldırılınca denetim düşüyor
+    (doğrulandı). 19/19.
 
 ## Yalnız raporlanan (senin kararın)
 

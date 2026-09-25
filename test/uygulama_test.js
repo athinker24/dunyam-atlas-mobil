@@ -123,6 +123,18 @@ const OLC = () => {
       await p.evaluate(k => document.querySelector(`[data-k=${k}]`).click(), k); await bekle(250);
       if (k === "sicaklik" || k === "yagis" || k === "kar") { await p.evaluate(() => document.querySelectorAll("#donem button")[7].click()); await bekle(250); }
     }
+    // ay seridinde parmakla tarama: touch-action yokken tarayici ikinci
+    // adimda pointercancel gonderiyordu, tarama telefonda calismiyordu (gece denetimi)
+    { await p.evaluate(() => document.querySelector("[data-k=sicaklik]").click()); await bekle(250);
+      const r = await p.evaluate(() => { const bs = [...document.querySelectorAll("#donem button")], a = bs[1].getBoundingClientRect(), z = bs[11].getBoundingClientRect();
+        return [a.x + a.width / 2, z.x + z.width / 2, a.y + a.height / 2]; });
+      const c = await ctx.newCDPSession(p);
+      const t = (type, x) => c.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x, y: r[2] }] });
+      await t("touchStart", r[0]); for (let i = 1; i <= 20; i++) { await t("touchMove", r[0] + (r[1] - r[0]) * i / 20); await bekle(16); }
+      await t("touchEnd"); await bekle(300); await c.detach();
+      const dn = await p.evaluate(() => window.__atlas.durum().donem);
+      denetle("ay seridinde parmakla tarama", dn === 10, `ay ${dn}, beklenen 10`);
+      await p.evaluate(() => document.querySelectorAll("#donem button")[0].click()); await bekle(250); }
     // kar katmani: kar hesabi tembel; sekme acilinca cizilmeli, tuval tek renk kalmamali
     await p.evaluate(() => document.querySelector("[data-k=kar]").click()); await bekle(400);
     const kr = await p.evaluate(() => { const c = document.getElementById("gl"), gl = c.getContext("webgl"), px = new Uint8Array(4), r = new Set();
