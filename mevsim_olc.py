@@ -148,7 +148,10 @@ def harita(h, yol, baslik):
     lej2 = 110
     out = Image.new("RGB", (W, 50 + p1.height + lej1 + 40 + p2.height + lej2), (11, 17, 22))
     d = ImageDraw.Draw(out)
-    d.text((16, 12), baslik, font=font, fill=(230, 226, 216))
+    bf = font
+    while d.textlength(baslik, font=bf) > W - 32 and bf.size > 12:
+        bf = ImageFont.truetype(bf.path, bf.size - 1)
+    d.text((16, 12), baslik, font=bf, fill=(230, 226, 216))
     y = 50
     out.paste(p1, (0, y)); y += p1.height + 12
     d.text((16, y), "Kurak mevsimin tipi", font=font, fill=(230, 226, 216)); y += 32
