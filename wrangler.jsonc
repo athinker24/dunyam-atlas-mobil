@@ -5,5 +5,8 @@
   "name": "dunyam-atlas-mobil",
   "compatibility_date": "2026-06-01",
   "assets": { "directory": "./site" },
-  "preview_urls": true
+  "preview_urls": true,
+  // ana dal disindaki dallarda Cloudflare "wrangler preview" kosar; bu blok
+  // olmadan yayin adimi duser (su-butcesi dalinda olculdu)
+  "previews": {}
 }
