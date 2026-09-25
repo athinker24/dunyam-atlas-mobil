@@ -210,6 +210,9 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
     edilemiyordu): artık UTC yazılıyor, uygulama telefonun saatine çevirip
     '25 Eylül 2026 22:29' biçiminde gösteriyor; eski biçim olduğu gibi. Veri
     satırındaki 'editor gorseli' Türkçe harflerle.
+27. Testin kar katmanı denetimi tuvalden rastgele 80 nokta okuyordu; sonuç
+    koşudan koşuya değişebilirdi. Sabit 10×8 ızgaraya çevrildi (44 farklı
+    renk, eşik 5).
 
 ## Yalnız raporlanan (senin kararın)
 

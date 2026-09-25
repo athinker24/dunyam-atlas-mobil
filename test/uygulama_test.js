@@ -126,7 +126,8 @@ const OLC = () => {
     // kar katmani: kar hesabi tembel; sekme acilinca cizilmeli, tuval tek renk kalmamali
     await p.evaluate(() => document.querySelector("[data-k=kar]").click()); await bekle(400);
     const kr = await p.evaluate(() => { const c = document.getElementById("gl"), gl = c.getContext("webgl"), px = new Uint8Array(4), r = new Set();
-      for (let i = 0; i < 80; i++) { gl.readPixels(Math.floor(c.width * (0.1 + 0.8 * Math.random())), Math.floor(c.height * (0.35 + 0.45 * Math.random())), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); r.add(px.join()); }
+      // sabit 10x8 izgara: rastgele ornek her kosuda baska sonuc verebiliyordu
+      for (let i = 0; i < 80; i++) { gl.readPixels(Math.floor(c.width * (0.1 + 0.8 * (i % 10 + 0.5) / 10)), Math.floor(c.height * (0.35 + 0.45 * (((i / 10) | 0) + 0.5) / 8)), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); r.add(px.join()); }
       return { renk: r.size, lejant: document.querySelector("#aciklama").textContent }; });
     denetle("kar katmani ciziliyor", kr.renk > 5 && /ay örtü/.test(kr.lejant), `${kr.renk} farkli renk`);
     await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
