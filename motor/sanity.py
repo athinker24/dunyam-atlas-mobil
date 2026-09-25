@@ -65,7 +65,11 @@ def check(grid: Grid, r: dict) -> list:
     donmus = float((np.abs(sst[:, ocean] - ice) < 0.01).mean())
     add("okyanus buyuk olcude donmus degil", donmus < 0.35,
         f"okyanus-aylarin %{100 * donmus:.0f}'i donma noktasinda ({ice} C); "
-        "buz yuzeyi ve buz-albedo modelde yok")
+        # sea_ice_air acikken buz ustu havasi kiyiya tasiniyor; metin
+        # "buz yuzeyi yok" diyordu (gece denetimi)
+        + ("buz ustu havasi kiyiya tasiniyor, buz-albedo modelde yok"
+           if world.params.get("sea_ice_air", 0) > 0
+           else "buz yuzeyi ve buz-albedo modelde yok"))
     # Esik GEZEGENE gore. Sabit 40 C Dunya'ya ozel bir sayidir ve motorun
     # temel kuralini cigner: kasten sicak bir dunyada (ortalama 30 C) SST'nin
     # 40'i asmasi DOGRUDUR, hata degil. Olculdu — modelin en sicak okyanusu

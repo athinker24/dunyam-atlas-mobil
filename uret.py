@@ -148,7 +148,7 @@ def kodla(a, lo, hi, olcek="lin"):
 _TURKCE = [
     ("sayisal saglik", "sayısal sağlık"), ("negatif degil", "negatif değil"), ("en dusuk", "en düşük"),
     ("buyuk olcude donmus degil", "büyük ölçüde donmuş değil"), ("okyanus-aylarin", "okyanus-ayların"),
-    ("donma noktasinda", "donma noktasında"), ("buz yuzeyi", "buz yüzeyi"), ("ust siniri", "üst sınırı"),
+    ("donma noktasinda", "donma noktasında"), ("buz yuzeyi", "buz yüzeyi"), ("buz ustu havasi kiyiya tasiniyor", "buz üstü havası kıyıya taşınıyor"), ("ust siniri", "üst sınırı"),
     ("en yuksek", "en yüksek"), ("kuresel", "küresel"), ("sicaklik", "sıcaklık"), ("dusuyor", "düşüyor"),
     ("ARTIYOR", "ARTIYOR"), ("asiri egiklik", "aşırı eğiklik"), ("yukseklikle sogume", "yükseklikle soğuma"),
     ("yukseklik", "yükseklik"), ("esdogrusalligi", "eşdoğrusallığı"), ("esdogrusallik", "eşdoğrusallık"),

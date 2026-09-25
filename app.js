@@ -79,6 +79,9 @@ function araziRenk(m){ const d = ARAZI_DURAK;
   return hex(d[d.length-1][1]); }
 const css = c => `rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
 const eksi = v => String(v).replace("-", "\u2212");   // tipografik eksi
+// Turkce ondalik virgul. Lejant ve deniz karti virgul, sinif paylari,
+// koordinatlar ve uret.py'den gelen metinler nokta yaziyordu (gece denetimi).
+const virgul = v => String(v).replace(/(\d)\.(?=\d)/g, "$1,");
 const cssRampa = dur => `linear-gradient(90deg,${dur.join(",")})`;
 
 function b64(s){ const bin = atob(s), o = new Uint8Array(bin.length);
@@ -738,7 +741,7 @@ function baslat(J, resimler){
   function aciklamaYaz(){
     const el = $("#aciklama");
     if(katman==="iklim"){
-      if(izole){ el.innerHTML = `<div class="izole"><span><b>${izole}</b> · ${D.KNAME[izole]||""} · %${(paylar[izole]*100).toFixed(1)}</span><button id="izole-kaldir">Hepsi</button></div>`;
+      if(izole){ el.innerHTML = `<div class="izole"><span><b>${izole}</b> · ${D.KNAME[izole]||""} · %${virgul((paylar[izole]*100).toFixed(1))}</span><button id="izole-kaldir">Hepsi</button></div>`;
         $("#izole-kaldir").onclick = () => { izole=null; listeYaz(); aciklamaYaz(); ciz(); }; return; }
       const g = Object.keys(GRUP).filter(g=>grupPay[g]);
       el.innerHTML = `<button class="gruplar" id="siniflar-ac"><span class="cubuk">${g.map(k=>`<i style="width:${grupPay[k]*100}%;background:${GRUP_RENK[k]}"></i>`).join("")}</span><span class="ok">Sınıflar</span></button>`
@@ -780,10 +783,10 @@ function baslat(J, resimler){
   function listeYaz(){
     const aile = {}; for(const k of Object.keys(paylar).sort((a,b)=>paylar[b]-paylar[a])) (aile[k[0]] = aile[k[0]]||[]).push(k);
     $("#sinif-listesi").innerHTML = Object.keys(GRUP).filter(g=>aile[g]).map(g =>
-      `<div class="grup"><h4>${GRUP[g]}<span>%${(grupPay[g]*100).toFixed(1)}</span></h4>` + aile[g].map(k =>
+      `<div class="grup"><h4>${GRUP[g]}<span>%${virgul((grupPay[g]*100).toFixed(1))}</span></h4>` + aile[g].map(k =>
         `<button class="satir" data-sinif="${k}" aria-pressed="${izole===k}"><i style="background:${KPAL[k]}"></i>`
         + `<span class="kod">${k}</span><span class="ad">${D.KNAME[k]||k}<small>${KREF[k]||""}</small></span>`
-        + `<span class="pay">%${(paylar[k]*100).toFixed(paylar[k]<0.01?2:1)}</span></button>`).join("") + `</div>`).join("");
+        + `<span class="pay">%${virgul((paylar[k]*100).toFixed(paylar[k]<0.01?2:1))}</span></button>`).join("") + `</div>`).join("");
   }
   $("#sinif-listesi").addEventListener("click", e => { const b = e.target.closest("[data-sinif]"); if(!b) return;
     izole = izole===b.dataset.sinif ? null : b.dataset.sinif; listeYaz(); sayfaKapat(); katmanSec("iklim"); });
@@ -839,17 +842,17 @@ function baslat(J, resimler){
     const el = $("#"+id); el.checked = ayar[k];
     el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); katmanSec(katman); });
   }
-  $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${v}</dd>`).join("")
-    + `<dt>hücre</dt><dd>${((B[2]-B[0])/W).toFixed(2)}°</dd>`;
+  $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${virgul(v)}</dd>`).join("")
+    + `<dt>hücre</dt><dd>${virgul(((B[2]-B[0])/W).toFixed(2))}°</dd>`;
   const gecen = D.R.sanity.filter(c=>c.gecti).length;
   $("#tutarlilik-say").textContent = `${gecen}/${D.R.sanity.length}`;
-  $("#tutarlilik").innerHTML = D.R.sanity.map(c=>`<div class="denetim${c.gecti?"":" dustu"}"><span>${c.ad}<small>${c.aciklama}</small></span></div>`).join("");
+  $("#tutarlilik").innerHTML = D.R.sanity.map(c=>`<div class="denetim${c.gecti?"":" dustu"}"><span>${c.ad}<small>${virgul(c.aciklama).replace(/(^|[\s(])-(?=\d)/g, "$1\u2212")}</small></span></div>`).join("");
   $("#surum").textContent = `Veri sürümü ${D.J.surum} · üretildi ${D.J.uretim} · kabartma: ${D.doku.kabartma}`;
 
   /* --- hucre karti --- */
   function kartYaz(){
     const i = sec, x = i%W, y = (i/W)|0, lat = D.enlem(y), lon = B[0] + (x+0.5)*(B[2]-B[0])/W;
-    const konum = `${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`;
+    const konum = virgul(`${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`);
     const el = $("#kart-icerik"); $("#kart").hidden = false;
     const j = D.karaSira[i], ad = D.KCODE[String(D.kop[i])];
     const T = D.tAy.map(a=>a[j]), P = D.pAy.map(a=>a[j]);
@@ -876,7 +879,7 @@ function baslat(J, resimler){
   // Dolasim sekmesinde okyanusa dokununca: deniz yuzeyi sicakligi ve ruzgar
   function denizKartYaz(){
     const i = sec, x = i%W, y = (i/W)|0, lat = D.enlem(y), lon = B[0] + (x+0.5)*(B[2]-B[0])/W, m = donem<0 ? 12 : donem;
-    const konum = `${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`;
+    const konum = virgul(`${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`);
     const u = dolOrnek(D, D.dol.u[m], x, y), v = dolOrnek(D, D.dol.v[m], x, y), T = D.dol.sst.slice(0,12).map(a=>dolOrnek(D, a, x, y));
     const r1 = v => eksi(Math.round(v*10)/10).replace(".", ",");
     $("#kart").hidden = false;

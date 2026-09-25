@@ -191,6 +191,17 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
     etiketler artık 7 bant sınırında (çakışan ara etiket gizlenir). Ayrıca
     kabartma gölgesi kapalıyken kaynak seçimi (Birleşik/Editör/Yükseklik)
     hâlâ etkin görünüyordu; şimdi soluk ve dokunulmaz.
+27. Ondalık ayırıcı karışıktı: lejant ve deniz kartı virgül (17,6), sınıf
+    payları, koordinatlar, künye ve iç tutarlılık metinleri nokta (%11.5,
+    41.2°K, 0.26°) yazıyordu. Hepsi Türkçe virgüle çekildi; tutarlılık
+    metinlerindeki eksi işareti tipografik eksi oldu (tire içeren sözcüklere
+    dokunmadan).
+27. İç tutarlılık raporu donmuş okyanus satırında 'buz yüzeyi ve buz-albedo
+    modelde yok' diyordu; sea_ice_air açık olduğundan buz üstü havası artık
+    var. Metin anahtara bağlandı: açıkken 'buz üstü havası kıyıya taşınıyor,
+    buz-albedo modelde yok'. Yalnız metin; sayılar değişmez ama surum
+    değişeceği için veri iş akışı gece dalında veriyi yeniden üretecek (1
+    derecede doğrulandı, 12/12).
 
 ## Yalnız raporlanan (senin kararın)
 
