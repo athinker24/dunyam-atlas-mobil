@@ -327,3 +327,11 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   Eski ve yeni atlas.json alan alan karşılaştırıldı: yalnız uretim, surum,
   donmuş okyanus açıklaması ve kabartma etiketi farklı; bütün sayısal
   alanlar ve dokular birebir aynı. _guncel_durum notuna yeni sürüm eklendi.
+- motor/koppen.py, Beck (2018) kurallarına karşı satır satır okundu (B eşiği
+  ve yaz yarısı, A/Af/Am, C/D sınırı 0 °C, Cs/Cw çakışma çözümü, a/b/c/d alt
+  harfleri, ET/EF): birebir. Uç değerler makul: en yağışlı kara 5610 mm/yıl,
+  9.6°K alçak muson kıyısı Am (Dünya'da deniz seviyesinde Buenaventura
+  ~7000); en kurak 18 mm/yıl, 5000-6000 m buzul EF, yıllık ortalama −29..−33
+  °C. Dokularda renk profili parçası yok (PNG yalnız IHDR/IDAT/IEND, JPG'de
+  ICC yok), WebGL renk dönüşümünü kapatıyor; doku en büyük doku boyutunu
+  aşarsa Canvas2D'ye düşülüyor.
