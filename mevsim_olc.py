@@ -88,6 +88,9 @@ def olc(g, r):
             "dunya_minmax": DUNYA_MINMAX,
             "kara_ay_payi_10mm_alti": round(100 * ort((P < 10).mean(0), kara), 1),
             "kara_yillik_yagis_mm": round(ort(P.sum(0), kara)),
+            # su butcesi (motor notu: Dunya kosusunda kuresel ~2061, gozlem ~1000)
+            "kuresel_yillik_yagis_mm": round(ort(P.sum(0), np.ones_like(kara))),
+            "okyanus_yillik_yagis_mm": round(ort(P.sum(0), ~kara)),
             "C_icinde_f_s_w": [pay(k2 == "Cf", ilik), pay(k2 == "Cs", ilik), pay(k2 == "Cw", ilik)],
             "D_icinde_f_s_w": [pay(k2 == "Df", soguk), pay(k2 == "Ds", soguk), pay(k2 == "Dw", soguk)],
             "kara_tip_payi": {t: pay(tipler == t) for t in TIP_RENK},
