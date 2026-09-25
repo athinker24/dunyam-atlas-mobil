@@ -286,3 +286,8 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
 - Kod gözden geçirme (bu gecenin bütün app.js farkı): bir hata bulundu ve düzeltildi (madde 24); yüzdelik/kantil ikili aramaları, geri tuşu, kaplama dönüşümü, klavye doğru.
 - Rastgele etkileşim taraması, geri tuşu ve klavye dahil, iki ek tohumla
   (99, 31337): 0 hata, uygulama sayfada kalıyor.
+- Ay değiştirme maliyeti (CPU ×4, orta telefon yaklaşığı, yalnız JS):
+  Sıcaklık medyan 17 ms, Yağış 14, Kar 23 (ilk açılışta 137, tembel kar
+  hesabı), Dolaşım 45 ms. Parmakla taramada Dolaşım ~20 kare/s'ye iner;
+  önbellekleme 2.7 MB bellek ister, gerekmedi. Çekmece dokunmayla
+  sürükleniyor (378 → 772 px).
