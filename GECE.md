@@ -220,6 +220,9 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
 27. CLAUDE.md eski sayılar taşıyordu: kara payı %6.8 alan / %5.3 hücre (0.25
     derecede yeniden ölçüldü: %6.95 / %5.40; uygulama künyesi %6.9 diyor),
     kara min/max ay oranı 0.078 (güncel veri 0.076). Düzeltildi.
+27. Deniz kartında en sıcak/en soğuk ay değerlerinin altında yalnız 'en
+    sıcak ay' yazıyordu, hangi ay olduğu yoktu; kara kartındaki gibi ayın
+    adı yazılıyor (ör. AĞUSTOS, OCAK).
 
 ## Yalnız raporlanan (senin kararın)
 

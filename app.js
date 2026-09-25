@@ -901,7 +901,8 @@ function baslat(J, resimler){
     $("#kart-icerik").innerHTML = `<div class="k-ust"><i style="background:#2b4a5a"></i><div><h3>Deniz</h3>`
       + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]} · ${kiyi}</small></div></div>`
       + `<div class="k-sayilar"><div><em>${r1(donem<0 ? T.reduce((p,c)=>p+c,0)/12 : T[donem])}°</em><span>yüzey</span></div>`
-      + `<div><em>${r1(Math.max(...T))}°</em><span>en sıcak ay</span></div><div><em>${r1(Math.min(...T))}°</em><span>en soğuk ay</span></div>`
+      // kara kartindaki gibi ayin adi (gece denetimi: "en sicak ay" yaziyordu, hangisi yoktu)
+      + `<div><em>${r1(Math.max(...T))}°</em><span>${AYLAR[T.indexOf(Math.max(...T))]}</span></div><div><em>${r1(Math.min(...T))}°</em><span>${AYLAR[T.indexOf(Math.min(...T))]}</span></div>`
       + `<div><em>${r1(Math.hypot(u,v))}</em><span>m/s rüzgâr</span></div></div>`
       + `<div class="k-alt"><span>${konum}</span><span>rüzgâr ${nereden(u,v)} esiyor</span></div>`;
   }
