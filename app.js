@@ -439,8 +439,15 @@ function baslat(J, resimler){
   function sinirla(){
     const g = gorunen();
     olcek = Math.max(sigOlcek*0.7, Math.min(sigOlcek*48, olcek));
-    const w = W*olcek, h = H*olcek, px = g.w*0.5;
-    ox = Math.min(px, Math.max(g.w - w - px, ox)); oy = Math.min(g.alt - 60, Math.max(g.ust + 60 - h, oy));
+    // Ekranin ortasi kara kutusundan en fazla gorunen alanin %35'i kadar
+    // disari cikabilir. Once butun VERI kutusuna gore sinirlaniyordu; veride
+    // karanin cevresinde 22 derecelik okyanus payi oldugu icin yakinken ekran
+    // tamamen bos okyanusa (ya da verinin disina) kayabiliyordu (gece
+    // denetimi, olculdu). Pay, kiyidaki secili hucrenin kartin ustune
+    // kaydirilabilmesi icin (gorunurYap).
+    const cx = g.w/2, cy = (g.ust + g.alt)/2, pw = 0.35*g.w, ph = 0.35*(g.alt - g.ust);
+    ox = Math.min(cx + pw - KUTU.x0*olcek, Math.max(cx - pw - (KUTU.x0 + KUTU.w)*olcek, ox));
+    oy = Math.min(cy + ph - KUTU.y0*olcek, Math.max(cy - ph - (KUTU.y0 + KUTU.h)*olcek, oy));
   }
   function boyut(){
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -899,9 +906,14 @@ async function acilis(){
 }
 
 if("serviceWorker" in navigator){
+  // Yalniz ESKI bir service worker'in yerine yenisi gecince yenile. Ilk
+  // kurulumda da controllerchange atesleniyor (clients.claim) ve olay anında
+  // controller dolu oldugu icin eski kontrol ilk acilisi da yeniliyordu:
+  // sayfa iki kez yukleniyordu (gece denetimi).
   let yenilendi = false;
+  const oncekiDenetci = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if(yenilendi || !navigator.serviceWorker.controller) return; yenilendi = true; location.reload(); });
+    if(yenilendi || !oncekiDenetci) return; yenilendi = true; location.reload(); });
   navigator.serviceWorker.register("sw.js", {updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
 }
 document.addEventListener("click", async e => {
