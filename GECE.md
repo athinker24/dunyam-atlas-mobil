@@ -361,3 +361,7 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   °C. Dokularda renk profili parçası yok (PNG yalnız IHDR/IDAT/IEND, JPG'de
   ICC yok), WebGL renk dönüşümünü kapatıyor; doku en büyük doku boyutunu
   aşarsa Canvas2D'ye düşülüyor.
+- Akıntı yolları 0.25 derecelik kara maskesine karşı ~0.1 derece adımla
+  örneklendi: 8 akıntıdan yalnız 'İç Deniz - mevsimsel genlik' 539 noktanın
+  2'sinde kıyıya değiyor (4.4°D 8.6°K); diğerleri tamamen denizde. Arazi
+  değişikliğinden sonra kayma yok.
