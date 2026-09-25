@@ -280,7 +280,8 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   aynı; akıntı ve denizellik katmanları ortalamayı yukarı itiyor. 14'e
   oturtmak için global_mean_sealevel_temp_c'yi ~12.9'a çekmek gerekir, ama
   bu savan/ılıman dengesini (14 °C'nin seçilme sebebi) değiştirir. Öneri:
-  dokunma, yalnız §6'ya 'gerçekleşen 15.1' notu düşülebilir.
+  dokunma, yalnız §6'ya 'gerçekleşen 15.1' notu düşülebilir. Not düşüldü
+  (yalnız belge); parametre kararı senin.
 
 - **Artık dallar.** arayuz-yeni, yukseklik-kaynak, su-butcesi ve
   claude/repo-access-check-2kwdm0 dallarının main'e girmemiş hiçbir commit'i

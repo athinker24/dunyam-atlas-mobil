@@ -241,7 +241,7 @@ Bu sayılar dünyanın kendisidir; değiştirmek başka bir gezegen yapar.
 |---|---|---|
 | gün uzunluğu | 15 saat | işaretli platoda bozkır isteniyordu; 24 saatlik günde orası %0 bozkırdı. Hızlı dönüş Hadley hücresini daraltır, iç kesimlere nem taşınımını zayıflatır |
 | eksen eğikliği | 28° | soğutmanın tundra bedelini ödüyor (yazları ısıtır) |
-| deniz seviyesi ort. sıcaklık | 14 °C | savan payını %19'dan ~%9'a indirmek için |
+| deniz seviyesi ort. sıcaklık | 14 °C (girdi; modelin çıkan küresel ortalaması 15.1) | savan payını %19'dan ~%9'a indirmek için. Fark akıntı ve denizellikten, 24 Eylül'den beri aynı; tutarlılık kontrolü ±3 °C ile geçer |
 | kara kuşağı | 60°K .. −7°K | 40-70°K'de dünya çok sertti; tek işleyen kol karayı güneye taşımaktı |
 | en yüksek nokta | 7000 m | dünyanın sahibi bildirdi (önce 6700) |
 | yükseklik eğrisi | sahibin çapaları | ova 250-300 m, plato çanağı 800-1000 m, Büyük Duvar zirveleri 6000 m, en yüksek 7000 m; aralar PCHIP. Kıta **bilerek** Dünya'dan yüksek (kara medyanı ~950 m, Dünya 377). Ayrıntı `_elev_curve` |
