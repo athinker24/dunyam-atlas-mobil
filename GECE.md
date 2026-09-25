@@ -129,3 +129,16 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     taklit ediyor ve orada kazanç yalnız %22 (9.2 → 7.1 s); gerçek telefon
     GPU'sunda katman kaydırmak çok daha ucuz olmalı ama buradan ölçemedim.
     Telefonda Dolaşım'da kaydırmanın akıcılığına bakman gerekiyor. Test 15/15.
+
+## Temiz çıkan denetimler (sorun bulunmadı)
+
+- Rastgele etkileşim taraması: 3 tohum, 1100 eylem (dokunma, çift dokunma,
+  sekme/ay, çekmece, anahtarlar, sınıf izolasyonu, döndürme, yakınlaştırma,
+  sürükleme): 0 JS hatası.
+- WebGL'siz yedek çizim (Canvas2D): 6 sekme hatasız.
+- 360×640 ve 1024×768'de taşan öğe yok.
+- `index.html` ve `manifest.webmanifest`: eksik yok.
+- Python dosyalarında statik tarama (pyflakes): temiz.
+- `yayinla.sh` 17 dosya kopyalıyor, eksik yok; `site/` git'te izlenmiyor.
+- Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12).
+- Ham yağış alanında 57-59°K satır sıçraması: kıyı geçişinden, artefakt değil.
