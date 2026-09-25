@@ -114,6 +114,33 @@ def olc(g, r):
     return s, dict(tipler=tipler, oran=oran, kara=kara, lat=lat, lon=lon)
 
 
+def kiyasla(g, r, taban):
+    """'Mevcut iklimleri en az degistirecek' olcutu: tabana gore sinifi
+    degisen karanin alan payi, en buyuk gecisler ve yagis degisimi."""
+    LA = np.meshgrid(np.asarray(g.lat), np.asarray(g.lon), indexing="ij")[0]
+    wt = np.cos(np.radians(LA))
+    kara = np.asarray(g.land)
+    K0, K1 = taban["koppen"], r["koppen"]
+    if K0.shape != K1.shape:
+        raise SystemExit("kiyas tabani baska cozunurlukte")
+    toplam = wt[kara].sum()
+    degisen = kara & (K0 != K1)
+    grup = np.vectorize(lambda k: koppen.BROAD.get(int(k), "?"))
+    grup_degisen = kara & (grup(K0) != grup(K1))
+    gecis = {}
+    for i, j in zip(*np.where(degisen)):
+        ad = "%s>%s" % (koppen.CODES[int(K0[i, j])], koppen.CODES[int(K1[i, j])])
+        gecis[ad] = gecis.get(ad, 0.0) + wt[i, j]
+    en = sorted(gecis.items(), key=lambda kv: -kv[1])[:8]
+    P0, P1 = taban["precip"].sum(0), r["precip"].sum(0)
+    return ({
+        "sinif_degisen_kara": round(100 * wt[degisen].sum() / toplam, 2),
+        "ana_grup_degisen_kara": round(100 * wt[grup_degisen].sum() / toplam, 2),
+        "yillik_yagis_degisim_ort": round(100 * float((wt * np.abs(P1 - P0) / np.maximum(P0, 1))[kara].sum() / toplam), 1),
+        "en_buyuk_gecisler": {k: round(100 * v / toplam, 2) for k, v in en},
+    }, degisen)
+
+
 def harita(h, yol, baslik):
     kara, lat, lon = h["kara"], h["lat"], h["lon"]
     ys, xs = np.where(kara)
@@ -152,13 +179,21 @@ def harita(h, yol, baslik):
         a, b, c = np.array([74, 44, 30]), np.array([226, 214, 176]), np.array([60, 140, 90])
         return np.where(v < 0.498, a + (b - a) * (v / 0.498), b + (c - b) * ((v - 0.498) / 0.502)).astype(np.uint8)
 
+    def degisim_renk(a0, a1, b0, b1):
+        o = (tip_renk(a0, a1, b0, b1) * 0.22 + 20).astype(np.uint8)
+        dg = h["degisen"][a0:a1, b0:b1]
+        o[dg] = tip_renk(a0, a1, b0, b1)[dg]
+        return o
+
     p1, p2 = panel(tip_renk), panel(oran_renk)
+    p3 = panel(degisim_renk) if "degisen" in h else None
     font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 22)
     kucuk = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 18)
     W = p1.width
     lej1 = 44 + 30 * 3
     lej2 = 110
-    out = Image.new("RGB", (W, 50 + p1.height + lej1 + 40 + p2.height + lej2), (11, 17, 22))
+    ek = (p3.height + 60) if p3 is not None else 0
+    out = Image.new("RGB", (W, 50 + p1.height + lej1 + 40 + p2.height + lej2 + ek), (11, 17, 22))
     d = ImageDraw.Draw(out)
     bf = font
     while d.textlength(baslik, font=bf) > W - 32 and bf.size > 12:
@@ -183,6 +218,10 @@ def harita(h, yol, baslik):
     for v, t in [(0, "0"), (0.249, "0.25 Dünya"), (0.5, "0.5+")]:
         x = 16 + v / 0.5 * bw
         d.text((min(x, W - 70) - (0 if v == 0 else 30), y + 18), t, font=kucuk, fill=(210, 206, 196))
+    if p3 is not None:
+        y += 60
+        d.text((16, y), "Sınıfı değişen kara (renk: yeni kurak mevsim tipi)", font=font, fill=(230, 226, 216))
+        out.paste(p3, (0, y + 34))
     d.text((16, out.height - 24), "mavi çizgiler: 19-36°K Akdeniz bandı · beyaz kutu: karsız plato çanağı",
            font=kucuk, fill=(150, 150, 150))
     out.save(yol)
@@ -196,6 +235,8 @@ def main():
     ap.add_argument("--harita", help="PNG yolu")
     ap.add_argument("--json", help="olcumleri JSON olarak yaz")
     ap.add_argument("--etiket", default="")
+    ap.add_argument("--kod", help="Koppen ve yagisi .npz olarak sakla (sonra --kiyas icin)")
+    ap.add_argument("--kiyas", help="taban .npz: sinifi degisen kara payini olc ve haritaya ekle")
     a = ap.parse_args()
 
     w = uret.dunya_yukle()
@@ -208,6 +249,10 @@ def main():
     s, h = olc(g, r)
     s["kosu"] = {"res": a.res, "params": {kv.split("=")[0]: float(kv.split("=")[1]) for kv in a.p},
                  "sure_s": round(time.time() - t0)}
+    if a.kod:
+        np.savez_compressed(a.kod, koppen=r["koppen"], precip=r["precip"].astype(np.float32))
+    if a.kiyas:
+        s["degisim"], h["degisen"] = kiyasla(g, r, np.load(a.kiyas))
     print(json.dumps(s, ensure_ascii=False, indent=1))
     if a.json:
         with open(a.json, "w", encoding="utf-8") as fh:
