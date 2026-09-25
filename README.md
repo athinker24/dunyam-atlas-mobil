@@ -36,6 +36,8 @@ seçilir. Diğer dalların ayrı önizleme adresi olur
    uygulama çevrimdışı çalışmaya devam eder.
 
 Tünel adresi her açılışta değişir ve bilgisayar açık, pencere açıkken geçerlidir.
+Tünel herkese açıktır; bu yüzden yalnız `yayinla.sh` kümesini (`site/`) sunar,
+depo kökünü değil.
 
 ## Güncellemek
 
