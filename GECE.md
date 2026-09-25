@@ -316,3 +316,7 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   indiriyor mu: sunucu günlüğünde her dosya bir kez 200, tekrarlar 304
   (atlas.json 2.7 MB bir kez). mevsim_olc.py 1 derecede hatasız koşuyor (44
   s).
+- Veri iş akışı gece dalında yeniden üretti (surum 65cf9d017d → bbcdf12a34).
+  Eski ve yeni atlas.json alan alan karşılaştırıldı: yalnız uretim, surum,
+  donmuş okyanus açıklaması ve kabartma etiketi farklı; bütün sayısal
+  alanlar ve dokular birebir aynı. _guncel_durum notuna yeni sürüm eklendi.
