@@ -81,3 +81,7 @@ bulundu, ne yapıldı, nasıl doğrulandı.
    parçacıklar 1.5-2 kat hızlı akıp izleri kısalıyordu. Adım artık geçen
    süreyle ölçekleniyor (60 Hz'de davranış aynı), arka plandan dönüşte
    sıçrama olmasın diye en fazla 3 kare. Test 15/15.
+10. **`_senkron_kontrol.py` yanlış yolda anlaşılmaz çıktı veriyordu.** Proje
+    yolu yoksa ya da yanlışsa her dosya için ayrı "projede yok" yazıyordu.
+    Artık yol kontrol ediliyor (`climate/` var mı) ve tek satırlık açık hata
+    ile 2 kodu dönüyor.

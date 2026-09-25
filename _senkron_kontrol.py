@@ -7,7 +7,7 @@ ile masaustundeki dunya farkli olur ve kimse fark etmez.
 
     python _senkron_kontrol.py ../         # proje kokunu ver, karsilastir
 
-Cikti 0 = ayni, 1 = fark var. Projedeki _repo_senkron.py ile guncellenir.
+Cikti 0 = ayni, 1 = fark var, 2 = proje yolu yanlis. Projedeki _repo_senkron.py ile guncellenir.
 """
 import hashlib
 import os
@@ -28,6 +28,12 @@ def ozet(yol):
 
 def main(proje):
     burasi = os.path.dirname(os.path.abspath(__file__))
+    # Yanlis yol verilince her dosya icin ayri "projede yok" yaziliyordu;
+    # asil sorun yolun kendisi (gece denetimi).
+    if not os.path.isdir(os.path.join(proje, "climate")):
+        print("asil proje bulunamadi: %s icinde climate/ yok. Proje kokunu ver:"
+              " python _senkron_kontrol.py /asil/projenin/yolu" % os.path.abspath(proje))
+        return 2
     fark = []
     for repo_yol, proje_yol, uzanti, haric in ESLESME:
         r = os.path.join(burasi, repo_yol)
