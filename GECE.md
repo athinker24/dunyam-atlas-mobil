@@ -301,3 +301,7 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
 - Köppen haritasında tek hücrelik benek (8 komşusunun hiçbiriyle aynı
   sınıfta olmayan kara hücresi): %1.1 (50232 hücreden 551). Gürültü sorunu
   değil.
+- İlk açılışta servis çalışanı kurulumu ile sayfa aynı dosyaları iki kez
+  indiriyor mu: sunucu günlüğünde her dosya bir kez 200, tekrarlar 304
+  (atlas.json 2.7 MB bir kez). mevsim_olc.py 1 derecede hatasız koşuyor (44
+  s).
