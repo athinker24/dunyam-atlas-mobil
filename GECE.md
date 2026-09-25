@@ -137,6 +137,12 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     Doğrulama: kart / çekmece / sınıf listesi / kart+çekmece senaryolarında
     geri sonrası hepsi kapalı, sayfa aynı, geçmiş uzunluğu sabit. Teste
     denetim eklendi, 16/16.
+20. **Yatay iPhone'da çentik başlığı ve sekmeleri örtebiliyordu.** Sayfa
+    viewport-fit=cover kullanıyor; üst ve alt güvenli alan payı vardı, sol
+    ve sağ yoktu. Başlık, alt dok, kart ve ayar çekmecesine safe-area-inset-
+    left/right payları eklendi. Doğrulama: 844×390'da 47 px çentik
+    taklidiyle başlık, menü düğmesi, ilk/son sekme ve lejant çentiğin
+    dışında. Test 16/16.
 
 ## Yalnız raporlanan (senin kararın)
 
