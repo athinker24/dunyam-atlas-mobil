@@ -441,6 +441,14 @@ function baslat(J, resimler){
 
   const KUTU = (()=>{ let x0=W,x1=0,y0=H,y1=0; for(let i=0;i<N;i++) if(D.land[i]){ const x=i%W, y=(i/W)|0;
     if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; } return {x0, y0, w:x1-x0+1, h:y1-y0+1}; })();
+  // her satirdaki karanin bati/dogu ucu (karasiz satirlar en yakin karali
+  // satirdan): pan siniri kutunun kosesindeki acik denize degil karaya baglanir
+  const SATIR = (()=>{ const a = new Float64Array(H).fill(NaN), b = new Float64Array(H).fill(NaN);
+    for(let i=0;i<N;i++) if(D.land[i]){ const x=i%W, y=(i/W)|0;
+      if(isNaN(a[y]) || x < a[y]) a[y] = x; if(isNaN(b[y]) || x+1 > b[y]) b[y] = x+1; }
+    for(let y=0, son=-1; y<H; y++){ if(!isNaN(a[y])) son=y; else if(son>=0){ a[y]=a[son]; b[y]=b[son]; } }
+    for(let y=H-1, son=-1; y>=0; y--){ if(!isNaN(a[y]) && son<0) son=y; if(isNaN(a[y])){ a[y]=a[son]; b[y]=b[son]; } }
+    return {a, b}; })();
 
   function gorunen(){
     const r = canvas.getBoundingClientRect();
@@ -463,9 +471,12 @@ function baslat(J, resimler){
     // tamamen bos okyanusa (ya da verinin disina) kayabiliyordu (gece
     // denetimi, olculdu). Pay, kiyidaki secili hucrenin kartin ustune
     // kaydirilabilmesi icin (gorunurYap).
+    // Yatay sinir, ekranin ortasindaki SATIRDA karanin bati/dogu ucuna gore:
+    // dikdortgen kutu yetmedi, kosesi kiyidan uzak acik deniz (test yakaladi).
     const cx = g.w/2, cy = (g.ust + g.alt)/2, pw = 0.35*g.w, ph = 0.35*(g.alt - g.ust);
-    ox = Math.min(cx + pw - KUTU.x0*olcek, Math.max(cx - pw - (KUTU.x0 + KUTU.w)*olcek, ox));
     oy = Math.min(cy + ph - KUTU.y0*olcek, Math.max(cy - ph - (KUTU.y0 + KUTU.h)*olcek, oy));
+    const sy = Math.max(0, Math.min(H-1, Math.floor((cy - oy)/olcek)));
+    ox = Math.min(cx + pw - SATIR.a[sy]*olcek, Math.max(cx - pw - SATIR.b[sy]*olcek, ox));
   }
   function boyut(){
     dpr = Math.min(window.devicePixelRatio || 1, 2);

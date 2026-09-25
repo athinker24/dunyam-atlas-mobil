@@ -81,11 +81,16 @@ const OLC = () => {
   p.on("console", m => { if (m.type() === "error" && !/^Failed to load resource/.test(m.text())) hatalar.push(m.text()); });
   p.on("response", y => { if (y.status() >= 400 && !ISTEGE_BAGLI.test(y.url())) hatalar.push(`${y.status()} ${y.url()}`); });
   const bekle = ms => p.waitForTimeout(ms);
+  // ilk acilista sayfa bir kez yuklenmeli (service worker ilk kurulumda
+  // controllerchange ile yeniliyordu; gece denetimi)
+  let yukleme = 0; p.on("framenavigated", f => { if (f === p.mainFrame()) yukleme++; });
   try {
     await p.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: "networkidle" });
     await p.waitForFunction(() => document.querySelector("#yukleniyor").hidden, null, { timeout: 60000 });
     const d0 = await p.evaluate(() => window.__atlas.durum());
     denetle("acilis", true);
+    await bekle(1500);
+    denetle("ilk acilista tek yukleme", yukleme === 1, `${yukleme} yukleme`);
     denetle("WebGL ile ciziliyor", d0.webgl);
 
     await bekle(600);
@@ -115,6 +120,13 @@ const OLC = () => {
       await p.evaluate(k => document.querySelector(`[data-k=${k}]`).click(), k); await bekle(250);
       if (k === "sicaklik" || k === "yagis" || k === "kar") { await p.evaluate(() => document.querySelectorAll("#donem button")[7].click()); await bekle(250); }
     }
+    // kar katmani: kar hesabi tembel; sekme acilinca cizilmeli, tuval tek renk kalmamali
+    await p.evaluate(() => document.querySelector("[data-k=kar]").click()); await bekle(400);
+    const kr = await p.evaluate(() => { const c = document.getElementById("gl"), gl = c.getContext("webgl"), px = new Uint8Array(4), r = new Set();
+      for (let i = 0; i < 80; i++) { gl.readPixels(Math.floor(c.width * (0.1 + 0.8 * Math.random())), Math.floor(c.height * (0.35 + 0.45 * Math.random())), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); r.add(px.join()); }
+      return { renk: r.size, lejant: document.querySelector("#aciklama").textContent }; });
+    denetle("kar katmani ciziliyor", kr.renk > 5 && /ay örtü/.test(kr.lejant), `${kr.renk} farkli renk`);
+    await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     // Dolasim sekmesi (veride varsa): ruzgar oklari ve akinti yollari cizilmeli
     const dol = await p.evaluate(() => !document.querySelector("[data-k=dolasim]").hidden);
     if (dol) {
@@ -138,6 +150,18 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-kaynak=editor]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-kaynak=bir]")?.click()); }
     denetle("katman, ay ve kabartma gecisleri hatasiz", hatalar.length === 0, hatalar.slice(0, 3).join(" | "));
+
+    // pan siniri: cok yakinken uzaga surukleyince ekran bos okyanusa/verinin
+    // disina kaymamali; ekranin ortasi kara kutusuna yakin kalmali (gece denetimi)
+    await p.mouse.move(195, 420); for (let i = 0; i < 12; i++) await p.mouse.wheel(0, -400);
+    await p.mouse.down(); await p.mouse.move(195 + 5000, 420 - 5000, { steps: 4 }); await p.mouse.up(); await bekle(300);
+    const pan = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum();
+      let kara = 0; for (let y = 140; y < 700; y += 10) for (let x = 5; x < 385; x += 10) {
+        const gx = Math.floor((x - s.ox) / s.olcek), gy = Math.floor((y - s.oy) / s.olcek);
+        if (gx >= 0 && gy >= 0 && gx < D.W && gy < D.H && D.land[gy * D.W + gx]) kara++; }
+      return kara; });
+    denetle("yakinken surukleyince kara ekranda kaliyor", pan > 0, `${pan} kara ornegi`);
+    await p.click("#sigdir"); await bekle(250);
 
     // cevrimdisi: service worker her seyi onbellege almis olmali
     await p.evaluate(() => navigator.serviceWorker.ready); await bekle(2500);
