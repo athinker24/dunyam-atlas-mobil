@@ -113,6 +113,26 @@ def dunya_yukle():
         os.remove(gecici)
 
 
+def bilinmeyen_params(params):
+    """Motorun hic okumadigi params adlari (yazim hatasi).
+
+    Dunya dosyasi bir guven siniri (CLAUDE.md 5): 'convective_C' gibi bir
+    yazim hatasi sessizce yutulur ve kosu taban degerle yapilir; olcum
+    "degisiklik etkisiz" diye yanlis okunur (gece denetimi). Bilinenler:
+    katmanlarin DEFAULTS'u ve motorda params.get("..") / params[".."] ile
+    okunan adlar. '_' ile baslayanlar not.
+    """
+    import glob
+    import importlib
+    bilinen = set()
+    for m in ("circulation", "maritime", "moisture", "monsoon", "temperature"):
+        bilinen |= set(importlib.import_module("motor." + m).DEFAULTS)
+    for f in glob.glob(os.path.join(BURASI, "motor", "*.py")):
+        with open(f, encoding="utf-8") as fh:
+            bilinen |= set(re.findall(r"params(?:\.get\(|\[)\s*[\"'](\w+)", fh.read()))
+    return sorted(k for k in params if not k.startswith("_") and k not in bilinen)
+
+
 def grid_kur(w, res):
     hm = w.heightmap
     return G.from_heightmap(
@@ -302,6 +322,10 @@ def main():
 
     t0 = time.time()
     w = dunya_yukle()
+    yok = bilinmeyen_params(w.params)
+    if yok and not a.zorla:
+        raise SystemExit("dunyam.json params icinde motorun okumadigi ad(lar): %s "
+                         "(yazim hatasi mi?). Yine de kosmak icin: --zorla" % ", ".join(yok))
     g = grid_kur(w, a.res)
     print("%s: %dx%d hucre, kara %%%.0f, hucre %.3f derece"
           % (w.name, g.shape[1], g.shape[0], 100 * g.land.mean(),

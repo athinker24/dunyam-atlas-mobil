@@ -243,9 +243,18 @@ def main():
     a = ap.parse_args()
 
     w = uret.dunya_yukle()
+    # bicimsiz ya da yanlis yazilmis ad sessizce taban kosusu olcuyordu (gece denetimi)
     for kv in a.p:
+        if "=" not in kv:
+            raise SystemExit("--p AD=DEGER bekleniyor: %s" % kv)
         ad, deger = kv.split("=", 1)
-        w.params[ad] = float(deger)
+        try:
+            w.params[ad] = float(deger)
+        except ValueError:
+            raise SystemExit("--p %s: deger sayi degil" % kv)
+    yok = uret.bilinmeyen_params(w.params)
+    if yok:
+        raise SystemExit("motorun okumadigi param: %s (yazim hatasi mi?)" % ", ".join(yok))
     g = uret.grid_kur(w, a.res)
     t0 = time.time()
     r = model.run(g)

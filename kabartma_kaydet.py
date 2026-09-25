@@ -99,6 +99,9 @@ def kaydet(kaynak: str) -> dict:
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         raise SystemExit(__doc__)
+    # yanlis yol Pillow'un Ingilizce izini basiyordu (gece denetimi)
+    if not os.path.isfile(sys.argv[1]):
+        raise SystemExit("gorsel bulunamadi: %s" % sys.argv[1])
     s = kaydet(sys.argv[1])
     print("kaydedildi: olcek %.4f/%.4f kayma %.1f/%.1f ortusme %.4f -> %s"
           % (s["sx"], s["sy"], s["ox"], s["oy"], s["iou"], HEDEF))

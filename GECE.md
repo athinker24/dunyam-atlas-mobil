@@ -274,6 +274,16 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     yok; --bind ve --directory bayrakları burada Python ile denendi, toplu
     iş sözdizimi elle okundu. Tünel artık yedek yol olduğundan etkisi
     sınırlı.
+42. **Yanlış yazılmış parametre adı sessizce yutuluyordu.** mevsim_olc.py
+    --p convective_C=0.3 (büyük C) hatasız koşup taban dünyayı ölçüyordu:
+    deneme 'etkisiz' diye yanlış okunurdu. --p foo ise Python izi basıyordu.
+    dunyam.json params'ında da aynı risk (motor bilinmeyen anahtarı okumaz).
+    uret.py'ye bilinmeyen_params eklendi: katmanların DEFAULTS'u ve motorda
+    params.get/params[] ile okunan adlar (76 ad) dışındaki her anahtar yazım
+    hatası sayılır; uret.py durur (--zorla ile geçilir), mevsim_olc.py
+    durur. Bugünkü dunyam.json'da bilinmeyen ad yok (1 derecelik koşu
+    12/12). kabartma_kaydet.py yanlış yolda iz yerine 'gorsel bulunamadi'
+    diyor.
 
 ## Yalnız raporlanan (senin kararın)
 
