@@ -556,12 +556,47 @@ def solve_month(grid: Grid, temp, sst, ocean_ref, u, v, p: dict):
     return p_oro + p_conv, W
 
 
+# Aylar birbirinden BAGIMSIZ cozulur; paralel kosmak her ayin hesabini
+# aynen birakir (sonuc bit bit ayni). fork'lu cocuklar girdileri bu
+# degiskenden okur, yeniden paketlenmez. fork yoksa (Windows) ya da
+# DUNYAM_ISCI=1 ise sirali.
+_PAYLAS = None
+
+
+def _ay(m):
+    grid, temp, sst, ocean_ref, u, v, p = _PAYLAS
+    return solve_month(grid, temp[m], sst[m], ocean_ref[m], u[m], v[m], p)
+
+
+def _isci_sayisi(n):
+    import multiprocessing as mp
+    import os
+    iste = os.environ.get("DUNYAM_ISCI")
+    if "fork" not in mp.get_all_start_methods():
+        return 1
+    k = int(iste) if iste else (len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else os.cpu_count() or 1)
+    return max(1, min(n, k))
+
+
 def run(grid: Grid, temp, sst, ocean_ref, u, v, p: dict | None = None):
     """(12, ny, nx) mm/ay yagis ve sutun su buhari."""
+    global _PAYLAS
     p = p or params(grid.world)
     n = len(temp)
     precip = np.empty((n, *grid.shape))
     cwv = np.empty((n, *grid.shape))
-    for m in range(n):
-        precip[m], cwv[m] = solve_month(grid, temp[m], sst[m], ocean_ref[m], u[m], v[m], p)
+    isci = _isci_sayisi(n)
+    if isci > 1:
+        import multiprocessing as mp
+        _PAYLAS = (grid, temp, sst, ocean_ref, u, v, p)
+        try:
+            with mp.get_context("fork").Pool(isci) as havuz:
+                sonuc = havuz.map(_ay, range(n), chunksize=1)
+        finally:
+            _PAYLAS = None
+        for m, (pr, w) in enumerate(sonuc):
+            precip[m], cwv[m] = pr, w
+    else:
+        for m in range(n):
+            precip[m], cwv[m] = solve_month(grid, temp[m], sst[m], ocean_ref[m], u[m], v[m], p)
     return precip, cwv
