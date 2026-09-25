@@ -4,13 +4,13 @@ Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmele
 bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
 değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
 bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
-adımda koştu (şimdi 15 denetim, hepsi geçiyor; GitHub'da da yeşil).
+adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
 - **Telefonda bakman gerekenler:** Dolaşım sekmesinde kaydırma akıcılığı
   (madde 16), çok yakınken kaydırma sınırı (1), dar ekranda lejant (7),
-  ayar çekmecesi açıkken kart (8), Kar sekmesi ve kart (11, 18), deniz
+  ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), deniz
   kartı (15).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
 - `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
@@ -129,6 +129,14 @@ adımda koştu (şimdi 15 denetim, hepsi geçiyor; GitHub'da da yeşil).
     Moskova 5 ay (Kas–Mar), Ulan Batur 4 ay ince örtü. Dünyam: örtülü kara
     payı aynı (%41.9), ortalama örtü süresi 2.55 → 2.23 ay. Test 15/15.
     CLAUDE.md §1'deki kar tanımı güncellendi.
+19. **Android geri tuşu uygulamadan çıkıyordu.** Kart, ayar çekmecesi ya da
+    sınıf listesi açıkken geri tuşu bunları kapatmıyor, doğrudan uygulamadan
+    çıkıyordu (kodda geçmiş yönetimi yoktu). Artık biri açılınca geçmişe tek
+    durum itiliyor, geri tuşu açık olanları kapatıyor; arayüzden (X,
+    sürükleme) kapatılınca itilen durum geri alınıyor, geçmiş şişmiyor.
+    Doğrulama: kart / çekmece / sınıf listesi / kart+çekmece senaryolarında
+    geri sonrası hepsi kapalı, sayfa aynı, geçmiş uzunluğu sabit. Teste
+    denetim eklendi, 16/16.
 
 ## Yalnız raporlanan (senin kararın)
 

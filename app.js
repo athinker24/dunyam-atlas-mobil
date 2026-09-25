@@ -936,6 +936,21 @@ function baslat(J, resimler){
   listeYaz(); katmanSec("iklim"); sigdir(); requestAnimationFrame(kare);
   $("#yukleniyor").hidden = true;
   (window.requestIdleCallback || (f => setTimeout(f, 300)))(() => karAl(D));
+  // Android geri tusu: acik kart, cekmece ya da sayfa once kapanir; once
+  // dogrudan uygulamadan cikiliyordu (gece denetimi). Biri acilinca gecmise
+  // tek durum itilir; geri gelince hepsi kapanir. Arayuzden kapatilinca itilen
+  // durum geri alinir ki gecmis sismesin.
+  { const ustler = [$("#kart"), ...document.querySelectorAll(".sayfa")];
+    let itildi = false, geriBekle = false;
+    new MutationObserver(() => {
+      const acik = ustler.some(e => !e.hidden);
+      if(acik && !itildi){ history.pushState({atlasUst: 1}, ""); itildi = true; }
+      else if(!acik && itildi){ itildi = false; geriBekle = true; history.back(); }
+    }).observe(document.body, {subtree: true, attributes: true, attributeFilter: ["hidden"]});
+    addEventListener("popstate", () => {
+      if(geriBekle){ geriBekle = false; return; }
+      if(!itildi) return;
+      itildi = false; sayfaKapat(); if(!$("#kart").hidden) kartKapat(); }); }
   window.__atlas = {D, durum:()=>({katman, donem, ox, oy, olcek, sec, webgl:!!G})};   // dogrulama betikleri icin
 }
 

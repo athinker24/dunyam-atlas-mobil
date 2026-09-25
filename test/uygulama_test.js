@@ -113,7 +113,10 @@ const OLC = () => {
       const kart = await p.evaluate(() => ({ acik: !document.querySelector("#kart").hidden,
         metin: document.querySelector("#kart-icerik").textContent, sec: window.__atlas.durum().sec }));
       denetle("karaya dokununca kart aciliyor", kart.acik && kart.sec === yum.hedef.i && /\d/.test(kart.metin) && /Kar/.test(kart.metin));
-      await p.click("#kart-kapat"); await bekle(300);
+      // Android geri tusu acik karti kapatmali, uygulamadan cikmamali (gece denetimi)
+      await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400);
+      const geri = await p.evaluate(() => ({ kart: !document.querySelector("#kart").hidden, yol: location.pathname, acik: !!window.__atlas }));
+      denetle("geri tusu karti kapatir, sayfada kalir", !geri.kart && geri.acik && /index\.html$|\/$/.test(geri.yol), JSON.stringify(geri));
     } else denetle("karaya dokununca kart aciliyor", false, "ekranda uygun kara hucresi yok");
 
     for (const k of ["sicaklik", "yagis", "kar", "arazi", "iklim"]) {
