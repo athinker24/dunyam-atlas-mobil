@@ -1,9 +1,19 @@
 # Gece bakımı günlüğü (gece dalı)
 
-Dünyanın sahibi uyurken yapılan denetim. Kurallar: düzeltmeler bu dalda,
-`main`'e girmez (her push telefona yayın); iklim sonucunu değiştiren şeyler
-yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem: bulgu, nasıl
-bulundu, ne yapıldı, nasıl doğrulandı.
+Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmeler
+bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
+değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
+bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
+adımda koştu (şimdi 15 denetim, hepsi geçiyor; GitHub'da da yeşil).
+
+## Özet
+
+- **Telefonda bakman gerekenler:** Dolaşım sekmesinde kaydırma akıcılığı
+  (madde 16), çok yakınken kaydırma sınırı (1), dar ekranda lejant (7),
+  ayar çekmecesi açıkken kart (8), Kar sekmesi ve kart (11, 18), deniz
+  kartı (15).
+- **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
+- `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
 
 ## Düzeltilenler
 
@@ -32,13 +42,13 @@ bulundu, ne yapıldı, nasıl doğrulandı.
    - Yüzdelik renk ölçeği için ~650 bin değer sıralanıyordu. Değerler bayt
      kodlarından geldiği için (kodlama başına en fazla 256 değer) havuz
      artık kodlardan sayılarak kuruluyor.
+
    Sonuç: `veriHazirla` 989 → 239 ms.
    Yan düzeltme: eski havuz Float32'ye yuvarlanmış değer tutup tam hassas
    değerle sorgulandığı için eşit değerler "ortadan" değil bir yandan
    sayılabiliyordu. Renk tablosu farkı en fazla 6/255 (görünmez); lejant
    etiketleri birebir aynı; yalnız bantlı yıllık yağışta bant sınırındaki
    3 kod komşu banda geçti. Test 12/12.
-
 4. **Test bu gecenin düzeltmelerini kapsamıyordu.** Üç denetim eklendi:
    ilk açılışta tek yükleme, kar katmanının çizilmesi (tuval tek renk
    değil, lejant doğru), çok yakınken aşırı sürüklemede karanın ekranda
@@ -52,17 +62,6 @@ bulundu, ne yapıldı, nasıl doğrulandı.
 6. **Belgelerdeki koşu süreleri eskimişti.** Nem korunumu motoru yavaşlattı:
    0.25° bu makinede ~14 → ~35 dk, GitHub'da ~12 → ~20 dk (ölçüldü).
    CLAUDE.md ve README güncellendi. Test satırı da yeni denetimleri anıyor.
-
-## Yalnız raporlanan (senin kararın)
-
-- **Motor yavaşlığı.** Profil (0.5°, bir ay): 18.3 s'nin 10 s'si Gauss
-  yumuşatması; korunum her adımda bir yumuşatma daha ekliyor. Adım içindeki
-  iki yumuşatmadan birini yeniden kullanmak hızı ~%30-40 artırır ama sonucu
-  çok az değiştirir (veri sürümü değişir). Bit bit aynı kalan bir hızlandırma
-  bulamadım. GitHub'da 20 dk kabul edilebilir göründüğü için dokunmadım.
-
-## Düzeltilenler (devam)
-
 7. **Dar ekranda lejant etiketleri üst üste biniyordu.** 360 px'te yıllık
    yağışta "1.164" ile "5.610 mm/yıl" birleşip "1.1645.610" okunuyordu
    (yüzdelik ölçekte değerler uçta birbirine yakın). Artık komşusuyla
@@ -88,18 +87,6 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     hesabının kaç yıl döndürüldüğüne bağlı. Artık bu hücreler "kalıcı,
     erimiyor (buzul)" gösteriyor. Kontrol: 784'ü EF (buz örtüsü), 289'u ET,
     3'ü BSk; tutarlı. Test 15/15.
-
-## Yalnız raporlanan (devam)
-
-- **Kartta sınıf ile klimagram %2.1 karada çelişiyor.** Kaydedilen Köppen
-  sınıfı, uygulamanın gösterdiği aylık değerlerden yeniden hesaplanınca
-  karanın %2.1'inde (alan ağırlıklı, 1059 hücre) farklı çıkıyor; en sık
-  Cwa/Cwb, Csa/Csb, Dfa/Dfb (hepsi 22 °C sıcak ay eşiği). Sebep: veri
-  dosyasında aylık sıcaklık 0.32 °C adımla saklanıyor. Motorun sınıfı
-  doğru; eşiğin hemen yanındaki hücrelerde gösterilen değer yuvarlanmış.
-  Düzeltme: sıcaklığı 2 baytla saklamak (atlas.json ~0.8 MB büyür).
-  Öncelik DÜŞÜK: fark en fazla 0.16 °C, kart sıcaklığı tam dereceye yuvarlıyor;
-  gözle görülebilir bir çelişki değil. Açılışı yavaşlatmaya değmez bence.
 12. **GitHub testi yayınlanan dosyaları değil repo kökünü test ediyordu.**
     Cloudflare yalnız `yayinla.sh`'nin `site/`'ye kopyaladıklarını yayınlıyor;
     oraya eklenmesi unutulan bir dosya telefonda eksik kalır ama kökte test
@@ -129,19 +116,6 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     taklit ediyor ve orada kazanç yalnız %22 (9.2 → 7.1 s); gerçek telefon
     GPU'sunda katman kaydırmak çok daha ucuz olmalı ama buradan ölçemedim.
     Telefonda Dolaşım'da kaydırmanın akıcılığına bakman gerekiyor. Test 15/15.
-
-## Temiz çıkan denetimler (sorun bulunmadı)
-
-- Rastgele etkileşim taraması: 3 tohum, 1100 eylem (dokunma, çift dokunma,
-  sekme/ay, çekmece, anahtarlar, sınıf izolasyonu, döndürme, yakınlaştırma,
-  sürükleme): 0 JS hatası.
-- WebGL'siz yedek çizim (Canvas2D): 6 sekme hatasız.
-- 360×640 ve 1024×768'de taşan öğe yok.
-- `index.html` ve `manifest.webmanifest`: eksik yok.
-- Python dosyalarında statik tarama (pyflakes): temiz.
-- `yayinla.sh` 17 dosya kopyalıyor, eksik yok; `site/` git'te izlenmiyor.
-- Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12).
-- Ham yağış alanında 57-59°K satır sıçraması: kıyı geçişinden, artefakt değil.
 17. **CLAUDE.md'ye tuzak eklendi (§7.7):** bulut makinesinde çizim
     performansı yanıltır (yazılım GPU); JS maliyeti CPU ×4 ile ve profille
     ölçülür, çizim telefonda doğrulanır.
@@ -155,3 +129,33 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     Moskova 5 ay (Kas–Mar), Ulan Batur 4 ay ince örtü. Dünyam: örtülü kara
     payı aynı (%41.9), ortalama örtü süresi 2.55 → 2.23 ay. Test 15/15.
     CLAUDE.md §1'deki kar tanımı güncellendi.
+
+## Yalnız raporlanan (senin kararın)
+
+- **Motor yavaşlığı.** Profil (0.5°, bir ay): 18.3 s'nin 10 s'si Gauss
+  yumuşatması; korunum her adımda bir yumuşatma daha ekliyor. Adım içindeki
+  iki yumuşatmadan birini yeniden kullanmak hızı ~%30-40 artırır ama sonucu
+  çok az değiştirir (veri sürümü değişir). Bit bit aynı kalan bir hızlandırma
+  bulamadım. GitHub'da 20 dk kabul edilebilir göründüğü için dokunmadım.
+- **Kartta sınıf ile klimagram %2.1 karada çelişiyor.** Kaydedilen Köppen
+  sınıfı, uygulamanın gösterdiği aylık değerlerden yeniden hesaplanınca
+  karanın %2.1'inde (alan ağırlıklı, 1059 hücre) farklı çıkıyor; en sık
+  Cwa/Cwb, Csa/Csb, Dfa/Dfb (hepsi 22 °C sıcak ay eşiği). Sebep: veri
+  dosyasında aylık sıcaklık 0.32 °C adımla saklanıyor. Motorun sınıfı
+  doğru; eşiğin hemen yanındaki hücrelerde gösterilen değer yuvarlanmış.
+  Düzeltme: sıcaklığı 2 baytla saklamak (atlas.json ~0.8 MB büyür).
+  Öncelik DÜŞÜK: fark en fazla 0.16 °C, kart sıcaklığı tam dereceye yuvarlıyor;
+  gözle görülebilir bir çelişki değil. Açılışı yavaşlatmaya değmez bence.
+
+## Temiz çıkan denetimler (sorun bulunmadı)
+
+- Rastgele etkileşim taraması: 3 tohum, 1100 eylem (dokunma, çift dokunma,
+  sekme/ay, çekmece, anahtarlar, sınıf izolasyonu, döndürme, yakınlaştırma,
+  sürükleme): 0 JS hatası.
+- WebGL'siz yedek çizim (Canvas2D): 6 sekme hatasız.
+- 360×640 ve 1024×768'de taşan öğe yok.
+- `index.html` ve `manifest.webmanifest`: eksik yok.
+- Python dosyalarında statik tarama (pyflakes): temiz.
+- `yayinla.sh` 17 dosya kopyalıyor, eksik yok; `site/` git'te izlenmiyor.
+- Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12).
+- Ham yağış alanında 57-59°K satır sıçraması: kıyı geçişinden, artefakt değil.
