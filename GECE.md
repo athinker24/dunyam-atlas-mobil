@@ -4,7 +4,7 @@ Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmele
 bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
 değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
 bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
-adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
+adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
@@ -177,6 +177,14 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     yeni kod ['Denetleniyor…', 'Sunucuya ulaşılamadı, önbellekteki sürüm
     açık']; çevrimdışı açılış testi geçiyor. Not: sw.js değiştiği için
     telefonda ilk açılışta sayfa bir kez yenilenir (beklenen).
+26. **'İnternetsiz açılıyor' testi ağ açıkken geçiyordu.** Playwright'ın
+    çevrimdışı taklidi yeniden başlayan service worker'a uygulanmıyor: sayfa
+    çevrimdışı yeniden yüklendikten sonra service worker sunucuya ulaştı
+    (var olmayan dosyaya 404). Yani test çevrimdışı çalışmayı hiç
+    sınamıyordu. Artık test sırasında sunucu da kapatılıyor (gerçek kesinti)
+    ve ağın gerçekten kapalı olduğu kontrol ediliyor. Uygulama bu gerçek
+    kesintide de önbellekten açılıyor. Aynı kesintiye 'Güncellemeleri
+    denetle' denetimi eklendi (madde 25). Test 17/17.
 
 ## Yalnız raporlanan (senin kararın)
 

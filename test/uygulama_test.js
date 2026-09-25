@@ -67,7 +67,7 @@ const OLC = () => {
 };
 
 (async () => {
-  const srv = await sunucu(), port = srv.address().port;
+  const srv = await sunucu(), port = srv.address().port; let kapali = false;
   const tarayici = await chromium.launch({
     executablePath: process.env.CHROMIUM_YOLU || undefined,
     args: ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
@@ -168,15 +168,30 @@ const OLC = () => {
 
     // cevrimdisi: service worker her seyi onbellege almis olmali
     await p.evaluate(() => navigator.serviceWorker.ready); await bekle(2500);
+    // Gercek kesinti: tarayicinin cevrimdisi taklidi yeniden baslayan service
+    // worker'a uygulanmiyor (olculdu: reload sonrasi SW sunucuya ulasti, var
+    // olmayan dosyaya 404 dondu); bu denetim ag acikken geciyordu. Sunucu da
+    // kapatilir.
     await ctx.setOffline(true);
+    srv.close(); srv.closeAllConnections?.(); kapali = true;
     await p.reload({ waitUntil: "load" }).catch(() => {});
     const cd = await p.waitForFunction(() => document.querySelector("#yukleniyor").hidden, null, { timeout: 20000 }).then(() => true, () => false);
+    const ag = await p.evaluate(async () => { try { await fetch("data/yok_" + Date.now() + ".json"); return "acik"; } catch (_) { return "kapali"; } }).catch(() => "?");
+    if (ag !== "kapali") console.log("UYARI: cevrimdisi denetiminde ag hala " + ag);
     denetle("internetsiz aciliyor", cd);
+    // internetsizken "Guncellemeleri denetle" onbellekteki surumu "Guncel" diye
+    // sunmamali (gece denetimi: service worker sessizce onbellege dusuyordu)
+    if (cd) {
+      const gm = await p.evaluate(async () => { const b = document.getElementById("bildirim"), g = [];
+        new MutationObserver(() => g.push(b.textContent)).observe(b, { childList: true, characterData: true, subtree: true });
+        document.getElementById("guncelle").click(); await new Promise(r => setTimeout(r, 2500)); return g; });
+      denetle("internetsizken guncelleme denetimi 'Guncel' demiyor", gm.length > 0 && !gm.some(t => /Güncel ·/.test(t)), JSON.stringify(gm));
+    }
     await ctx.setOffline(false);
   } catch (e) {
     denetle("beklenmeyen hata", false, e.message.split("\n")[0]);
   }
-  await tarayici.close(); srv.close();
+  await tarayici.close(); if (!kapali) srv.close();
   const dusen = sonuclar.filter(s => !s.gecti).length;
   console.log(dusen ? `\n${dusen} denetim DUSTU` : `\n${sonuclar.length}/${sonuclar.length} gecti`);
   process.exit(dusen ? 1 : 0);
