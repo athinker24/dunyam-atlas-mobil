@@ -79,6 +79,11 @@ function araziRenk(m){ const d = ARAZI_DURAK;
   return hex(d[d.length-1][1]); }
 const css = c => `rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
 const eksi = v => String(v).replace("-", "\u2212");   // tipografik eksi
+// uretim damgasi: yeni veride UTC ("...T19:24Z"), telefonun saatine cevrilir.
+// Once makinenin yerel saatiydi: GitHub'da UTC, masaustunde TSI, ayirt
+// edilemiyordu (gece denetimi). Eski bicim oldugu gibi gosterilir.
+const tarih = u => { const d = /T\d\d:\d\dZ$/.test(u||"") ? new Date(u) : null;
+  return d && !isNaN(d) ? d.toLocaleString("tr-TR", {day:"numeric", month:"long", year:"numeric", hour:"2-digit", minute:"2-digit"}) : u; };
 // Turkce ondalik virgul. Lejant ve deniz karti virgul, sinif paylari,
 // koordinatlar ve uret.py'den gelen metinler nokta yaziyordu (gece denetimi).
 const virgul = v => String(v).replace(/(\d)\.(?=\d)/g, "$1,");
@@ -847,7 +852,7 @@ function baslat(J, resimler){
   const gecen = D.R.sanity.filter(c=>c.gecti).length;
   $("#tutarlilik-say").textContent = `${gecen}/${D.R.sanity.length}`;
   $("#tutarlilik").innerHTML = D.R.sanity.map(c=>`<div class="denetim${c.gecti?"":" dustu"}"><span>${c.ad}<small>${virgul(c.aciklama).replace(/(^|[\s(])-(?=\d)/g, "$1\u2212")}</small></span></div>`).join("");
-  $("#surum").textContent = `Veri sürümü ${D.J.surum} · üretildi ${D.J.uretim} · kabartma: ${D.doku.kabartma}`;
+  $("#surum").textContent = `Veri sürümü ${D.J.surum} · üretildi ${tarih(D.J.uretim)} · kabartma: ${D.doku.kabartma}`;
 
   /* --- hucre karti --- */
   function kartYaz(){
@@ -1020,7 +1025,7 @@ async function acilis(){
     resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
-    if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+J.uretim), 600);
+    if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);
     localStorage.setItem("veri-surum", J.surum); } catch(_){}
   try { baslat(J, resimler); }
   catch(e){ console.error(e); $("#yukleniyor").innerHTML = `<span>Atlas açılamadı<br><small style="text-transform:none;letter-spacing:0">${e.message}</small></span>`; }
@@ -1044,7 +1049,9 @@ document.addEventListener("click", async e => {
   navigator.serviceWorker?.getRegistration().then(r => r?.update()).catch(() => {});
   bildir("Denetleniyor…");
   try { const J = await veriCek(true); let once = null; try{ once = localStorage.getItem("veri-surum"); }catch(_){}
-    if(once && once!==J.surum){ try{ localStorage.setItem("veri-surum", J.surum); }catch(_){} location.reload(); }
+    // veri-surum burada yazilmaz: acilis farki gorup "Yeni veri yuklendi"
+    // desin. Once yaziliyordu ve elle guncellemede sayfa sessizce yenileniyordu.
+    if(once && once!==J.surum) location.reload();
     else bildir("Güncel · veri "+J.surum);
   } catch(err){ bildir("Sunucuya ulaşılamadı, önbellekteki sürüm açık"); }
 });

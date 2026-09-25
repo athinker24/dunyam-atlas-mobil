@@ -192,9 +192,10 @@ def uret(w, bolge: dict, K: np.ndarray, pencere, cikti_dir: str, olcek: int = OL
     k, iou = _kabartma_gorselden(w, cy, cx, kara_hi)
     hedef = float((k - 1.0)[kara_hi > 0.5].std()) if k is not None else 0.094
     kg = _kabartma_griden(w, kara, metre, cy, cx, hedef)
-    kaynak = "editor gorseli"
+    # uygulamada "Veri" satirinda gorunur; Turkce harflerle (gece denetimi)
+    kaynak = "editör görseli"
     if k is None:
-        k, kaynak, iou = kg, "gri ton yukseklik haritasi (editor gorseli yok)", None
+        k, kaynak, iou = kg, "gri ton yükseklik haritası (editör görseli yok)", None
     _kabartma_yaz(k, kara_hi, os.path.join(cikti_dir, "kabartma.jpg"))
     _kabartma_yaz(kg, kara_hi, os.path.join(cikti_dir, "kabartma_gri.jpg"))
     _kabartma_yaz(_kabartma_birlesik(k, kg, kara_hi, olcek), kara_hi, os.path.join(cikti_dir, "kabartma_bir.jpg"))

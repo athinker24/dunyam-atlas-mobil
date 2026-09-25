@@ -202,6 +202,14 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
     buz-albedo modelde yok'. Yalnız metin; sayılar değişmez ama surum
     değişeceği için veri iş akışı gece dalında veriyi yeniden üretecek (1
     derecede doğrulandı, 12/12).
+27. 'Güncellemeleri denetle' yeni veri bulunca sürümü yerel kayda yazıp
+    sayfayı yeniliyordu; açılış farkı göremediği için 'Yeni veri yüklendi'
+    bildirimi hiç çıkmıyor, sayfa sessizce yenileniyordu. Kayıt artık
+    açılışa bırakıldı (tarayıcıda doğrulandı: bildirim çıkıyor). Üretim
+    damgası makinenin yerel saatiydi (GitHub'da UTC, masaüstünde TSİ, ayırt
+    edilemiyordu): artık UTC yazılıyor, uygulama telefonun saatine çevirip
+    '25 Eylül 2026 22:29' biçiminde gösteriyor; eski biçim olduğu gibi. Veri
+    satırındaki 'editor gorseli' Türkçe harflerle.
 
 ## Yalnız raporlanan (senin kararın)
 

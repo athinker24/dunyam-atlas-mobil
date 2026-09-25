@@ -404,7 +404,7 @@ def main():
     surum = ozet_h.hexdigest()[:10]
     with open(a.cikti, "w", encoding="utf-8") as fh:
         fh.write('{"surum":%s,"uretim":%s,"facts":%s,"data":%s}'
-                 % (json.dumps(surum), json.dumps(time.strftime("%Y-%m-%d %H:%M")),
+                 % (json.dumps(surum), json.dumps(time.strftime("%Y-%m-%dT%H:%MZ", time.gmtime())),
                     json.dumps(facts, ensure_ascii=False), govde))
     print("-> %s  surum %s  %.2f MB  (%.0f sn)"
           % (a.cikti, surum, os.path.getsize(a.cikti) / 1e6, time.time() - t0))
