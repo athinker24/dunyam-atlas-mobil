@@ -157,6 +157,10 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     kullanımı). Eklendi: Esc açık çekmece/sayfayı, yoksa kartı kapatır;
     oklar kaydırır; +/− yakınlaştırır; 0 kıtaya sığdırır. Doğrulama:
     1280×800'de hepsi denendi, JS hatası yok. Test 16/16.
+23. **baslat.bat tarayıcıyı sunucudan önce açıyordu;** ilk açılışta
+    'bağlanılamadı' sayfası görünebiliyordu. Artık önce sunucu ayrı
+    pencerede başlıyor, 2 saniye sonra tarayıcı açılıyor. (Windows'ta
+    denenemedi; komutlar standart cmd.)
 
 ## Yalnız raporlanan (senin kararın)
 
@@ -194,3 +198,5 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
 - `yayinla.sh` 17 dosya kopyalıyor, eksik yok; `site/` git'te izlenmiyor.
 - Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12).
 - Ham yağış alanında 57-59°K satır sıçraması: kıyı geçişinden, artefakt değil.
+- Yeniden keşif taraması (bütün değişikliklerden sonra): 6 sekme × 13 dönem × rastgele dokunma, döndürme, aşırı yakınlaştırma: JS hatası yok, boş ekran bulgusu artık çıkmıyor; açılış 934 ms (yavaşlatmasız). Kalan tek uyarı 'NaN/sonsuz yok' tutarlılık kontrolünün adı (yanlış alarm).
+- Safari uyumu (statik tarama): yeni API yok; yalnız :has() (Safari 15.4+), daha eskide yalnız 'çekmece açıkken kart gizli' çalışmaz.
