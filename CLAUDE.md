@@ -77,6 +77,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | "en üst 60 olsun, orta olsun" | `KUZEY_KARA, GUNEY_KARA = 60, -7` | `_mk_heightmap.py` |
 | "sol üstteki bölge çok soğuk" | dünyanın sahibi araziyi kendisi alçalttı | `_bekleyen` |
 | "kış yağışı dünya genelinde çok az, kar da" | fırtına yolu terimi, `storm_c` 60 (yeni parametre) | `_firtina` |
+| "kendi içinde tutarlı olsun" (su bütçesi Dünya'nın 2 katıydı) | nem korunumu (`conserve_moisture` 1, yeni anahtar), `land_recycle` 0.25 → 0.65, `eddy_blend` 0.005 → 0.02 (etkin difüzivite motor notundaki ~1e6 m²/s); sabit buharlaşma tavanı denenip **reddedildi** | `_su_butcesi` |
 
 ### 2.3 Çalışma biçimi istekleri
 
@@ -331,7 +332,7 @@ projeye de taşı.
 yolu terimi (`storm_c`) ve karşıtlığın ay içi dağılımı (`storm_contrast_sigma_k`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
 ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
 alan ağırlıklı kara yağışı / sınıf payı, `motor/maritime.py` hafif deniz buzu
-(`sea_ice_air`) yalnız bu repoda. Asıl projeye
+(`sea_ice_air`), `motor/moisture.py` nem korunumu (`conserve_moisture`) yalnız bu repoda. Asıl projeye
 taşınmalı.
 
 **Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
@@ -387,9 +388,15 @@ buraya bak.
 - **`gravity_ms2` hiçbir şey tarafından okunmuyor.** Bilerek: ait olduğu üç
   yer de Dünya'ya uydurulmuş sabitler taşıyor. `test_gravity_is_inert` yarım
   bağlamayı engelliyor.
-- **Su bütçesi Dünya'nınkinin iki katı** ve düzeltmek Köppen skorunu
-  düşürüyor — çünkü fazla su başka bir hatayı (yerleşim hatasını) maskeliyor.
-  Sıra önemli: yerleşim düzelmeden bütçe düzeltilemez.
+- **Su bütçesi Dünya'nınkinin iki katıydı; Dünyam'da yarı yolda düzeltildi.**
+  Yakınsama, girdap ve fırtına yağışı nemden düşülmüyordu (yağışın ~%30'u
+  yoktan). `conserve_moisture` (motor 0, Dünyam 1) bunu düşer. Tek başına
+  açmak dünyayı kurutur (B %6 → %43): nem karaya ulaşmıyordu. O yüzden
+  birlikte `land_recycle` 0.65 ve `eddy_blend` 0.02. Sabit `evap_max`
+  tavanı YANLIŞ: ortalama akışı her yerde üst sınır yapıyor, kuru havanın
+  iç denizlerde nemlenmesini kesiyor. Küresel yağış hâlâ ~1540 mm (Dünya
+  ~1015); kalan fazla `rh_ocean`'dan. Dünya doğrulamasında korunum açık
+  denenmedi. Ayrıntı `_su_butcesi`.
 
 ---
 
