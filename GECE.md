@@ -85,3 +85,19 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     yolu yoksa ya da yanlışsa her dosya için ayrı "projede yok" yazıyordu.
     Artık yol kontrol ediliyor (`climate/` var mı) ve tek satırlık açık hata
     ile 2 kodu dönüyor.
+11. **Buzul hücrelerinde kar kalınlığı anlamsızdı.** 1076 kara hücresinde
+    yıllık kar yağışı yıllık erime kapasitesini aşıyor, kar hiç erimeden
+    birikiyor. Kart burada "en kalın ..., X mm su" yazıyordu ama X yalnız kar
+    hesabının kaç yıl döndürüldüğüne bağlı. Artık bu hücreler "kalıcı,
+    erimiyor (buzul)" gösteriyor. Kontrol: 784'ü EF (buz örtüsü), 289'u ET,
+    3'ü BSk; tutarlı. Test 15/15.
+
+## Yalnız raporlanan (devam)
+
+- **Kartta sınıf ile klimagram %2.1 karada çelişiyor.** Kaydedilen Köppen
+  sınıfı, uygulamanın gösterdiği aylık değerlerden yeniden hesaplanınca
+  karanın %2.1'inde (alan ağırlıklı, 1059 hücre) farklı çıkıyor; en sık
+  Cwa/Cwb, Csa/Csb, Dfa/Dfb (hepsi 22 °C sıcak ay eşiği). Sebep: veri
+  dosyasında aylık sıcaklık 0.32 °C adımla saklanıyor. Motorun sınıfı
+  doğru; eşiğin hemen yanındaki hücrelerde gösterilen değer yuvarlanmış.
+  Düzeltme: sıcaklığı 2 baytla saklamak (atlas.json ~0.6 MB büyür).

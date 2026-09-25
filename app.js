@@ -216,16 +216,20 @@ const KAR_ALT = -2, KAR_UST = 4, ERIME = 75, ORTU_ESIK = 10, YAGAR_ESIK = 5;
 function karHesapla(tAy, pAy, n){
   const swe = [], kar = [];   // ay ortasi kar ortusu, ayda yagan kar (mm su)
   for(let m=0;m<12;m++){ swe.push(new Float32Array(n)); kar.push(new Float32Array(n)); }
-  const ortu = new Uint8Array(n), yagar = new Uint16Array(n), ortuAy = new Uint16Array(n);
-  for(let j=0;j<n;j++){ let s = 0;
-    for(let tur=0;tur<3;tur++) for(let m=0;m<12;m++){ const T = tAy[m][j];
+  // kalici: kar hic erimiyor, yildan yila birikiyor (buzul). Orada kalinlik
+  // yalniz dondurulen yil sayisina bagli, anlamsiz; kart "kalici" yazar.
+  const ortu = new Uint8Array(n), yagar = new Uint16Array(n), ortuAy = new Uint16Array(n), kalici = new Uint8Array(n);
+  for(let j=0;j<n;j++){ let s = 0, gecen = 0;
+    for(let tur=0;tur<3;tur++){ for(let m=0;m<12;m++){ const T = tAy[m][j];
       const k = pAy[m][j]*Math.max(0, Math.min(1, (KAR_UST-T)/(KAR_UST-KAR_ALT)));
       const bas = s; s += k; s -= Math.min(s, ERIME*Math.max(0, T));
       if(tur===2){ kar[m][j] = k; swe[m][j] = (bas+s)/2; } }
+      if(tur===1) gecen = s; }
+    if(s > gecen + 1) kalici[j] = 1;
     for(let m=0;m<12;m++){
       if(swe[m][j] >= ORTU_ESIK){ ortu[j]++; ortuAy[j] |= 1<<m; }
       if(kar[m][j] >= YAGAR_ESIK) yagar[j] |= 1<<m; } }
-  return {swe, kar, ortu, yagar, ortuAy};
+  return {swe, kar, ortu, yagar, ortuAy, kalici};
 }
 // Kar alani ilk ihtiyacta kurulur. Acilista hesaplamak orta sinif telefonda
 // (CPU 4 kat yavas) ~360 ms ekliyordu ve ilk ekran kar gostermiyor; baslat
@@ -838,7 +842,8 @@ function baslat(J, resimler){
     const K = karAl(D), yag = ayAraligi(K.yagar[j]);
     if(!yag && !K.ortu[j]) return `<div class="k-kar yok">Kar yok</div>`;
     const sw = K.swe.map(a=>a[j]), en = sw.indexOf(Math.max(...sw));
-    const ortu = K.ortu[j] ? `örtü ${K.ortu[j]===12 ? "bütün yıl" : K.ortu[j]+" ay"} · en kalın ${AYLAR[en]}, ${Math.round(sw[en])} mm su` : "yerde tutunmuyor";
+    const ortu = K.kalici[j] ? "kalıcı, erimiyor (buzul)"
+      : K.ortu[j] ? `örtü ${K.ortu[j]===12 ? "bütün yıl" : K.ortu[j]+" ay"} · en kalın ${AYLAR[en]}, ${Math.round(sw[en])} mm su` : "yerde tutunmuyor";
     return `<div class="k-kar"><b>Kar</b> ${yag ? yag+" yağar" : "seyrek"} · ${ortu}</div>`;
   }
   // Dolasim sekmesinde okyanusa dokununca: deniz yuzeyi sicakligi ve ruzgar
