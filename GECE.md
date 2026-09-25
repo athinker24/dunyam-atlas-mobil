@@ -4,7 +4,7 @@ Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmele
 bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
 değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
 bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
-adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
+adımda koştu (şimdi 18 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
@@ -223,6 +223,11 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
 27. Deniz kartında en sıcak/en soğuk ay değerlerinin altında yalnız 'en
     sıcak ay' yazıyordu, hangi ay olduğu yoktu; kara kartındaki gibi ayın
     adı yazılıyor (ör. AĞUSTOS, OCAK).
+27. Canvas2D yedek çizimi (telefonda WebGL reddedilirse tek yol) CI'da hiç
+    sınanmıyordu, yalnız bir kez elle denetlenmişti. Teste eklendi: WebGL
+    bağlamı engellenmiş ikinci sayfa açılıyor, 2D tuvalde en az 6 farklı
+    renk ve sayfa hatası yok bekleniyor. Yedeği bilerek bozunca denetim
+    düşüyor (doğrulandı). 18/18.
 
 ## Yalnız raporlanan (senin kararın)
 

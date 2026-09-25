@@ -167,6 +167,20 @@ const OLC = () => {
     denetle("yakinken surukleyince kara ekranda kaliyor", pan > 0, `${pan} kara ornegi`);
     await p.click("#sigdir"); await bekle(250);
 
+    // WebGL yoksa Canvas2D yedegi: telefonda GPU surucusu reddederse tek yol
+    // bu; CI'da hic sinanmiyordu (gece denetimi)
+    { const y = await ctx.newPage(), yh = [];
+      y.on("pageerror", e => yh.push(e.message));
+      await y.addInitScript(() => { const og = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function (t, ...r) { return /webgl/.test(t) ? null : og.call(this, t, ...r); }; });
+      await y.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: "load" });
+      const ac = await y.waitForFunction(() => document.querySelector("#yukleniyor").hidden, null, { timeout: 30000 }).then(() => true, () => false);
+      const r = ac ? await y.evaluate(() => { const c = document.getElementById("gl"), x = c.getContext("2d"), n = new Set();
+        for (let i = 0; i < 80; i++) n.add(x.getImageData(Math.floor(c.width * (0.1 + 0.8 * (i % 10 + 0.5) / 10)), Math.floor(c.height * (0.2 + 0.6 * (((i / 10) | 0) + 0.5) / 8)), 1, 1).data.join());
+        return { webgl: window.__atlas.durum().webgl, renk: n.size }; }) : null;
+      denetle("WebGL yokken Canvas2D ile ciziliyor", ac && r && !r.webgl && r.renk > 5 && yh.length === 0, r ? `${r.renk} farkli renk ${yh.join(" | ")}` : "acilmadi");
+      await y.close(); }
+
     // cevrimdisi: service worker her seyi onbellege almis olmali
     await p.evaluate(() => navigator.serviceWorker.ready); await bekle(2500);
     // Gercek kesinti: tarayicinin cevrimdisi taklidi yeniden baslayan service
