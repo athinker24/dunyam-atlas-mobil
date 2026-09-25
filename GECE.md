@@ -237,6 +237,13 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     1 iptal, ay Şubat'ta kaldı. #donem'e touch-action:none: 20 hareket, 0
     iptal, ay Kasım. Teste eklendi; düzeltme kaldırılınca denetim düşüyor
     (doğrulandı). 19/19.
+37. **Düğmelerde çift dokunma yakınlaştırması.** Sayfa geneline touch-
+    action:manipulation eklendi (harita none olarak kalır). iOS Safari ay
+    şeridinde hızlı iki dokunuşu sayfa yakınlaştırması sayabiliyor;
+    manipulation bunu keser, kaydırma ve sıkıştırmaya dokunmaz.
+    DOĞRULANAMADI: headless Chromium'da sayfa yakınlaştırması kapalı;
+    standart önlem, iPhone'da bakılmalı. Testler 19/19, ay taraması
+    etkilenmedi.
 
 ## Yalnız raporlanan (senin kararın)
 
@@ -291,3 +298,6 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   hesabı), Dolaşım 45 ms. Parmakla taramada Dolaşım ~20 kare/s'ye iner;
   önbellekleme 2.7 MB bellek ister, gerekmedi. Çekmece dokunmayla
   sürükleniyor (378 → 772 px).
+- Köppen haritasında tek hücrelik benek (8 komşusunun hiçbiriyle aynı
+  sınıfta olmayan kara hücresi): %1.1 (50232 hücreden 551). Gürültü sorunu
+  değil.

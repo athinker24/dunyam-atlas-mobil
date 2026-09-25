@@ -28,7 +28,9 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:var(--zemin)}
+/* manipulation: dugmelerde cift dokunma yakinlastirmasi olmasin (iOS ay seridinde
+   hizli iki dokunusu sayfa yakinlastirmasi sayar); kaydirma ve sikistirma serbest */
+html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:var(--zemin);touch-action:manipulation}
 body{color:var(--yazi);font:400 15px/1.45 var(--sans);-webkit-font-smoothing:antialiased;
   font-variant-numeric:tabular-nums}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
