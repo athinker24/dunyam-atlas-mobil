@@ -257,6 +257,9 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     ≈ 3) tık başına ~%0.5 yakınlaşma. Satır 16 px, sayfa 400 px sayılıyor.
     Chromium'da değişiklik yok (piksel kipi); Firefox bu makinede yok,
     formülle doğrulandı.
+40. **Simge değişikliği testi tetiklemiyordu.** uygulama.yml'nin yol
+    listesinde icons/ yoktu; simgeler yayınlanan kümede (yayinla.sh) olduğu
+    halde değişince test koşmuyordu. Eklendi.
 
 ## Yalnız raporlanan (senin kararın)
 
