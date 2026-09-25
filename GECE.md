@@ -286,6 +286,16 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     diyor. heightmap anahtarları da denetleniyor (elev_curv gibi bir hata
     eğriyi sessizce kapatırdı). Yapay yazım hatasıyla denendi: "storm_C,
     heightmap.elev_curv" diye durdu.
+43. **Güncelleme denetiminde oturum dolması 'sunucuya ulaşılamadı'
+    görünüyordu; bildirim taşabiliyordu.** Cloudflare Access oturumu dolunca
+    veri isteği giriş sayfasına yönlenir ve CORS'ta düşer; mesaj internet
+    yokmuş gibi okunuyordu. Artık çevrimdışıysa 'İnternet yok, önbellekteki
+    sürüm açık', çevrimiçiyken istek düşerse 'Oturum dolmuş olabilir:
+    uygulamayı kapatıp yeniden aç' (yeniden açınca sayfa isteği giriş
+    sayfasına gider, madde 7.5 davranışı). İki yol da tarayıcıda denendi.
+    Bildirim kutusu white-space:nowrap idi; uzun metin 390 px ekrandan
+    taşardı. Artık ekran genişliği −32 px'te sarıyor (16..374 px, iki
+    satır).
 
 ## Yalnız raporlanan (senin kararın)
 

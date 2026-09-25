@@ -1065,6 +1065,10 @@ document.addEventListener("click", async e => {
     // desin. Once yaziliyordu ve elle guncellemede sayfa sessizce yenileniyordu.
     if(once && once!==J.surum) location.reload();
     else bildir("Güncel · veri "+J.surum);
-  } catch(err){ bildir("Sunucuya ulaşılamadı, önbellekteki sürüm açık"); }
+  } catch(err){
+    // cevrimiciyken istek dusuyorsa en olasi sebep Cloudflare Access oturumunun
+    // dolmasi (giris sayfasina yonlendirme CORS'ta duser); cozum yeniden acmak
+    bildir(navigator.onLine === false ? "İnternet yok, önbellekteki sürüm açık"
+      : "Sunucuya ulaşılamadı. Oturum dolmuş olabilir: uygulamayı kapatıp yeniden aç", 5000); }
 });
 acilis();
