@@ -97,7 +97,9 @@ bulundu, ne yapıldı, nasıl doğrulandı.
   Cwa/Cwb, Csa/Csb, Dfa/Dfb (hepsi 22 °C sıcak ay eşiği). Sebep: veri
   dosyasında aylık sıcaklık 0.32 °C adımla saklanıyor. Motorun sınıfı
   doğru; eşiğin hemen yanındaki hücrelerde gösterilen değer yuvarlanmış.
-  Düzeltme: sıcaklığı 2 baytla saklamak (atlas.json ~0.6 MB büyür).
+  Düzeltme: sıcaklığı 2 baytla saklamak (atlas.json ~0.8 MB büyür).
+  Öncelik DÜŞÜK: fark en fazla 0.16 °C, kart sıcaklığı tam dereceye yuvarlıyor;
+  gözle görülebilir bir çelişki değil. Açılışı yavaşlatmaya değmez bence.
 12. **GitHub testi yayınlanan dosyaları değil repo kökünü test ediyordu.**
     Cloudflare yalnız `yayinla.sh`'nin `site/`'ye kopyaladıklarını yayınlıyor;
     oraya eklenmesi unutulan bir dosya telefonda eksik kalır ama kökte test
