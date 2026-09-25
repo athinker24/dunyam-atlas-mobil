@@ -50,6 +50,12 @@ DEFAULTS = dict(
     # duzeltirken Koppen'i dusurdugu icin kapali; kurgusal dunyada olcut
     # Koppen degil fizik oldugundan orada acilmali. docs/06 6.5b.
     evap_max_mm_month=0.0,
+    # [P] NEM KORUNUMU: yakinsama, girdap ve firtina yagisi tasinan buhardan
+    # dusulur (bkz solve_month). Kapaliyken bu uc terim nemden bagimsiz
+    # hesaplanir ve yagisin ~%30'u yoktan gelir; evap_max tek basina butceyi
+    # duzeltemez (Dunyam 1 der: tavan 60 mm/ay iken okyanusa 1621 mm/yil
+    # yagiyor, buharlasmadan fazla). 0 = KAPALI (bit-birebir eski davranis).
+    conserve_moisture=0.0,
     land_recycle=0.25,  # kara ustu evapotranspirasyon geri kazanimi
     precip_efficiency=0.060,  # bulut suyunun her adimda yagan kesri
     # [K] Alt-grid sirtlarin etkin kaldirma yuksekligi, relief'in kesri.
@@ -401,76 +407,19 @@ def solve_month(grid: Grid, temp, sst, ocean_ref, u, v, p: dict):
     if _soft < 0 or not np.isfinite(_soft):
         raise ValueError(f"moist_crit_soft={_soft} negatif olamaz")
     crit_sig = _soft * cap_free if _soft > 0 else None   # cap_free dongude sabit
-    for _ in range(_needed_iters(grid, p)):
-        if ed_a > 0:
-            W = ((1.0 - ed_a) * W + ed_a * grid.smooth(W, ed_sig)).astype(W.dtype)
-        Wa = ornek(W)
-        Ca = ornek(C)
-        # Engellenen nem YOK OLMAZ, bariyerin ruzgar ustune yagar. Silmek
-        # Himalaya'yi kurutuyordu (oran 0.09, katsayilardan bagimsiz); oysa
-        # guney yamac dunyanin en yagisli yeridir, sebebi tam da engellenen
-        # akisin orada zorunlu yukselmesidir. Bulut suyuna cevriliyor.
-        blocked = Wa * (1.0 - through)
-        Wa = Wa - blocked
-        dep = np.bincount(_flat, weights=blocked.ravel(),
-                          minlength=_nyx).reshape(grid.shape).astype(F, copy=False)
-        if block_sigma > 0.5:
-            dep = _boxblur(dep, block_sigma)
-        Ca = Ca + dep
-        ekle = (w_eq32 - Wa) * evap_gain
-        if adim_tavan is not None:
-            # yalniz POZITIF yon kirpilir: negatif taraf buharlasma degil,
-            # havanin yuzeye nem birakmasidir ve enerji sinirina tabi degil
-            ekle = np.minimum(ekle, adim_tavan)
-        Wa = np.where(ocean, Wa + ekle, Wa)
-
-        # doygunlugu asan buhar yogusur; eksik kalirsa bulut suyu buharlasir
-        excess = Wa - cap
-        cond_now = np.maximum(0.0, excess)
-        evap_now = np.minimum(Ca, np.maximum(0.0, -excess))
-        W = Wa - cond_now + evap_now
-        C = Ca + cond_now - evap_now
-
-        # Derin nemli konveksiyon. Gozlemsel iliski: yagis, sutun su
-        # buharinin doygunluga ORANI kritik bir esigi asinca hizla artar
-        # (Bretherton 2004). Bu terim olmadan model duz tropik ovalarda
-        # SIFIR yagis veriyordu — Ganj ovasinda 0 mm, gozlenen 300-700.
-        # Orografik terim yalnizca kaldirma varken calisir; muson yagmuru
-        # ise ovada konvektiftir.
-        if crit_sig is None:
-            deep = np.maximum(0.0, W - p["moist_crit_frac"] * cap_free)
-        else:
-            deep = _soft_pos(W - p["moist_crit_frac"] * cap_free, crit_sig).astype(F, copy=False)
-        conv_fall = p["moist_rate"] * deep * subsid_gate
-        W = W - conv_fall
-
-        fall = eff * C + conv_fall
-        C = C - eff * C
-        # kara ustu evapotranspirasyon: dusen yagisin bir kismi geri doner
-        W = np.where(ocean, W, W + p["land_recycle"] * fall)
-
-    # yagan bulut suyu -> mm/ay. Parsel ds yolunu ds/U surede gecer.
-    step_seconds = ds * 1000.0 / speed
-    p_oro = fall / step_seconds * SECONDS_PER_MONTH
-
+    # Yakinsama, girdap ve firtina yagisi (mm/ay). Anahtar kapaliyken dongu
+    # SONRASI son W ile bir kez hesaplanir ve nemden DUSULMEZ (eski davranis:
+    # kuresel su butcesi Dunya'nin ~2 kati, bu terimler yagisin ~%30'u).
+    # conserve_moisture acikken her adimda hesaplanip tasinan nemden dusulur.
     # konvektif / yakinsama kaynakli yagis: ITCZ'yi ve subtropikal collerin
     # kuruluğunu bu terim uretir (yakinsama vs iraksama)
     # Iraksama BUYUK OLCEKTE degerlendirilir: konvektif sistemler ~300 km
     # olceginde orgutlenir, hucre olcegindeki gurultu yagis uretmez.
-    div_s = grid.smooth(divergence(grid, u, v), p["convective_smooth_km"] / grid.cell_km)
     conv = _soft_pos(-div_s, p["div_var_frac"] * float(np.sqrt((div_s ** 2).mean())))
-    nw = W
-    if p["conv_w_pow"] != 1.0:
-        wr = p["cwv_ref_mm"]
-        nw = wr * np.power(np.maximum(W, 0.0) / wr, p["conv_w_pow"])
-    p_conv = p["convective_c"] * nw * conv * SECONDS_PER_MONTH
-    if p["eddy_diff_m2s"] > 0:
-        Ws = grid.smooth(W, p["eddy_smooth_km"] / grid.cell_km)
-        lap = grid.ddx(grid.ddx(Ws)) + grid.ddy(grid.ddy(Ws))
-        p_conv = p_conv + np.maximum(0.0, p["eddy_diff_m2s"] * lap) * SECONDS_PER_MONTH
     storm_c = float(p.get("storm_c", 0.0))
     if storm_c < 0 or not np.isfinite(storm_c):
         raise ValueError(f"storm_c={storm_c} negatif olamaz")
+    firtina = None
     if storm_c > 0:
         # havanin uzerinden aktigi yuzeye kelepce: okyanusta elev deniz tabani
         z = np.maximum(np.asarray(grid.elev), grid.world.sea_level_m) - grid.world.sea_level_m
@@ -519,11 +468,91 @@ def solve_month(grid: Grid, temp, sst, ocean_ref, u, v, p: dict):
             S = np.where(ocean, F(1.0), ornek2(S) * through2 * st_decay)
             if sig_adim > 0.3:
                 S = np.where(ocean, F(1.0), ndimage.gaussian_filter1d(S, sig_adim, axis=0, mode="nearest"))
-        p_conv = p_conv + storm_c * kusak[:, None] * S
-    if p["conv_tau_min_days"] > 0:
-        p_max = W * SECONDS_PER_MONTH / (p["conv_tau_min_days"] * 86400.0)
-        p_conv = np.minimum(p_conv, p_max)
+        firtina = storm_c * kusak[:, None] * S
 
+    def konv_orani(W_):
+        nw = W_
+        if p["conv_w_pow"] != 1.0:
+            wr = p["cwv_ref_mm"]
+            nw = wr * np.power(np.maximum(W_, 0.0) / wr, p["conv_w_pow"])
+        r = p["convective_c"] * nw * conv * SECONDS_PER_MONTH
+        if p["eddy_diff_m2s"] > 0:
+            Ws = grid.smooth(W_, p["eddy_smooth_km"] / grid.cell_km)
+            lap = grid.ddx(grid.ddx(Ws)) + grid.ddy(grid.ddy(Ws))
+            r = r + np.maximum(0.0, p["eddy_diff_m2s"] * lap) * SECONDS_PER_MONTH
+        if firtina is not None:
+            r = r + firtina
+        if p["conv_tau_min_days"] > 0:
+            p_max = W_ * SECONDS_PER_MONTH / (p["conv_tau_min_days"] * 86400.0)
+            r = np.minimum(r, p_max)
+        return r
+
+    # [P] NEM KORUNUMU. 0 = KAPALI (bit-birebir eski davranis). Acikken
+    # yukaridaki uc terimin yagisi adim basina tasinan buhardan dusulur:
+    # parsel hucreyi step_seconds'ta gecer, o surede r*step/ay kadar yagar.
+    korunum = float(p.get("conserve_moisture", 0.0)) > 0
+    step_seconds = ds * 1000.0 / speed
+    adim_ay = (step_seconds / SECONDS_PER_MONTH).astype(F)
+
+    for _ in range(_needed_iters(grid, p)):
+        if ed_a > 0:
+            W = ((1.0 - ed_a) * W + ed_a * grid.smooth(W, ed_sig)).astype(W.dtype)
+        Wa = ornek(W)
+        Ca = ornek(C)
+        # Engellenen nem YOK OLMAZ, bariyerin ruzgar ustune yagar. Silmek
+        # Himalaya'yi kurutuyordu (oran 0.09, katsayilardan bagimsiz); oysa
+        # guney yamac dunyanin en yagisli yeridir, sebebi tam da engellenen
+        # akisin orada zorunlu yukselmesidir. Bulut suyuna cevriliyor.
+        blocked = Wa * (1.0 - through)
+        Wa = Wa - blocked
+        dep = np.bincount(_flat, weights=blocked.ravel(),
+                          minlength=_nyx).reshape(grid.shape).astype(F, copy=False)
+        if block_sigma > 0.5:
+            dep = _boxblur(dep, block_sigma)
+        Ca = Ca + dep
+        ekle = (w_eq32 - Wa) * evap_gain
+        if adim_tavan is not None:
+            # yalniz POZITIF yon kirpilir: negatif taraf buharlasma degil,
+            # havanin yuzeye nem birakmasidir ve enerji sinirina tabi degil
+            ekle = np.minimum(ekle, adim_tavan)
+        Wa = np.where(ocean, Wa + ekle, Wa)
+
+        # doygunlugu asan buhar yogusur; eksik kalirsa bulut suyu buharlasir
+        excess = Wa - cap
+        cond_now = np.maximum(0.0, excess)
+        evap_now = np.minimum(Ca, np.maximum(0.0, -excess))
+        W = Wa - cond_now + evap_now
+        C = Ca + cond_now - evap_now
+
+        # Derin nemli konveksiyon. Gozlemsel iliski: yagis, sutun su
+        # buharinin doygunluga ORANI kritik bir esigi asinca hizla artar
+        # (Bretherton 2004). Bu terim olmadan model duz tropik ovalarda
+        # SIFIR yagis veriyordu — Ganj ovasinda 0 mm, gozlenen 300-700.
+        # Orografik terim yalnizca kaldirma varken calisir; muson yagmuru
+        # ise ovada konvektiftir.
+        if crit_sig is None:
+            deep = np.maximum(0.0, W - p["moist_crit_frac"] * cap_free)
+        else:
+            deep = _soft_pos(W - p["moist_crit_frac"] * cap_free, crit_sig).astype(F, copy=False)
+        conv_fall = p["moist_rate"] * deep * subsid_gate
+        W = W - conv_fall
+
+        if korunum:
+            sink = np.minimum(W, konv_orani(W) * adim_ay).astype(F, copy=False)
+            W = W - sink
+            fall = eff * C + conv_fall + sink
+        else:
+            fall = eff * C + conv_fall
+        C = C - eff * C
+        # kara ustu evapotranspirasyon: dusen yagisin bir kismi geri doner
+        W = np.where(ocean, W, W + p["land_recycle"] * fall)
+
+    # yagan bulut suyu -> mm/ay. Parsel ds yolunu ds/U surede gecer.
+    p_oro = fall / step_seconds * SECONDS_PER_MONTH
+
+    if korunum:
+        return p_oro, W
+    p_conv = konv_orani(W)
     return p_oro + p_conv, W
 
 
