@@ -169,6 +169,15 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
   Öncelik DÜŞÜK: fark en fazla 0.16 °C, kart sıcaklığı tam dereceye yuvarlıyor;
   gözle görülebilir bir çelişki değil. Açılışı yavaşlatmaya değmez bence.
 
+- **Küresel ortalama sıcaklık hedefin 1.1 °C üstünde.** Dünyanın kimliğinde
+  (CLAUDE.md §6) deniz seviyesi ortalaması 14 °C yazıyor; model 15.1 °C
+  veriyor (tutarlılık kontrolü ±3 °C toleransla geçiyor). Fark bugünkü
+  değişikliklerden değil, 24 Eylül'deki en eski veri sürümlerinden beri
+  aynı; akıntı ve denizellik katmanları ortalamayı yukarı itiyor. 14'e
+  oturtmak için global_mean_sealevel_temp_c'yi ~12.9'a çekmek gerekir, ama
+  bu savan/ılıman dengesini (14 °C'nin seçilme sebebi) değiştirir. Öneri:
+  dokunma, yalnız §6'ya 'gerçekleşen 15.1' notu düşülebilir.
+
 ## Temiz çıkan denetimler (sorun bulunmadı)
 
 - Rastgele etkileşim taraması: 3 tohum, 1100 eylem (dokunma, çift dokunma,
