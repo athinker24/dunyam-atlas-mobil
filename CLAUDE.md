@@ -346,6 +346,16 @@ koşulursa hepsini eski hâline döndürür; `_egri_kur.py --yaz` koşulursa eğ
 hipsometrisine zorlar. Önce bu iki dosyayı asıl projeye taşı. Ayrıntı
 `dunyam.json` → `_heightmap_kaynak`, `_elev_curve`.
 
+### 7.7 Bulut makinesinde uygulama performansı yanıltır
+
+Playwright'ın Chromium'u burada GPU'yu yazılımla taklit ediyor (SwiftShader).
+Büyük bir SVG ya da tuval katmanını birleştirmek bu yüzden telefondakinden
+çok pahalı görünür: Dolaşım'da sürükleme Iklim'in ~5 katı sürdü, ama JS
+profili neredeyse boştu. Ölçerken ayır: JS maliyeti için CPU'yu 4 kat
+yavaşlat (`Emulation.setCPUThrottlingRate`, orta sınıf telefon yaklaşığı) ve
+CDP profilini oku; çizim maliyetini telefonda gözle doğrula. Açılış ölçümü
+(25 Eylül, CPU ×4): `veriHazirla` 239 ms, toplam açılış ~2.3 s.
+
 ---
 
 ## 8. Motorun bilinen sınırları

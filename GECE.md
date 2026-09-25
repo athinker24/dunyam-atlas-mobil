@@ -142,3 +142,6 @@ bulundu, ne yapıldı, nasıl doğrulandı.
 - `yayinla.sh` 17 dosya kopyalıyor, eksik yok; `site/` git'te izlenmiyor.
 - Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12).
 - Ham yağış alanında 57-59°K satır sıçraması: kıyı geçişinden, artefakt değil.
+17. **CLAUDE.md'ye tuzak eklendi (§7.7):** bulut makinesinde çizim
+    performansı yanıltır (yazılım GPU); JS maliyeti CPU ×4 ile ve profille
+    ölçülür, çizim telefonda doğrulanır.
