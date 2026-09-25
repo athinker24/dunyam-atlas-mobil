@@ -186,6 +186,12 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
   bu savan/ılıman dengesini (14 °C'nin seçilme sebebi) değiştirir. Öneri:
   dokunma, yalnız §6'ya 'gerçekleşen 15.1' notu düşülebilir.
 
+- **Artık dallar.** arayuz-yeni, yukseklik-kaynak, su-butcesi ve
+  claude/repo-access-check-2kwdm0 dallarının main'e girmemiş hiçbir commit'i
+  yok (tamamen birleşmiş). Her birinin Cloudflare'de önizleme adresi
+  olabilir ve Access ile korunmuyorsa herkese açık. Silinmeleri önerilir;
+  silme geri alınamaz olduğu için yapmadım, onayını bekliyor.
+
 ## Temiz çıkan denetimler (sorun bulunmadı)
 
 - Rastgele etkileşim taraması: 3 tohum, 1100 eylem (dokunma, çift dokunma,
