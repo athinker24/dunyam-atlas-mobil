@@ -14,6 +14,8 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   kartı (15, 34), ay şeridinde parmağı kaydırarak ay tarama (36), bantlı renk
   lejantı (27).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
+- **Veri:** gece dalında GitHub yeniden üretti (surum bbcdf12a34). Yalnız
+  rapor metni ve damga farklı; iklim sayıları birebir aynı (madde 29, 30).
 - `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
 
 ## Düzeltilenler
@@ -296,7 +298,8 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
 - `index.html` ve `manifest.webmanifest`: eksik yok.
 - Python dosyalarında statik tarama (pyflakes): temiz.
 - `yayinla.sh` 17 dosya kopyalıyor, eksik yok; `site/` git'te izlenmiyor.
-- Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12).
+- Tutarlılık kontrolü metinleri güncel veriyle uyumlu (12/12). Sonradan
+  biri eskimiş çıktı: donmuş okyanus satırı, madde 29.
 - Ham yağış alanında 57-59°K satır sıçraması: kıyı geçişinden, artefakt değil.
 - Yeniden keşif taraması (bütün değişikliklerden sonra): 6 sekme × 13 dönem × rastgele dokunma, döndürme, aşırı yakınlaştırma: JS hatası yok, boş ekran bulgusu artık çıkmıyor; açılış 934 ms (yavaşlatmasız). Kalan tek uyarı 'NaN/sonsuz yok' tutarlılık kontrolünün adı (yanlış alarm).
 - Safari uyumu (statik tarama): yeni API yok; yalnız :has() (Safari 15.4+), daha eskide yalnız 'çekmece açıkken kart gizli' çalışmaz.
