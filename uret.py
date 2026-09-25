@@ -133,6 +133,10 @@ def bilinmeyen_params(params):
     return sorted(k for k in params if not k.startswith("_") and k not in bilinen)
 
 
+HM_ANAHTAR = {"file", "sea_level_value", "max_elev_m", "max_depth_m", "bounds", "band",
+              "elev_gamma", "elev_curve", "kabartma"}
+
+
 def grid_kur(w, res):
     hm = w.heightmap
     return G.from_heightmap(
@@ -323,8 +327,11 @@ def main():
     t0 = time.time()
     w = dunya_yukle()
     yok = bilinmeyen_params(w.params)
+    # heightmap anahtarlari da .get() ile okunuyor: "elev_curv" gibi bir hata
+    # egriyi sessizce kapatirdi
+    yok += ["heightmap." + k for k in w.heightmap if not k.startswith("_") and k not in HM_ANAHTAR]
     if yok and not a.zorla:
-        raise SystemExit("dunyam.json params icinde motorun okumadigi ad(lar): %s "
+        raise SystemExit("dunyam.json icinde motorun okumadigi ad(lar): %s "
                          "(yazim hatasi mi?). Yine de kosmak icin: --zorla" % ", ".join(yok))
     g = grid_kur(w, a.res)
     print("%s: %dx%d hucre, kara %%%.0f, hucre %.3f derece"
