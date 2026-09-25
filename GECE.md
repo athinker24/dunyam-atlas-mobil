@@ -119,3 +119,13 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     kıyıya yaklaşık uzaklık ("kıyıya ~250 km", 30 km altı "kıyıya yakın").
     Yükleme hatası "İlk kurulum için sunucu açık olmalı" diyordu (eski tünel
     dönemi); artık "İlk açılış için internet bağlantısı gerekli".
+16. **Dolaşım sekmesinde kaydırma takılıyordu.** 40 adımlık sürükleme
+    (CPU 4 kat yavaş) İklim'de 3.8 s, Dolaşım'da 18.9 s sürdü. Profil: JS
+    değil, büyük SVG kaplamasının her karede yeniden kurulup boyanması
+    (kaplama gizlenince 3.7 s). Artık hareket sürerken son çizim CSS
+    dönüşümüyle kaydırılıp ölçekleniyor, parmak kalkınca / tekerlek durunca
+    bir kez yeniden kuruluyor (sayıldı: sürüklemede 0 yeniden kurma, 20
+    dönüşüm; bırakınca 1 kurma). Dürüst not: bu test ortamı GPU'yu yazılımla
+    taklit ediyor ve orada kazanç yalnız %22 (9.2 → 7.1 s); gerçek telefon
+    GPU'sunda katman kaydırmak çok daha ucuz olmalı ama buradan ölçemedim.
+    Telefonda Dolaşım'da kaydırmanın akıcılığına bakman gerekiyor. Test 15/15.

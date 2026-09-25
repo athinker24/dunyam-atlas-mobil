@@ -533,8 +533,24 @@ function baslat(J, resimler){
     requestAnimationFrame(kare);
   }
 
+  // Dolasim kaplamasi (akis cizgileri) her karede bastan kurulup boyaniyordu;
+  // Dolasim'da surukleme Iklim'in ~5 kati surdu (yazilim GPU'lu test
+  // ortami, gece denetimi). Maliyet JS degil buyuk SVG'nin boyanmasi. Hareket
+  // surerken son cizim oldugu gibi kaydirilip olceklenir; hareket bitince
+  // (parmak kalkinca / tekerlek durunca) bir kez yeniden kurulur.
+  let cizilen = null, sonTeker = 0;
+  const harekette = () => ptr.size > 0 || performance.now() - sonTeker < 150;
   function kaplamaCiz(){
     const r = canvas.getBoundingClientRect(); kaplama.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
+    // Donusum SVG'nin icine degil ogenin kendisine (CSS) verilir: tarayici onu
+    // katman olarak kaydirir, yeniden boyamaz. SVG donusumu de her karede
+    // boyatiyordu: maliyet JS degil boyamaydi (kaplamasiz 3.7 s, olculdu).
+    if(katman==="dolasim" && D.dol && !ayar.parcacik && cizilen && cizilen.katman === katman && cizilen.donem === donem && harekette()){
+      const k = olcek/cizilen.olcek;
+      kaplama.style.transform = `translate(${(ox - cizilen.ox*k).toFixed(2)}px,${(oy - cizilen.oy*k).toFixed(2)}px) scale(${k.toFixed(5)})`;
+      return; }
+    kaplama.style.transform = "";
+    cizilen = {ox, oy, olcek, katman, donem};
     let s = "";
     if(ayar.izgara){ const g = gorunen();
       for(const la of [60,30,0,-30]){ const y = oy + (B[3]-la)/(B[3]-B[1])*H*olcek;
@@ -892,7 +908,7 @@ function baslat(J, resimler){
     else if(p.length>=2 && g0.orta){ const orta = {x:(p[0].x+p[1].x)/2, y:(p[0].y+p[1].y)/2}, d = Math.hypot(p[0].x-p[1].x, p[0].y-p[1].y);
       olcek = g0.olcek*d/g0.d; sinirla(); const k = olcek/g0.olcek;
       ox = orta.x-(g0.orta.x-g0.ox)*k; oy = orta.y-(g0.orta.y-g0.oy)*k; ciz(); } });
-  function birak(e){ if(!ptr.has(e.pointerId)) return; const q = ptr.get(e.pointerId); ptr.delete(e.pointerId);
+  function birak(e){ if(!ptr.has(e.pointerId)) return; const q = ptr.get(e.pointerId); ptr.delete(e.pointerId); ciz();
     if(dokun && e.type==="pointerup" && performance.now()-dokun.t < 350){ const now = performance.now();
       // Tek dokunma hucreyi HEMEN secer (onceden ikinci dokunusu beklemek icin
       // 290 ms ertelenirdi; kart gec geliyordu). Cift dokunma gelirse ilk
@@ -909,7 +925,8 @@ function baslat(J, resimler){
         else { sec = i; D.land[i] ? kartYaz() : denizKartYaz(); gorunurYap(q.y); ciz(); } } }
     dokun = null; hareketBasla(); }
   harita.addEventListener("pointerup", birak); harita.addEventListener("pointercancel", birak);
-  harita.addEventListener("wheel", e => { e.preventDefault(); const q = yerel(e); yakinlas(q.x, q.y, Math.exp(-e.deltaY*0.0015)); }, {passive:false});
+  harita.addEventListener("wheel", e => { e.preventDefault(); sonTeker = performance.now(); const q = yerel(e); yakinlas(q.x, q.y, Math.exp(-e.deltaY*0.0015));
+    clearTimeout(harita.tekerSon); harita.tekerSon = setTimeout(ciz, 170); }, {passive:false});
 
   addEventListener("resize", () => { boyut(); sigdir(); });
   listeYaz(); katmanSec("iklim"); sigdir(); requestAnimationFrame(kare);
