@@ -161,6 +161,12 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     'bağlanılamadı' sayfası görünebiliyordu. Artık önce sunucu ayrı
     pencerede başlıyor, 2 saniye sonra tarayıcı açılıyor. (Windows'ta
     denenemedi; komutlar standart cmd.)
+24. **Kendi kodumda hata (madde 1'in devamı):** satır sınırındaki geri
+    doldurma, karanın olmadığı en üst satırlara en üstteki karalı satırın
+    değil en alt satırın batı/doğu uçlarını kopyalıyordu. Kod gözden
+    geçirmede bulundu, düzeltildi; en üst satır artık ilk karalı satırın
+    uçlarını alıyor (doğrulandı: 0. satır = 83. satır = [318, 377]). Test
+    16/16.
 
 ## Yalnız raporlanan (senin kararın)
 

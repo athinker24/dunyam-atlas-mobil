@@ -458,7 +458,7 @@ function baslat(J, resimler){
     for(let i=0;i<N;i++) if(D.land[i]){ const x=i%W, y=(i/W)|0;
       if(isNaN(a[y]) || x < a[y]) a[y] = x; if(isNaN(b[y]) || x+1 > b[y]) b[y] = x+1; }
     for(let y=0, son=-1; y<H; y++){ if(!isNaN(a[y])) son=y; else if(son>=0){ a[y]=a[son]; b[y]=b[son]; } }
-    for(let y=H-1, son=-1; y>=0; y--){ if(!isNaN(a[y]) && son<0) son=y; if(isNaN(a[y])){ a[y]=a[son]; b[y]=b[son]; } }
+    for(let y=H-1, son=-1; y>=0; y--){ if(!isNaN(a[y])) son=y; else if(son>=0){ a[y]=a[son]; b[y]=b[son]; } }
     return {a, b}; })();
 
   function gorunen(){
