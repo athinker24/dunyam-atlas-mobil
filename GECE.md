@@ -143,14 +143,22 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     left/right payları eklendi. Doğrulama: 844×390'da 47 px çentik
     taklidiyle başlık, menü düğmesi, ilk/son sekme ve lejant çentiğin
     dışında. Test 16/16.
+21. **Veri üretimi yavaştı (35 dk); sonucu değiştirmeden 16 dk'ya indi.**
+    Nem çözücüsü 12 ayı sırayla çözüyordu, oysa aylar birbirinden bağımsız.
+    Artık fork ile paralel (4 çekirdek); fork yoksa (Windows) ya da
+    DUNYAM_ISCI=1 ile sıralı. Doğrulama: 1°'de yağış, buhar, sınıf ve
+    sıcaklık dizileri sıralı koşuyla birebir eşit; 0.25°'de tam üretimin
+    içerik özeti yayındaki veriyle aynı (65cf9d017d); GitHub'da da aynı
+    özet, veri commit'i yok. Süre: bu makinede 35 → 15.7 dk, GitHub'da 19.4
+    → 11.6 dk. Motor değişikliği olduğu için Proje 3 ayrışma listesine
+    eklendi (CLAUDE.md §7.6). Yan düzeltme: uret.py --cikti klasör verilince
+    hesap bittikten sonra yazarken düşüyordu; artık klasörü kabul ediyor.
 
 ## Yalnız raporlanan (senin kararın)
 
-- **Motor yavaşlığı.** Profil (0.5°, bir ay): 18.3 s'nin 10 s'si Gauss
-  yumuşatması; korunum her adımda bir yumuşatma daha ekliyor. Adım içindeki
-  iki yumuşatmadan birini yeniden kullanmak hızı ~%30-40 artırır ama sonucu
-  çok az değiştirir (veri sürümü değişir). Bit bit aynı kalan bir hızlandırma
-  bulamadım. GitHub'da 20 dk kabul edilebilir göründüğü için dokunmadım.
+- **Motor yavaşlığı** (çözüldü, bkz. madde 21: aylar paralel, sonuç aynı). Tek ayın içinde
+  yumuşatmayı yeniden kullanmak ek ~%30 kazandırır ama sonucu çok az değiştirir;
+  yapılmadı.
 - **Kartta sınıf ile klimagram %2.1 karada çelişiyor.** Kaydedilen Köppen
   sınıfı, uygulamanın gösterdiği aylık değerlerden yeniden hesaplanınca
   karanın %2.1'inde (alan ağırlıklı, 1059 hücre) farklı çıkıyor; en sık

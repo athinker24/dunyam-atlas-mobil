@@ -95,9 +95,11 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
   görünmedi: atlas paletinde Af/Am/Aw aynı turkuazın üç tonuydu (ton farkı
   8 derece). Karar yanlış ölçütle verilmişti.
 - **Uzun koşu sırasında boş bekleme.** 0.25 derecelik koşu 4 çekirdekli bulut
-  makinesinde ~35 dakika (nem korunumu açıkken ölçüldü, 25 Eylül; kapalıyken
-  ~14 dk idi, eski masaüstünde ~40 dk). Yavaşlığın yarısından fazlası
-  `grid.smooth`: korunum her adımda bir Gauss yumuşatması daha ekliyor.
+  makinesinde ~16 dakika (25 Eylül, nem korunumu açık, aylar paralel;
+  sıralıyken ~35 dk). Nem çözücüsü 12 ayı `fork` ile paralel çözer, sonuç bit
+  bit aynı (`surum` doğrulandı); Windows'ta ya da `DUNYAM_ISCI=1` ile sıralı.
+  Tek bir ayın yarıdan fazlası `grid.smooth`: korunum her adımda bir Gauss
+  yumuşatması daha ekliyor.
   Arka plana al, o sırada bağımsız işi yap. Çıktıyı dosyaya yönlendirdiğinde
   tamponlanır — koşu bitene kadar dosya boş görünebilir, bu normal.
 - **Yüzdeler alan ağırlıklı olacak.** Kullanıcıya gösterilen her oran.
@@ -138,7 +140,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 ```bash
 pip install -r requirements.txt
 python uret.py --res 1.0 --ozet     # kaba deneme, ~1 dk
-python uret.py --ozet               # gerçek çözünürlük (0.25), ~35 dk (GitHub'da ~20)
+python uret.py --ozet               # gerçek çözünürlük (0.25), ~16 dk (GitHub'da ~12)
 ```
 
 `uret.py` dünyayı `dunya/`'dan okur, motoru koşar, iç tutarlılık raporunu
@@ -177,7 +179,7 @@ girdi aynıysa `surum` aynı çıkar ve commit atılmaz; test adımı da yalnız
 değiştiğinde koşar (ilk kez 24 Eylül'de, rapor metni değişikliğinde koştu ve
 geçti). Actions sekmesinden **atlas verisi → Run workflow** ile elle de
 başlatılır (çözünürlük orada seçilir). Ölçüldü: 1365×682 hücre, 12/12
-tutarlılık, GitHub koşucusunda ~20 dk (nem korunumundan önce ~12). Koşu sırasında dala başka commit
+tutarlılık, GitHub koşucusunda ~12 dk (aylar paralel; sıralıyken ~20). Koşu sırasında dala başka commit
 gelirse iş akışı push'tan önce `git pull --rebase` yapar.
 
 ---
@@ -336,7 +338,8 @@ projeye de taşı.
 yolu terimi (`storm_c`) ve karşıtlığın ay içi dağılımı (`storm_contrast_sigma_k`), `motor/grid.py` bölünmeyen kaynağı yeniden örnekleme
 ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
 alan ağırlıklı kara yağışı / sınıf payı, `motor/maritime.py` hafif deniz buzu
-(`sea_ice_air`), `motor/moisture.py` nem korunumu (`conserve_moisture`) yalnız bu repoda. Asıl projeye
+(`sea_ice_air`), `motor/moisture.py` nem korunumu (`conserve_moisture`) ve ayların paralel
+çözümü (`run`, sonucu değiştirmez) yalnız bu repoda. Asıl projeye
 taşınmalı.
 
 **Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri

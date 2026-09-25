@@ -80,7 +80,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/
           git commit -m "Veri: uret.py ile yeniden uretildi (${GITHUB_SHA::7})"
-          # Kosu ~20 dk suruyor (nem korunumundan once ~12). O arada bu yolu tetiklemeyen bir commit
+          # Kosu ~12 dk suruyor (aylar paralel; siraliyken ~20). O arada bu yolu tetiklemeyen bir commit
           # (or. yalniz app.js) dala gelirse duz push reddediliyordu ve veri
           # guncellenmeden is dusuyordu. Once uzaktakinin ustune tasi.
           for i in 1 2 3; do
