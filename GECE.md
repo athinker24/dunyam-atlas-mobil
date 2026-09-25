@@ -13,6 +13,8 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), klavye (22), deniz
   kartı (15, 34), ay şeridinde parmağı kaydırarak ay tarama (36), bantlı renk
   lejantı (27).
+- **Bilgisayarda bakman gereken:** baslat.bat ve tunel.bat bir kez açılmalı
+  (madde 41; Windows'ta sınanamadı).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
 - **Veri:** gece dalında GitHub yeniden üretti (surum bbcdf12a34). Yalnız
   rapor metni ve damga farklı; iklim sayıları birebir aynı (madde 29, 30).
