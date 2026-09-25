@@ -932,6 +932,19 @@ function baslat(J, resimler){
   harita.addEventListener("wheel", e => { e.preventDefault(); sonTeker = performance.now(); const q = yerel(e); yakinlas(q.x, q.y, Math.exp(-e.deltaY*0.0015));
     clearTimeout(harita.tekerSon); harita.tekerSon = setTimeout(ciz, 170); }, {passive:false});
 
+  // Bilgisayarda (baslat.bat) klavye: Esc acik olani kapatir, oklar kaydirir,
+  // +/- yakinlastirir, 0 kitaya sigdirir (gece denetimi: klavye hic yoktu).
+  addEventListener("keydown", e => {
+    if(e.target.closest && e.target.closest("input, textarea")) return;
+    const g = gorunen(), cx = g.w/2, cy = (g.ust + g.alt)/2, adim = 60;
+    if(e.key === "Escape"){ if(!cek.hidden || document.querySelector(".sayfa:not([hidden])")) sayfaKapat(), cek.hidden = true; else if(sec !== null) kartKapat(); }
+    else if(e.key === "+" || e.key === "=") yakinlas(cx, cy, 1.4);
+    else if(e.key === "-") yakinlas(cx, cy, 1/1.4);
+    else if(e.key === "0") sigdir();
+    else if(e.key.startsWith("Arrow")){ const d = {ArrowLeft:[adim,0], ArrowRight:[-adim,0], ArrowUp:[0,adim], ArrowDown:[0,-adim]}[e.key];
+      ox += d[0]; oy += d[1]; ciz(); }
+    else return;
+    e.preventDefault(); });
   addEventListener("resize", () => { boyut(); sigdir(); });
   listeYaz(); katmanSec("iklim"); sigdir(); requestAnimationFrame(kare);
   $("#yukleniyor").hidden = true;

@@ -153,6 +153,10 @@ adımda koştu (şimdi 16 denetim, hepsi geçiyor; GitHub'da da yeşil).
     → 11.6 dk. Motor değişikliği olduğu için Proje 3 ayrışma listesine
     eklendi (CLAUDE.md §7.6). Yan düzeltme: uret.py --cikti klasör verilince
     hesap bittikten sonra yazarken düşüyordu; artık klasörü kabul ediyor.
+22. **Bilgisayarda klavye hiç çalışmıyordu** (baslat.bat ile masaüstü
+    kullanımı). Eklendi: Esc açık çekmece/sayfayı, yoksa kartı kapatır;
+    oklar kaydırır; +/− yakınlaştırır; 0 kıtaya sığdırır. Doğrulama:
+    1280×800'de hepsi denendi, JS hatası yok. Test 16/16.
 
 ## Yalnız raporlanan (senin kararın)
 
