@@ -22,7 +22,10 @@ e-postasına gelen kodla açılır.
    yeni sürümü alır, internet yoksa önbellekten çalışır.
 
 Yayınlanan dal Cloudflare panelinde Settings → Build → Branch control'dan
-seçilir. Diğer dalların ayrı önizleme adresi olur.
+seçilir. Diğer dalların ayrı önizleme adresi olur
+(`<dal>-dunyam-atlas-mobil.<alt alan>.workers.dev`); bunun için
+`wrangler.jsonc`'de `"previews": {}` gerekir, yoksa yayın adımı düşer.
+Önizleme adresi Access ile korunmuyorsa herkese açıktır.
 
 ## Telefona kurmak (eski yol, geçici tünel)
 
@@ -119,7 +122,8 @@ python _senkron_kontrol.py /ana/projenin/yolu
 | `kabartma_kaydet.py` | editör görselini kabartma kaynağı olarak alır ve araziye oturtur |
 | `motor/` | iklim motoru (ana projenin `climate/` kopyası) |
 | `dunya/` | dünya tanımı, akıntılar, yükseklik haritası, kabartma kaynağı |
-| `test/uygulama_test.js` | uygulamanın tarayıcı testi |
+| `test/uygulama_test.js` | uygulamanın tarayıcı testi (GitHub'da yayınlanan `site/` kümesinde koşar) |
+| `mevsim_olc.py` | yağışın mevsimselliğini ve korunan istekleri ölçer, harita çizer; veri yazmaz |
 | `.github/workflows/veri.yml`, `uygulama.yml` | GitHub'da yeniden üretim ve test |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare yayını |
 | `_senkron_kontrol.py` | kopyalar ana projeyle aynı mı |

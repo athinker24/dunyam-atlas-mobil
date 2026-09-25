@@ -108,3 +108,6 @@ bulundu, ne yapıldı, nasıl doğrulandı.
     test/uygulama_test.js site` koşuyor; `yayinla.sh` değişince de test
     tetikleniyor. `yayinla.sh` yorumu "Pages" yerine Workers'ı anlatıyor.
     Doğrulama: yerelde `site/` üzerinde 15/15.
+13. **README eksikleri.** Dosya tablosuna `mevsim_olc.py` eklendi; test
+    satırı `site/` kümesini anıyor; dal önizlemesinin adres biçimi,
+    `"previews": {}` gereği ve Access uyarısı yazıldı.
