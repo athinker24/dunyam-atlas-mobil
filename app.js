@@ -567,7 +567,11 @@ function baslat(J, resimler){
     cizilen = {ox, oy, olcek, katman, donem};
     let s = "";
     if(ayar.izgara){ const g = gorunen();
-      for(const la of [60,30,0,-30]){ const y = oy + (B[3]-la)/(B[3]-B[1])*H*olcek;
+      // etiket adimi cizgiyle ayni (shader: dpp < 0.03 ise 10°); yakinken
+      // 30'un katlari ekrandan cikinca hic enlem etiketi kalmiyordu (gece denetimi)
+      const adim = (B[2]-B[0])/W/olcek < 0.03 ? 10 : 30, enler = [];
+      for(let la = Math.ceil(B[1]/adim)*adim; la <= B[3]; la += adim) enler.push(la);
+      for(const la of enler){ const y = oy + (B[3]-la)/(B[3]-B[1])*H*olcek;
         if(y > g.ust + 10 && y < g.alt - 4) s += `<text x="10" y="${(y-4).toFixed(1)}">${la===0 ? "EKVATOR" : Math.abs(la)+"°"+(la>0?"K":"G")}</text>`; } }
     if(katman==="dolasim" && D.dol) s += dolasimCiz();
     if(sec !== null){ const x = ox + (sec%W)*olcek, y = oy + ((sec/W)|0)*olcek, k = Math.max(olcek, 6), d = (k-olcek)/2;

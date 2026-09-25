@@ -213,6 +213,10 @@ adımda koştu (şimdi 17 denetim, hepsi geçiyor; GitHub'da da yeşil).
 27. Testin kar katmanı denetimi tuvalden rastgele 80 nokta okuyordu; sonuç
     koşudan koşuya değişebilirdi. Sabit 10×8 ızgaraya çevrildi (44 farklı
     renk, eşik 5).
+27. Enlem etiketleri yalnız 60/30/0/−30'da yazılıyordu; yakınlaşınca ızgara
+    10° aralığa geçiyor ama etiket kalmıyordu (30'un katları ekrandan
+    çıkınca hiç enlem yazmıyordu). Etiket adımı artık çizgiyle aynı: uzakta
+    30°, yakında 10°.
 
 ## Yalnız raporlanan (senin kararın)
 
