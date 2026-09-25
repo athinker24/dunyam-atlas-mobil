@@ -178,3 +178,7 @@ dl#kunye dd{text-align:right}
 .cekmece .tutamak{position:sticky;top:0;z-index:2;height:22px;margin:0 -20px;background:var(--zemin);touch-action:none;cursor:grab}
 .cekmece .tutamak::before{content:"";position:absolute;left:50%;top:9px;width:38px;height:4px;margin-left:-19px;border-radius:2px;background:var(--cizgi-2)}
 .cekmece>header{position:sticky;top:22px;z-index:2;background:var(--zemin);margin:0 -20px;padding:0 20px 6px;touch-action:none}
+/* Ayar cekmecesi acikken kart haritayi ortmesin: cekmece yarida durur ki
+   ayar degisikligi haritada gorulsun (gece denetimi). Kart kapanmaz, cekmece
+   kapaninca geri gelir. */
+body:has(#sayfa-ayar:not([hidden])) #kart{display:none}

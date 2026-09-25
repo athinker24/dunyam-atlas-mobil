@@ -63,3 +63,16 @@ bulundu, ne yapıldı, nasıl doğrulandı.
 - **Dolaşım sekmesinde deniz sıcaklığı alanı** verinin kesildiği yerde
   (karanın 22° ötesi) keskin dikdörtgen kenarla bitiyor. Veri yok, doğru
   gösterim; kenar yumuşatılabilir, zevk meselesi.
+
+## Düzeltilenler (devam)
+
+7. **Dar ekranda lejant etiketleri üst üste biniyordu.** 360 px'te yıllık
+   yağışta "1.164" ile "5.610 mm/yıl" birleşip "1.1645.610" okunuyordu
+   (yüzdelik ölçekte değerler uçta birbirine yakın). Artık komşusuyla
+   çakışan ara etiket gizleniyor, uçlar hep görünüyor; ekran dönünce yeniden
+   hesaplanıyor. Doğrulama: 320/360/390/1024 px × 5 katman × 2 dönem,
+   çakışma ve taşma yok.
+8. **Ayar çekmecesi açıkken hücre kartı haritayı örtüyordu.** Çekmece yarıda
+   durur ki ayar değişikliği haritada görülsün; kart tam o alanı kapatıyordu.
+   Çekmece açıkken kart gizleniyor (kapanmıyor), çekmece kapanınca geri
+   geliyor. Doğrulama: 360×640'ta aç/kapa.

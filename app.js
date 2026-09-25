@@ -721,7 +721,21 @@ function baslat(J, resimler){
     el.innerHTML = dolNot + `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
       + o.etiket.map((e,k)=>`<span style="left:${e.x*100}%">${e.t}${k===o.etiket.length-1?` <span class="birim">${o.birim}</span>`:""}</span>`).join("")
       + `</div></div>`;
+    etiketCakismasi();
   }
+  // Yuzdelik olcekte degerler uclarda birbirine yakin duser; dar ekranda bir
+  // ara etiket komsusunun ustune biniyordu ("1.1645.610 mm/yil", 360 px,
+  // gece denetimi). Komsusuyla cakisan ara etiket gizlenir, uclar kalir.
+  function etiketCakismasi(){
+    const sp = [...document.querySelectorAll("#aciklama .etiketler>span")];
+    for(const e of sp) e.style.visibility = "";
+    for(let i=sp.length-2;i>=1;i--){ const r = sp[i].getBoundingClientRect(), sag = sp[i+1];
+      if(sag.style.visibility !== "hidden" && r.right > sag.getBoundingClientRect().left - 6) sp[i].style.visibility = "hidden"; }
+    for(let i=1;i<sp.length-1;i++){ if(sp[i].style.visibility === "hidden") continue;
+      const r = sp[i].getBoundingClientRect(), sol = sp.slice(0, i).reverse().find(e => e.style.visibility !== "hidden");
+      if(sol && sol.getBoundingClientRect().right > r.left - 6) sp[i].style.visibility = "hidden"; }
+  }
+  addEventListener("resize", () => etiketCakismasi());
 
   $("#aciklama").addEventListener("click", e => {
     const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac");
