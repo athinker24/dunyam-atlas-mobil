@@ -17,7 +17,8 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
   (madde 41; Windows'ta sınanamadı).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
 - **Veri:** gece dalında GitHub yeniden üretti (surum bbcdf12a34). Yalnız
-  rapor metni ve damga farklı; iklim sayıları birebir aynı (madde 29, 30).
+  rapor metni ve damga farklı; iklim sayıları birebir aynı (madde 29 ve 30;
+  karşılaştırma "Temiz çıkan" bölümünde).
 - `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
 
 ## Düzeltilenler
