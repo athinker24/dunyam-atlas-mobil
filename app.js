@@ -436,14 +436,19 @@ float denizT(vec2 uv, vec2 derece){
   if(uv.x < 0.0 || uv.y < 0.0 || uv.x >= 1.0 || uv.y >= 1.0) return 1.0;
   // doku.png G = karekok(uzaklik/60 teksel): karesi dogrusal, ~450 km'de doyar
   float g = texture2D(tDoku, uv).g;
-  float t = 0.5 * g * g + 0.5 * kabaDerin(uv);
+  // ince alan ~450 km'de doyar; doyma noktasinda kirilmasin diye egimi
+  // sifira yumusakca iner (yoksa kiyiya paralel bir ton siniri gorunuyordu)
+  float f = g * g; f = f * (2.0 - f);
+  float t = 0.5 * f + 0.5 * kabaDerin(uv);
   // havzalar ve sirtlar: derinde buyuk olcekli dalgalanma
   float n = gurultu(derece / 9.0) - 0.5;
-  return clamp(t + n * 0.22 * smoothstep(0.35, 0.8, t), 0.0, 1.0); }
+  return clamp(t + n * 0.16 * smoothstep(0.3, 0.9, t), 0.0, 1.0); }
 vec3 deniz(float t, vec2 derece, float grad){
   vec3 sig = vec3(0.135, 0.300, 0.320), orta = vec3(0.060, 0.145, 0.185), derin = vec3(0.028, 0.058, 0.085);
-  // sahanlik, yamac, derin: sahanlik genis ve acik, yamacta hizli koyulasir
-  vec3 c = t < 0.28 ? mix(sig, orta, smoothstep(0.08, 0.28, t)) : mix(orta, derin, smoothstep(0.28, 0.9, t));
+  // sahanliktan derine tek surekli gecis (iki basamak degil): sig -> orta
+  // genis bir aralikta, orta -> derin daha da genis, ikisi ust uste biner
+  vec3 c = mix(sig, orta, smoothstep(0.0, 0.45, t));
+  c = mix(c, derin, smoothstep(0.2, 1.0, t));
   // tropik sular biraz turkuaz, yuksek enlem griye
   float e = clamp(abs(derece.y) / 60.0, 0.0, 1.0);
   c = mix(c * vec3(0.90, 1.07, 1.05), c * vec3(1.03, 0.98, 0.95), e);
@@ -451,10 +456,10 @@ vec3 deniz(float t, vec2 derece, float grad){
   float n = gurultu(derece * 1.3) * 0.5 + gurultu(derece * 5.1) * 0.5;
   c *= 0.96 + 0.08 * n;
   // esderinlik cizgileri, ekranda ~1 piksel
-  if(grad > 1e-6){ float k = t * 8.0, d = abs(fract(k + 0.5) - 0.5) / (grad * 8.0);
-    c += vec3(0.35, 0.50, 0.52) * 0.075 * (1.0 - smoothstep(0.3, 1.2, d)) * step(0.03, t) * (1.0 - step(0.985, t)); }
+  if(grad > 1e-6){ float k = t * 6.0, d = abs(fract(k + 0.5) - 0.5) / (grad * 6.0);
+    c += vec3(0.35, 0.50, 0.52) * 0.04 * (1.0 - smoothstep(0.3, 1.6, d)) * smoothstep(0.03, 0.12, t) * (1.0 - smoothstep(0.85, 0.98, t)); }
   // kiyi kopugu
-  c += vec3(0.10, 0.17, 0.18) * (1.0 - smoothstep(0.0, 0.06, t));
+  c += vec3(0.07, 0.12, 0.13) * (1.0 - smoothstep(0.0, 0.12, t));
   return c;
 }
 void main(){
