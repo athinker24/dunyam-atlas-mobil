@@ -42,7 +42,8 @@ Code'la) bir dala konmaları gerekir, sonrası bulutta yürür:
 
 ## Şu an yayında olan
 
-- `main`: `60a4674` (sanity okyanussuz düzeltmesi birleşti). Veri sürümü
+- `main`: `yalniz-repo` ve `tektonik` dalları birleşti (26 Eylül). Uygulama
+  dosyaları 60a4674'ten beri aynı; telefonda değişen yok. Veri sürümü
   `f773654851` (üretim 26 Eylül 05:57 UTC). İklim sayıları 25 Eylül'den beri
   aynı (`dunyam.json` → `_guncel_durum`).
 - Son eklenenler, telefonda görüldü:
@@ -55,6 +56,20 @@ Code'la) bir dala konmaları gerekir, sonrası bulutta yürür:
     Beaufort şeridi, buz ayları, tropikal fırtına koşulu (yalnız eşik),
     yakındaki akıntı, yağış, en yakın kara.
 - Açık kalan karar yok. Doğu kıyı savanı bilerek bırakıldı (`_dogu_kiyi_savan`).
+
+## Tektonik hikâye (26 Eylül, `main`'de)
+
+Arazideki dağ, plato ve havzalardan geriye dönük kurulan levha hikâyesi.
+Başka bir oturum ya da yapay zekâ için giriş noktası **`tektonik/OZET.md`**
+(makine için `tektonik/ozet.json`); ikisi `tektonik/ozet.py` ile modelden
+üretilir, elle düzenlenmez. Bölge bölge kararların gerekçesi `TEKTONIK.md`.
+Model `tektonik/levhalar.py` (13 kapalı levha, Bird 2003 sınır sınıfları),
+haritalar `tektonik/harita.py` (Equal Earth ve küreler). Okyanus içindeki
+sırt, hendek ve üçlü kavşaklar **tasarımdır**, araziden ölçülmedi.
+
+Sahibinin onayını bekleyen: 9'un hesaplanan sınıfa göre Baykal tipi rifte
+dönmesi ve kuzeydoğudaki kaçış bloğu. Sıradaki: buzul geçmişi, sonra su
+dengeli göller ve nehirler.
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
 
@@ -104,7 +119,7 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
    - **Bulunan kusur ve düzeltmesi:** `tunel.bat`'ın yerel sunucusu
      `--bind 127.0.0.1` kullanmıyordu (`baslat.bat` kullanıyor), yani tünel
      açıkken `site/` yerel ağa da açılıyordu. Ölçüldü: dinleyen adres `::`.
-     Düzeltme `tunel-yerel-bind` dalında (`2a272f6`), **birleştirilmedi**.
+     Düzeltme `tunel-yerel-bind` dalındaydı; `yalniz-repo` ile `main`'e girdi.
    - Not: `.bat`'ları otomatik başlatırken `Start-Process` çalışma dizinini
      devralmıyor; tam yol verilirse ikisi de sorunsuz koşuyor. Betiklerde
      kusur değil.
@@ -134,7 +149,8 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 - Küresel ortalama 15.1 °C (girdi 14). Öneri: dokunma.
 - Birleşmiş eski dallar: `gunluk-sicaklik`, `deniz-deneme`, `deniz-yumusak`,
   `deniz-kart`, `durum`, `sanity-okyanussuz`, `durum-masaustu-bitti`,
-  `tunel-yerel-bind` (son ikisi `yalniz-repo` ile). Silmek
+  `tunel-yerel-bind`, `yalniz-repo`, `tektonik`, `durum-duzelt` (bayat),
+  `nehir-deneme` (boş). Silmek
   sahibinde (bulut oturumunun silme izni yok, 403).
 
 ## Kurallar (hatırlatma)
