@@ -368,6 +368,12 @@ yeter (ileri sarma).
     6371 olduğu için görünür fark yok (kart aynı: 'kıyıya ~1.950 km'). Veri
     iş akışı yeni alan yüzünden veriyi yeniden üretecek; sayısal alanların
     aynı kaldığı alan alan karşılaştırılacak.
+50. **Yatay düzende parçacıkların ~%40'ı görünmeyen yerde doğuyordu.**
+    Hareketli rüzgâr parçacıkları tuvalin bütün genişliğinde doğuyordu; yan
+    dok gelince (madde 47) sağdaki 340 px'e düşenler boşa çiziliyordu. Artık
+    yalnız görünen haritada doğuyorlar, sayı da o genişlikle orantılı. Dikey
+    ekranda sayı ve görünüş değişmedi (ilk denemede sayıyı görünen alana
+    göre küçültmüştüm, dikeyde parçacık seyrekleşiyordu; geri alındı).
 
 ## Yalnız raporlanan (senin kararın)
 

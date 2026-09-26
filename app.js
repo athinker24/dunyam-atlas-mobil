@@ -619,12 +619,14 @@ function baslat(J, resimler){
     const cv = $("#parcacik"), c = cv.getContext("2d");
     let P = null, sayi = 0, calisiyor = false, son = null, sonZaman = 0;
     const ac = () => katman==="dolasim" && ayar.parcacik && D.dol;
-    function dogur(i){ const g = gorunen(), r = cv.getBoundingClientRect();
-      const sx = Math.random()*r.width, sy = g.ust + Math.random()*(g.alt-g.ust);
+    // yalniz gorunen haritada dogar (yatay duzende dokun altina harcanmasin)
+    function dogur(i){ const g = gorunen();
+      const sx = Math.random()*g.w, sy = g.ust + Math.random()*(g.alt-g.ust);
       P[i*4] = (sx-ox)/olcek - 0.5; P[i*4+1] = (sy-oy)/olcek - 0.5; P[i*4+2] = 0; P[i*4+3] = 60 + Math.random()*50; }
     function kur(){ const r = cv.getBoundingClientRect();
       cv.width = Math.round(r.width*dpr); cv.height = Math.round(r.height*dpr);
-      sayi = Math.min(2000, Math.round(r.width*r.height/300)); P = new Float32Array(sayi*4);
+      // dikeyde sayi eskisi gibi; yatayda yan dokun kapladigi pay dusulur
+      sayi = Math.min(2000, Math.round(gorunen().w*r.height/300)); P = new Float32Array(sayi*4);
       for(let i=0;i<sayi;i++){ dogur(i); P[i*4+2] = Math.random()*P[i*4+3]; } c.clearRect(0, 0, cv.width, cv.height); }
     return {
       get calisiyor(){ return calisiyor; },
