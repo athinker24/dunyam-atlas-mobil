@@ -41,6 +41,43 @@ bloğun kendi dağları (7, 8, 11) ayrı ele alınacak.
 Himalaya'da çarpan kıtaya bakan güney yamaç diktir. Arazinin elle
 çizilmesinden; istenirse güney yamaç dikleştirilir.
 
-## 2. Diğer dağlar (SIRADA)
+## 2. Alt kıta: Anadolu benzeri kolaj (KARARLAŞTI, 26 Eylül)
 
-Sahibin önerisi bekleniyor: 5, 4, 6, 10, 7, 8, 11, takımadalar.
+**Sahibin tasarımı:** blok Anadolu örnek alınarak çizildi; doğu ve batı
+kıyısına paralel sıralar, arada platolar, havzalar, vadiler.
+**Adlandırma (sahip):** 7 = doğu kıyısı sırası (ölçümdeki 7 ve 8 aynı
+sıra), 8 = batı kıyısı sıraları, 11 = ortadaki eski kuşak.
+
+**Ölçüler (1400 m eşik):**
+- 7: ~2.370 km, 5.892 m, pürüz 502 (genç, etkin).
+- 8: 160-430 km'lik kısa dik parçalar, pürüz 700-1000, en yüksek 5.594 m;
+  aralarında denize açılan vadiler.
+- 11 ve çevresi: 1.555 km, yalnız 3.488 m, pürüz 227 (eski, aşınmış).
+- Bloğun %56'sı 900 m altında (ova ve havza).
+
+**Hikâye (dört aşama):**
+1. Eski kaynaşma: blok iki küçük kıtaydı; aradaki okyanus kapandı, 11 o
+   dikişte yükseldi (Kırşehir kütlesi / İzmir-Ankara kenedi benzeri).
+2. Doğu kenarı: blok kuzeye yürürken doğu kenarının altına okyanus daldı,
+   7 yükseldi. 7'nin doğusundaki kapalı körfez **Karadeniz benzeri** yay
+   ardı havzası: dalmanın arkasında kabuk gerilip açıldı (sahip seçti).
+3. Batı kenarı gerilmesi (sahip onayladı): iç denizin Duvar altına dalan
+   levhası geri çekildikçe bloğun batı kıyısı gerildi; 8 kısa dağlara ve
+   denize açılan çöküntü vadilerine bölündü (Ege / Batı Anadolu benzeri).
+   Sonuç: verimli vadiler, sıcak su kaynakları, depremler. İç denizdeki
+   takımadalar Ege adaları karşılığı.
+4. Büyük Çarpışma: blok Duvar'a dayandı; kuzeyi önülke havzası, iç kısım
+   sıkışıp kabardı; kapalı havzalar tuzlu göl adayı (Tuz Gölü benzeri).
+
+**Büyük yanal fay (sahip ekledi):** Kuzey Anadolu Fayı benzeri. Bloğun
+yaylalarının kuzey kenarı boyunca, önülke ovasıyla yayla arasında,
+doğudaki körfezden batı kıyısına kabaca doğu-batı uzanır. Sağ yönlü:
+fayın güneyi batıya, serbest kenara (geri çekilen iç deniz levhasına)
+kaçar; kuzeyi Duvar'a bağlı kalır. Büyük deprem hattı.
+
+## 3. Yarımada ve 4: İtalya-Alpler benzeri (TASLAK)
+
+Sahibin tasarımı: güneybatı bloğunun doğusundaki yarımada İtalya'dan
+esinli, omurgasında Apenin benzeri sıra; batıdaki kıtaya (güneybatı
+bloğu) çarparak 4'ü (Alpler benzeri yay, arası vadili) yükseltti; ikisinin
+arasında Po ovası benzeri ova.
