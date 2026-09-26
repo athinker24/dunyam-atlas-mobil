@@ -430,7 +430,11 @@ def main():
 
     # yaricap: uygulama km hesaplarinda (kiyi uzakligi, akinti genisligi)
     # kullanir; once 6371 sabitti (CLAUDE.md 2.1, gece denetimi)
-    veri = {"world": w.name, "fictional": True, "radius_km": w.radius_km, "regions": {"global": bolge},
+    # gezegen: uygulamanin gunluk sicaklik tahmini (gunduz/gece, ayin tipik
+    # uclari) gunes isinimini ve gun uzunlugunu bu degerlerden hesaplar
+    gezegen = {"eksen_deg": w.axial_tilt_deg, "gun_saat": w.rotation_period_h,
+               "yil_gun": w.year_length_days, "ekinoks_gun": w.northward_equinox_doy}
+    veri = {"world": w.name, "fictional": True, "radius_km": w.radius_km, "gezegen": gezegen, "regions": {"global": bolge},
             "koppen_colors": {v[0]: "#%02x%02x%02x" % v[1] for v in LEG.values()},
             "koppen_names": {v[0]: v[2] for v in LEG.values()},
             "koppen_code": {str(k): v[0] for k, v in LEG.items()}}

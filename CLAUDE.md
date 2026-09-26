@@ -23,7 +23,16 @@ Kurgusal bir gezegenin iklim atlası. İki parçası var:
   doğrusal, erime 75 mm/°C/ay, örtü eşiği ay ortasında 10 mm su; ay ortası
   ay içi doğrusal yağış/erimeyle hesaplanır). Eşikler seçimdir; kaba bir
   sınama: Moskova normalleriyle 5 ay örtü (gerçekte ~4.5), Ulan Batur 4 ay
-  ince örtü. Hiç erimeyen hücreler kartta "kalıcı (buzul)". Veriyi `data/atlas.json`'dan,
+  ince örtü. Hiç erimeyen hücreler kartta "kalıcı (buzul)". Gündüz/gece
+  sıcaklığı, ayın tipik tepesi/dibi ve ~30 yılda bir rekor da motordan gelmez:
+  `app.js` `gunlukHazirla` aylık sıcaklık, yağış, yükseklik, kıyıya uzaklık,
+  güneş ışınımı (gezegenin eksen eğikliği ve yılından; veride `gezegen`) ve
+  yıllık genlikten istatistiksel tahmin eder. Katsayılar 209 ABD istasyonunun
+  1991-2019 günlük verisinden (CMU/GHCN-D); istasyon dışarıda bırakılarak
+  hata: gündüz-gece farkı 1.9, tepe 1.7, dip 1.35 °C. Gündüz-gece farkı
+  √(gün/24) ile ölçeklenir (Dünyam 15 saat: %21 küçük). Kalibrasyon 25-48°K;
+  tropikte ve çok yüksekte kaba. Sıcaklık sekmesinde Ortalama/Gündüz/Gece/
+  Tepe/Dip seçimi, kartta klimagram bandı ve satırı. Veriyi `data/atlas.json`'dan,
   harita dokularını `data/doku.png`, `yukseklik.png`, `kabartma*.jpg`,
   `dolasim.png`'den okur.
 - **Üretici** (`uret.py` + `motor/` + `dunya/`) — iklim motorunun ve dünya
@@ -123,7 +132,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 | `dunya/` | `dunyam.json`, `dunyam.currents.json`, `dunyam_heightmap.png`, `kabartma_kaynak.jpg` |
 | `requirements.txt` | numpy, scipy, pillow — hepsi bu |
 | `.github/workflows/veri.yml` | değişiklikte veriyi GitHub'da yeniden üretir |
-| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış (tek yükleme), WebGL yokken Canvas2D yedeği, ay şeridinde parmakla tarama, yatay ekranda yan dok, iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart (kar satırı dahil), Kar katmanı, Dolaşım (çizgiler, akıntılar, parçacıklar), katman/ay/kabartma geçişleri, yakınken pan sınırı, geri tuşu, güncelleme denetimi (yeni veride yenileyip bildirir), çevrimdışı (sunucu kapatılarak) ve çevrimdışı güncelleme denetimi. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
+| `test/uygulama_test.js`, `.github/workflows/uygulama.yml` | tarayıcı testi: açılış (tek yükleme), WebGL yokken Canvas2D yedeği, ay şeridinde parmakla tarama, yatay ekranda yan dok, gündüz sıcaklığı katmanı ve kartta gündüz-gece bandı (veride `gezegen` varsa), iki görünümde okyanus koyu, yumuşak/piksel parlaklık eşit, kart (kar satırı dahil), Kar katmanı, Dolaşım (çizgiler, akıntılar, parçacıklar), katman/ay/kabartma geçişleri, yakınken pan sınırı, geri tuşu, güncelleme denetimi (yeni veride yenileyip bildirir), çevrimdışı (sunucu kapatılarak) ve çevrimdışı güncelleme denetimi. `veri.yml` yeni veriyi bu test geçmeden commit etmez |
 | `mevsim_olc.py` | yağışın mevsimselliğini ölçer (kara min/max ay oranı, 36°K kuzeyinde f/s/w payları, korunan istekler, yılda ≥3 kez dönen rüzgâr payı) ve harita çizer; `--p` ile params denemesi, `--kod`/`--kiyas` ile sınıfı değişen kara payı. Veri yazmaz |
 | `_senkron_kontrol.py` | kopyalar asıl projeyle aynı mı |
 | `yayinla.sh`, `wrangler.jsonc` | Cloudflare derleme komutu ve yayın ayarı: yalnız uygulama dosyalarını `site/`'ye kopyalar (motor ve dünya tanımı yayınlanmaz) |

@@ -115,6 +115,8 @@ const OLC = () => {
       const kart = await p.evaluate(() => ({ acik: !document.querySelector("#kart").hidden,
         metin: document.querySelector("#kart-icerik").textContent, sec: window.__atlas.durum().sec }));
       denetle("karaya dokununca kart aciliyor", kart.acik && kart.sec === yum.hedef.i && /\d/.test(kart.metin) && /Kar/.test(kart.metin));
+      if (await p.evaluate(() => !!window.__atlas.D.J.data.gezegen))
+        denetle("kartta gunduz-gece satiri ve bant", /gündüz-gece farkı/.test(kart.metin) && await p.evaluate(() => !!document.querySelector("#kart .klimagram polygon")));
       // Android geri tusu acik karti kapatmali, uygulamadan cikmamali (gece denetimi)
       await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400);
       const geri = await p.evaluate(() => ({ kart: !document.querySelector("#kart").hidden, yol: location.pathname, acik: !!window.__atlas }));
@@ -137,6 +139,16 @@ const OLC = () => {
       const dn = await p.evaluate(() => window.__atlas.durum().donem);
       denetle("ay seridinde parmakla tarama", dn === 10, `ay ${dn}, beklenen 10`);
       await p.evaluate(() => document.querySelectorAll("#donem button")[0].click()); await bekle(250); }
+    // gunluk sicaklik (veride gezegen alani varsa): gunduz katmani cizilmeli,
+    // kartta gunduz-gece satiri ve klimagramda bant olmali
+    if (await p.evaluate(() => !!window.__atlas.D.J.data.gezegen)) {
+      await p.evaluate(() => { document.querySelector("[data-k=sicaklik]").click(); document.querySelector("[data-sicmod=gunduz]").click(); }); await bekle(400);
+      const gs = await p.evaluate(() => { const c = document.getElementById("gl"), gl = c.getContext("webgl"), px = new Uint8Array(4), r = new Set();
+        for (let i = 0; i < 80; i++) { gl.readPixels(Math.floor(c.width * (0.1 + 0.8 * (i % 10 + 0.5) / 10)), Math.floor(c.height * (0.35 + 0.45 * (((i / 10) | 0) + 0.5) / 8)), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); r.add(px.join()); }
+        return { renk: r.size, alt: document.querySelector("#altbaslik").textContent }; });
+      await p.evaluate(() => document.querySelector("[data-sicmod=ort]").click()); await bekle(250);
+      denetle("gunduz sicakligi katmani ciziliyor", gs.renk > 5 && /gündüz/.test(gs.alt), `${gs.renk} farkli renk`);
+    }
     // kar katmani: kar hesabi tembel; sekme acilinca cizilmeli, tuval tek renk kalmamali
     await p.evaluate(() => document.querySelector("[data-k=kar]").click()); await bekle(400);
     const kr = await p.evaluate(() => { const c = document.getElementById("gl"), gl = c.getContext("webgl"), px = new Uint8Array(4), r = new Set();

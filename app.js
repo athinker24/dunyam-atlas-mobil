@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false},
+  dolZemin:"sst", parcacik:false, sicMod:"ort"},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -248,6 +248,53 @@ function karHesapla(tAy, pAy, n){
 // ilk kareden sonra bos zamanda cagirir, sekme ya da kart daha once isterse
 // o an hesaplanir (gece denetimi).
 function karAl(D){ return D.kar || (D.kar = karHesapla(D.tAy, D.pAy, D.n)); }
+/* Gunluk sicaklik: gunduz (ortalama gunluk en yuksek), gece (ortalama gunluk
+   en dusuk), ayin tipik tepesi ve dibi (her yil o ay gorulen en yuksek/en
+   dusuk) ve ~30 yilda bir rekor. Motor yalniz aylik ortalama verir; bunlar
+   ondan istatistiksel olarak turetilir (kar gibi, veri dosyasina girmez).
+   Katsayilar 209 ABD istasyonunun 1991-2019 gunluk verisinden (CMU/GHCN-D)
+   en kucuk karelerle; istasyon disarida birakilarak olculen hata: gunduz-gece
+   farki 1.9, tepe 1.7, dip 1.35, rekor ~2 C. Girdiler motorun bildigi
+   seyler: aylik yagis (kuru hava gece hizli sogur), yukseklik, kiyiya
+   uzaklik, ayin gunes isinimi (gezegenin eksen egikligi ve yilindan), yillik
+   sicaklik genligi (karasallik) ve ayin yillik ortalamadan sapmasi.
+   Gezegenin gunu Dunya'dan farkliysa gunduz-gece farki sqrt(gun/24) ile
+   olceklenir: yuzey sicakliginin gunluk salinimi donemin karekokuyle buyur
+   (isinin toprakta yayilmasi). Dunyam'da 15 saat: fark %21 kucuk. Kalibrasyon
+   ABD'nin 25-48K araligindan; tropikte ve cok yuksekte kaba bir tahmindir. */
+const GS = {dtr: [11.942, -1.117, 2.417, 1.071, 0.833], ehi: [0.848, 0.292, -0.246, -0.207, 0.228],
+  elo: [2.832, 0.195, -0.198, 0.622, 0.015], rekS: [2.12, 0.34], rekC: [0.09, 0.73]};
+function gunlukHazirla(D){
+  const g = D.J.data.gezegen; if(!g) return null;
+  const {W, H, N, n, land, karaSira, elev, tAy, pAy, B} = D;
+  // kiyiya uzaklik (km): okyanustan kara hucrelerine 4 komsulu BFS
+  const adim = (B[2]-B[0])/W * (D.J.data.radius_km || 6371) * Math.PI/180;
+  const uz = new Float32Array(N).fill(-1), q = new Int32Array(N); let bas = 0, son = 0;
+  for(let i=0;i<N;i++) if(!land[i]){ uz[i] = 0; q[son++] = i; }
+  while(bas < son){ const i = q[bas++], x = i%W;
+    for(const k of [x>0 ? i-1 : -1, x<W-1 ? i+1 : -1, i-W, i+W]) if(k >= 0 && k < N && uz[k] < 0){ uz[k] = uz[i] + 1; q[son++] = k; } }
+  // ayin ortasinda gunluk ortalama atmosfer ustu gunes isinimi (W/m2), satir basina
+  const Q = new Float32Array(H*12), egik = g.eksen_deg*Math.PI/180;
+  for(let y=0;y<H;y++){ const f = D.enlem(y)*Math.PI/180;
+    for(let m=0;m<12;m++){ const dec = egik*Math.sin(2*Math.PI*((m+0.5)*g.yil_gun/12 - g.ekinoks_gun)/g.yil_gun);
+      const h0 = Math.acos(Math.max(-1, Math.min(1, -Math.tan(f)*Math.tan(dec))));
+      Q[y*12+m] = 1361/Math.PI*(h0*Math.sin(f)*Math.sin(dec) + Math.cos(f)*Math.cos(dec)*Math.sin(h0)); } }
+  const kk = new Float32Array(n), z = new Float32Array(n), A = new Float32Array(n), Tm = new Float32Array(n), satir = new Int32Array(n);
+  for(let i=0;i<N;i++){ if(!land[i]) continue; const j = karaSira[i];
+    kk[j] = 1 - Math.exp(-uz[i]*adim/150); z[j] = Math.max(0, elev[i])/1000; satir[j] = (i/W)|0;
+    let lo = 1e9, hi = -1e9, t = 0; for(let m=0;m<12;m++){ const v = tAy[m][j]; lo = Math.min(lo, v); hi = Math.max(hi, v); t += v/12; }
+    A[j] = hi - lo; Tm[j] = t; }
+  const don = Math.sqrt(g.gun_saat/24), c = (v, a, b) => Math.max(a, Math.min(b, v));
+  // j hucresi, m ayi: {gunduz, gece, tepe, dip, rekS, rekC}
+  function ay(j, m){ const T = tAy[m][j], q2 = Q[satir[j]*12+m]/100, dT = T - Tm[j], k = GS;
+    const dtr = c(k.dtr[0] + k.dtr[1]*Math.log(pAy[m][j]+5) + k.dtr[2]*z[j] + k.dtr[3]*kk[j] + k.dtr[4]*q2, 3, 22)*don;
+    const ehi = c(k.ehi[0] + k.ehi[1]*A[j] + k.ehi[2]*dT + k.ehi[3]*kk[j] + k.ehi[4]*q2, 1, 14);
+    const elo = c(k.elo[0] + k.elo[1]*A[j] + k.elo[2]*dT + k.elo[3]*kk[j] + k.elo[4]*q2, 1, 20);
+    const gunduz = T + dtr/2, gece = T - dtr/2, tepe = gunduz + ehi, dip = gece - elo;
+    return {gunduz, gece, tepe, dip, rekS: tepe + k.rekS[0] + k.rekS[1]*ehi, rekC: dip - k.rekC[0] - k.rekC[1]*elo}; }
+  return {ay, don};
+}
+function gunlukAl(D){ return D.gunluk !== undefined ? D.gunluk : (D.gunluk = gunlukHazirla(D)); }
 // ay maskesinden "Kasım–Mart" gibi bir aralik (yil donumunu asan dahil)
 function ayAraligi(mask){
   if(!mask) return null; if(mask === 0xfff) return "bütün yıl";
@@ -292,6 +339,7 @@ function gorunumKur(D, katman, donem, bant){
     return {a, lut, olcek:{serit:`linear-gradient(90deg,${Array.from({length:24},(_,k)=>css(araziRenk((k/23)**2*ust))).join(",")})`,
       etiket: etiket.map(m=>({x:Math.sqrt(m/ust), t:m.toLocaleString("tr-TR")})), birim:"m"}};
   }
+  if(katman==="sicaklik" && ayar.sicMod && ayar.sicMod!=="ort" && gunlukAl(D)) return gunlukGorunum(D, donem, bant, a, lut);
   const sic = katman==="sicaklik";
   const enc = donem<0 ? (sic ? D.tyil : D.pyil) : (sic ? D.Tk : D.Pk);
   const ham = donem<0 ? null : (sic ? D.Tm : D.Pm);
@@ -311,6 +359,32 @@ function gorunumKur(D, katman, donem, bant){
     // bantliyken etiketler bant sinirlarinda; ceyreklikler bantlarin ortasina
     // dusuyor ve hangi degerin bandi boldugu okunmuyordu (gece denetimi)
     etiket:(bant ? Array.from({length:BANT+1}, (_,k)=>k/BANT) : [0,.25,.5,.75,1]).map(q=>({x:q, t:fmt(kantil(hv, q))}))}};
+}
+
+// Sicaklik sekmesinde gunduz / gece / tepe / dip. Yillikta gunduz ve gece 12
+// ayin ortalamasi; tepe yilin en sicak ayinin tepesi, dip en soguk ayin dibi.
+// Renk olcegi ortalama katmaniyla ayni mantik: bu alanin 12 ayindaki dagilima
+// gore esit alanli (yuzdelik) rampa, ay degisince renkler karsilastirilabilir.
+const SIC_MOD = {gunduz: "gündüz", gece: "gece", tepe: "ayın tipik tepesi", dip: "ayın tipik dibi"};
+function gunlukGorunum(D, donem, bant, a, lut){
+  const G = gunlukAl(D), mod = ayar.sicMod, {n, N, yakin, karaSira} = D;
+  const hv = D.gunlukHavuz || (D.gunlukHavuz = {});
+  if(!hv[mod]){ const ay = [], yl = new Float32Array(n); let lo = 1e9, hi = -1e9;
+    for(let m=0;m<12;m++){ const f = new Float32Array(n); for(let j=0;j<n;j++){ const v = G.ay(j, m)[mod]; f[j] = v; lo = Math.min(lo, v); hi = Math.max(hi, v); } ay.push(f); }
+    for(let j=0;j<n;j++){ let t = mod==="tepe" ? -1e9 : mod==="dip" ? 1e9 : 0;
+      for(let m=0;m<12;m++){ const v = ay[m][j]; t = mod==="tepe" ? Math.max(t, v) : mod==="dip" ? Math.min(t, v) : t + v/12; } yl[j] = t; }
+    const enc = {lo, hi, kok: false}, kod = v => 1 + Math.round((v-lo)/(hi-lo||1)*254), say = new Float64Array(256);
+    for(const f of ay) for(let j=0;j<n;j++) say[kod(f[j])]++;
+    const vals = [], cum = [0]; let t = 0; for(let b=1;b<256;b++) if(say[b]){ vals.push(kodCoz(enc, b)); t += say[b]; cum.push(t); }
+    hv[mod] = {ay, yl, enc, kod, havuz: {n: t, vals: Float64Array.from(vals), cum: Float64Array.from(cum)}}; }
+  const h = hv[mod], f = donem<0 ? h.yl : h.ay[donem], dur = RAMPA.sicaklik, BANT = 6;
+  for(let i=0;i<N;i++) a[i] = h.kod(f[karaSira[yakin[i]]]);
+  for(let b=1;b<256;b++){ let q = yuzdelik(h.havuz, kodCoz(h.enc, b)); if(bant) q = Math.min(BANT-1, Math.floor(q*BANT))/(BANT-1);
+    lut.set(rampa(dur, q).map(v=>v|0), b*3); }
+  lut.set(lut.slice(3,6), 0);
+  const fmt = v => eksi(Math.round(v));
+  const serit = bant ? `linear-gradient(90deg,${Array.from({length:BANT},(_,k)=>{ const c=css(rampa(dur,k/(BANT-1))); return `${c} ${(k/BANT*100).toFixed(2)}% ${((k+1)/BANT*100).toFixed(2)}%`; }).join(",")})` : cssRampa(dur);
+  return {a, lut, olcek:{serit, birim: "°C", etiket:(bant ? Array.from({length:BANT+1}, (_,k)=>k/BANT) : [0,.25,.5,.75,1]).map(q=>({x:q, t:fmt(kantil(h.havuz, q))}))}};
 }
 
 /* ================================================================ cizim */
@@ -732,7 +806,8 @@ function baslat(J, resimler){
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
     if(!G) yedekBoya();
     $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi:"Arazi, yükseklik",
-      sicaklik:"Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
+      sicaklik: ayar.sicMod!=="ort" && gunlukAl(D) ? "Sıcaklık, "+SIC_MOD[ayar.sicMod]+", "+(donem<0 ? (ayar.sicMod==="tepe" ? "yılın en sıcak ayı" : ayar.sicMod==="dip" ? "yılın en soğuk ayı" : "yıllık ortalama") : AYLAR[donem])
+        : "Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
       kar:donem<0 ? "Kar örtüsü, yerde kaldığı ay sayısı" : "Yerdeki kar, "+AYLAR[donem]+" ortası",
       // yillikta oklar 12 ayin bileske (net) ruzgari: yil icinde donen yerlerde
@@ -776,7 +851,11 @@ function baslat(J, resimler){
       + `<button role="radio" data-zemin="hiz" aria-checked="${ayar.dolZemin==="hiz"}">Rüzgâr hızı</button></div>`
       + `<button class="canli" id="parcacik-ac" aria-pressed="${ayar.parcacik}">Hareketli</button></div>`
       + `<div class="dol-not"><span><i class="ok-ruzgar"></i>rüzgâr</span><span><i class="ak s"></i>sıcak akıntı</span><span><i class="ak k"></i>soğuk akıntı</span></div>` : "";
-    el.innerHTML = dolNot + `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
+    // sicaklik: ortalama / gunduz / gece / ayin tipik tepesi ve dibi (gunlukHazirla)
+    const sicNot = katman==="sicaklik" && gunlukAl(D) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Sıcaklık türü">`
+      + [["ort","Ortalama"],["gunduz","Gündüz"],["gece","Gece"],["tepe","Tepe"],["dip","Dip"]].map(([k,t]) =>
+        `<button role="radio" data-sicmod="${k}" aria-checked="${ayar.sicMod===k}">${t}</button>`).join("") + `</div></div>` : "";
+    el.innerHTML = dolNot + sicNot + `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
       + o.etiket.map((e,k)=>`<span style="left:${e.x*100}%">${e.t}${k===o.etiket.length-1?` <span class="birim">${o.birim}</span>`:""}</span>`).join("")
       + `</div></div>`;
     etiketCakismasi();
@@ -796,7 +875,8 @@ function baslat(J, resimler){
   addEventListener("resize", () => etiketCakismasi());
 
   $("#aciklama").addEventListener("click", e => {
-    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac");
+    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]");
+    if(sm){ ayar.sicMod = sm.dataset.sicmod; ayarYaz(); katmanSec("sicaklik"); }
     if(z){ ayar.dolZemin = z.dataset.zemin; ayarYaz(); katmanSec("dolasim"); }
     if(p){ ayar.parcacik = !ayar.parcacik; ayarYaz(); aciklamaYaz(); ciz(); }
   });
@@ -877,6 +957,7 @@ function baslat(J, resimler){
     const el = $("#kart-icerik"); $("#kart").hidden = false;
     const j = D.karaSira[i], ad = D.KCODE[String(D.kop[i])];
     const T = D.tAy.map(a=>a[j]), P = D.pAy.map(a=>a[j]);
+    const gun = gunlukAl(D) ? AYLAR.map((_, m) => gunlukAl(D).ay(j, m)) : null;
     const sicak = T.indexOf(Math.max(...T)), soguk = T.indexOf(Math.min(...T)), r = v => eksi(Math.round(v));
     el.innerHTML = `<div class="k-ust"><i style="background:${KPAL[ad]||"#888"}"></i><div><h3>${D.KNAME[ad]||"—"}</h3>`
       + `<small><b>${ad||""}</b>${KREF[ad] ? "Dünya'da: "+KREF[ad] : ""}</small></div></div>`
@@ -884,9 +965,21 @@ function baslat(J, resimler){
       + `<div><em>${r(T[sicak])}°</em><span>${AYLAR[sicak]}</span></div>`
       + `<div><em>${r(T[soguk])}°</em><span>${AYLAR[soguk]}</span></div>`
       + `<div><em>${Math.round(D.pYil[j]).toLocaleString("tr-TR")}</em><span>mm/yıl</span></div></div>`
-      + klimagram(T, P, donem, karAl(D).ortuAy[j], karAl(D).kar.map(a=>a[j]))
+      + klimagram(T, P, donem, karAl(D).ortuAy[j], karAl(D).kar.map(a=>a[j]), gun)
+      + gunSatiri(gun)
       + karSatiri(j)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
+  }
+  // "Temmuz: gündüz 33°, gece 22° · her yıl ~41° / ~18° · 30 yılda bir ~46°"
+  // yillikta: yilin en sicak gunu ve en soguk gecesi (ayi ile)
+  function gunSatiri(gun){
+    if(!gun) return "";
+    const r = v => eksi(Math.round(v)) + "°";
+    if(donem >= 0){ const o = gun[donem];
+      return `<div class="k-gun"><b>${AYLAR[donem]}</b> gündüz ${r(o.gunduz)}, gece ${r(o.gece)} · ayın tipik tepesi ${r(o.tepe)}, dibi ${r(o.dip)} · 30 yılda bir ${r(o.rekS)} / ${r(o.rekC)}</div>`; }
+    const s = gun.reduce((a, o, m) => o.tepe > gun[a].tepe ? m : a, 0), c = gun.reduce((a, o, m) => o.dip < gun[a].dip ? m : a, 0);
+    const fark = gun.reduce((t, o) => t + (o.gunduz - o.gece)/12, 0);
+    return `<div class="k-gun"><b>Gün</b> gündüz-gece farkı ~${Math.round(fark)}° · yılın en sıcak günü ~${r(gun[s].tepe)} (${AYLAR[s]}), en soğuk gecesi ~${r(gun[c].dip)} (${AYLAR[c]}) · 30 yılda bir ${r(gun[s].rekS)} / ${r(gun[c].rekC)}</div>`;
   }
   // "Kar: Kasım–Mart yağar · örtü 4 ay, en çok Şubat'ta 120 mm su"
   function karSatiri(j){
@@ -1005,12 +1098,14 @@ function baslat(J, resimler){
 }
 
 /* 12 aylik iklim grafigi: cubuk yagis, cizgi sicaklik. Secili ay vurgulu. */
-function klimagram(T, P, secili, ortuAy = 0, kar = null){
+function klimagram(T, P, secili, ortuAy = 0, kar = null, gun = null){
   const w = 330, h = 92, sol = 28, sag = 34, ust = 6, alt = 16, iw = w-sol-sag, ih = h-ust-alt;
   const guzel = v => { for(const x of [10,20,25,50,100,150,200,250,300,400,500,750,1000,1500,2000,3000]) if(v <= x) return x;
     return Math.ceil(v/1000)*1000; };
   const pm = guzel(Math.max(40, ...P));
-  const t0 = Math.floor((Math.min(...T)-1)/5)*5, t1 = Math.ceil((Math.max(...T)+1)/5)*5;
+  // gunduz-gece bandi varsa olcek onu da kapsar
+  const tAlt = gun ? Math.min(...gun.map(o=>o.gece)) : Math.min(...T), tUst = gun ? Math.max(...gun.map(o=>o.gunduz)) : Math.max(...T);
+  const t0 = Math.floor((tAlt-1)/5)*5, t1 = Math.ceil((tUst+1)/5)*5;
   const X = i => sol + (i+0.5)*iw/12, Yt = t => ust + (t1-t)/(t1-t0)*ih, bw = iw/12*0.58;
   let s = `<svg class="klimagram" viewBox="0 0 ${w} ${h}" role="img" aria-label="Aylık sıcaklık ve yağış">`;
   for(const t of [t0, t1]) s += `<line x1="${sol}" x2="${w-sag}" y1="${Yt(t)}" y2="${Yt(t)}" stroke="rgba(214,205,186,.10)"/>`;
@@ -1022,6 +1117,8 @@ function klimagram(T, P, secili, ortuAy = 0, kar = null){
     s += `<rect x="${(X(i)-bw/2).toFixed(1)}" y="${(ust+ih-P[i]/pm*ih).toFixed(1)}" width="${bw.toFixed(1)}" height="${kh.toFixed(1)}" fill="#e8eef3" fill-opacity=".82"/>`; });
   for(let i=0;i<12;i++) if(ortuAy>>i & 1)
     s += `<rect x="${(X(i)-iw/24).toFixed(1)}" y="${ust+ih+1}" width="${(iw/12).toFixed(1)}" height="2" fill="#e8eef3" fill-opacity=".7"/>`;
+  // gunduz (ust kenar) ile gece (alt kenar) arasi soluk bant
+  if(gun) s += `<polygon points="${[...gun.map((o,i)=>`${X(i).toFixed(1)},${Yt(o.gunduz).toFixed(1)}`), ...gun.map((o,i)=>`${X(i).toFixed(1)},${Yt(o.gece).toFixed(1)}`).reverse()].join(" ")}" fill="#d2a45c" fill-opacity=".16" stroke="#d2a45c" stroke-opacity=".35" stroke-width=".6"/>`;
   s += `<polyline fill="none" stroke="#d2a45c" stroke-width="1.7" stroke-linejoin="round" points="${T.map((t,i)=>`${X(i).toFixed(1)},${Yt(t).toFixed(1)}`).join(" ")}"/>`;
   T.forEach((t,i) => { s += `<circle cx="${X(i).toFixed(1)}" cy="${Yt(t).toFixed(1)}" r="${i===secili?3:1.8}" fill="#d2a45c"/>`; });
   s += `<text x="${sol-5}" y="${Yt(t1)+3}" text-anchor="end">${eksi(t1)}°</text><text x="${sol-5}" y="${Yt(t0)+3}" text-anchor="end">${eksi(t0)}°</text>`;
