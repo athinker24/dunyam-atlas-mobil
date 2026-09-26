@@ -75,9 +75,34 @@ doğudaki körfezden batı kıyısına kabaca doğu-batı uzanır. Sağ yönlü:
 fayın güneyi batıya, serbest kenara (geri çekilen iç deniz levhasına)
 kaçar; kuzeyi Duvar'a bağlı kalır. Büyük deprem hattı.
 
-## 3. Yarımada ve 4: İtalya-Alpler benzeri (TASLAK)
+## 3. Yarımada ve 4: İtalya-Alpler benzeri (KARARLAŞTI, 26 Eylül)
 
 Sahibin tasarımı: güneybatı bloğunun doğusundaki yarımada İtalya'dan
 esinli, omurgasında Apenin benzeri sıra; batıdaki kıtaya (güneybatı
 bloğu) çarparak 4'ü (Alpler benzeri yay, arası vadili) yükseltti; ikisinin
 arasında Po ovası benzeri ova.
+
+**Ölçüler:** yarımada 1,58 milyon km² (İtalya'nın ~5 katı), omurga ~1.560 km,
+en yüksek 5.143 m, karanın %3'ü 1.500 m üstü (ince omurga). Ova 0,53 milyon
+km², ort. 640 m, 4'ün iç bükeyinde. 4: 1,07 milyon km², 6.706 m; ovaya bakan
+iç yamaç dış yamaçtan biraz dik (0,91° / 0,83°), gerçek Alpler gibi.
+
+**Seçilen yol (a):** yarımada alt kıtanın batıya uzanan çıkıntısıydı
+(Adriyatik levhasının Afrika çıkıntısı olması gibi). Alt kıta kuzeye
+yürürken saat yönünün tersine biraz döndü, çıkıntı batıya savrulup
+güneybatı bloğuna çarptı ve 4'ü yükseltti. Yarımadanın doğu ucu alt
+kıtanın güneybatı köşesine dar bir boğazla hâlâ değiyor.
+
+**Dünyam'ın Akdeniz'i:** iç denizin güneyi genel yakınlaşma içinde geri
+çekilen levhaların açtığı gerilme havzalarıdır: alt kıtanın batı kıyısı
+(Ege), yarımadanın kuzeyindeki iç bükey körfez (Tiren benzeri).
+
+**Sonraya:** Alp tipi büyük buzul gölleri için buzul çağı geçmişi gerekir
+(4 ~11°K'de); tektonikten sonra ayrı karar.
+
+## 4. 10 ve 6: batıdan gelen devasa çarpışma (TASLAK)
+
+Sahibin tasarımı: çizdiği güneybatı kıyı kuşağının tamamı tek bir devasa
+çarpışma; içindeki düzlük onun platosu; çarpan batıdaki okyanus levhası,
+güneybatıdaki düz yarımada o levhanın su üstündeki kısmı. Örnek And Dağları.
+
