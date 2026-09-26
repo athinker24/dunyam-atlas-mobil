@@ -331,7 +331,7 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
     kapanır). Görünür alan hesabı tek yerde (gorunen): sığdırma, pan sınırı,
     parçacıklar ve etiketler buna göre. Dikey ekran ve tablet (1024×768)
     değişmedi; 844×390, 667×375, 390×844, 1024×768'de taşan öğe yok;
-    döndürmeli rastgele tarama 0 hata; test 20/20. Telefonda bakılmalı: yan
+    döndürmeli rastgele tarama 0 hata; test 20/20, sonra yatay düzen teste eklendi (21/21). Telefonda bakılmalı: yan
     çevirip Dolaşım, kart ve ayarlar.
 
 ## Yalnız raporlanan (senin kararın)
