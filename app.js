@@ -472,10 +472,12 @@ function baslat(J, resimler){
     return {a, b}; })();
 
   function gorunen(){
-    const r = canvas.getBoundingClientRect();
+    const r = canvas.getBoundingClientRect(), d = $("#dok").getBoundingClientRect();
     const ust = $(".marka").getBoundingClientRect().bottom + 8;
-    const alt = $("#dok").getBoundingClientRect().top - 8;
-    return {w:r.width, h:r.height, ust, alt};
+    // yatay kisa ekranda dok sag sutunda (style.css): harita solda kalan alan
+    const yan = d.top < 1 && d.left > 1;
+    const alt = yan ? r.height - 8 : d.top - 8;
+    return {w: yan ? d.left : r.width, h:r.height, ust, alt};
   }
   function sigdir(){
     const g = gorunen(), vh = Math.max(80, g.alt - g.ust), pay = 0.94;

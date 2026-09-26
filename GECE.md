@@ -12,7 +12,7 @@ adımda koştu (şimdi 20 denetim, hepsi geçiyor; GitHub'da da yeşil).
   (madde 16), çok yakınken kaydırma sınırı (1), dar ekranda lejant (7),
   ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), klavye (22), deniz
   kartı (15, 34), ay şeridinde parmağı kaydırarak ay tarama (36), bantlı renk
-  lejantı (27).
+  lejantı (27), telefonu yan çevirince düzen (47).
 - **Bilgisayarda bakman gereken:** baslat.bat ve tunel.bat bir kez açılmalı
   (madde 41; Windows'ta sınanamadı).
 - **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
@@ -320,6 +320,19 @@ adımda koştu (şimdi 20 denetim, hepsi geçiyor; GitHub'da da yeşil).
     doğrudan run satırına gömüyordu (GitHub'un uyardığı enjeksiyon kalıbı;
     yalnız repoya yazabilen başlatabildiği için risk düşük); artık ortam
     değişkeniyle geçiyor.
+47. **Telefon yan çevrilince harita neredeyse kayboluyordu.** 844×390'da alt
+    dok ekranın %53'ünü kaplıyor, haritaya ~97 px kalıyordu; Dolaşım'da
+    açılan deniz kartı başlığın üstüne binip seçili hücreyi tamamen
+    örtüyordu; ayar çekmecesi alttan açılıp haritanın alt yarısını
+    kapatıyordu (ekran görüntüleriyle bulundu). Yatay kısa ekranda
+    (yükseklik ≤ 500 px) dok artık sağda 340 px'lik sütun, harita solda tam
+    yükseklikte; kart haritanın altında, ayar çekmecesi yan sütunun yerine
+    açılıyor (harita bütünüyle görünür, sürükleme tutamağı yok, X ile
+    kapanır). Görünür alan hesabı tek yerde (gorunen): sığdırma, pan sınırı,
+    parçacıklar ve etiketler buna göre. Dikey ekran ve tablet (1024×768)
+    değişmedi; 844×390, 667×375, 390×844, 1024×768'de taşan öğe yok;
+    döndürmeli rastgele tarama 0 hata; test 20/20. Telefonda bakılmalı: yan
+    çevirip Dolaşım, kart ve ayarlar.
 
 ## Yalnız raporlanan (senin kararın)
 
