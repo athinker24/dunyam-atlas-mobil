@@ -1,0 +1,260 @@
+{
+ "yontem": "TEKTONIK.md 'Levha modeli'; siniflar Bird (2003) olcutu, 20 derece esigi",
+ "cerceve": "Kuzey levhasi sabit; hiz cm/yil",
+ "cozunurluk_derece": 0.1,
+ "levhalar": {
+  "Kuzey": {
+   "kimlik": 1,
+   "tohum": [
+    50,
+    0
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    0.0,
+    0.0
+   ],
+   "sira": 10,
+   "euler_kutbu": null,
+   "euler_hizi_derece_My": 0.0,
+   "alan_milyon_km2": 46.71,
+   "kara_payi": 0.333
+  },
+  "Kuzeydoğu": {
+   "kimlik": 2,
+   "tohum": [
+    47,
+    34
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    1.5,
+    0.0
+   ],
+   "sira": 9,
+   "euler_kutbu": [
+    43.0,
+    -146.0
+   ],
+   "euler_hizi_derece_My": 0.1349,
+   "alan_milyon_km2": 3.43,
+   "kara_payi": 0.781
+  },
+  "İber": {
+   "kimlik": 3,
+   "tohum": [
+    38,
+    -28
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    0.0,
+    0.5
+   ],
+   "sira": 6,
+   "euler_kutbu": [
+    0.0,
+    -118.0
+   ],
+   "euler_hizi_derece_My": 0.045,
+   "alan_milyon_km2": 6.67,
+   "kara_payi": 0.755
+  },
+  "Ege": {
+   "kimlik": 4,
+   "tohum": [
+    26,
+    -12
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    -0.5,
+    -2.0
+   ],
+   "sira": 9,
+   "euler_kutbu": [
+    -12.59,
+    71.75
+   ],
+   "euler_hizi_derece_My": 0.1854,
+   "alan_milyon_km2": 4.46,
+   "kara_payi": 0.318
+  },
+  "Güneybatı": {
+   "kimlik": 5,
+   "tohum": [
+    15,
+    -25
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    0.0,
+    1.0
+   ],
+   "sira": 7,
+   "euler_kutbu": [
+    0.0,
+    -115.0
+   ],
+   "euler_hizi_derece_My": 0.0899,
+   "alan_milyon_km2": 30.25,
+   "kara_payi": 0.296
+  },
+  "Yarımada": {
+   "kimlik": 6,
+   "tohum": [
+    6,
+    -3
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    -2.0,
+    1.0
+   ],
+   "sira": 8,
+   "euler_kutbu": [
+    -62.81,
+    -81.19
+   ],
+   "euler_hizi_derece_My": 0.2011,
+   "alan_milyon_km2": 4.59,
+   "kara_payi": 0.5
+  },
+  "Alt Kıta": {
+   "kimlik": 7,
+   "tohum": [
+    12,
+    12
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    0.3,
+    4.0
+   ],
+   "sira": 5,
+   "euler_kutbu": [
+    4.2,
+    -78.89
+   ],
+   "euler_hizi_derece_My": 0.3607,
+   "alan_milyon_km2": 25.63,
+   "kara_payi": 0.329
+  },
+  "Batı Okyanusu": {
+   "kimlik": 8,
+   "tohum": [
+    0,
+    -60
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    5.0,
+    1.0
+   ],
+   "sira": 2,
+   "euler_kutbu": [
+    78.69,
+    -150.0
+   ],
+   "euler_hizi_derece_My": 0.4586,
+   "alan_milyon_km2": 64.57,
+   "kara_payi": 0.024
+  },
+  "Doğu Okyanusu": {
+   "kimlik": 9,
+   "tohum": [
+    0,
+    60
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    -6.0,
+    0.0
+   ],
+   "sira": 2,
+   "euler_kutbu": [
+    -90.0,
+    0.0
+   ],
+   "euler_hizi_derece_My": 0.5396,
+   "alan_milyon_km2": 103.38,
+   "kara_payi": 0.0
+  },
+  "Büyük Okyanus": {
+   "kimlik": 10,
+   "tohum": [
+    0,
+    130
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    1.0,
+    1.0
+   ],
+   "sira": 2,
+   "euler_kutbu": [
+    45.0,
+    40.0
+   ],
+   "euler_hizi_derece_My": 0.1272,
+   "alan_milyon_km2": 94.68,
+   "kara_payi": 0.0
+  },
+  "Uzak Okyanus": {
+   "kimlik": 11,
+   "tohum": [
+    0,
+    -150
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    -3.0,
+    -0.5
+   ],
+   "sira": 1,
+   "euler_kutbu": [
+    -80.54,
+    -60.0
+   ],
+   "euler_hizi_derece_My": 0.2735,
+   "alan_milyon_km2": 144.84,
+   "kara_payi": 0.0
+  },
+  "Kuzey Kutup": {
+   "kimlik": 12,
+   "tohum": [
+    84,
+    0
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    1.0,
+    0.0
+   ],
+   "sira": 3,
+   "euler_kutbu": [
+    6.0,
+    -180.0
+   ],
+   "euler_hizi_derece_My": 0.0899,
+   "alan_milyon_km2": 21.17,
+   "kara_payi": 0.0
+  },
+  "Güney Kutup": {
+   "kimlik": 13,
+   "tohum": [
+    -72,
+    0
+   ],
+   "hiz_tohumda_dogu_kuzey": [
+    1.0,
+    0.0
+   ],
+   "sira": 3,
+   "euler_kutbu": [
+    18.0,
+    -0.0
+   ],
+   "euler_hizi_derece_My": 0.0899,
+   "alan_milyon_km2": 109.92,
+   "kara_payi": 0.0
+  }
+ },
+ "sinif_uzunluk_km": {
+  "CCB": 10580.0,
+  "SUB": 47400.0,
+  "CTF": 5362.0,
+  "OTF": 60294.0,
+  "CRB": 5319.0,
+  "OSR": 43098.0
+ },
+ "adim_sayisi": 4027
+}

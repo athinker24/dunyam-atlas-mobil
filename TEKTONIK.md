@@ -193,11 +193,68 @@ havzası) → 7 (aynı dalmanın körfez açılmadan önce yükselttiği eski ke
 Körfez açılırken yarımadayı 7'den kopardı (Japon Denizi'nin Japonya'yı
 Asya'dan koparması gibi; Batı Karadeniz de benzer biçimde açıldı).
 
-## Levha haritası
+## Levha haritası (ilk sürüm, yerini aşağıdaki modele bıraktı)
 
 `tektonik/levha_haritasi.png`, üreten betik `tektonik/harita.py` (çizgiler
 araziden ölçülür, adlar elle). Levhalar: Kuzey, Kuzeydoğu kaçış bloğu,
 İber bloğu, Güneybatı bloğu, Yarımada, Alt kıta, Ege, Küçük kıta (batı
 okyanusu levhasının üstünde), Batı okyanusu, Doğu okyanusu, İç deniz.
 Okyanus ortası sırtları çizilmedi: okyanus tabanı verisi yok, karar sahibin.
+
+## Levha modeli (26 Eylül, sahip istedi: bütün gezegeni saran, sınırları tam)
+
+**Yöntem** (gerçek dünyadaki sayısallaştırmanın iki standardı birleştirildi):
+- *GPlates kapalı levha çokgenleri* (Gurnis vd. 2012): levhalar sınır
+  parçalarının kesişmesinden çıkan kapalı alanlar; gezegenin her noktası
+  tam bir levhaya ait. Burada sınır çizgileri 0,1 derecelik küresel gride
+  yakılıp kalan bölgeler etiketleniyor (boylamda sarmal).
+- *Bird 2003, PB2002*: sınırlar ~40-45 km'lik adımlara bölünür, her adım
+  levhaların Euler vektörlerinden hesaplanan göreli hızla yedi sınıftan
+  birine atanır: göreli hız sınıra 20°'den yakınsa yanal (OTF/CTF), değilse
+  yaklaşma (SUB/OCB/CCB) ya da ayrılma (OSR/CRB); iki yanı denizse okyanusal.
+  Dalma ve çarpışmada üst levha: kıta tarafı, değilse levha sırası.
+- Levha hızları hikâyeden seçildi (Kuzey levhası sabit çerçeve); sınıflar
+  hesaptan çıkar, elle yazılmaz. Böylece harita kendi içinde tutarsız olamaz.
+- Karadaki sınırlar araziden ölçülür (dağ etekleri, kıyılar). Okyanustakiler
+  TASARIM: sırtlar göreli harekete dik parçalar ve ona paralel dönüşüm
+  faylarıyla (düzensiz aralıklı) üretilir, dalma çukurları dalan levhaya
+  doğru bombeli yaylar. Okyanus tabanı derinliği de tasarım: sırttan uzaklık /
+  yarı yayılma hızı = yaş, derinlik = 2,6 + 0,35 √yaş km.
+
+**Levhalar** (13 levha, 4027 adım, toplam 172 bin km sınır):
+
+| levha | alan (milyon km²) | kara payı | Euler hızı (°/My) |
+|---|---|---|---|
+| Kuzey | 46.7 | %33 | 0.00 |
+| Kuzeydoğu | 3.4 | %78 | 0.13 |
+| İber | 6.7 | %76 | 0.04 |
+| Ege | 4.5 | %32 | 0.19 |
+| Güneybatı | 30.2 | %30 | 0.09 |
+| Yarımada | 4.6 | %50 | 0.20 |
+| Alt Kıta | 25.6 | %33 | 0.36 |
+| Batı Okyanusu | 64.6 | %2 | 0.46 |
+| Doğu Okyanusu | 103.4 | %0 | 0.54 |
+| Büyük Okyanus | 94.7 | %0 | 0.13 |
+| Uzak Okyanus | 144.8 | %0 | 0.27 |
+| Kuzey Kutup | 21.2 | %0 | 0.09 |
+| Güney Kutup | 109.9 | %0 | 0.09 |
+
+**Sınıf uzunlukları (bin km):** OTF 60, SUB 47, OSR 43, CCB 11, CTF 5, CRB 5.
+
+**Hikâyeye etkisi (hesaptan çıkan, Claude):**
+- 9 hesapta *kıta yarığı* çıktı: kaçış bloğu doğuya giderken arkası açılıyor.
+  Bölüm 7'deki "9 bindirme" yerine: 9 önce sıkışmayla yükselmiş eski bir
+  kuşak, bugün eteğinde Baykal tipi bir yarık açılıyor (Amur levhasının batı
+  sınırı Baykal yarığıdır). Derin bir yarık gölü için aday.
+- Yarımada ile alt kıta arasındaki boğaz *yarık* çıktı: çıkıntı alt kıtadan
+  kopuyor, bölüm 3'teki (a) ile uyumlu.
+- Ege ile Kuzey arası *yay ardı yarık*, Ege çukuru *dalma*, alt kıtanın
+  batı kıyısı boyunca *yanal fay*: bölüm 1, 2 ve 6 ile uyumlu.
+- Okyanus levhaları (Batı, Doğu, Büyük, Uzak, iki kutup) tamamen tasarım;
+  okyanus tabanı verisi yok, sahibin kararına açık.
+
+**Dosyalar:** `tektonik/levhalar.py` (model), `tektonik/harita.py` (çizim),
+`levhalar.json` (levhalar, Euler kutupları, alanlar), `sinirlar.geojson`
+(sınıflanmış adımlar, PB2002 `steps` karşılığı), `levha_kimlik.png` (0,1°
+levha kimliği rasterı), `levha_dunya.png`, `levha_kure.png`, `levha_haritasi.png`.
 
