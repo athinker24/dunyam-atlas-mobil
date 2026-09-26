@@ -520,3 +520,5 @@ yeter (ileri sarma).
   ölçüldü: JS yığını 3 MB sabit, DOM düğümü 679-705 arasında salınıyor
   (artış yok), olay dinleyicisi 60-62. İlk denemede son durumlar farklıydı
   (açık kart klimagramı) ve artış gibi görünmüştü; aynı durumda ölçünce yok.
+- Yatay başlangıçlı rastgele etkileşim taraması (844×390, tohum 2718,
+  döndürme dahil): 0 hata, uygulama sayfada kalıyor.
