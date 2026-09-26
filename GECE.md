@@ -477,3 +477,6 @@ yeter (ileri sarma).
   RES ortam değişkeniyle geçti; surum değişmedi, commit atılmadı (madde 42
   ve 46 gerçek çözünürlükte doğrulandı). Ay süresi değişikliğinin (madde 48)
   0.25 doğrulaması sıradaki koşuda.
+- Ayar çekmecesi açıkken döndürme: dikey 405 px alt çekmece → yatay tam
+  yükseklik yan sütun → dikeyde yine 405 px; yatayda açıp dikeye dönünce de
+  405 px. Kalıntı yükseklik yok.
