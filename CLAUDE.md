@@ -6,6 +6,10 @@ olduğunu** yeniden keşfetmek zorunda kalmamak.
 
 Belgeler ve kod yorumları **Türkçe**. Kullanıcı Türkçe çalışıyor.
 
+**Oturuma başlarken önce `DURUM.md`'yi oku**: şu an yayında olan, açık
+kararlar ve bilgisayarda (asıl projede) yapılacaklar orada. Oturumu
+bitirirken onu güncelle; kalıcı bilgi buraya, anlık durum oraya.
+
 ---
 
 ## 1. Bu repo nedir
@@ -322,7 +326,7 @@ Hata değil, tasarım. Kendini güncelleyebilmesi sabit bir adres ister.
 **Eylül 2026: sabit adres Cloudflare ile KURULDU** (Workers, yalnız statik
 dosya; `wrangler.jsonc`). Cloudflare private repoyu okur, her push'ta
 `sh yayinla.sh` koşar ve `npx wrangler deploy` `site/`'yi yayınlar; diğer
-dalların ayrı önizleme adresi olur. Önünde Cloudflare Access durur (yalnız
+dalların ayrı önizleme adresi olur. **Üretim dalı Cloudflare ayarıdır** (Settings → Build → Branch control): 26 Eylül'de `main` değildi ve `main` push'ları yalnız önizleme olarak derleniyordu; GitHub'daki "Workers Builds" onayı yine yeşildi. Telefona gelmeyen bir değişiklikte önce Cloudflare → Deployments'a bak. Önünde Cloudflare Access durur (yalnız
 sahibin e-postası). Access'in çerezi manifest isteğine gitsin diye
 `index.html`'de manifest bağlantısı `crossorigin="use-credentials"` taşır;
 kaldırılırsa telefona kurulum sessizce bozulur. Access oturumu dolunca `sw.js`
