@@ -371,8 +371,8 @@ yeter (ileri sarma).
 50. **Yatay düzende parçacıkların ~%40'ı görünmeyen yerde doğuyordu.**
     Hareketli rüzgâr parçacıkları tuvalin bütün genişliğinde doğuyordu; yan
     dok gelince (madde 47) sağdaki 340 px'e düşenler boşa çiziliyordu. Artık
-    yalnız görünen haritada doğuyorlar, sayı da o genişlikle orantılı. Dikey
-    ekranda sayı ve görünüş değişmedi (ilk denemede sayıyı görünen alana
+    yalnız görünen haritada doğuyorlar, sayı da o genişlikle orantılı. Bildirim kutusu da yatayda harita alanının
+    ortasında (16..488 px, dok 504'te başlıyor). Dikey ekranda sayı ve görünüş değişmedi (ilk denemede sayıyı görünen alana
     göre küçültmüştüm, dikeyde parçacık seyrekleşiyordu; geri alındı).
 
 ## Yalnız raporlanan (senin kararın)
