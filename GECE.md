@@ -30,7 +30,8 @@ iPhone'da çift dokunma (37).
 Bilgisayarda: baslat.bat ve tunel.bat bir kez açılmalı (41; Windows'ta
 sınanamadı), klavye (22).
 
-Karar bekleyenler: "Yalnız raporlanan" bölümü (akıntı km/derece sabiti,
+Karar bekleyenler: "Yalnız raporlanan" bölümü (en önemlisi: rüzgâr kuşakları
+yılda 3-4 kez yön değiştiriyor, görselli; akıntı km/derece sabiti,
 klimagram yuvarlaması, küresel ortalama 15.1 °C, artık dallar).
 
 Veri: GitHub gece dalında yeniden üretti (surum 3285f63f32); yalnız rapor metni, damga ve
@@ -374,6 +375,14 @@ yeter (ileri sarma).
     yalnız görünen haritada doğuyorlar, sayı da o genişlikle orantılı. Bildirim kutusu da yatayda harita alanının
     ortasında (16..488 px, dok 504'te başlıyor). Dikey ekranda sayı ve görünüş değişmedi (ilk denemede sayıyı görünen alana
     göre küçültmüştüm, dikeyde parçacık seyrekleşiyordu; geri alındı).
+51. **Deniz kartı yıllık rüzgârı yanlış gösteriyordu.** Yıllık görünümde 12
+    ayın ortalama vektörünün boyu 'm/s rüzgâr' diye yazılıyor ve yönü
+    söyleniyordu. Rüzgâr yıl içinde dönen yerlerde (aşağıda raporlanan kuşak
+    davranışı yüzünden okyanusun çoğu) bu ~0 çıkıyordu: 73.5°K 33°B'de '0,7
+    m/s, batıdan' yazıyordu, oysa aylık hızların ortalaması 4.1 m/s. Kart
+    artık zemin katmanıyla aynı büyüklüğü (aylık hızların ortalaması)
+    yazıyor; ortalama vektör bu hızın yarısından küçükse 'rüzgâr yönü
+    mevsimle değişiyor' diyor. Aylık görünüm değişmedi.
 
 ## Yalnız raporlanan (senin kararın)
 
@@ -418,6 +427,27 @@ yeter (ileri sarma).
   değiştirdiği için uygulamadım. Yarıçapı farklı bir dünyada (ör. 4000 km)
   uzaklıklar 1.59 kat
   sayılır, akıntılar ~%37 dar kalırdı.
+
+- **Rüzgâr kuşakları yılda 3-4 kez yön değiştiriyor (k_itcz 0.6'nın
+  yazılmamış bedeli).** Deniz kartını denetlerken bulundu: okyanus alanının
+  %76.7'sinde, karanın %66.3'ünde yüzey rüzgârı yılda en az 3 kez batılıdan
+  doğuluya dönüyor (45°K okyanus ortalaması: Oca +8, Mar −5, Nis −8, Haz +8,
+  Eki −8 m/s). Mekanizma (motor/circulation.py _belt_nodes): bütün basınç
+  kuşakları, kutup yüksekleri dahil, ITCZ ile katı olarak kayıyor. 15
+  saatlik günde kuşak aralığı φ_H = 18.8°, ITCZ salınımı k_itcz × eğiklik =
+  0.6 × 28° = ±16.8°: her enlem yılda neredeyse bir tam kuşak ileri geri
+  geçiyor. k_itcz 0.2 (Dünya doğrulaması) ile oran %0.1 / %0.6. Dünya'da
+  orta enlem kuşakları yalnız ~5-10° kayar. Görsel:
+  gece_resim/zonal_ruzgar.png (enlem × ay, kırmızı batılı, mavi doğulu).
+  Etkisi: denizellik, nem taşınımı ve fırtına terimi bu rüzgârı kullanıyor;
+  akıntı yerleşimi de (_akintilar) yıllık ortalama rüzgârdan türetilmişti,
+  ki bu dönüşler yüzünden zayıf. Akdeniz kuşağı bu salınımdan geliyor, yani
+  bilerek seçilen bir kurgu kararının parçası olabilir; notlarda (_akdeniz)
+  yalnız Af kaybı bedel olarak yazılı. Olası kol (ölçülmedi): kuşak
+  kaymasını enlemle azaltmak (ITCZ tam kayar, kutba doğru daha az). Bu
+  iklimi değiştirir; karar senin, görsel karşılaştırmayla sorarım.
+
+  ![zonal rüzgâr](gece_resim/zonal_ruzgar.png)
 
 ## Temiz çıkan denetimler (sorun bulunmadı)
 

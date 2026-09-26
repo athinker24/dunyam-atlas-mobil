@@ -900,6 +900,11 @@ function baslat(J, resimler){
     const i = sec, x = i%W, y = (i/W)|0, lat = D.enlem(y), lon = B[0] + (x+0.5)*(B[2]-B[0])/W, m = donem<0 ? 12 : donem;
     const konum = virgul(`${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`);
     const u = dolOrnek(D, D.dol.u[m], x, y), v = dolOrnek(D, D.dol.v[m], x, y), T = D.dol.sst.slice(0,12).map(a=>dolOrnek(D, a, x, y));
+    // hiz: aylik hizlarin ortalamasi (zemin katmaniyla ayni). Yillikta ortalama
+    // vektorun boyu yazilip yonu soyleniyordu; ruzgar yil icinde donen yerlerde
+    // (okyanusun cogu) ~0 cikiyordu (gece denetimi). Vektor hizin yarisindan
+    // kucukse tek bir yon yok.
+    const hiz = dolOrnek(D, D.dol.hiz[m], x, y), yon = Math.hypot(u, v) >= 0.5*hiz ? `rüzgâr ${nereden(u,v)} esiyor` : "rüzgâr yönü mevsimle değişiyor";
     const r1 = v => eksi(Math.round(v*10)/10).replace(".", ",");
     $("#kart").hidden = false;
     // en yakin kara hucresine buyuk daire uzakligi: "acik deniz" her
@@ -913,8 +918,8 @@ function baslat(J, resimler){
       + `<div class="k-sayilar"><div><em>${r1(donem<0 ? T.reduce((p,c)=>p+c,0)/12 : T[donem])}°</em><span>yüzey</span></div>`
       // kara kartindaki gibi ayin adi (gece denetimi: "en sicak ay" yaziyordu, hangisi yoktu)
       + `<div><em>${r1(Math.max(...T))}°</em><span>${AYLAR[T.indexOf(Math.max(...T))]}</span></div><div><em>${r1(Math.min(...T))}°</em><span>${AYLAR[T.indexOf(Math.min(...T))]}</span></div>`
-      + `<div><em>${r1(Math.hypot(u,v))}</em><span>m/s rüzgâr</span></div></div>`
-      + `<div class="k-alt"><span>${konum}</span><span>rüzgâr ${nereden(u,v)} esiyor</span></div>`;
+      + `<div><em>${r1(hiz)}</em><span>m/s rüzgâr</span></div></div>`
+      + `<div class="k-alt"><span>${konum}</span><span>${yon}</span></div>`;
   }
   function kartKapat(){ sec = null; $("#kart").hidden = true; ciz(); }
   // secilen hucre acilan kartin altinda kaldiysa haritayi yukari kaydir
