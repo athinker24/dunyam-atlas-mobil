@@ -377,6 +377,17 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
   silme geri alınamaz olduğu için yapmadım, onayını bekliyor.
 
 
+- **Akıntı uzaklığında Dünya elipsoidi sabit (CLAUDE.md §2.1).**
+  motor/temperature.py _segment_distance_km dereceyi km'ye 111.32 (doğu-
+  batı) ve 110.57 (kuzey-güney) ile çeviriyor: bunlar Dünya elipsoidinin
+  değerleri; gezegenin radius_km'i kullanılmıyor. Dünyam'ın yarıçapı 6371
+  km, küre değeri 111.195 km/derece; akıntı genişlikleri (width_km) bu
+  yüzden binde birkaç kaymış. Ölçüldü (0.5 derece, --kiyas, 111.195 ile):
+  karanın %0.05'i sınıf değiştiriyor, ana grup %0.01. Düzeltme: radius_km ×
+  π/180 (küre). surum değişir, veri yeniden üretilir; etkisi küçük ama sayı
+  değiştirdiği için uygulamadım. Yarıçapı farklı bir dünyada (ör. 4000 km)
+  akıntılar ~%59 geniş sayılırdı.
+
 ## Temiz çıkan denetimler (sorun bulunmadı)
 
 - Rastgele etkileşim taraması: 3 tohum, 1100 eylem (dokunma, çift dokunma,
