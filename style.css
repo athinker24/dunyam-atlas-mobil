@@ -121,6 +121,12 @@ svg{display:block}
 .klimagram text{font:10px var(--sans);fill:var(--soluk)}
 .k-kar,.k-gun{font-size:12px;color:var(--soluk);margin:2px 0 2px}
 .k-kar b,.k-gun b{color:var(--yazi);font-weight:500;margin-right:2px}
+.k-serit{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;margin:2px 0 8px;text-align:center;font-size:10px;color:var(--soluk)}
+.k-serit div{display:flex;flex-direction:column;align-items:center;padding:2px 0;border-radius:4px}
+.k-serit div.sec{background:rgba(255,255,255,.07);color:var(--yazi)}
+.k-serit i{font-style:normal;font-size:13px;line-height:15px;color:var(--yazi)}
+.k-serit b{font-weight:500;color:var(--yazi)}
+.k-gun small{color:var(--soluk);font-size:11px}
 .k-alt{display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--soluk)}
 .k-deniz{font:500 17px var(--serif)}
 

@@ -65,7 +65,13 @@ const OLC = () => {
     const x = s.ox + ((i % D.W) + 0.5) * s.olcek, y = s.oy + (((i / D.W) | 0) + 0.5) * s.olcek;
     if (x > 30 && x < cv.clientWidth - 30 && y > ust + 30 && y < alt - 30) hedef = { x, y, i };
   }
-  return { kara: ort(kara), deniz: ort(deniz), nk: kara.length, nd: deniz.length, hedef };
+  // denizde (Iklim sekmesinde de) dokunulacak bir hucre
+  let denizHedef = null;
+  for (let i = 0; i < D.N && !denizHedef; i += adim) if (!D.land[i] && ic(i, 3)) {
+    const x = s.ox + ((i % D.W) + 0.5) * s.olcek, y = s.oy + (((i / D.W) | 0) + 0.5) * s.olcek;
+    if (x > 30 && x < cv.clientWidth - 30 && y > ust + 30 && y < alt - 30) denizHedef = { x, y, i };
+  }
+  return { kara: ort(kara), deniz: ort(deniz), nk: kara.length, nd: deniz.length, hedef, denizHedef };
 };
 
 (async () => {
@@ -122,6 +128,15 @@ const OLC = () => {
       const geri = await p.evaluate(() => ({ kart: !document.querySelector("#kart").hidden, yol: location.pathname, acik: !!window.__atlas }));
       denetle("geri tusu karti kapatir, sayfada kalir", !geri.kart && geri.acik && /index\.html$|\/$/.test(geri.yol), JSON.stringify(geri));
     } else denetle("karaya dokununca kart aciliyor", false, "ekranda uygun kara hucresi yok");
+    // denize dokununca Iklim sekmesinde de deniz karti (ruzgar, Beaufort, buz)
+    if (yum.denizHedef) {
+      await p.touchscreen.tap(yum.denizHedef.x, yum.denizHedef.y); await bekle(700);
+      const dk = await p.evaluate(() => ({ acik: !document.querySelector("#kart").hidden, metin: document.querySelector("#kart-icerik").textContent,
+        dol: !!window.__atlas.D.dol }));
+      denetle("denize dokununca deniz karti", dk.acik && /Deniz/.test(dk.metin) && /En yakın kara/.test(dk.metin)
+        && (!dk.dol || (/Beaufort/.test(dk.metin) && /Buz/.test(dk.metin))), dk.metin.slice(0, 80));
+      await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400);
+    } else denetle("denize dokununca deniz karti", false, "ekranda uygun deniz hucresi yok");
 
     for (const k of ["sicaklik", "yagis", "kar", "arazi", "iklim"]) {
       await p.evaluate(k => document.querySelector(`[data-k=${k}]`).click(), k); await bekle(250);

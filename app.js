@@ -204,6 +204,16 @@ function dolOrnek(D, a, x, y){
 const PUSULA = ["kuzeyden","kuzeydoğudan","doğudan","güneydoğudan","güneyden","güneybatıdan","batıdan","kuzeybatıdan"];
 // ruzgar geldigi yonle adlandirilir: akis guneye ise "kuzeyden"
 const nereden = (u, v) => PUSULA[Math.round(((Math.atan2(-u, -v)*180/Math.PI) + 360) % 360 / 45) % 8];
+const YONE = ["kuzeye","kuzeydoğuya","doğuya","güneydoğuya","güneye","güneybatıya","batıya","kuzeybatıya"];
+// Beaufort olcegi (m/s alt sinirlari, WMO)
+const BFT = [0.5, 1.6, 3.4, 5.5, 8.0, 10.8, 13.9, 17.2, 20.8, 24.5, 28.5, 32.7];
+const beaufort = v => BFT.filter(e => v >= e).length;
+const BFT_AD = ["sakin","esinti","hafif rüzgâr","tatlı rüzgâr","mutedil rüzgâr","sert rüzgâr","kuvvetli","fırtınamsı","fırtına","kuvvetli fırtına","tam fırtına","şiddetli fırtına","kasırga"];
+// isaretli aylari ardisik araliklar olarak yaz ("Ara–Şub, Tem"), yil sonundan basa sarar
+function aySirasi(b){ if(b.every(Boolean)) return "yıl boyu";
+  let bas = b.findIndex(v => !v); const ara = [];
+  for(let k=1;k<=12;k++){ const j = (bas+k)%12; if(b[j] && !b[(j+11)%12]) ara.push([j, j]); else if(b[j]) ara[ara.length-1][1] = j; }
+  return ara.map(([a, z]) => a===z ? AYLAR[a] : `${AYLAR[a]}–${AYLAR[z]}`).join(", "); }
 
 // yuzdelik: havuzdaki orta sira (esit degerler ortadan)
 function yuzdelik(h, x){ if(!h.n) return 0.5; const v = h.vals;
@@ -1068,30 +1078,73 @@ function baslat(J, resimler){
     return `<div class="k-kar"><b>Kar</b> ${yag ? yag+" yağar" : "seyrek"} · ${ortu}</div>`;
   }
   // Dolasim sekmesinde okyanusa dokununca: deniz yuzeyi sicakligi ve ruzgar
+  // Denize dokununca (her sekmede): denizcilik icin motorun verdigi ne varsa.
+  // Derinlik, gelgit ve dalga verisi YOK; gosterilmez. Tropikal firtina satiri
+  // bir kosul esigidir (deniz suyu >= 26,5 °C ve enlem 5-30°), motor siklon
+  // cozmez.
   function denizKartYaz(){
-    const i = sec, x = i%W, y = (i/W)|0, lat = D.enlem(y), lon = B[0] + (x+0.5)*(B[2]-B[0])/W, m = donem<0 ? 12 : donem;
+    const i = sec, x = i%W, y = (i/W)|0, lat = D.enlem(y), lon = B[0] + (x+0.5)*(B[2]-B[0])/W;
     const konum = virgul(`${Math.abs(lat).toFixed(1)}°${lat>=0?"K":"G"} ${Math.abs(lon).toFixed(1)}°${lon>=0?"D":"B"}`);
-    const u = dolOrnek(D, D.dol.u[m], x, y), v = dolOrnek(D, D.dol.v[m], x, y), T = D.dol.sst.slice(0,12).map(a=>dolOrnek(D, a, x, y));
-    // hiz: aylik hizlarin ortalamasi (zemin katmaniyla ayni). Yillikta ortalama
-    // vektorun boyu yazilip yonu soyleniyordu; ruzgar yil icinde donen yerlerde
-    // (okyanusun cogu) ~0 cikiyordu (gece denetimi). Vektor hizin yarisindan
-    // kucukse tek bir yon yok.
-    const hiz = dolOrnek(D, D.dol.hiz[m], x, y), yon = Math.hypot(u, v) >= 0.5*hiz ? `rüzgâr ${nereden(u,v)} esiyor` : "rüzgâr yönü mevsimle değişiyor";
-    const r1 = v => eksi(Math.round(v*10)/10).replace(".", ",");
-    $("#kart").hidden = false;
-    // en yakin kara hucresine buyuk daire uzakligi: "acik deniz" her
-    // okyanus hucresine, kiyi sularina ve ic denize de yaziliyordu (gece denetimi)
-    const k = D.yakin[i], kx = k%W, kyy = (k/W)|0, rad = Math.PI/180;
+    const r1 = v => eksi(Math.round(v*10)/10).replace(".", ","), rad = Math.PI/180;
+    // en yakin kara: buyuk daire uzakligi ve yonu (gece denetimi: "acik deniz"
+    // her okyanus hucresine yaziliyordu)
+    const k = D.yakin[i], kx = k%W, kyy = (k/W)|0;
     const klat = D.enlem(kyy)*rad, klon = (B[0] + (kx+0.5)*(B[2]-B[0])/W)*rad, la1 = lat*rad, lo1 = lon*rad;
     const km = YARICAP*Math.acos(Math.min(1, Math.sin(la1)*Math.sin(klat) + Math.cos(la1)*Math.cos(klat)*Math.cos(lo1-klon)));
-    const kiyi = km < 30 ? "kıyıya yakın" : `kıyıya ~${(km < 200 ? Math.round(km/10)*10 : Math.round(km/50)*50).toLocaleString("tr-TR")} km`;
+    const kmYaz = v => (v < 200 ? Math.round(v/10)*10 : Math.round(v/50)*50).toLocaleString("tr-TR");
+    const karaYon = YONE[Math.round(((Math.atan2(Math.sin(klon-lo1)*Math.cos(klat), Math.cos(la1)*Math.sin(klat) - Math.sin(la1)*Math.cos(klat)*Math.cos(klon-lo1))/rad) + 360) % 360 / 45) % 8];
+    const karaSinif = D.KCODE[String(D.kop[k])], kiyi = km < 30 ? "kıyıya yakın" : `kıyıya ~${kmYaz(km)} km`;
+    const satirlar = [];
+    let sayilar = "", serit = "";
+    if(D.dol){
+      const m = donem<0 ? 12 : donem;
+      const T = D.dol.sst.slice(0,12).map(a=>dolOrnek(D, a, x, y));
+      const U = AYLAR.map((_, a) => dolOrnek(D, D.dol.u[a], x, y)), V = AYLAR.map((_, a) => dolOrnek(D, D.dol.v[a], x, y));
+      const HZ = AYLAR.map((_, a) => dolOrnek(D, D.dol.hiz[a], x, y));
+      const hiz = dolOrnek(D, D.dol.hiz[m], x, y), u = dolOrnek(D, D.dol.u[m], x, y), v = dolOrnek(D, D.dol.v[m], x, y);
+      const bf = beaufort(hiz);
+      sayilar = `<div><em>${r1(donem<0 ? T.reduce((p,c)=>p+c,0)/12 : T[donem])}°</em><span>su</span></div>`
+        + `<div><em>${r1(Math.min(...T))}..${r1(Math.max(...T))}°</em><span>yıl içinde</span></div>`
+        + `<div><em>${r1(hiz)}</em><span>m/s rüzgâr</span></div><div><em>${bf}</em><span>Beaufort</span></div>`;
+      // yon: aylik vektor hizin yarisindan kucukse tek bir yon yok (gece denetimi)
+      const yon = (a, uu, vv) => Math.hypot(uu, vv) >= 0.5*a ? nereden(uu, vv) : null;
+      const buYon = yon(hiz, u, v);
+      satirlar.push(`<b>Rüzgâr</b> ${buYon ? buYon + " esiyor" : "yönü mevsimle değişiyor"} · ${BFT_AD[bf]}`);
+      const sert = HZ.indexOf(Math.max(...HZ)), sakin = HZ.indexOf(Math.min(...HZ));
+      satirlar.push(`<b>En sert</b> ${AYLAR[sert]} ${r1(HZ[sert])} m/s (${beaufort(HZ[sert])} bft) · <b>en sakin</b> ${AYLAR[sakin]} ${r1(HZ[sakin])} m/s`);
+      // 12 ay: okun yonu ruzgarin gittigi yon, sayi Beaufort
+      serit = `<div class="k-serit">` + AYLAR.map((a, j) => { const tek = yon(HZ[j], U[j], V[j]);
+        const aci = Math.atan2(U[j], V[j])/rad;
+        return `<div${j===donem ? ' class="sec"' : ""}><span>${a[0]}</span><i style="${tek ? `transform:rotate(${aci.toFixed(0)}deg)` : "opacity:.35"}">${tek ? "↑" : "·"}</i><b>${beaufort(HZ[j])}</b></div>`; }).join("") + `</div>`;
+      // buz: motor okyanusu donma noktasinda kelepceler
+      const buz = T.map(t => t <= -1.5);
+      satirlar.push(`<b>Buz</b> ${buz.some(Boolean) ? `${aySirasi(buz)} (${buz.filter(Boolean).length} ay deniz buzu)` : "yok, yıl boyu açık"}`);
+      const tf = T.map(t => t >= 26.5 && Math.abs(lat) >= 5 && Math.abs(lat) <= 30);
+      if(tf.some(Boolean)) satirlar.push(`<b>Tropikal fırtına koşulları</b> ${aySirasi(tf)} <small>(su ≥ 26,5 °C; motor siklon çözmez)</small>`);
+    }
+    // akinti: yola en yakin nokta; genisligin yarisi icindeyse "icinde"
+    let ak = null;
+    // "Ic Deniz - mevsimsel genlik" bir akinti degil, mevsimsel sicaklik
+    // ayari; akis yonu yazilirsa yaniltir
+    for(const a of D.akintilar){ if(/genlik/i.test(a.ad)) continue; for(let s = 0; s+1 < a.yol.length; s++){
+      const [x1, y1] = a.yol[s], [x2, y2] = a.yol[s+1], c = Math.cos(lat*rad);
+      const dx = (x2-x1)*c, dy = y2-y1, px = (lon-x1)*c, py = lat-y1, L = dx*dx+dy*dy || 1e-9;
+      const t = Math.max(0, Math.min(1, (px*dx+py*dy)/L)), d = Math.hypot(px-t*dx, py-t*dy)*KM_DERECE;
+      if(!ak || d < ak.d) ak = {d, a, dx, dy}; } }
+    if(ak && ak.d < ak.a.genislik_km){
+      const ad = ak.a.ad.includes(" - ") ? ak.a.ad.split(" - ").slice(1).join(" - ") : ak.a.ad;
+      const akYon = YONE[Math.round(((Math.atan2(ak.dx, ak.dy)/rad) + 360) % 360 / 45) % 8];
+      satirlar.push(`<b>Akıntı</b> ${ak.a.anomali >= 0 ? "sıcak" : "soğuk"} (${ak.a.anomali >= 0 ? "+" : ""}${r1(ak.a.anomali)} °C), `
+        + `${ak.d < ak.a.genislik_km/2 ? "içinde" : `~${kmYaz(ak.d)} km yakında`}, akış ${akYon} · <small>${ad}</small>`);
+    } else satirlar.push(`<b>Akıntı</b> yakında tanımlı akıntı yok`);
+    if(D.pyil.a[i]) satirlar.push(`<b>Yağış</b> ${Math.round(kodCoz(D.pyil, D.pyil.a[i])).toLocaleString("tr-TR")} mm/yıl, denize düşen`);
+    satirlar.push(`<b>En yakın kara</b> ${km < 30 ? "hemen yanında" : `~${kmYaz(km)} km ${karaYon}`} · ${D.KNAME[karaSinif] || karaSinif} (${karaSinif})`);
+    $("#kart").hidden = false;
     $("#kart-icerik").innerHTML = `<div class="k-ust"><i style="background:#2b4a5a"></i><div><h3>Deniz</h3>`
       + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]} · ${kiyi}</small></div></div>`
-      + `<div class="k-sayilar"><div><em>${r1(donem<0 ? T.reduce((p,c)=>p+c,0)/12 : T[donem])}°</em><span>yüzey</span></div>`
-      // kara kartindaki gibi ayin adi (gece denetimi: "en sicak ay" yaziyordu, hangisi yoktu)
-      + `<div><em>${r1(Math.max(...T))}°</em><span>${AYLAR[T.indexOf(Math.max(...T))]}</span></div><div><em>${r1(Math.min(...T))}°</em><span>${AYLAR[T.indexOf(Math.min(...T))]}</span></div>`
-      + `<div><em>${r1(hiz)}</em><span>m/s rüzgâr</span></div></div>`
-      + `<div class="k-alt"><span>${konum}</span><span>${yon}</span></div>`;
+      + (sayilar ? `<div class="k-sayilar">${sayilar}</div>` : "") + serit
+      + satirlar.map(t => `<div class="k-gun">${t}</div>`).join("")
+      + `<div class="k-alt"><span>${konum}</span><span>derinlik verisi yok</span></div>`;
   }
   function kartKapat(){ sec = null; $("#kart").hidden = true; ciz(); }
   // secilen hucre acilan kartin altinda kaldiysa haritayi yukari kaydir
@@ -1129,7 +1182,7 @@ function baslat(J, resimler){
         sonDokun = {...q, t:now, once:{ox, oy, sec}};
         const x = Math.floor((q.x-ox)/olcek), y = Math.floor((q.y-oy)/olcek);
         const i = (x<0||y<0||x>=W||y>=H) ? null : y*W+x;
-        if(i===null || (!D.land[i] && katman!=="dolasim")) kartKapat();
+        if(i===null) kartKapat();
         else { sec = i; D.land[i] ? kartYaz() : denizKartYaz(); gorunurYap(q.y); ciz(); } } }
     dokun = null; hareketBasla(); }
   harita.addEventListener("pointerup", birak); harita.addEventListener("pointercancel", birak);
