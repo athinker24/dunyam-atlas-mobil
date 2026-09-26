@@ -439,6 +439,8 @@ function baslat(J, resimler){
   const palet = new Uint8Array(32*4);
   for(const [kod, ad] of Object.entries(D.KCODE)){ const c = hex(KPAL[ad] || D.J.data.koppen_colors[ad]);
     palet.set([c[0],c[1],c[2],255], (+kod)*4); }
+  // gezegenin yaricapi veriden (eski veride yok: Dunyam'inki 6371)
+  const YARICAP = D.J.data.radius_km || 6371, KM_DERECE = YARICAP*Math.PI/180;
   const kodNo = {}; for(const [kod, ad] of Object.entries(D.KCODE)) kodNo[ad] = +kod;
 
   if(G){
@@ -589,7 +591,7 @@ function baslat(J, resimler){
   /* --- dolasim kaplamasi: akinti yollari ve ruzgar oklari (SVG) --- */
   const ekranX = lon => ox + (lon-B[0])/(B[2]-B[0])*W*olcek, ekranY = lat => oy + (B[3]-lat)/(B[3]-B[1])*H*olcek;
   function dolasimCiz(){
-    const r = canvas.getBoundingClientRect(), g = gorunen(), km = olcek/((B[2]-B[0])/W*111.2);   // ekran px / km
+    const r = canvas.getBoundingClientRect(), g = gorunen(), km = olcek/((B[2]-B[0])/W*KM_DERECE);   // ekran px / km
     let s = "";
     // akintilar: genisligi kadar soluk bir serit + yonunu gosteren cekirdek cizgi
     for(const a of D.akintilar){
@@ -902,7 +904,7 @@ function baslat(J, resimler){
     // okyanus hucresine, kiyi sularina ve ic denize de yaziliyordu (gece denetimi)
     const k = D.yakin[i], kx = k%W, kyy = (k/W)|0, rad = Math.PI/180;
     const klat = D.enlem(kyy)*rad, klon = (B[0] + (kx+0.5)*(B[2]-B[0])/W)*rad, la1 = lat*rad, lo1 = lon*rad;
-    const km = 6371*Math.acos(Math.min(1, Math.sin(la1)*Math.sin(klat) + Math.cos(la1)*Math.cos(klat)*Math.cos(lo1-klon)));
+    const km = YARICAP*Math.acos(Math.min(1, Math.sin(la1)*Math.sin(klat) + Math.cos(la1)*Math.cos(klat)*Math.cos(lo1-klon)));
     const kiyi = km < 30 ? "kıyıya yakın" : `kıyıya ~${(km < 200 ? Math.round(km/10)*10 : Math.round(km/50)*50).toLocaleString("tr-TR")} km`;
     $("#kart-icerik").innerHTML = `<div class="k-ust"><i style="background:#2b4a5a"></i><div><h3>Deniz</h3>`
       + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]} · ${kiyi}</small></div></div>`

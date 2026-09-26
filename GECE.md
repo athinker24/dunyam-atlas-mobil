@@ -344,6 +344,13 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
     sonra f79c6ff75e, bit bit aynı; veri değişmez. İlk ölçümümde yılı
     yanlışlıkla 365.0 alıp %0.06 sınıf değişimi bulmuştum; o varsayım
     yanlıştı. motor/ ayrışma listesine eklendi, asıl projeye taşınmalı.
+49. **Uygulamada Dünya yarıçapı sabitti.** Deniz kartındaki kıyı uzaklığı
+    6371 km, Dolaşım'daki akıntı şeridi genişliği 111.2 km/derece ile
+    hesaplanıyordu. uret.py artık veriye gezegenin radius_km'ini yazıyor,
+    uygulama onu kullanıyor (eski veride yoksa 6371). Dünyam'ın yarıçapı
+    6371 olduğu için görünür fark yok (kart aynı: 'kıyıya ~1.950 km'). Veri
+    iş akışı yeni alan yüzünden veriyi yeniden üretecek; sayısal alanların
+    aynı kaldığı alan alan karşılaştırılacak.
 
 ## Yalnız raporlanan (senin kararın)
 

@@ -428,7 +428,9 @@ def main():
     bolge["dolasim"], bolge["akintilar"] = dolasim(r, g, w, (y0, y1, x0, x1),
                                                    os.path.dirname(os.path.abspath(a.cikti)))
 
-    veri = {"world": w.name, "fictional": True, "regions": {"global": bolge},
+    # yaricap: uygulama km hesaplarinda (kiyi uzakligi, akinti genisligi)
+    # kullanir; once 6371 sabitti (CLAUDE.md 2.1, gece denetimi)
+    veri = {"world": w.name, "fictional": True, "radius_km": w.radius_km, "regions": {"global": bolge},
             "koppen_colors": {v[0]: "#%02x%02x%02x" % v[1] for v in LEG.values()},
             "koppen_names": {v[0]: v[2] for v in LEG.values()},
             "koppen_code": {str(k): v[0] for k, v in LEG.items()}}
