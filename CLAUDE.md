@@ -398,6 +398,14 @@ buraya bak.
   0.249); ılıman kuşakta Cf azınlık, Cw baskın. Yaz tepesini indirmek
   (`convective_c`, muson) karanın %13-16'sının sınıfını değiştirip bozkır
   üretiyor, o yüzden seçilmedi. Ölçmek için `mevsim_olc.py`.
+- **Basınç kuşakları ITCZ ile katı kayar.** `circulation._belt_nodes` bütün
+  kuşakları (kutup yüksekleri dahil) ITCZ kadar kaydırır. Dünyam'da kuşak
+  aralığı φ_H 18.8° (15 saatlik gün), ITCZ salınımı `k_itcz` 0.6 × 28° =
+  ±16.8°: her enlem yılda neredeyse bir kuşak ileri geri geçer, okyanusun
+  %77'sinde yüzey rüzgârı yılda 3-4 kez yön değiştirir (0.2 ile %0.1;
+  26 Eylül ölçümü, `gece_resim/zonal_ruzgar.png`). Akdeniz kuşağı bu
+  salınımdan gelir. Yıllık ortalama rüzgâr vektörü bu yüzden zayıftır;
+  uygulama yıllık hız için aylık hızların ortalamasını kullanır.
 - **60-70° kuşağında mevsim genliği yetersiz** (en soğuk ay fazla ılık).
   `transport_seasonal_lat_deg` bunu düzeltir ama 70° üstünde aşırı büyütür;
   karası 70°'nin altında biten bir dünyada açmaya değer, büyük kutup kıtası
