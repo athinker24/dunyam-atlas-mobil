@@ -371,7 +371,8 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
   adımları ayı saniyeye bununla çeviriyor. Dünyam'ın yılı 365 gün, fark
   %0.07; ölçüldü (0.5 derece, --kiyas): karanın %0.06'sı sınıf değiştiriyor,
   ana grup %0.06. Yani Dünyam için önemsiz, ama yılı farklı bir dünyada (ör.
-  500 gün) yağış ~%37 kayardı. Düzeltme: sabit yerine world.year_length_days
+  500 gün) aylık yağış ~%27
+  eksik çıkardı (365.25/500). Düzeltme: sabit yerine world.year_length_days
   × 86400 / 12 (params() içinde). surum değişir, veri yeniden üretilir, asıl
   projeye de taşınmalı (Dünya doğrulamasında 365.25 → 365.25, etkisiz).
   Uygulamadım: iklim sayısını değiştiriyor, karar senin.
