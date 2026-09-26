@@ -384,6 +384,11 @@ yeter (ileri sarma).
     yazıyor; ortalama vektör bu hızın yarısından küçükse 'rüzgâr yönü
     mevsimle değişiyor' diyor. Aylık görünüm değişmedi. Dolaşım'ın yıllık alt başlığı
     'yıllık ortalama' yerine 'yıllık net rüzgâr': oklar bileşke rüzgârı çiziyor.
+52. **Rüzgâr dönüşü ölçü aracında yoktu.** mevsim_olc.py artık
+    'ruzgar_donusu' veriyor: yüzey rüzgârının doğu-batı bileşeni yılda en az
+    3 kez yön değiştiren okyanus ve kara alan payı (şimdi %76.7 / %66.3,
+    önceki ölçümle aynı). Kuşak ya da k_itcz denemelerinde bu bedel artık
+    her koşuda görünür.
 
 ## Yalnız raporlanan (senin kararın)
 

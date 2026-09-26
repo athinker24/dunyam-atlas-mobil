@@ -56,6 +56,15 @@ def tip(kod: str) -> str:
     return {"f": "f", "s": "s", "w": "w", "m": "m"}[kod[1]]
 
 
+def ruzgar_donusu(r, kara, wt):
+    u = np.asarray(r["u"])
+    isr = np.sign(u)
+    degisim = (np.diff(np.concatenate([isr, isr[:1]]), axis=0) != 0).sum(0)
+    donen = degisim >= 3
+    return {m: round(100 * float((wt * donen)[k].sum() / wt[k].sum()), 1)
+            for m, k in (("okyanus", ~kara), ("kara", kara))}
+
+
 def olc(g, r):
     lat, lon = np.asarray(g.lat), np.asarray(g.lon)
     LA, LO = np.meshgrid(lat, lon, indexing="ij")
@@ -113,6 +122,10 @@ def olc(g, r):
             "plato_yillik_mm": round(ort(P.sum(0), plato)),
         },
         "grup": {gr: pay(np.vectorize(lambda s: s[0])(kodlar) == gr) for gr in "ABCDE"},
+        # yuzey ruzgari yilda >=3 kez yon degistiren alan payi (dogu-bati
+        # bileseni). Kusaklar ITCZ ile kati kaydigi icin k_itcz 0.6'da okyanusun
+        # ~%77'si, 0.2'de ~%0.1 (CLAUDE.md 8, gece denetimi 26 Eylul)
+        "ruzgar_donusu": ruzgar_donusu(r, kara, wt),
     }
     return s, dict(tipler=tipler, oran=oran, kara=kara, lat=lat, lon=lon)
 
