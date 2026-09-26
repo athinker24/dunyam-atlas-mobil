@@ -397,7 +397,9 @@ buraya bak.
 - **Yağış hâlâ çok mevsimsel.** Kara min/max ay oranı 0.076 (Dünya gözlemi
   0.249); ılıman kuşakta Cf azınlık, Cw baskın. Yaz tepesini indirmek
   (`convective_c`, muson) karanın %13-16'sının sınıfını değiştirip bozkır
-  üretiyor, o yüzden seçilmedi. Ölçmek için `mevsim_olc.py`.
+  üretiyor, o yüzden seçilmedi. Ölçmek için `mevsim_olc.py`. Önemli bir
+  kaynak kuşak salınımı (aşağıda): 1 derecede `k_itcz` 0.2 ile oran 0.138,
+  ama Akdeniz bandında Cs %47 → %7 ve B %9 → %22 (26 Eylül).
 - **Basınç kuşakları ITCZ ile katı kayar.** `circulation._belt_nodes` bütün
   kuşakları (kutup yüksekleri dahil) ITCZ kadar kaydırır. Dünyam'da kuşak
   aralığı φ_H 18.8° (15 saatlik gün), ITCZ salınımı `k_itcz` 0.6 × 28° =
