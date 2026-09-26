@@ -443,3 +443,7 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
   devreye girmiyor; enlem etiketi döngüsü −0'da 'EKVATOR' yazıyor. Masaüstü
   1440×900 düzeni sorunsuz. Depo boyutu 37 MB (23 veri sürümü), büyüme sorun
   değil.
+- GitHub veri koşusu (0.25 derece, 11.5 dk) params/heightmap ad denetimi ve
+  RES ortam değişkeniyle geçti; surum değişmedi, commit atılmadı (madde 42
+  ve 46 gerçek çözünürlükte doğrulandı). Ay süresi değişikliğinin (madde 48)
+  0.25 doğrulaması sıradaki koşuda.
