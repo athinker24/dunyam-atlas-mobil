@@ -100,9 +100,36 @@ kıtanın güneybatı köşesine dar bir boğazla hâlâ değiyor.
 **Sonraya:** Alp tipi büyük buzul gölleri için buzul çağı geçmişi gerekir
 (4 ~11°K'de); tektonikten sonra ayrı karar.
 
-## 4. 10 ve 6: batıdan gelen devasa çarpışma (TASLAK)
+## 4. 10 ve 6: batıdan gelen devasa çarpışma (KARARLAŞTI, 26 Eylül)
 
 Sahibin tasarımı: çizdiği güneybatı kıyı kuşağının tamamı tek bir devasa
 çarpışma; içindeki düzlük onun platosu; çarpan batıdaki okyanus levhası,
 güneybatıdaki düz yarımada o levhanın su üstündeki kısmı. Örnek And Dağları.
+
+**Ölçüler:** kuşak 5,19 milyon km², en yüksek 5.924 m (6). Plato 10: 0,59
+milyon km², ort. 2.278 m, eğim 0,12° (Altiplano benzeri, daha alçak ve
+büyük). Güneybatı düz yarımada: 1,13 milyon km², ort. 156 m, en yüksek
+712 m. 6: küçük ama en dik ve keskin yer (eğim 1,24°), genç ve etkin.
+
+**Düzeltme (kabul edildi):** okyanus kabuğu 1,1 milyon km²'lik düz kara
+olarak su üstüne çıkmaz; yarımada okyanus levhasının taşıdığı hafif bir
+küçük kıta (Zelandia benzeri).
+
+**Hikâye:**
+1. And dönemi: batı okyanus levhası güneybatı bloğunun altına daldı,
+   kıyıda volkanlı dağ kuşağı yükseldi.
+2. Küçük kıta dalma hattına geldi, batamadı; ön kısmı bloğun altına
+   sokulup kabuğu iki kat kalınlaştırdı, plato 10 kabardı (Tibet
+   mekanizması). And gibi başlayıp Himalaya gibi biten çarpışma.
+3. Bugün: batmayan artık güneybatı düz yarımada; çarpışma en son 6'da
+   sürüyor; kuşağın geri kalanında volkanlar sönmüş.
+
+Güneybatı bloğu doğudan (4) ve batıdan (bu çarpışma) sıkışan bir kıta.
+Tuz düzlüğü / Titikaka benzeri göl istenirse plato ortasına sığ çanak
+açmak gerekir (plato yüzeyi şu an dışarı akıyor); arazi kararı, sonraya.
+
+## 5. 5 ve daire içi: İber Yarımadası benzeri (TASLAK)
+
+Sahibin tasarımı: 5 klasik alt kıta / üst kıta çarpışması; güneyindeki
+yükseltiler eski çarpışmaların kalıntısı; bölge İber Yarımadası'ndan esinli.
 
