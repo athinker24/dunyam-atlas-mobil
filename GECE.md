@@ -33,7 +33,7 @@ sınanamadı), klavye (22).
 Karar bekleyenler: "Yalnız raporlanan" bölümü (akıntı km/derece sabiti,
 klimagram yuvarlaması, küresel ortalama 15.1 °C, artık dallar).
 
-Veri: GitHub gece dalında yeniden üretti; yalnız rapor metni, damga ve
+Veri: GitHub gece dalında yeniden üretti (surum 3285f63f32); yalnız rapor metni, damga ve
 yarıçap alanı farklı, iklim sayıları birebir aynı ("Temiz çıkan" bölümünde
 alan alan karşılaştırma). `main`'e almak için `gece` dalını birleştirmek
 yeter (ileri sarma).
@@ -480,3 +480,7 @@ yeter (ileri sarma).
 - Ayar çekmecesi açıkken döndürme: dikey 405 px alt çekmece → yatay tam
   yükseklik yan sütun → dikeyde yine 405 px; yatayda açıp dikeye dönünce de
   405 px. Kalıntı yükseklik yok.
+- GitHub yeniden üretti (surum bbcdf12a34 → 3285f63f32, 0.25 derece). Alan
+  alan karşılaştırma: yalnız surum, uretim ve yeni radius_km farklı; iklim
+  alanları ve dokular birebir aynı. Böylece ay süresinin gezegen yılından
+  alınması (madde 48) gerçek çözünürlükte de etkisiz doğrulandı.
