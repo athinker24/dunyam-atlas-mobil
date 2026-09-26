@@ -484,3 +484,8 @@ yeter (ileri sarma).
   alan karşılaştırma: yalnız surum, uretim ve yeni radius_km farklı; iklim
   alanları ve dokular birebir aynı. Böylece ay süresinin gezegen yılından
   alınması (madde 48) gerçek çözünürlükte de etkisiz doğrulandı.
+- Bellek sızıntısı denetimi: Dolaşım + parçacıklar açıkken 10 tur (her turda
+  25 ay değişimi, tekerlek, 4 sekme, kart aç/kapa), her tur aynı son durumda
+  ölçüldü: JS yığını 3 MB sabit, DOM düğümü 679-705 arasında salınıyor
+  (artış yok), olay dinleyicisi 60-62. İlk denemede son durumlar farklıydı
+  (açık kart klimagramı) ve artış gibi görünmüştü; aynı durumda ölçünce yok.
