@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false, sicMod:"ort"},
+  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -262,6 +262,29 @@ function karAl(D){ return D.kar || (D.kar = karHesapla(D.tAy, D.pAy, D.n)); }
    olceklenir: yuzey sicakliginin gunluk salinimi donemin karekokuyle buyur
    (isinin toprakta yayilmasi). Dunyam'da 15 saat: fark %21 kucuk. Kalibrasyon
    ABD'nin 25-48K araligindan; tropikte ve cok yuksekte kaba bir tahmindir. */
+/* Deniz dokusu (yalniz gorunus): okyanus hucrelerinde en yakin karaya
+   uzaklik, iki gecisli pah (chamfer) donusumu, dogu-bati adimi cos(enlem)
+   ile. 0..255 = 1 - exp(-km/700); kara 0. */
+function denizUzak(D){
+  const {W, H, N, B, land} = D, km = (B[3]-B[1])/H * (D.J.data.radius_km || 6371) * Math.PI/180;
+  const d = new Float32Array(N).fill(1e9);
+  for(let i=0;i<N;i++) if(land[i]) d[i] = 0;
+  const cx = y => Math.max(0.05, Math.cos(D.enlem(y)*Math.PI/180));
+  for(let y=0;y<H;y++){ const ax = cx(y), ac = Math.hypot(ax, 1);
+    for(let x=0;x<W;x++){ const i = y*W+x; let v = d[i];
+      if(x>0) v = Math.min(v, d[i-1]+ax);
+      if(y>0){ v = Math.min(v, d[i-W]+1); if(x>0) v = Math.min(v, d[i-W-1]+ac); if(x<W-1) v = Math.min(v, d[i-W+1]+ac); }
+      d[i] = v; } }
+  for(let y=H-1;y>=0;y--){ const ax = cx(y), ac = Math.hypot(ax, 1);
+    for(let x=W-1;x>=0;x--){ const i = y*W+x; let v = d[i];
+      if(x<W-1) v = Math.min(v, d[i+1]+ax);
+      if(y<H-1){ v = Math.min(v, d[i+W]+1); if(x<W-1) v = Math.min(v, d[i+W+1]+ac); if(x>0) v = Math.min(v, d[i+W-1]+ac); }
+      d[i] = v; } }
+  const o = new Uint8Array(N);
+  for(let i=0;i<N;i++) o[i] = Math.round(255*(1 - Math.exp(-d[i]*km/700)));
+  return o;
+}
+
 const GS = {dtr: [11.942, -1.117, 2.417, 1.071, 0.833], ehi: [0.848, 0.292, -0.246, -0.207, 0.228],
   elo: [2.832, 0.195, -0.198, 0.622, 0.015], rekS: [2.12, 0.34], rekC: [0.09, 0.73]};
 function gunlukHazirla(D){
@@ -394,9 +417,46 @@ const FS = `
 precision highp float;
 uniform vec2 uRes; uniform float uDpr; uniform vec3 uView; uniform vec2 uGrid; uniform vec4 uBounds;
 uniform sampler2D tAlan, tLut, tKop, tPal, tDoku, tDokuN, tYuk, tKab;
-uniform int uMod; uniform float uPiksel, uKabartma, uIzgara, uIzole, uOlcek, uZemin;
+uniform int uMod; uniform float uPiksel, uKabartma, uIzgara, uIzole, uOlcek, uZemin, uDeniz;
 const vec3 DERIN = vec3(${vec3s(OKYANUS_DERIN)});
 const vec3 KIYI = vec3(${vec3s(OKYANUS_KIYI)});
+// deniz dokusu (yalniz gorunus, veri degil): kiyiya uzakliktan sig/derin
+// tonu, esderinlik cizgileri, kiyi kopugu, enleme gore hafif ton ve durgun
+// su grenli. Derinlik gercek batimetri degil, kiyiya uzakliktir.
+float hs(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float gurultu(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0 - 2.0*f);
+  return mix(mix(hs(i), hs(i + vec2(1.0, 0.0)), f.x), mix(hs(i + vec2(0.0, 1.0)), hs(i + vec2(1.0, 1.0)), f.x), f.y); }
+// kaba derinlik tKop alfasinda, en yakin ornekleme: elle cift dogrusal
+float kabaDerin(vec2 uv){ vec2 p = uv * uGrid - 0.5, i = floor(p), f = p - i;
+  float a = texture2D(tKop, (i + vec2(0.5, 0.5)) / uGrid).a, b = texture2D(tKop, (i + vec2(1.5, 0.5)) / uGrid).a;
+  float c = texture2D(tKop, (i + vec2(0.5, 1.5)) / uGrid).a, d = texture2D(tKop, (i + vec2(1.5, 1.5)) / uGrid).a;
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y); }
+// t: 0 kiyi .. 1 acik okyanus
+float denizT(vec2 uv, vec2 derece){
+  if(uv.x < 0.0 || uv.y < 0.0 || uv.x >= 1.0 || uv.y >= 1.0) return 1.0;
+  // doku.png G = karekok(uzaklik/60 teksel): karesi dogrusal, ~450 km'de doyar
+  float g = texture2D(tDoku, uv).g;
+  float t = 0.5 * g * g + 0.5 * kabaDerin(uv);
+  // havzalar ve sirtlar: derinde buyuk olcekli dalgalanma
+  float n = gurultu(derece / 9.0) - 0.5;
+  return clamp(t + n * 0.22 * smoothstep(0.35, 0.8, t), 0.0, 1.0); }
+vec3 deniz(float t, vec2 derece, float grad){
+  vec3 sig = vec3(0.135, 0.300, 0.320), orta = vec3(0.060, 0.145, 0.185), derin = vec3(0.028, 0.058, 0.085);
+  // sahanlik, yamac, derin: sahanlik genis ve acik, yamacta hizli koyulasir
+  vec3 c = t < 0.28 ? mix(sig, orta, smoothstep(0.08, 0.28, t)) : mix(orta, derin, smoothstep(0.28, 0.9, t));
+  // tropik sular biraz turkuaz, yuksek enlem griye
+  float e = clamp(abs(derece.y) / 60.0, 0.0, 1.0);
+  c = mix(c * vec3(0.90, 1.07, 1.05), c * vec3(1.03, 0.98, 0.95), e);
+  // durgun su greni, +-%4
+  float n = gurultu(derece * 1.3) * 0.5 + gurultu(derece * 5.1) * 0.5;
+  c *= 0.96 + 0.08 * n;
+  // esderinlik cizgileri, ekranda ~1 piksel
+  if(grad > 1e-6){ float k = t * 8.0, d = abs(fract(k + 0.5) - 0.5) / (grad * 8.0);
+    c += vec3(0.35, 0.50, 0.52) * 0.075 * (1.0 - smoothstep(0.3, 1.2, d)) * step(0.03, t) * (1.0 - step(0.985, t)); }
+  // kiyi kopugu
+  c += vec3(0.10, 0.17, 0.18) * (1.0 - smoothstep(0.0, 0.06, t));
+  return c;
+}
 void main(){
   vec2 ekran = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
   vec2 hucre = (ekran - uView.xy) / uView.z;
@@ -405,6 +465,14 @@ void main(){
   bool icinde = uv.x >= 0.0 && uv.y >= 0.0 && uv.x < 1.0 && uv.y < 1.0;
   vec4 dk = texture2D(tDoku, uv);
   vec3 renk = icinde ? mix(KIYI, DERIN, dk.g) : DERIN;
+  if(uDeniz > 0.5){
+    float dlon = (uBounds.z - uBounds.x) / uGrid.x, dlat = (uBounds.w - uBounds.y) / uGrid.y;
+    vec2 derece = vec2(uBounds.x + hucre.x * dlon, uBounds.w - hucre.y * dlat);
+    vec2 o = 1.0 / uView.z / uGrid, od = vec2(dlon, dlat) / uView.z;
+    float t = denizT(uv, derece);
+    float grad = length(vec2(denizT(uv + vec2(o.x, 0.0), derece + vec2(od.x, 0.0)) - t, denizT(uv + vec2(0.0, o.y), derece - vec2(0.0, od.y)) - t));
+    renk = deniz(t, derece, grad);
+  }
   if(uMod == 3 && icinde){   // dolasim: okyanus deniz yuzeyi sicakligiyla
     float sv = uPiksel > 0.5 ? texture2D(tAlan, muv).r : texture2D(tAlan, uv).r;
     // veri karanin ~22 derece otesinde biter; alan orada dikdortgen bir
@@ -474,13 +542,13 @@ function glKur(canvas){
   gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE);
   gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
   const U = {}; for(const ad of ["uRes","uDpr","uView","uGrid","uBounds","tAlan","tLut","tKop","tPal","tDoku","tDokuN","tYuk","tKab",
-    "uMod","uPiksel","uKabartma","uIzgara","uIzole","uOlcek","uZemin"]) U[ad] = gl.getUniformLocation(pr, ad);
+    "uMod","uPiksel","uKabartma","uIzgara","uIzole","uOlcek","uZemin","uDeniz"]) U[ad] = gl.getUniformLocation(pr, ad);
   const birimler = {tAlan:0, tLut:1, tKop:2, tPal:3, tDoku:4, tDokuN:5, tYuk:6, tKab:7};
   const doku = {};
   function kur(ad, veri, w, h, bicim, suz){
     let t = doku[ad]; if(!t) t = doku[ad] = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0 + birimler[ad]); gl.bindTexture(gl.TEXTURE_2D, t);
-    const f = bicim==="L" ? gl.LUMINANCE : (bicim==="RGBA" ? gl.RGBA : gl.RGB);
+    const f = bicim==="L" ? gl.LUMINANCE : bicim==="LA" ? gl.LUMINANCE_ALPHA : (bicim==="RGBA" ? gl.RGBA : gl.RGB);
     if(veri instanceof Uint8Array) gl.texImage2D(gl.TEXTURE_2D, 0, f, w, h, 0, f, gl.UNSIGNED_BYTE, veri);
     else gl.texImage2D(gl.TEXTURE_2D, 0, f, f, gl.UNSIGNED_BYTE, veri);
     const m = suz ? gl.LINEAR : gl.NEAREST;
@@ -520,8 +588,11 @@ function baslat(J, resimler){
   if(G){
     // model okyanus hucrelerine de sinif yazar; piksel gorunumu karayi
     // "kod > 0" diye ayirdigi icin dokuda okyanus 0 olmali
-    const kopKara = new Uint8Array(N); for(let i=0;i<N;i++) if(D.land[i]) kopKara[i] = D.kop[i];
-    G.kur("tKop", kopKara, W, H, "L", false);
+    // L = kara sinif kodu, A = deniz dokusu icin kaba "derinlik" (kiyiya
+    // uzakliktan; gercek batimetri degil, yalniz gorunus)
+    const kopKara = new Uint8Array(N*2), dz = denizUzak(D);
+    for(let i=0;i<N;i++){ if(D.land[i]) kopKara[2*i] = D.kop[i]; kopKara[2*i+1] = dz[i]; }
+    G.kur("tKop", kopKara, W, H, "LA", false);
     G.kur("tPal", palet, 32, 1, "RGBA", false);
     G.kur("tDoku", resimler.doku, 0, 0, "RGB", true);
     G.kur("tDokuN", resimler.doku, 0, 0, "RGB", false);
@@ -614,6 +685,7 @@ function baslat(J, resimler){
         gl.uniform1f(U.uPiksel, ayar.piksel ? 1 : 0);
         gl.uniform1f(U.uKabartma, ayar.kabartma ? (katman==="arazi" || katman==="dolasim" ? 0.8 : 0.5) : 0);
         gl.uniform1f(U.uIzgara, ayar.izgara ? 1 : 0);
+        gl.uniform1f(U.uDeniz, ayar.deniz ? 1 : 0);
         gl.uniform1f(U.uIzole, izole ? kodNo[izole] : 0);
         gl.uniform1f(U.uOlcek, D.doku.olcek);
         gl.uniform1f(U.uZemin, ayar.dolZemin==="hiz" ? 1 : 0);
@@ -939,7 +1011,7 @@ function baslat(J, resimler){
   for(const b of kaynakDugme) b.addEventListener("click", () => {
     ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); ciz(); });
   kaynakYaz();
-  for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-bant","bant"]]){
+  for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-deniz","deniz"],["ay-bant","bant"]]){
     const el = $("#"+id); el.checked = ayar[k];
     el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); katmanSec(katman); });
   }
