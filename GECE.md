@@ -453,6 +453,15 @@ yeter (ileri sarma).
   kaymasını enlemle azaltmak (ITCZ tam kayar, kutba doğru daha az). Bu
   iklimi değiştirir; karar senin, görsel karşılaştırmayla sorarım.
 
+    Ek ölçüm (1 derece, kaba; yalnız k_itcz değişti; 0.6 / 0.4 / 0.2):
+  rüzgâr dönen okyanus %77 / %20 / %0.1; kara min/max ay oranı 0.065 / 0.089
+  / 0.138 (Dünya 0.249); Akdeniz bandında Cs %47 / %35 / %7; plato bozkırı
+  %70 / %28 / %39; B grubu %8.7 / %12.7 / %22.4. Yani CLAUDE.md §8'deki
+  'yağış çok mevsimsel' sorununun önemli bir kaynağı bu salınım, ama Akdeniz
+  kuşağı ve plato bozkırı da ondan geliyor: salınımı azaltmak ikisini de
+  bozuyor. Tek düğmeyle çözülmez; enlemle azalan kayma ayrı bir motor kolu
+  olur (ölçülmedi).
+
   ![zonal rüzgâr](gece_resim/zonal_ruzgar.png)
 
 ## Temiz çıkan denetimler (sorun bulunmadı)
