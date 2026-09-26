@@ -213,4 +213,5 @@ body:has(#sayfa-ayar:not([hidden])) #kart{display:none}
   .cekmece .tutamak{height:8px;pointer-events:none}
   .cekmece .tutamak::before{display:none}
   .cekmece>header{top:8px}
+  #bildirim{left:calc((100% - var(--yan) - var(--sag))/2);max-width:calc(100% - var(--yan) - var(--sag) - 32px)}
 }
