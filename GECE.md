@@ -4,7 +4,7 @@ Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmele
 bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
 değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
 bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
-adımda koştu (şimdi 20 denetim, hepsi geçiyor; GitHub'da da yeşil).
+adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 

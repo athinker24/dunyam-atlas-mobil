@@ -193,6 +193,15 @@ const OLC = () => {
       denetle("WebGL yokken Canvas2D ile ciziliyor", ac && r && !r.webgl && r.renk > 5 && yh.length === 0, r ? `${r.renk} farkli renk ${yh.join(" | ")}` : "acilmadi");
       await y.close(); }
 
+    // telefon yan cevrilince dok sag sutunda, harita solda en az ekranin
+    // yarisi (gece denetimi: alt dok haritaya ~97 px birakiyordu)
+    { const y = await ctx.newPage(); await y.setViewportSize({ width: 844, height: 390 });
+      await y.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: "load" });
+      await y.waitForFunction(() => document.querySelector("#yukleniyor").hidden, null, { timeout: 30000 });
+      const d = await y.evaluate(() => { const r = document.getElementById("dok").getBoundingClientRect(); return { sol: r.left, ust: r.top, alt: r.bottom, h: innerHeight }; });
+      denetle("yatay ekranda dok yan sutunda", d.ust < 1 && d.sol >= 422 && d.alt >= d.h - 1, JSON.stringify(d));
+      await y.close(); }
+
     // "Guncellemeleri denetle" sunucuda yeni veri bulunca sayfayi yenilemeli ve
     // "Yeni veri yuklendi" demeli (gece denetimi: once sessizce yenileniyordu)
     { const g = await ctx.newPage();
