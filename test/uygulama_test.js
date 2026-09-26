@@ -193,6 +193,21 @@ const OLC = () => {
       denetle("WebGL yokken Canvas2D ile ciziliyor", ac && r && !r.webgl && r.renk > 5 && yh.length === 0, r ? `${r.renk} farkli renk ${yh.join(" | ")}` : "acilmadi");
       await y.close(); }
 
+    // "Guncellemeleri denetle" sunucuda yeni veri bulunca sayfayi yenilemeli ve
+    // "Yeni veri yuklendi" demeli (gece denetimi: once sessizce yenileniyordu)
+    { const g = await ctx.newPage();
+      await g.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: "load" });
+      await g.waitForFunction(() => document.querySelector("#yukleniyor").hidden, null, { timeout: 30000 });
+      const sahte = async r => { const y = await r.fetch(); const j = await y.json(); j.surum = "sinama0000"; await r.fulfill({ response: y, json: j }); };
+      await ctx.route("**/data/atlas.json", sahte);
+      await g.evaluate(() => document.getElementById("guncelle").click());
+      const t = await g.waitForEvent("load", { timeout: 15000 })
+        .then(() => g.waitForFunction(() => { const b = document.getElementById("bildirim"); return !b.hidden && /Yeni veri/.test(b.textContent) && b.textContent; }, null, { timeout: 8000 }))
+        .then(h => h.jsonValue(), e => "yok: " + e.message.split("\n")[0]);
+      await ctx.unroute("**/data/atlas.json", sahte);
+      denetle("guncelleme denetimi yeni veride yeniler ve bildirir", /Yeni veri/.test(t), t);
+      await g.close(); }
+
     // cevrimdisi: service worker her seyi onbellege almis olmali
     await p.evaluate(() => navigator.serviceWorker.ready); await bekle(2500);
     // Gercek kesinti: tarayicinin cevrimdisi taklidi yeniden baslayan service

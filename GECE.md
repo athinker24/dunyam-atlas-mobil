@@ -4,7 +4,7 @@ Dünyanın sahibi uyurken yapılan denetim (25-26 Eylül). Kurallar: düzeltmele
 bu dalda, `main`'e girmez (her push telefona yayın); iklim sonucunu
 değiştiren şeyler yalnız ölçülür ve buraya yazılır, uygulanmaz. Her kalem:
 bulgu, nasıl bulundu, ne yapıldı, nasıl doğrulandı. Uygulama testi her
-adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
+adımda koştu (şimdi 20 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
@@ -306,6 +306,12 @@ adımda koştu (şimdi 19 denetim, hepsi geçiyor; GitHub'da da yeşil).
     karşılaştırılıyor. Doğrulama: depolama engelli + sunucuda sürüm
     değiştirilmiş taklitte sayfa yenilendi; normal yol (bildirim) de
     çalışıyor.
+45. **Güncelleme akışı testte yoktu.** Bu gece iki kez bozuk çıkan yol
+    (madde 30 ve 44): sunucuda yeni veri varken 'Güncellemeleri denetle'
+    sayfayı yenilemeli ve 'Yeni veri yüklendi' demeli. Teste eklendi: veri
+    isteği yakalanıp sürüm değiştiriliyor, yenileme ve bildirim bekleniyor.
+    Madde 30'daki eski hatayı geri koyunca denetim düşüyor (doğrulandı).
+    20/20.
 
 ## Yalnız raporlanan (senin kararın)
 
