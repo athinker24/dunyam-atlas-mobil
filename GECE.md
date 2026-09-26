@@ -412,3 +412,10 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
   örneklendi: 8 akıntıdan yalnız 'İç Deniz - mevsimsel genlik' 539 noktanın
   2'sinde kıyıya değiyor (4.4°D 8.6°K); diğerleri tamamen denizde. Arazi
   değişikliğinden sonra kayma yok.
+- Bu oturumun app.js/style.css farkı (d0f4a33'ten beri, +90/−27 satır)
+  eleştirel okundu: Canvas2D yalıtma rengi shader formülüyle aynı; elle
+  güncellemede yeniden yükleme döngüsü yok (denetim isteği yeni veriyi
+  önbelleğe yazar, yenilenen sayfa onu alır); yan dok algısı dikey ekranda
+  devreye girmiyor; enlem etiketi döngüsü −0'da 'EKVATOR' yazıyor. Masaüstü
+  1440×900 düzeni sorunsuz. Depo boyutu 37 MB (23 veri sürümü), büyüme sorun
+  değil.
