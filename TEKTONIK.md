@@ -128,8 +128,28 @@ Güneybatı bloğu doğudan (4) ve batıdan (bu çarpışma) sıkışan bir kıt
 Tuz düzlüğü / Titikaka benzeri göl istenirse plato ortasına sığ çanak
 açmak gerekir (plato yüzeyi şu an dışarı akıyor); arazi kararı, sonraya.
 
-## 5. 5 ve daire içi: İber Yarımadası benzeri (TASLAK)
+## 5. 5 ve daire içi: İber Yarımadası benzeri (KARARLAŞTI, 26 Eylül)
 
 Sahibin tasarımı: 5 klasik alt kıta / üst kıta çarpışması; güneyindeki
 yükseltiler eski çarpışmaların kalıntısı; bölge İber Yarımadası'ndan esinli.
+
+**Ölçüler:** daire içi 3,24 milyon km² (İber ~0,58), ort. 535 m, %16'sı
+700 m üstü, eğim 0,10°, pürüz 43: geniş, düz, eski yayla (Meseta
+benzeri). 900 m'yi geçen tek grup 5'in eteği; eski dağlar aşınıp alçak
+kabartılara dönmüş (Varisken kalıntısı benzeri). 5: 6.563 m, pürüz 626,
+eğim 1,26°, yamaçlar eşit; genç (Pireneler benzeri, ~2.390 km).
+
+**Hikâye:** daire içi çok eski dağlarıyla ayrı bir kıta parçasıydı; dağları
+aşındı. Blok kuzeye yürüyüp ana karaya çarptı, 5 dikişte yükseldi.
+Biskay Körfezi benzeri dönme EKLENMEDİ: iç denizin batı ucu okyanus
+kalıntısı olarak kalıyor (bölüm 1, yol A).
+
+**Omurga:** 5, Duvar, 4 ve 6 genç; güneydeki bütün parçalar (İber benzeri
+blok, alt kıta, İtalya benzeri yarımada, batıdaki küçük kıta) aynı kuzeye
+yakınlaşmanın içinde. Tetis kapanışının Dünyam karşılığı.
+
+## 6. İç denizdeki takımadalar: Yunanistan-Ege benzeri (TASLAK)
+
+Sahibin tasarımı: Yunanistan'dan esinli, dağlık, iç denizin batıya yakın
+ortasında.
 
