@@ -3,6 +3,8 @@
 //
 //     npm install --no-save playwright && npx playwright install chromium
 //     node test/uygulama_test.js [klasor]        # varsayilan: repo koku
+//     sh yayinla.sh && node test/uygulama_test.js site   # CI boyle (yayinlanan kume)
+//     CHROMIUM_YOLU=/yol/chrome node ...          # hazir Chromium (indirmeden)
 //
 // Neden var: iki hata (piksel gorunumde okyanusun sinif rengine boyanmasi,
 // yumusak gorunumun %28 karanlik olmasi) elle cekilen ekran goruntulerinden
