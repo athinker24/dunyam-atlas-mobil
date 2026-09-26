@@ -10,6 +10,11 @@ Belgeler ve kod yorumları **Türkçe**. Kullanıcı Türkçe çalışıyor.
 kararlar ve bilgisayarda (asıl projede) yapılacaklar orada. Oturumu
 bitirirken onu güncelle; kalıcı bilgi buraya, anlık durum oraya.
 
+**26 Eylül'den beri iş yalnız GitHub + mobil Claude Code ile yürür;** bu
+repo tek kaynaktır, asıl proje arşivdir. Aşağıda "asıl projede koşar"
+diye geçen adımlar (Dünya doğrulaması, `_mk_heightmap.py`, `_akinti_kur.py`,
+senkron) artık erişilemez; ne anlama geldiği `DURUM.md` → "Çalışma biçimi".
+
 ---
 
 ## 1. Bu repo nedir

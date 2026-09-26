@@ -17,4 +17,4 @@ rem acikken site/ ayni zamanda yerel aga da aciliyordu (baslat.bat
 rem zaten --bind 127.0.0.1 kullaniyordu, burasi atlanmisti). Tunelin
 rem kendisi 127.0.0.1 uzerinden bagladigi icin bir sey kaybolmaz.
 start "Dunyam sunucu" python -m http.server 8778 --bind 127.0.0.1 --directory site
-npx --yes cloudflared tunnel --url http://localhost:8778
+npx --yes cloudflared tunnel --url http://127.0.0.1:8778

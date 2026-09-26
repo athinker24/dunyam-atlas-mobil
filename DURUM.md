@@ -1,8 +1,29 @@
 # DURUM — aktif durum (her oturumun başında oku)
 
-Son güncelleme: 26 Eylül 2026, **masaüstü oturumu**. Bu dosya "şu an
+Son güncelleme: 26 Eylül 2026, bulut oturumu (masaüstü sonuçları dahil). Bu dosya "şu an
 neredeyiz" sorusunun cevabıdır; kalıcı bilgi `CLAUDE.md`'de, gece bakımının
 ayrıntısı `GECE.md`'de. Oturumu bitirirken bu dosyayı güncelle.
+
+## Çalışma biçimi (26 Eylül'den beri)
+
+Sahibi bu proje için artık bilgisayar kullanmayacak: iş **yalnız GitHub ve
+mobil Claude Code** (bulut oturumu) üzerinden yürür. Sonuçları:
+
+- **Tek kaynak bu repo.** `motor/` ve `dunya/` artık kopya değil, asıl
+  hâldir. Asıl proje ("Proje 3") 26 Eylül itibarıyla bu repoyla aynı ve
+  arşiv olarak kalır; `_senkron_kontrol.py` yalnız bir gün oraya dönülürse
+  işe yarar.
+- **Dünya doğrulaması artık koşulamaz.** `test_climate.py` ve Dünya
+  referans verisi (`rasterio` ister) masaüstünde. Motor değişikliği burada
+  yalnız iç tutarlılık kontrolleri (12 madde) ve uygulama testiyle
+  sınanır. Motorun fiziğine dokunan bir değişiklikte bunu sahibine söyle.
+- **Arazi değişikliği şu an bilgisayar ister.** `.glb`'den gezegen tuvalini
+  üreten `_mk_heightmap.py` ve akıntıları kıyıdan türeten `_akinti_kur.py`
+  yalnız masaüstünde. Sahibi yeni arazi verirse önce bu ikisinin repoya
+  taşınması gerekir (kanal ve üç kıyı girintisi `_heightmap_kaynak`'ta
+  yazılı; taşınan sürüm onları korumalı). Kabartma görseli zaten repoda
+  (`kabartma_kaydet.py`).
+- `baslat.bat` ve `tunel.bat` yalnız Windows içindir; yayın Cloudflare'den.
 
 ## Şu an yayında olan
 
@@ -78,19 +99,15 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 
 ## Sahibinin kararını bekleyen
 
-- **`tunel-yerel-bind` dalı (`2a272f6`)**: `tunel.bat`'a `--bind 127.0.0.1`.
-  Yalnız `tunel.bat`'a dokunuyor, uygulama dosyalarına değil. Ölçüm
-  yukarıda 5'te.
 - **Servis çalışanı bir kez normal tarayıcıda görülmeli.** Gömülü tarayıcı
   panelinde kaydolmadı: konsolda iki "script alınamadı" hatası, kayıt sayısı
   0. Sunucu tarafı sağlam — `sw.js` 200 dönüyor, bağlam güvenli (localhost),
   `navigator.serviceWorker` var. Panelin kısıtı olması kuvvetle muhtemel
   (telefonda çalışıyor) ama **doğrulanmadı**: `baslat.bat` ile açıp
   konsola bakmak yeter.
-- **`durum-duzelt` dalı artık bayat.** İçeriği (DURUM.md'ye "şunları yap"
-  notları + sanity düzeltmesi) bu oturumda yapıldı; sanity kısmı zaten
-  `60a4674` ile `main`'e girdi. Birleştirilirse bitmiş işi "yapılacak" diye
-  geri yazar. Silinebilir.
+- **`durum-duzelt` dalı artık bayat** (yalnız DURUM.md'ye "şunları yap"
+  notları; hepsi yapıldı). Birleştirilirse bitmiş işi geri yazar.
+  Silinebilir.
 
 ### Küçük, eskiden beri bekleyenler
 
@@ -101,7 +118,8 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
   karanın %2.1'inde, en çok 0.16 °C). Öncelik düşük.
 - Küresel ortalama 15.1 °C (girdi 14). Öneri: dokunma.
 - Birleşmiş eski dallar: `gunluk-sicaklik`, `deniz-deneme`, `deniz-yumusak`,
-  `deniz-kart`, `sanity-okyanussuz` (`60a4674` ile birleşti). Silmek
+  `deniz-kart`, `durum`, `sanity-okyanussuz`, `durum-masaustu-bitti`,
+  `tunel-yerel-bind` (son ikisi `yalniz-repo` ile). Silmek
   sahibinde (bulut oturumunun silme izni yok, 403).
 
 ## Kurallar (hatırlatma)
