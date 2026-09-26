@@ -139,31 +139,65 @@ def aciklama(im, baslik, satirlar, zaman=None, genislik=None):
     return son
 
 # ============================================================== 1. tum gezegen
+A1, A2, A3, A4 = 1.340264, -0.081106, 0.000893, 0.003796
+def ee_ileri(la, lo):
+    """Equal Earth izdusumu (Savric vd. 2018): derece -> (x, y)"""
+    t = np.arcsin(np.sqrt(3) / 2 * np.sin(np.radians(la))); l = np.radians(lo)
+    x = 2 * np.sqrt(3) * l * np.cos(t) / (3 * (A1 + 3 * A2 * t ** 2 + t ** 6 * (7 * A3 + 9 * A4 * t ** 2)))
+    return x, A1 * t + A2 * t ** 3 + t ** 7 * (A3 + A4 * t ** 2)
+def ee_geri(x, y):
+    t = y.copy()
+    for _ in range(8):
+        f = A1 * t + A2 * t ** 3 + t ** 7 * (A3 + A4 * t ** 2) - y; fp = A1 + 3 * A2 * t ** 2 + t ** 6 * (7 * A3 + 9 * A4 * t ** 2)
+        t = t - f / fp
+    fp = A1 + 3 * A2 * t ** 2 + t ** 6 * (7 * A3 + 9 * A4 * t ** 2)
+    l = 3 * x * fp / (2 * np.sqrt(3) * np.cos(t)); la = np.degrees(np.arcsin(np.clip(2 * np.sin(t) / np.sqrt(3), -1, 1)))
+    return la, np.degrees(l), np.abs(l) <= np.pi
 def dunya(cikti):
     h = Harita(-90, 90, -180, 180, 8, dolgu=0.18)
-    for lo in range(-150, 181, 30):
-        x, _ = h.P(0, lo); h.d.line([(x, 0), (x, h.im.size[1])], fill=(255, 255, 255, 30), width=1)
-    for la in range(-60, 61, 30):
-        _, y = h.P(la, 0); h.d.line([(0, y), (h.im.size[0], y)], fill=(255, 255, 255, 30), width=1)
-    h.adimlar(kal=4, dis=13, dis_her=3)
-    h.hizlar(20, 9)
-    for ad, (la, lo) in {"Kuzey": (60, -20), "Kuzeydoğu": (47, 33), "İber": (37, -30), "Ege": (26, -12),
-                         "Güneybatı": (-15, -25), "Yarımada": (6, -3), "Alt Kıta": (-15, 14), "Batı Okyanusu": (0, -62),
-                         "Doğu Okyanusu": (-10, 60), "Büyük Okyanus": (5, 132), "Uzak Okyanus": (5, -140),
-                         "Kuzey Kutup": (82, 0), "Güney Kutup": (-68, 0)}.items():
-        h.yazi(h.P(la, lo), ad.upper(), F(26 if M.LEVHALAR[ad]["sira"] > 3 or "Okyanus" in ad else 24, True))
-    im = h.bitir()
+    h.adimlar(kal=4, dis=13, dis_her=4)
+    duz = h.bitir(); A = np.array(duz.convert("RGB")); Hh, Ww = A.shape[:2]
+    GW = 2880; k = GW / (2 * 2.7064); GH = int(2 * 1.3173 * k) + 4
+    yy, xx = np.mgrid[0:GH, 0:GW]; X = (xx - GW / 2) / k; Y = (GH / 2 - yy) / k
+    la, lo, ic = ee_geri(X, Y); ic &= np.abs(Y) <= 1.3173
+    px = np.clip(((lo + 180) * 8).astype(int), 0, Ww - 1); py = np.clip(((90 - la) * 8).astype(int), 0, Hh - 1)
+    B = A[py, px]; B[~ic] = (14, 20, 28)
+    im = Image.fromarray(B).convert("RGBA"); d = ImageDraw.Draw(im)
+    P = lambda la_, lo_: (GW / 2 + ee_ileri(la_, lo_)[0] * k, GH / 2 - ee_ileri(la_, lo_)[1] * k)
+    for lo_ in range(-180, 181, 30):
+        d.line([P(la_, lo_) for la_ in np.arange(-90, 90.1, 2)], fill=(255, 255, 255, 40), width=1)
+    for la_ in range(-60, 61, 30):
+        d.line([P(la_, lo_) for lo_ in np.arange(-180, 180.1, 2)], fill=(255, 255, 255, 40), width=1)
+    d.line([P(la_, 180) for la_ in np.arange(-90, 90.1, 1)] + [P(la_, -180) for la_ in np.arange(90, -90.1, -1)], fill=(120, 140, 170), width=2)
+    kat = Image.new("RGBA", im.size, (0, 0, 0, 0)); dk = ImageDraw.Draw(kat)
+    for la_ in np.arange(-60, 80, 18):
+        for lo_ in np.arange(-171, 180, 18):
+            ad = M.levha_at(la_, lo_); v = M.hiz(ad, la_, lo_); L = np.hypot(*v); a = np.array(P(la_, lo_))
+            if L < 0.3: dk.ellipse([a[0] - 3, a[1] - 3, a[0] + 3, a[1] + 3], fill=(255, 255, 255, 170)); continue
+            c = np.cos(np.radians(la_)); b = np.array(P(la_ + v[1] * 0.3, lo_ + v[0] * 0.3 / max(c, 0.2)))
+            t = (b - a) / (np.hypot(*(b - a)) or 1); b = a + t * L * 9; n = np.array([t[1], -t[0]])
+            dk.line([tuple(a), tuple(b)], fill=(255, 255, 255, 210), width=3)
+            dk.polygon([tuple(b + t * 9), tuple(b + n * 6), tuple(b - n * 6)], fill=(255, 255, 255, 210))
+    def yazi(xy, s_, font):
+        bb = dk.textbbox((0, 0), s_, font=font)
+        dk.text((xy[0] - (bb[2] - bb[0]) / 2, xy[1] - (bb[3] - bb[1]) / 2), s_, font=font, fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
+    for ad, (la_, lo_) in {"Kuzey": (60, -25), "Kuzeydoğu": (47, 33), "İber": (37, -30), "Ege": (26, -12),
+                           "Güneybatı": (-18, -25), "Yarımada": (6, -3), "Alt Kıta": (-18, 18), "Batı Okyanusu": (5, -65),
+                           "Doğu Okyanusu": (5, 60), "Büyük Okyanus": (10, 138), "Uzak Okyanus": (5, -145),
+                           "Kuzey Kutup": (82, 0), "Güney Kutup": (-68, 0)}.items():
+        yazi(P(la_, lo_), ad.upper(), F(26, True))
+    im = Image.alpha_composite(im, kat)
     satir = [("OSR", AD["OSR"]), ("OTF", AD["OTF"].replace("okyanus ", "")), ("SUB", AD["SUB"]),
              ("CCB", AD["CCB"]), ("CRB", AD["CRB"]), ("HIZ", "levha hızı, Kuzey levhasına göre (1 cm/yıl ≈ 9 px)")]
-    o = M.yaz()
-    uz = o["sinif_uzunluk_km"]
-    zaman = ["SAYILAR (Bird 2003 sınıfları, ~42 km'lik adımlar)",
+    o = M.yaz(); uz = o["sinif_uzunluk_km"]
+    ort = sum(a["km"] for a in M.ADIMLAR) / len(M.ADIMLAR)
+    zaman = ["SAYILAR (Bird 2003 sınıfları, ort. %.0f km'lik adımlar)" % ort,
              "%d levha, %d sınır adımı, toplam %.0f bin km sınır" % (len(M.ADLAR), o["adim_sayisi"], sum(uz.values()) / 1e3)]
     for s_ in ("OSR", "OTF", "SUB", "CCB", "CTF", "CRB"):
         if s_ in uz: zaman.append("%s  %-28s %6.0f bin km" % (s_, M.SINIF_AD[s_], uz[s_] / 1e3))
-    zaman.append("Okyanustaki sınırlar tasarım; karadakiler araziden ölçüldü.")
+    zaman.append("Equal Earth izdüşümü. Okyanustaki sınırlar tasarım; karadakiler araziden ölçüldü.")
     aciklama(im, "Dünyam levhaları — tüm gezegen", satir, zaman, genislik=1400).convert("RGB").save(cikti)
-    kureler(im, cikti.replace("levha_dunya", "levha_kure"))
+    kureler(duz, cikti.replace("levha_dunya", "levha_kure"))
 
 # ============================================================== 2. kita
 def kita(cikti):
@@ -256,6 +290,18 @@ def kureler(duz, cikti, merkezler=((20, 0), (-20, 180)), cap=1100):
         tuval.paste(Image.fromarray(img.astype(np.uint8)), (60 + k * (cap + 60), 70))
     d = ImageDraw.Draw(tuval)
     d.text((60, 18), "Dünyam levhaları — kıtaya bakan yüz ve arka yüz", font=F(34, True), fill=(255, 255, 255))
+    etiket = {"Kuzey": (62, -20), "Kuzeydoğu": (47, 33), "İber": (37, -30), "Ege": (26, -12), "Güneybatı": (-18, -25),
+              "Yarımada": (6, -3), "Alt Kıta": (-18, 18), "Batı Okyanusu": (5, -62), "Doğu Okyanusu": (5, 58),
+              "Büyük Okyanus": (10, 138), "Uzak Okyanus": (5, -150), "Kuzey Kutup": (80, 0), "Güney Kutup": (-66, 0)}
+    for k, (f0, l0) in enumerate(merkezler):
+        f0r = np.radians(f0)
+        for ad, (la, lo) in etiket.items():
+            f, l = np.radians(la), np.radians(lo - l0)
+            if np.sin(f0r) * np.sin(f) + np.cos(f0r) * np.cos(f) * np.cos(l) < 0.25: continue
+            x = 60 + k * (cap + 60) + cap / 2 * (1 + np.cos(f) * np.sin(l))
+            y = 70 + cap / 2 * (1 - (np.cos(f0r) * np.sin(f) - np.sin(f0r) * np.cos(f) * np.cos(l)))
+            bb = d.textbbox((0, 0), ad.upper(), font=F(24, True))
+            d.text((x - (bb[2] - bb[0]) / 2, y - (bb[3] - bb[1]) / 2), ad.upper(), font=F(24, True), fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
     tuval.save(cikti)
 
 if __name__ == "__main__":

@@ -44,12 +44,12 @@ LEVHALAR = {
     "Güneybatı":       dict(tohum=(15, -25),  hiz=(0.0, 1.0),   sira=7,  renk=(220, 130, 100)),
     "Yarımada":        dict(tohum=(6, -3),    hiz=(-2.0, 1.0),  sira=8,  renk=(230, 200, 120)),
     "Alt Kıta":        dict(tohum=(12, 12),   hiz=(0.3, 4.0),   sira=5,  renk=(130, 200, 120)),
-    "Batı Okyanusu":   dict(tohum=(0, -60),   hiz=(5.0, 1.0),   sira=2,  renk=(80, 120, 170)),
-    "Doğu Okyanusu":   dict(tohum=(0, 60),    hiz=(-6.0, 0.0),  sira=2,  renk=(90, 150, 150)),
-    "Büyük Okyanus":   dict(tohum=(0, 130),   hiz=(1.0, 1.0),   sira=2,  renk=(100, 110, 170)),
-    "Uzak Okyanus":    dict(tohum=(0, -150),  hiz=(-3.0, -0.5), sira=1,  renk=(110, 130, 190)),
-    "Kuzey Kutup":     dict(tohum=(84, 0),    hiz=(1.0, 0.0),   sira=3,  renk=(70, 95, 130)),
-    "Güney Kutup":     dict(tohum=(-72, 0),   hiz=(1.0, 0.0),   sira=3,  renk=(70, 90, 125)),
+    "Batı Okyanusu":   dict(tohum=(0, -60),   hiz=(4.5, 1.0),   sira=2,  renk=(80, 120, 170)),
+    "Doğu Okyanusu":   dict(tohum=(0, 60),    hiz=(-5.0, 1.5),  sira=2,  renk=(90, 150, 150)),
+    "Büyük Okyanus":   dict(tohum=(0, 135),   hiz=(1.0, 1.5),   sira=2,  renk=(100, 110, 170)),
+    "Uzak Okyanus":    dict(tohum=(0, -150),  hiz=(-3.0, 1.0), sira=1,  renk=(110, 130, 190)),
+    "Kuzey Kutup":     dict(tohum=(86, 0),    hiz=(1.0, 0.0),   sira=3,  renk=(70, 95, 130)),
+    "Güney Kutup":     dict(tohum=(-78, 0),   hiz=(1.0, 0.0),   sira=3,  renk=(70, 90, 125)),
 }
 def birim(la, lo):
     a, b = np.radians(la), np.radians(lo)
@@ -151,7 +151,14 @@ dc = olculen("dogu_cukur")
 S["dogu_cukur"] = [(31, 46), (27, 40), (24, 33), (22, 27)] + dc + [(-12, 25), (-25, 31), (-38, 39), (-56, 46)]
 S["duvar_dogu"] = [S["duvar"][-1], (29.5, 38), (30.5, 43), (31, 46)]
 S["kuzey_dogu"] = [(31, 46), (38.3, 45.5), (46, 45.5), (53, 44.5), (60, 43), (73, 42)]
-S["kd_bati"] = [(55.5, 20.5), (50, 23), (45, 25.2), (40.5, 27)]
+def _dokuz():
+    p = [(55.5, 20.5)]
+    for la in np.arange(54.5, 41.0, -0.5):
+        y = row(la); c0, c1 = col(19), col(31); x = c0 + int(np.argmax(es[y, c0:c1]))
+        while x < c1 and es[y, x] > 0.6 * es[y, c0 + int(np.argmax(es[y, c0:c1]))]: x += 1
+        p.append((la, LO(x)))
+    return yumusat(p + [(40.5, 27)], 7)
+S["kd_bati"] = _dokuz()
 S["kd_kuzey"] = [(55.5, 20.5), (55.6, 26), (54.4, 32), (53.2, 38.5), (53, 44.5)]
 S["kd_guney"] = [(40.5, 27), (39.6, 31), (39.2, 35), (38.6, 40.5), (38.3, 45.5)]
 # --- okyanus sinirlari: taban egrisi + goreli hizdan sekil (tasarim)
@@ -203,19 +210,69 @@ def bolumlu(dugum, dilimler, ust):
         else: parca = merdiven(dd, ust, komsu, alt=(1, 2))
         yol += parca if not yol else parca[1:]
     return yol
-KB = [(77, -118), (66, -112), (55, -100), (44, -92), (35, -86), (27, -84)]
-GB = [(27, -84), (16, -88), (5, -96), (-7, -102), (-19, -99), (-31, -90), (-42, -82), (-56, -78)]
-S["bati_sirt"] = merdiven(KB, "Kuzey", "Uzak Okyanus")[:-1] + merdiven(GB, "Batı Okyanusu", "Uzak Okyanus")
-S["kuzey27"] = [(28, -48), (27.8, -56), (27.3, -64), (27.6, -72), (27.2, -79), (27, -84)]
-S["dogu_sirt"] = merdiven([(77, 112), (64, 104), (52, 98), (40, 101), (28, 108), (16, 112), (4, 108), (-8, 100), (-20, 96), (-32, 100), (-44, 108), (-56, 112)],
-                          "Doğu Okyanusu", "Büyük Okyanus")
-S["orta_cukur"] = yay([(77, 158), (62, 163), (48, 170), (34, 174), (20, 172), (6, 166), (-8, 160), (-22, 157), (-36, 158), (-56, 161)],
-                      "Büyük Okyanus", "Uzak Okyanus", bombe=0.18)
-S["kuzey_halka"] = bolumlu(halka_dugum(69.5, 3.2, 4, 40), [(-180, -114, "Uzak Okyanus"), (-114, 42, "Kuzey"), (42, 106, "Doğu Okyanusu"),
-                                                          (106, 160, "Büyük Okyanus"), (160, 180, "Uzak Okyanus")], "Kuzey Kutup")
-S["guney_halka"] = bolumlu(halka_dugum(-42, 4.2, 4, 10), [(-180, -80, "Uzak Okyanus"), (-80, -40, "Batı Okyanusu"), (-40, -5, "Güneybatı"),
-                                                           (-5, 45, "Alt Kıta"), (45, 110, "Doğu Okyanusu"), (110, 160, "Büyük Okyanus"),
-                                                           (160, 180, "Uzak Okyanus")], "Güney Kutup")
+def fraktal(p, genlik=0.07, derin=5, tavan=1.2):
+    """orta nokta kaydirma: dugumler korunur, aralara cok olcekli kiriklik"""
+    p = [tuple(map(float, x)) for x in p]
+    for k in range(derin):
+        q = [p[0]]
+        for a, b in zip(p[:-1], p[1:]):
+            D, c = _en(a, b); L = np.hypot(*D)
+            n = np.array([-D[1], D[0]]) / (L or 1); u = RNG.normal(0, 1) * min(genlik * L * (0.62 ** k), tavan)
+            m = ((a[0] + b[0]) / 2 + n[1] * u, (a[1] + b[1]) / 2 + n[0] * u / c); q += [m, b]
+        p = q
+    return p
+def merdiven2(dugum, A, B):
+    """sirt: yayilma sinira dikse basamak (sirt parcasi + donusum fayi), yanalsa kirikli egri"""
+    taban = [dugum[0]]
+    for a, b in zip(dugum[:-1], dugum[1:]):
+        k = RNG.randint(2, 4)
+        for j in range(1, k):
+            t = j / k + RNG.uniform(-0.15, 0.15) / k
+            taban.append((a[0] + (b[0] - a[0]) * t + RNG.uniform(-1.5, 1.5), a[1] + (b[1] - a[1]) * t + RNG.uniform(-1.5, 1.5)))
+        taban.append(b)
+    yol = [taban[0]]
+    for a, b in zip(taban[:-1], taban[1:]):
+        m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2); d, _ = _goreli(A, B, m); D, c = _en(a, b)
+        if abs(D @ d) / (np.hypot(*D) or 1) > 0.55: yol += fraktal([a, b], 0.05, 3)[1:]; continue
+        p_ = np.array([-d[1], d[0]]); al = D @ p_; ara = np.array(a) + np.array([(al * p_)[1], (al * p_)[0] / c])
+        yol += fraktal([a, tuple(ara)], 0.03, 3)[1:] + [b]
+    return yol
+def parcali(dugum, dilimler):
+    """boylam dilimlerine gore farkli levha ciftiyle merdiven"""
+    yol = []
+    for lo_a, lo_b, A, B in dilimler:
+        dd = [x for x in dugum if lo_a - 1e-6 <= x[1] <= lo_b + 1e-6]
+        if len(dd) >= 2: yol += merdiven2(dd, A, B) if not yol else merdiven2(dd, A, B)[1:]
+    return yol
+WR_K = [(79, -150), (68, -138), (58, -124), (47, -112), (37, -102), (27, -95)]
+WR_G = [(27, -95), (16, -92), (4, -97), (-8, -106), (-20, -114), (-32, -122), (-44, -130)]
+S["bati_sirt"] = merdiven2(WR_K, "Kuzey", "Uzak Okyanus")[:-1] + merdiven2(WR_G, "Batı Okyanusu", "Uzak Okyanus")
+S["kuzey27"] = fraktal([(28, -48), (28.5, -62), (26.5, -78), (27, -95)], 0.06)
+S["dogu_sirt"] = merdiven2([(81, 70), (68, 80), (56, 92), (44, 102), (32, 108), (20, 110), (8, 106), (-4, 100), (-16, 94), (-28, 90), (-40, 84)],
+                           "Doğu Okyanusu", "Büyük Okyanus")
+S["orta_cukur"] = fraktal(yay([(71, 150), (58, 158), (45, 166), (32, 172), (18, 174), (4, 170), (-10, 165), (-24, 162), (-36, 164), (-50, 170)],
+                              "Büyük Okyanus", "Uzak Okyanus", bombe=0.16), 0.02, 2)
+SR = [(-44, -130), (-47, -110), (-44, -90), (-46, -70), (-40, -52), (-34, -40), (-30, -24), (-27, -8), (-29, 8),
+      (-26, 22), (-31, 36), (-36, 50), (-42, 68), (-40, 84)]
+S["guney_sirt"] = parcali(SR, [(-130, -38, "Güney Kutup", "Batı Okyanusu"), (-38, -3, "Güney Kutup", "Güneybatı"),
+                               (-3, 36, "Güney Kutup", "Alt Kıta"), (36, 84, "Güney Kutup", "Doğu Okyanusu")])
+S["guney_sirt2"] = merdiven2([(-40, 84), (-46, 100), (-52, 120), (-50, 140), (-54, 158), (-50, 170)], "Güney Kutup", "Büyük Okyanus")
+S["guney_sirt3"] = merdiven2([(-50, 170), (-55, 180)], "Güney Kutup", "Uzak Okyanus")
+S["guney_sirt3b"] = merdiven2([(-55, -180), (-52, -162), (-50, -146), (-44, -130)], "Güney Kutup", "Uzak Okyanus")
+NR = [(76, -180), (73, -165), (79, -150), (72, -128), (69, -110), (73, -90), (70, -70), (74, -50), (71, -30), (67, -10),
+      (72, 10), (69, 30), (73, 42), (76, 55), (81, 70), (75, 90), (71, 110), (74, 130), (71, 150), (73, 165), (76, 180)]
+S["kuzey_halka"] = fraktal(NR, 0.06, 5, 1.5)
+# guney uzantilari halkayi assin
+for k_, uc in (("alti", (-58, -40)), ("gb_altkita_guney", (-58, -5)), ("dogu_cukur", (-58, 46))):
+    S[k_] = S[k_][:-1] + [uc]
+# tasarlanan (olculmeyen) kita sinirlarina kiriklik
+for k_ in ("ege_dogu", "ege_kuzey", "ege_bati", "bogaz", "iber_bati", "yar_kuzey", "yar_dogu", "yar_guney",
+           "gb_altkita", "duvar_dogu", "kuzey_dogu", "kd_kuzey", "kd_guney"):
+    S[k_] = fraktal(S[k_], 0.05, 4, 0.6)
+for k_ in ("alti", "gb_altkita_guney", "dogu_cukur"):
+    ic = [i for i, x in enumerate(S[k_]) if x[0] < -3]
+    if ic: S[k_] = S[k_][:ic[0]] + fraktal(S[k_][ic[0]:], 0.06, 4, 1.0)
+S.pop("guney_halka", None)
 AD = {"duvar": "Duvar dikişi", "pireneler": "5 dikişi (Pireneler benzeri)", "alpler": "4 dikişi (Alpler)",
       "bati_cukur": "Batı dalması (And tipi)", "alti": "6 çarpışması ve güney uzantısı", "ege_cukur": "Ege çukuru",
       "ege_dogu": "Ege doğu sınırı", "ege_kuzey": "Ege yay ardı sınırı", "ege_bati": "Ege batı sınırı",
@@ -224,7 +281,7 @@ AD = {"duvar": "Duvar dikişi", "pireneler": "5 dikişi (Pireneler benzeri)", "a
       "gb_altkita_guney": "Güneybatı-Alt kıta güney", "dogu_cukur": "Doğu dalması", "duvar_dogu": "Duvar doğu ucu",
       "kuzey_dogu": "Kuzey doğu kıyısı", "kd_bati": "9 (kaçış bloğu batısı)", "kd_kuzey": "2 (kaçış bloğu kuzeyi)",
       "kd_guney": "kaçış bloğu güneyi", "kuzey27": "27°K dönüşüm fayı", "bati_sirt": "Batı sırtı",
-      "dogu_sirt": "Doğu sırtı", "orta_cukur": "Uzak okyanus çukuru", "kuzey_halka": "Kuzey kutup sınırı", "guney_halka": "Güney sırtı"}
+      "dogu_sirt": "Doğu sırtı", "orta_cukur": "Uzak okyanus çukuru", "kuzey_halka": "Kuzey kutup sınırı", "guney_sirt": "Güney sırtı", "guney_sirt2": "Güneydoğu sırtı", "guney_sirt3": "Uzak güney sırtı", "guney_sirt3b": "Uzak güney sırtı"}
 
 # ------------------------------------------------------------------ yak, etiketle
 def sik(p, adim=0.05):

@@ -208,7 +208,7 @@ Okyanus ortası sırtları çizilmedi: okyanus tabanı verisi yok, karar sahibin
   parçalarının kesişmesinden çıkan kapalı alanlar; gezegenin her noktası
   tam bir levhaya ait. Burada sınır çizgileri 0,1 derecelik küresel gride
   yakılıp kalan bölgeler etiketleniyor (boylamda sarmal).
-- *Bird 2003, PB2002*: sınırlar ~40-45 km'lik adımlara bölünür, her adım
+- *Bird 2003, PB2002*: sınırlar kısa adımlara bölünür (PB2002'de ort. 44,7 km, burada ~27 km), her adım
   levhaların Euler vektörlerinden hesaplanan göreli hızla yedi sınıftan
   birine atanır: göreli hız sınıra 20°'den yakınsa yanal (OTF/CTF), değilse
   yaklaşma (SUB/OCB/CCB) ya da ayrılma (OSR/CRB); iki yanı denizse okyanusal.
@@ -221,25 +221,35 @@ Okyanus ortası sırtları çizilmedi: okyanus tabanı verisi yok, karar sahibin
   doğru bombeli yaylar. Okyanus tabanı derinliği de tasarım: sırttan uzaklık /
   yarı yayılma hızı = yaş, derinlik = 2,6 + 0,35 √yaş km.
 
-**Levhalar** (13 levha, 4027 adım, toplam 172 bin km sınır):
+**Levhalar** (13 levha, 6119 adım, toplam 164 bin km sınır):
 
 | levha | alan (milyon km²) | kara payı | Euler hızı (°/My) |
 |---|---|---|---|
-| Kuzey | 46.7 | %33 | 0.00 |
-| Kuzeydoğu | 3.4 | %78 | 0.13 |
-| İber | 6.7 | %76 | 0.04 |
+| Kuzey | 55.8 | %28 | 0.00 |
+| Kuzeydoğu | 3.4 | %77 | 0.13 |
+| İber | 6.7 | %75 | 0.04 |
 | Ege | 4.5 | %32 | 0.19 |
-| Güneybatı | 30.2 | %30 | 0.09 |
-| Yarımada | 4.6 | %50 | 0.20 |
-| Alt Kıta | 25.6 | %33 | 0.36 |
-| Batı Okyanusu | 64.6 | %2 | 0.46 |
-| Doğu Okyanusu | 103.4 | %0 | 0.54 |
-| Büyük Okyanus | 94.7 | %0 | 0.13 |
-| Uzak Okyanus | 144.8 | %0 | 0.27 |
-| Kuzey Kutup | 21.2 | %0 | 0.09 |
-| Güney Kutup | 109.9 | %0 | 0.09 |
+| Güneybatı | 23.4 | %38 | 0.09 |
+| Yarımada | 4.6 | %49 | 0.20 |
+| Alt Kıta | 20.6 | %41 | 0.36 |
+| Batı Okyanusu | 77.1 | %2 | 0.41 |
+| Doğu Okyanusu | 97.5 | %0 | 0.47 |
+| Büyük Okyanus | 110.1 | %0 | 0.16 |
+| Uzak Okyanus | 131.3 | %0 | 0.28 |
+| Kuzey Kutup | 15.0 | %0 | 0.09 |
+| Güney Kutup | 110.4 | %0 | 0.09 |
 
-**Sınıf uzunlukları (bin km):** OTF 60, SUB 47, OSR 43, CCB 11, CTF 5, CRB 5.
+**Sınıf uzunlukları (bin km):** OSR 54, SUB 49, OTF 38, CCB 11, CRB 6, CTF 5, OCB 1.
+
+**Şekil (sahip: "çok karemsi", 26 Eylül):** okyanus düzeni gerçek Dünya'ya
+benzetildi: sırtlar gezegeni çapraz ve kıvrılarak dolaşıyor, üç üçlü kavşakta
+(sırt-sırt-sırt ve sırt-sırt-çukur) buluşuyor; Güney Kutup levhası üç sırtın
+kuşattığı düzensiz bir alan. Tasarlanan bütün çizgiler orta nokta kaydırmayla
+(fraktal) çok ölçekli kırıklık aldı; sırtlar yalnız yayılma sınıra dikse
+basamaklı, yanalsa kırıklı eğri. 9 artık araziden: sıranın doğu eteği (yarık
+vadisi). Gezegen haritası Equal Earth izdüşümünde (Šavrič vd. 2018); enlem-
+boylam ızgarası kutupları yatay şeride çevirip levhaları dikdörtgen
+gösteriyordu.
 
 **Hikâyeye etkisi (hesaptan çıkan, Claude):**
 - 9 hesapta *kıta yarığı* çıktı: kaçış bloğu doğuya giderken arkası açılıyor.
