@@ -382,7 +382,8 @@ yeter (ileri sarma).
     m/s, batıdan' yazıyordu, oysa aylık hızların ortalaması 4.1 m/s. Kart
     artık zemin katmanıyla aynı büyüklüğü (aylık hızların ortalaması)
     yazıyor; ortalama vektör bu hızın yarısından küçükse 'rüzgâr yönü
-    mevsimle değişiyor' diyor. Aylık görünüm değişmedi.
+    mevsimle değişiyor' diyor. Aylık görünüm değişmedi. Dolaşım'ın yıllık alt başlığı
+    'yıllık ortalama' yerine 'yıllık net rüzgâr': oklar bileşke rüzgârı çiziyor.
 
 ## Yalnız raporlanan (senin kararın)
 

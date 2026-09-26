@@ -735,7 +735,9 @@ function baslat(J, resimler){
       sicaklik:"Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
       kar:donem<0 ? "Kar örtüsü, yerde kaldığı ay sayısı" : "Yerdeki kar, "+AYLAR[donem]+" ortası",
-      dolasim:"Rüzgâr ve akıntılar, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem])}[k];
+      // yillikta oklar 12 ayin bileske (net) ruzgari: yil icinde donen yerlerde
+      // zayif kalir, "ortalama" ruzgar hizi sanilmasin (gece denetimi)
+      dolasim:"Rüzgâr ve akıntılar, "+(donem<0 ? "yıllık net rüzgâr" : AYLAR[donem])}[k];
     aciklamaYaz(); boyut();
     // ay seridi acilinca dok ve kart yukselir; secili hucre kartin altinda kalmasin
     if(sec!==null && !D.land[sec] && k!=="dolasim"){ sec = null; $("#kart").hidden = true; }
