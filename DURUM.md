@@ -25,6 +25,21 @@ mobil Claude Code** (bulut oturumu) üzerinden yürür. Sonuçları:
   (`kabartma_kaydet.py`).
 - `baslat.bat` ve `tunel.bat` yalnız Windows içindir; yayın Cloudflare'den.
 
+## Sıradaki iş: eksikleri repoya taşımak (27 Eylül planı)
+
+Bu dosyalar yalnız bilgisayarda; bulut oturumu onlara ulaşamaz. Bir kez
+bilgisayardan (GitHub web arayüzünden yükleyerek ya da masaüstü Claude
+Code'la) bir dala konmaları gerekir, sonrası bulutta yürür:
+
+1. `_mk_heightmap.py` ve `worldinfo/` içindeki en yeni arazi kaynağı
+   (`.glb` ya da 16 bit PNG). Repoya alınırken kanal ve üç kıyı girintisi
+   (`_heightmap_kaynak`) korunmalı; bulut oturumu bunu yeniden üretip
+   bugünkü `dunya/dunyam_heightmap.png` ile karşılaştırarak doğrular.
+2. `_akinti_kur.py` (yalnız kıyı değişirse gerekir).
+3. İsteğe bağlı: `test_climate.py` ve Dünya referans verisi. Referans
+   `rasterio` istiyor ve büyük; repoya girip girmeyeceği boyutuna bakılarak
+   karar verilir.
+
 ## Şu an yayında olan
 
 - `main`: `60a4674` (sanity okyanussuz düzeltmesi birleşti). Veri sürümü
