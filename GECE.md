@@ -386,7 +386,8 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
   karanın %0.05'i sınıf değiştiriyor, ana grup %0.01. Düzeltme: radius_km ×
   π/180 (küre). surum değişir, veri yeniden üretilir; etkisi küçük ama sayı
   değiştirdiği için uygulamadım. Yarıçapı farklı bir dünyada (ör. 4000 km)
-  akıntılar ~%59 geniş sayılırdı.
+  uzaklıklar 1.59 kat
+  sayılır, akıntılar ~%37 dar kalırdı.
 
 ## Temiz çıkan denetimler (sorun bulunmadı)
 
