@@ -8,18 +8,35 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
-- **Telefonda bakman gerekenler:** Dolaşım sekmesinde kaydırma akıcılığı
-  (madde 16), çok yakınken kaydırma sınırı (1), dar ekranda lejant (7),
-  ayar çekmecesi açıkken kart (8), geri tuşu (19), Kar sekmesi ve kart (11, 18), klavye (22), deniz
-  kartı (15, 34), ay şeridinde parmağı kaydırarak ay tarama (36), bantlı renk
-  lejantı (27), telefonu yan çevirince düzen (47).
-- **Bilgisayarda bakman gereken:** baslat.bat ve tunel.bat bir kez açılmalı
-  (madde 41; Windows'ta sınanamadı).
-- **Karar bekleyenler:** "Yalnız raporlanan" bölümü.
-- **Veri:** gece dalında GitHub yeniden üretti (surum bbcdf12a34). Yalnız
-  rapor metni ve damga farklı; iklim sayıları birebir aynı (madde 29 ve 30;
-  karşılaştırma "Temiz çıkan" bölümünde).
-- `main`'e almak için `gece` dalını birleştirmek yeter (ileri sarma).
+49 düzeltme, hepsi `gece` dalında; test her adımda yeşil. En önemlileri:
+
+- **Telefonda hiç çalışmayan özellik:** ay şeridinde parmağı kaydırarak ay
+  tarama (36).
+- **Yan çevrilmiş telefonda harita ~100 px'e iniyordu;** dok ve ayarlar
+  artık sağ sütunda (47).
+- **Güvenlik:** tunel.bat açıkken `.git`, `motor/`, `dunya/` internetten
+  indirilebiliyordu; baslat.bat yerel ağa açıktı (41).
+- **Güncelleme akışı:** elle güncellemede bildirim yoktu (30), yerel kayıt
+  engelliyse yeni veri "Güncel" sayılıyordu (44), oturum dolması "sunucuya
+  ulaşılamadı" görünüyordu (43). Akış artık testte (45).
+- **Ölçüm güvenliği:** yanlış yazılmış parametre adı sessizce taban koşusu
+  ölçtürüyordu (42); motorda Dünya yılı sabitti (48, Dünyam'da etkisiz).
+
+Telefonda bakman gerekenler: ay taraması (36), yan çevirme (47), Dolaşım'da
+kaydırma akıcılığı (16), çok yakınken kaydırma sınırı (1), geri tuşu (19),
+Kar sekmesi ve kart (11, 18), deniz kartı (15, 34), bantlı renk lejantı (27),
+iPhone'da çift dokunma (37).
+
+Bilgisayarda: baslat.bat ve tunel.bat bir kez açılmalı (41; Windows'ta
+sınanamadı), klavye (22).
+
+Karar bekleyenler: "Yalnız raporlanan" bölümü (akıntı km/derece sabiti,
+klimagram yuvarlaması, küresel ortalama 15.1 °C, artık dallar).
+
+Veri: GitHub gece dalında yeniden üretti; yalnız rapor metni, damga ve
+yarıçap alanı farklı, iklim sayıları birebir aynı ("Temiz çıkan" bölümünde
+alan alan karşılaştırma). `main`'e almak için `gece` dalını birleştirmek
+yeter (ileri sarma).
 
 ## Düzeltilenler
 
