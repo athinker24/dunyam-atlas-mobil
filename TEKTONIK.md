@@ -148,8 +148,56 @@ kalıntısı olarak kalıyor (bölüm 1, yol A).
 blok, alt kıta, İtalya benzeri yarımada, batıdaki küçük kıta) aynı kuzeye
 yakınlaşmanın içinde. Tetis kapanışının Dünyam karşılığı.
 
-## 6. İç denizdeki takımadalar: Yunanistan-Ege benzeri (TASLAK)
+## 6. İç denizdeki takımadalar: Yunanistan-Ege benzeri (KARARLAŞTI, 26 Eylül)
 
 Sahibin tasarımı: Yunanistan'dan esinli, dağlık, iç denizin batıya yakın
 ortasında.
+
+**Ölçüler:** 1,17 milyon km², 8 ada, en büyüğü karanın %87'si (ana ada ve
+küçükler). Boylam −20..−4, enlem 19..30. Kuzey kenarı kuzeye yay çiziyor,
+güneye parmaklar uzanıyor (Mora, Halkidiki benzeri). Ort. 501 m, %12'si
+1.000 m üstü; en yüksek 6.443 m (büyük volkan). Doğu ucu ile alt kıtanın
+batı kıyısı arası ~260 km deniz.
+
+**Hikâye:** iç deniz levhası geri çekildikçe dalma hattı güneye kaydı;
+kenardan koparılan kabuk şeridi güneye çekilip gerildi, adalara bölündü.
+Dalma hattı takımadanın güney açığında; adaların güneyinde volkan yayı
+(Santorini benzeri), en büyüğü 6.443 m. Takımada ile alt kıtanın batı
+kıyısı arasındaki deniz Ege'nin karşılığı; bölüm 2'deki batı kıyısı
+gerilmesiyle birlikte iki yanlı Ege.
+
+**Bölüm 1, yol A'ya düzeltme:** batıda okyanus Duvar'ın altına değil,
+takımadanın altına dalar; takımada ile Duvar arasındaki deniz, geri
+çekilmenin arkasında açılan gerilme havzasıdır.
+
+## 7. Kuzeydoğu kaçış bloğu (sahip ekledi, 26 Eylül)
+
+**Sahip:** 9, 3 ve 2 arasına bir levha daha; ayrıntıyı Claude belirler.
+**Ölçüler:** ~5,1 milyon km², ort. 1.567 m, %43'ü 1.500 m üstü, %42'si
+700-1.500 m arası yayla; en yüksek 6.760 m (2).
+**Hikâye (Claude, sahibin onayına açık):** büyük çarpışmanın basıncı
+kuzeydoğu bloğunu doğuya, açık okyanusa doğru sıkıştırıp itti (Hindistan
+çarpışmasının Güney Çin ve Çinhindi'ni doğuya itmesi gibi, kaçış
+tektoniği). Batı sınırı 9: plato bloğunun ittiği bindirme kuşağı. Kuzey
+sınırı 2 boyunca sol yanal, güney sınırı Duvar'ın kuzey eteği boyunca
+sağ yanal faylar. Dağlık ve yüksek olması sınırlarının hepsinin etkin
+olmasından.
+
+## 8. Bölüm 2'ye geometri düzeltmesi (Claude, 26 Eylül)
+
+Bölüm 2'de "7'nin doğusundaki körfez dalmanın arkasında açıldı" yazıyordu;
+bu sıra ters: yay ardı havzası çukurun öbür tarafında açılır. Doğru sıra
+(doğudan batıya): doğu dalma çukuru (doğudaki yarımadanın açığında) →
+doğudaki yarımada (etkin volkan yayı) → Karadeniz benzeri körfez (yay ardı
+havzası) → 7 (aynı dalmanın körfez açılmadan önce yükselttiği eski kenar).
+Körfez açılırken yarımadayı 7'den kopardı (Japon Denizi'nin Japonya'yı
+Asya'dan koparması gibi; Batı Karadeniz de benzer biçimde açıldı).
+
+## Levha haritası
+
+`tektonik/levha_haritasi.png`, üreten betik `tektonik/harita.py` (çizgiler
+araziden ölçülür, adlar elle). Levhalar: Kuzey, Kuzeydoğu kaçış bloğu,
+İber bloğu, Güneybatı bloğu, Yarımada, Alt kıta, Ege, Küçük kıta (batı
+okyanusu levhasının üstünde), Batı okyanusu, Doğu okyanusu, İç deniz.
+Okyanus ortası sırtları çizilmedi: okyanus tabanı verisi yok, karar sahibin.
 
