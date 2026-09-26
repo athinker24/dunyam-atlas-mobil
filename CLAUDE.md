@@ -341,7 +341,7 @@ yolu terimi (`storm_c`) ve karşıtlığın ay içi dağılımı (`storm_contras
 ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
 alan ağırlıklı kara yağışı / sınıf payı, `motor/maritime.py` hafif deniz buzu
 (`sea_ice_air`), `motor/moisture.py` nem korunumu (`conserve_moisture`) ve ayların paralel
-çözümü (`run`, sonucu değiştirmez) ve ay süresinin gezegen yılından alınması (`_saniye_ay`, Dünyam'da etkisiz) yalnız bu repoda. Asıl projeye
+çözümü (`run`, sonucu değiştirmez) ve ay süresinin gezegen yılından alınması (`_saniye_ay`, Dünyam'da etkisiz), `motor/circulation.py` `belt_shift_decay` (kapalı) yalnız bu repoda. Asıl projeye
 taşınmalı.
 
 **Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri
@@ -408,6 +408,9 @@ buraya bak.
   26 Eylül ölçümü, `gece_resim/zonal_ruzgar.png`). Akdeniz kuşağı bu
   salınımdan gelir. Yıllık ortalama rüzgâr vektörü bu yüzden zayıftır;
   uygulama yıllık hız için aylık hızların ortalamasını kullanır.
+  Deneme düğmesi `belt_shift_decay` (motor 0 = katı kayma, bit bit eski;
+  Dünyam'da kapalı): 0.25'te dönüş %20 ama karanın %38'i sınıf değiştirir
+  (`gece_resim/kusak_kaymasi.png`).
 - **60-70° kuşağında mevsim genliği yetersiz** (en soğuk ay fazla ılık).
   `transport_seasonal_lat_deg` bunu düzeltir ama 70° üstünde aşırı büyütür;
   karası 70°'nin altında biten bir dünyada açmaya değer, büyük kutup kıtası

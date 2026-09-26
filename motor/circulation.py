@@ -31,6 +31,11 @@ DEFAULTS = dict(
     v_min=1.5,  # m/s taban
     smooth_deg=3.0,  # basinc profili yumusatmasi
     drag_blend_km=60.0,  # kiyida surtunme gecisinin yumusatma olcegi
+    # ITCZ'den k. kusak dugumu ITCZ kaymasinin max(0, 1 - k*belt_shift_decay)
+    # kadarini izler. 0 = KAPALI: butun kusaklar ITCZ ile kati kayar (bit bit
+    # eski). Kati kayma 15 saatlik gunde (phi_H 18.8) ve k_itcz 0.6'da okyanusun
+    # ~%77'sinde ruzgari yilda 3-4 kez donduruyor (CLAUDE.md 8, gece denetimi).
+    belt_shift_decay=0.0,
 )
 
 
@@ -56,13 +61,17 @@ def itcz_lat(day, world: World, p: dict) -> np.ndarray:
 def _belt_nodes(itcz: float, phi_h: float, p: dict):
     """ITCZ'den disariya alcak/yuksek donusumlu kusak dugumleri."""
     nodes, vals = [itcz], [p["p_itcz"]]
+    d = float(p.get("belt_shift_decay", 0.0))
     for s in (1, -1):
         hemi = []
-        k, phi = 1, itcz + s * phi_h
+        k, phi = 1, (s * phi_h + itcz * max(0.0, 1.0 - d)) if d > 0 else itcz + s * phi_h
         while abs(phi) <= 90.0 + phi_h:
             hemi.append((phi, p["p_high"] if k % 2 else p["p_low"], k % 2 == 1))
             k += 1
-            phi += s * phi_h
+            if d > 0:
+                phi = s * k * phi_h + itcz * max(0.0, 1.0 - k * d)
+            else:
+                phi += s * phi_h
         # her yarimkurede en distaki YUKSEK kusak kutup yuksegidir
         for i in range(len(hemi) - 1, -1, -1):
             if hemi[i][2]:

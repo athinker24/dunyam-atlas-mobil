@@ -389,6 +389,10 @@ yeter (ileri sarma).
     3 kez yön değiştiren okyanus ve kara alan payı (şimdi %76.7 / %66.3,
     önceki ölçümle aynı). Kuşak ya da k_itcz denemelerinde bu bedel artık
     her koşuda görünür.
+53. **Kuşak kayması deneme düğmesi (kapalı).** motor/circulation.py'ye
+    belt_shift_decay eklendi, varsayılan 0 ile sonuç bit bit aynı (1
+    derecede surum c2020f9c7e önce ve sonra). Dünyam'da kapalı; ölçümü ve
+    görseli 'Yalnız raporlanan' bölümündeki rüzgâr kuşakları maddesinde.
 
 ## Yalnız raporlanan (senin kararın)
 
@@ -463,6 +467,19 @@ yeter (ileri sarma).
   olur (ölçülmedi).
 
   ![zonal rüzgâr](gece_resim/zonal_ruzgar.png)
+
+    Kolu ölçülebilir kıldım: motor/circulation.py'ye belt_shift_decay
+  eklendi (ITCZ'den k. kuşak ITCZ kaymasının max(0, 1 − k·d) kadarını izler;
+  varsayılan 0 = kapalı, 1 derecede surum c2020f9c7e önce/sonra aynı).
+  Dünyam'a UYGULANMADI. 1 derece ölçüm (d = 0.25 / 0.4 / 0.5): dönen okyanus
+  %20 / %14 / %11; min/max 0.087 / 0.109 / 0.126; Akdeniz bandında Cs %37 /
+  %20 / %11; plato bozkırı %16 / %50 / %74; sınıfı değişen kara %38 / %49 /
+  %55 (en büyük geçiş Csa → BSh %3.3-3.9). Yani dünyayı baştan değiştiriyor,
+  kolay kazanç değil. Görsel (0.5 derece, üstte şimdiki, altta d = 0.25):
+  gece_resim/kusak_kaymasi.png. İstersen sabah birlikte bakarız; istemezsen
+  parametre kapalı kalır, hiçbir şeyi etkilemez.
+
+  ![kuşak kayması](gece_resim/kusak_kaymasi.png)
 
 ## Temiz çıkan denetimler (sorun bulunmadı)
 
