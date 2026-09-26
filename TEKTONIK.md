@@ -1,5 +1,7 @@
 # Tektonik hikâye — karar günlüğü
 
+**Hızlı ve kendi başına anlaşılır özet: `tektonik/OZET.md`** (makine için `tektonik/ozet.json`). Bu dosya kararların tarihçesi; düzeltmeler dahil, sonuç için özete bak.
+
 Dünyanın sahibiyle adım adım kuruluyor. Arazi elle çizildi; hikâye araziden
 geriye doğru okunuyor. Motor levha bilmez, iklimi etkilemez. Numaralar
 26 Eylül dağ ölçümündeki sıradağlar (tepe yüksekliğine göre sıralı).
