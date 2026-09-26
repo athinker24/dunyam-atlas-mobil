@@ -312,6 +312,14 @@ adımda koştu (şimdi 20 denetim, hepsi geçiyor; GitHub'da da yeşil).
     isteği yakalanıp sürüm değiştiriliyor, yenileme ve bildirim bekleniyor.
     Madde 30'daki eski hatayı geri koyunca denetim düşüyor (doğrulandı).
     20/20.
+46. **Elle veri üretiminde '0,5' düşerdi; girdi kabuğa gömülüyordu.**
+    Actions → atlas verisi → Run workflow kutusuna Türkçe alışkanlıkla '0,5'
+    yazılırsa uret.py 'invalid float' ile düşerdi. uret.py ve mevsim_olc.py
+    artık ondalık virgülü kabul ediyor, sayı değilse Türkçe hata veriyor
+    (1,0 ile 1 derecelik koşu 12/12). Ayrıca veri.yml girdiyi ${{ }} ile
+    doğrudan run satırına gömüyordu (GitHub'un uyardığı enjeksiyon kalıbı;
+    yalnız repoya yazabilen başlatabildiği için risk düşük); artık ortam
+    değişkeniyle geçiyor.
 
 ## Yalnız raporlanan (senin kararın)
 

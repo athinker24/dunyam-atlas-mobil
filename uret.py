@@ -133,6 +133,14 @@ def bilinmeyen_params(params):
     return sorted(k for k in params if not k.startswith("_") and k not in bilinen)
 
 
+def ondalik(s):
+    """Komutsatiri sayisi; ondalik virgul de kabul (0,25)."""
+    try:
+        return float(str(s).strip().replace(",", "."))
+    except ValueError:
+        raise argparse.ArgumentTypeError("sayi bekleniyor: %r" % s)
+
+
 HM_ANAHTAR = {"file", "sea_level_value", "max_elev_m", "max_depth_m", "bounds", "band",
               "elev_gamma", "elev_curve", "kabartma"}
 
@@ -313,7 +321,8 @@ def ozet_yaz(g, K, yillik_yagis):
 
 def main():
     ap = argparse.ArgumentParser(description="Dunyam Atlasi veri ureticisi")
-    ap.add_argument("--res", type=float, default=0.25, help="derece/hucre (varsayilan 0.25)")
+    # "0,5" de kabul: Actions'taki elle baslatma kutusuna Turkce yazim (gece denetimi)
+    ap.add_argument("--res", type=ondalik, default=0.25, help="derece/hucre (varsayilan 0.25)")
     ap.add_argument("--cikti", default=CIKTI, help="atlas.json yolu ya da klasor (dokular yanina yazilir)")
     ap.add_argument("--ozet", action="store_true", help="sinif paylarini da yaz")
     ap.add_argument("--zorla", action="store_true",

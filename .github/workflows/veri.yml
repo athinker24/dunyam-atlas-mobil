@@ -39,7 +39,11 @@ jobs:
       - name: veriyi uret
         # uret.py dokulari (doku.png, yukseklik.png, kabartma.jpg) ciktinin
         # yanina yazar; hepsi birlikte tasinir.
-        run: python uret.py --res "${{ github.event.inputs.res || '0.25' }}" --cikti /tmp/yeni/atlas.json --ozet
+        # girdi kabuga ortam degiskeniyle gecer, satira gomulmez (enjeksiyon
+        # kalibi; gece denetimi). "0,5" de kabul edilir (uret.py).
+        env:
+          RES: ${{ github.event.inputs.res || '0.25' }}
+        run: python uret.py --res "$RES" --cikti /tmp/yeni/atlas.json --ozet
       # Dosyayi dogrudan yazip "git diff" ile bakmak ISE YARAMAZ: her ciktida
       # bir "uretim" zaman damgasi var, yani dosya iklim hic degismese de her
       # kosuda farkli cikar ve 2 MB'lik bos commit'ler birikir. Icerik ozeti

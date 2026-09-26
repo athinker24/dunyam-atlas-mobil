@@ -232,7 +232,7 @@ def harita(h, yol, baslik):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--res", type=float, default=0.5)
+    ap.add_argument("--res", type=uret.ondalik, default=0.5)
     ap.add_argument("--p", action="append", default=[], metavar="AD=DEGER",
                     help="params ustune yazilir (tekrarlanabilir)")
     ap.add_argument("--harita", help="PNG yolu")
