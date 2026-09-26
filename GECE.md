@@ -8,7 +8,7 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
 
 ## Özet
 
-49 düzeltme, hepsi `gece` dalında; test her adımda yeşil. En önemlileri:
+53 düzeltme, hepsi `gece` dalında; test her adımda yeşil. En önemlileri:
 
 - **Telefonda hiç çalışmayan özellik:** ay şeridinde parmağı kaydırarak ay
   tarama (36).
