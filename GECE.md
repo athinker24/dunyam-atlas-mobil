@@ -333,6 +333,17 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
     değişmedi; 844×390, 667×375, 390×844, 1024×768'de taşan öğe yok;
     döndürmeli rastgele tarama 0 hata; test 20/20, sonra yatay düzen teste eklendi (21/21). Telefonda bakılmalı: yan
     çevirip Dolaşım, kart ve ayarlar.
+48. **Motorda Dünya yılı sabitlenmişti (CLAUDE.md §2.1 ihlali).**
+    motor/moisture.py ayın saniyesini SECONDS_PER_MONTH = 365.25 × 86400 /
+    12 sabitinden alıyordu; gezegenin year_length_days'i kullanılmıyordu.
+    Yağış, yakınsama, girdap, orografik yağış ve korunum adımları ayı
+    saniyeye bununla çeviriyor; yılı farklı bir dünyada aylık miktarlar yıl
+    oranında kayardı (500 günlük yılda ay ~%27 kısa sayılırdı). Artık
+    params() gezegenin yılından '_saniye_ay' koyuyor. Dünyam'ın yılı zaten
+    365.25 gün (künye yuvarlayıp '365' yazıyor): 1 derecede surum önce ve
+    sonra f79c6ff75e, bit bit aynı; veri değişmez. İlk ölçümümde yılı
+    yanlışlıkla 365.0 alıp %0.06 sınıf değişimi bulmuştum; o varsayım
+    yanlıştı. motor/ ayrışma listesine eklendi, asıl projeye taşınmalı.
 
 ## Yalnız raporlanan (senin kararın)
 
@@ -365,17 +376,6 @@ adımda koştu (şimdi 21 denetim, hepsi geçiyor; GitHub'da da yeşil).
   olabilir ve Access ile korunmuyorsa herkese açık. Silinmeleri önerilir;
   silme geri alınamaz olduğu için yapmadım, onayını bekliyor.
 
-- **Motorda Dünya yılı sabitlenmiş (CLAUDE.md §2.1 ihlali).**
-  motor/moisture.py SECONDS_PER_MONTH = 365.25 × 86400 / 12; gezegenin
-  year_length_days'i kullanılmıyor. Yağış, yakınsama, girdap ve korunum
-  adımları ayı saniyeye bununla çeviriyor. Dünyam'ın yılı 365 gün, fark
-  %0.07; ölçüldü (0.5 derece, --kiyas): karanın %0.06'sı sınıf değiştiriyor,
-  ana grup %0.06. Yani Dünyam için önemsiz, ama yılı farklı bir dünyada (ör.
-  500 gün) aylık yağış ~%27
-  eksik çıkardı (365.25/500). Düzeltme: sabit yerine world.year_length_days
-  × 86400 / 12 (params() içinde). surum değişir, veri yeniden üretilir, asıl
-  projeye de taşınmalı (Dünya doğrulamasında 365.25 → 365.25, etkisiz).
-  Uygulamadım: iklim sayısını değiştiriyor, karar senin.
 
 ## Temiz çıkan denetimler (sorun bulunmadı)
 

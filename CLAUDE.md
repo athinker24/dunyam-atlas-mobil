@@ -341,7 +341,7 @@ yolu terimi (`storm_c`) ve karşıtlığın ay içi dağılımı (`storm_contras
 ve dikişte su kütlesi birleştirme, `motor/sanity.py` donmuş okyanus oranı ve
 alan ağırlıklı kara yağışı / sınıf payı, `motor/maritime.py` hafif deniz buzu
 (`sea_ice_air`), `motor/moisture.py` nem korunumu (`conserve_moisture`) ve ayların paralel
-çözümü (`run`, sonucu değiştirmez) yalnız bu repoda. Asıl projeye
+çözümü (`run`, sonucu değiştirmez) ve ay süresinin gezegen yılından alınması (`_saniye_ay`, Dünyam'da etkisiz) yalnız bu repoda. Asıl projeye
 taşınmalı.
 
 **Arazi tarafında da ayrışma VAR:** `dunya/dunyam_heightmap.png` (kara pikselleri

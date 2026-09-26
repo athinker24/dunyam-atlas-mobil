@@ -180,11 +180,15 @@ DEFAULTS = dict(
     storm_contrast_sigma_k=0.0,
 )
 
-SECONDS_PER_MONTH = 365.25 * 86400.0 / 12.0
+# Yalniz params() disinda elle kurulan p icin yedek; motor gezegenin yilini
+# kullanir (params: "_saniye_ay").
+_SANIYE_AY_DUNYA = 365.25 * 86400.0 / 12.0
 
 
 def params(world: World) -> dict:
-    return {**DEFAULTS, **world.params}
+    # ayin saniyesi GEZEGENIN yilindan: sabit 365.25 gun Dunya'ya ozeldi
+    # (CLAUDE.md 2.1; gece denetimi). Dunyam'da yil 365.25, sonuc bit bit ayni.
+    return {**DEFAULTS, **world.params, "_saniye_ay": world.year_length_days * 86400.0 / 12.0}
 
 
 def temperature_lapse(grid: Grid) -> float:
@@ -296,6 +300,7 @@ def _needed_iters(grid: Grid, p: dict) -> int:
 
 def solve_month(grid: Grid, temp, sst, ocean_ref, u, v, p: dict):
     """Bir ay icin (yagis mm/ay, sutun su buhari mm) doner."""
+    SECONDS_PER_MONTH = p.get("_saniye_ay", _SANIYE_AY_DUNYA)  # noqa: N806
     ds = p["advect_step_km"]
     src = _upwind_sampler(grid, u, v, ds)
     # src dongu boyunca SABIT: bilineer plani bir kez kurup tekrar kullan.
