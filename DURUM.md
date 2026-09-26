@@ -1,13 +1,14 @@
 # DURUM — aktif durum (her oturumun başında oku)
 
-Son güncelleme: 26 Eylül 2026, bulut oturumu. Bu dosya "şu an neredeyiz"
-sorusunun cevabıdır; kalıcı bilgi `CLAUDE.md`'de, gece bakımının ayrıntısı
-`GECE.md`'de. Oturumu bitirirken bu dosyayı güncelle.
+Son güncelleme: 26 Eylül 2026, **masaüstü oturumu**. Bu dosya "şu an
+neredeyiz" sorusunun cevabıdır; kalıcı bilgi `CLAUDE.md`'de, gece bakımının
+ayrıntısı `GECE.md`'de. Oturumu bitirirken bu dosyayı güncelle.
 
 ## Şu an yayında olan
 
-- `main`: `d0c4fce`. Veri sürümü `f773654851` (üretim 26 Eylül 05:57 UTC).
-  İklim sayıları 25 Eylül'den beri aynı (`dunyam.json` → `_guncel_durum`).
+- `main`: `60a4674` (sanity okyanussuz düzeltmesi birleşti). Veri sürümü
+  `f773654851` (üretim 26 Eylül 05:57 UTC). İklim sayıları 25 Eylül'den beri
+  aynı (`dunyam.json` → `_guncel_durum`).
 - Son eklenenler, telefonda görüldü:
   - Günlük sıcaklık: gündüz/gece, ayın tipik tepesi/dibi, 30 yılda bir rekor
     (Sıcaklık sekmesinde Ortalama/Gündüz/Gece/Tepe/Dip; kartta bant ve satır).
@@ -29,34 +30,69 @@ Bir değişiklik telefona gelmiyorsa önce Cloudflare → Deployments'ta yeni ka
 var mı bak. Telefonda: uygulamayı tamamen kapatıp aç; veri sürümü
 değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 
-## Bilgisayarda (masaüstü, asıl proje "Proje 3") yapılacaklar
+## Bilgisayarda (masaüstü, asıl proje "Proje 3") — BİTTİ
 
-Sırası önemli. 1 bitmeden 2'deki betikleri KOŞMA: bu repodaki ayrışmaları
-geri alırlar.
+26 Eylül masaüstü oturumunda 1, 2, 4 ve 5 kapandı; 3'ü sahibi atladı
+(`_atlas.py` kullanılmıyor), 6 bırakıldı.
 
-1. **Ayrışmaları bu repodan asıl projeye taşı** (normal yönün tersi; ayrıntı
-   `CLAUDE.md` §7.6). Taşınacaklar:
-   - `motor/`: `moisture.py` (storm_c, storm_contrast_sigma_k,
-     conserve_moisture, ayların paralel çözümü, `_saniye_ay`), `grid.py`
-     (bölünmeyen kaynak, dikişte su kütlesi), `sanity.py` (donmuş okyanus,
-     alan ağırlıklı kara yağışı / sınıf payı), `maritime.py` (sea_ice_air),
-     `circulation.py` (belt_shift_decay, kapalı).
-   - `dunya/`: `dunyam_heightmap.png`, `dunyam.json` (elev_curve çapaları,
-     `heightmap.kabartma` kaydı, bütün `_` notları), `kabartma_kaynak.jpg`.
-   - Sonra `python _senkron_kontrol.py <asıl proje yolu>` fark göstermemeli.
-2. **1 bitene kadar koşma:** `_repo_senkron.py --yaz` (repoyu eski hâline
-   döndürür), `_egri_kur.py --yaz` (sahibin yükseklik çapalarını siler).
-3. **Palet:** masaüstü şablonu yeni koyu `KPAL`'a taşınana kadar `_atlas.py`
-   palet karşılaştırmasında DURUR; bu beklenen (§7.4). Ya şablonu taşı ya da
-   durmayı bil.
-4. `_atlas.py`'nin yazdığı `atlas.json`'u bu repoya KOPYALAMA: eski biçim,
-   yeni uygulama açılmaz. Mobil veri yalnız bu repodaki `uret.py`'den.
-5. Windows'ta bir kez dene: `baslat.bat` ve `tunel.bat` (GECE 41; bulutta
-   sınanamadı), klavye (GECE 22).
-6. İsteğe bağlı: nem korunumu (`conserve_moisture`) Dünya doğrulamasında hiç
-   denenmedi (§8). Asıl projede Dünya'ya karşı bir koşu değerli olur.
+1. **Ayrışmalar asıl projeye taşındı.** `motor/`'dan 6 dosya
+   (`circulation`, `grid`, `maritime`, `moisture`, `monsoon`, `sanity`),
+   `dunya/`'dan 2 (`dunyam.json`, `dunyam_heightmap.png`); Windows klonundan
+   bayt bayt, satır sonlarına dokunulmadan. Projedeki eski hâlleri
+   `Proje 3/out/_yedek_oncesi/` altında.
+   - Farklar satır sonu gürültüsüyle şişik görünüyordu; normalize edilmiş
+     gerçek değişiklik: `monsoon` 3, `maritime` 14, `circulation` 15,
+     `sanity` 31, `grid` 32, `moisture` 209 satır.
+   - `kabartma_kaynak.jpg` **taşınmadı**: eşleme listesinde yok, projede onu
+     okuyan kod yok. İstenirse tek kopyalama.
+   - `_senkron_kontrol.py`: fark yok, çıkış 0.
+   - `test_climate.py` kopyalamadan önce ve sonra: ikisi de **68/68**, çıkış
+     0, test listesi ve sonuçları birebir aynı. Tek fark üç yeni
+     `RuntimeWarning` idi (aşağıya bak).
+2. **Koşulmadı** ve bundan sonra da koşulmayacak: `_repo_senkron.py --yaz`,
+   `_egri_kur.py --yaz`, `_mk_heightmap.py`. Üçü de repodan taşınan işi geri
+   alır. Asıl projede bu yasak üç yere yazıldı: `HANDOFF.md` başına ⛔
+   uyarısı, `CLAUDE.md`'ye kalıcı not, oturum hafızası.
+3. **Atlandı** (sahibi: "`_atlas.py`'yi kullanmıyorum"). Palet karşılaştırması
+   hâlâ duracaktır, beklenen.
+4. `_atlas.py`'nin yazdığı `atlas.json` bu repoya **kopyalanmadı**.
+5. **Windows'ta denendi, GECE 41 ve 22 kapandı.**
+   - `baslat.bat`: dinleyen adres `127.0.0.1`. Bu makineden `/` ve
+     `/index.html` 200, `/.git/HEAD` 200 (tasarım gereği depo kökü);
+     **yerel ağdan bağlantı kurulmuyor.** Geçti.
+   - `tunel.bat`: genel adreste `/index.html` ve `/` 200; `/.git/HEAD`,
+     `/motor/`, `/motor/sanity.py`, `/dunya/dunyam.json` hepsi **404**;
+     `/data/atlas.json` 200 (uygulama verisi). Geçti.
+   - Klavye: `+` yakınlaştırdı, `0` kıtaya sığdırdı, `→` kaydırdı, tıklayınca
+     kart açıldı, `Esc` kapattı. Dördü de görüntüyle doğrulandı.
+   - **Bulunan kusur ve düzeltmesi:** `tunel.bat`'ın yerel sunucusu
+     `--bind 127.0.0.1` kullanmıyordu (`baslat.bat` kullanıyor), yani tünel
+     açıkken `site/` yerel ağa da açılıyordu. Ölçüldü: dinleyen adres `::`.
+     Düzeltme `tunel-yerel-bind` dalında (`2a272f6`), **birleştirilmedi**.
+   - Not: `.bat`'ları otomatik başlatırken `Start-Process` çalışma dizinini
+     devralmıyor; tam yol verilirse ikisi de sorunsuz koşuyor. Betiklerde
+     kusur değil.
+6. **Bırakıldı** (sahibi: "şimdilik"). Nem korunumu (`conserve_moisture`)
+   Dünya doğrulamasında hiç denenmedi (§8); asıl projede Dünya'ya karşı bir
+   koşu değerli olur.
 
-## Sahibinin kararını bekleyen, küçük
+## Sahibinin kararını bekleyen
+
+- **`tunel-yerel-bind` dalı (`2a272f6`)**: `tunel.bat`'a `--bind 127.0.0.1`.
+  Yalnız `tunel.bat`'a dokunuyor, uygulama dosyalarına değil. Ölçüm
+  yukarıda 5'te.
+- **Servis çalışanı bir kez normal tarayıcıda görülmeli.** Gömülü tarayıcı
+  panelinde kaydolmadı: konsolda iki "script alınamadı" hatası, kayıt sayısı
+  0. Sunucu tarafı sağlam — `sw.js` 200 dönüyor, bağlam güvenli (localhost),
+  `navigator.serviceWorker` var. Panelin kısıtı olması kuvvetle muhtemel
+  (telefonda çalışıyor) ama **doğrulanmadı**: `baslat.bat` ile açıp
+  konsola bakmak yeter.
+- **`durum-duzelt` dalı artık bayat.** İçeriği (DURUM.md'ye "şunları yap"
+  notları + sanity düzeltmesi) bu oturumda yapıldı; sanity kısmı zaten
+  `60a4674` ile `main`'e girdi. Birleştirilirse bitmiş işi "yapılacak" diye
+  geri yazar. Silinebilir.
+
+### Küçük, eskiden beri bekleyenler
 
 - Akıntı uzaklığında Dünya sabiti: `motor/temperature.py` 111.32 / 110.57
   km/derece (Dünya elipsoidi). §2.1'e aykırı; düzeltmesi `radius_km × π/180`.
@@ -65,7 +101,8 @@ geri alırlar.
   karanın %2.1'inde, en çok 0.16 °C). Öncelik düşük.
 - Küresel ortalama 15.1 °C (girdi 14). Öneri: dokunma.
 - Birleşmiş eski dallar: `gunluk-sicaklik`, `deniz-deneme`, `deniz-yumusak`,
-  `deniz-kart`. Silmek sahibinde (bulut oturumunun silme izni yok, 403).
+  `deniz-kart`, `sanity-okyanussuz` (`60a4674` ile birleşti). Silmek
+  sahibinde (bulut oturumunun silme izni yok, 403).
 
 ## Kurallar (hatırlatma)
 
