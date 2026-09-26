@@ -111,7 +111,7 @@ elenen kollar `dunya/dunyam.json` içindeki `_` ile başlayan notlarda.
 
 | yol | ne |
 |---|---|
-| `index.html`, `style.css`, `app.js` | uygulama (dokunmatik pan/pinch, hücre kartı, alt panel) |
+| `index.html`, `style.css`, `app.js` | uygulama (dokunmatik pan/pinch, hücre kartı, alt panel; yatay kısa ekranda panel ve ayarlar sağ sütunda, görünür harita alanını yalnız `gorunen()` hesaplar) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | kurulum ve çevrimdışı çalışma |
 | `data/atlas.json` | uygulamanın veri dosyası (yıllık alanlar, 12 aylık kara verisi, sınıflar) |
 | `data/doku.png`, `yukseklik.png`, `kabartma.jpg`, `kabartma_gri.jpg`, `kabartma_bir.jpg` | harita dokuları, ~0.066° (kıyı + okyanus uzaklığı + yumuşak sınıf; yükseklik; üç kabartma: editör görselinden, gri tonlu yükseklik haritasından ve ikisinin birleşimi — büyük biçim griden, ince doku editörden; uygulamada varsayılan birleşik). Editör görseli sahibin KONTURSUZ çıktısı olmalı: konturlu görselde tırtık gölgeye geçiyor |
