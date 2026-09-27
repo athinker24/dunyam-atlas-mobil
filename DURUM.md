@@ -87,6 +87,13 @@ tatlı göl, kuzey kolunun ucunda 4.050 km² tuz gölü. Uygulamada su katmanı
 (27 Eylül): ana kollar / bütün kollar, dokununca göl ve
 nehir bilgisi. Deltalar (158 delta, uygulamada çatallı ağızlar). Su deniz renkleriyle çizilir. Nehir çizgisi bütün ağa ortak kaydırma alanıyla kıvrılır, düz arazide (plato) 200-900 km'lik büyük kıvrım (sahibi: "çok düz"). Paralel dere tarakları birleştirildi (~35 km, sahibi: "olabildiğince az"). Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
 
+## Tektonik katman (27 Eylül)
+
+Arazi sekmesinde "Yükseklik / Levhalar". Levhalar, sınırlar ve volkan
+kuşakları; kural ve kaynaklar `TEKTONIK.md` sonunda. Veri
+`python tektonik/uygulama.py` ile (levha modeli değişirse elle koşulur).
+Merak Planet Advisor incelemesi askıda (sahibi: "bu bi dursun").
+
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
 
 `main`'e push'lar bir süre üretime gitmedi: Cloudflare'in üretim dalı `main`

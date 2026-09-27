@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana"},
+  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik"},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -246,6 +246,40 @@ function suHazirla(S){
     const k = /^nehir/.test(d.tur) ? 1 : /^yay/.test(d.tur) ? 2 : 3;
     return {...d, k, yollar, g: tabanK(d.q / Math.pow(c.length, 0.8)), kutu: kutu(Float32Array.from(c.flatMap(a => [...a])))}; });
   return {nehirler, goller, deltalar};
+}
+
+/* Tektonik: data/tektonik.json ve data/levha.png (tektonik/uygulama.py).
+   Sınırlar ve volkan kuşakları 0.01° fark kodlu; levha.png harita kutusuna
+   kırpılmış levha kimliği (gri ton = kimlik). */
+const LEVHA_RENK = {1:[201,166,107], 2:[217,140,95], 3:[181,138,216], 4:[224,192,96], 5:[111,179,160], 6:[224,122,138],
+  7:[143,191,90], 8:[91,143,214], 9:[79,176,198], 10:[122,127,208], 11:[76,120,168], 12:[154,184,200], 13:[138,160,184]};
+function tektHazirla(T, im){
+  if(!T || !im) return null;
+  const coz = kod => { const n = kod.length/2, a = new Float32Array(kod.length); let x = 0, y = 0;
+    for(let i=0;i<n;i++){ x += kod[2*i]; y += kod[2*i+1]; a[2*i] = x/100; a[2*i+1] = y/100; } return a; };
+  const kutu = a => { let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+    for(let i=0;i<a.length;i+=2){ x0=Math.min(x0,a[i]); x1=Math.max(x1,a[i]); y0=Math.min(y0,a[i+1]); y1=Math.max(y1,a[i+1]); }
+    return [x0,y0,x1,y1]; };
+  const yolKur = (a, kapat) => { const y = new Path2D(); y.moveTo(a[0], a[1]);
+    for(let i=2;i<a.length;i+=2) y.lineTo(a[i], a[i+1]); if(kapat) y.closePath(); return y; };
+  const sinirlar = T.sinirlar.map(s => { const p = coz(s.p); return {...s, p, yol: yolKur(p), kutu: kutu(p)}; });
+  const kusaklar = T.kusaklar.map(k => { const on = coz(k.on), arka = coz(k.arka), n = on.length/2;
+    // kuşak alanı: cephe boyunca git, arka çizgiden geri dön
+    const alan = new Float32Array(on.length*2); alan.set(on);
+    for(let i=0;i<n;i++){ alan[on.length + 2*i] = arka[2*(n-1-i)]; alan[on.length + 2*i+1] = arka[2*(n-1-i)+1]; }
+    return {...k, on, alanYol: yolKur(alan, true), onYol: yolKur(on), kutu: kutu(alan)}; });
+  const yariklar = T.yariklar.map(r => { const p = coz(r.p); return {...r, p, kutu: kutu(p)}; });
+  // levha kimliği ve boyalı levha tuvali (bir kez)
+  const w = im.naturalWidth, h = im.naturalHeight, cv = document.createElement("canvas");
+  cv.width = w; cv.height = h; const c = cv.getContext("2d", {willReadFrequently:true}); c.drawImage(im, 0, 0);
+  const px = c.getImageData(0, 0, w, h), kim = new Uint8Array(w*h);
+  for(let i=0;i<w*h;i++){ const k = px.data[4*i]; kim[i] = k;
+    const r = LEVHA_RENK[k]; if(r){ px.data[4*i] = r[0]; px.data[4*i+1] = r[1]; px.data[4*i+2] = r[2]; px.data[4*i+3] = 255; } else px.data[4*i+3] = 0; }
+  c.putImageData(px, 0, 0);
+  const K = T.kesit;
+  const levhaAt = (lon, lat) => { const x = Math.floor((lon-K[0])/(K[2]-K[0])*w), y = Math.floor((K[3]-lat)/(K[3]-K[1])*h);
+    return x < 0 || y < 0 || x >= w || y >= h ? 0 : kim[y*w + x]; };
+  return {levhalar: T.levhalar, siniflar: T.siniflar, sinirlar, kusaklar, yariklar, tuval: cv, kesit: K, levhaAt};
 }
 
 const PUSULA = ["kuzeyden","kuzeydoğudan","doğudan","güneydoğudan","güneyden","güneybatıdan","batıdan","kuzeybatıdan"];
@@ -626,6 +660,7 @@ function baslat(J, resimler){
   const D = veriHazirla(J), {W, H, N, B} = D;
   D.dol = dolasimHazirla(D, resimler.dolasim);
   D.su = suHazirla(resimler.su);
+  D.tk = tektHazirla(resimler.tekt, resimler.levha);
   // kabartma kaynaklari (kabartmaKur GL kurulurken cagrilir, once tanimli olmali)
   const KAB = {bir: resimler.kabartmaBir, editor: resimler.kabartma, gri: resimler.kabartmaGri};
   if(!KAB[ayar.kabartmaKaynak]) ayar.kabartmaKaynak = KAB.bir ? "bir" : "editor";
@@ -758,6 +793,7 @@ function baslat(J, resimler){
         c.imageSmoothingEnabled = false; c.setTransform(dpr*olcek,0,0,dpr*olcek,dpr*ox,dpr*oy); c.drawImage(yedekTuval, 0, 0);
       }
       suCiz();
+      if(TK) tektCiz();
       parcacik.gorunumDegisti();   // once: kaplama parcacik acikken akis cizgisi cizmesin
       kaplamaCiz();
     }
@@ -905,6 +941,115 @@ function baslat(J, resimler){
     suC.globalAlpha = 1;
   }
 
+  /* --- tektonik katman (Arazi > Levhalar): levha renkleri, sınırlar,
+     volkan kuşakları. Su katmanı gibi Canvas2D; kaydırırken CSS ile kayar.
+     Sınır renkleri yaygın levha haritası geleneği: yakınsak kırmızı (dişler
+     üst levhanın tarafında), ıraksak yeşil (kıta yarığı kesik), dönüşüm
+     turuncu. Yay volkanları: dalma hattına paralel, üst levhada 150-280 km
+     içeride bir kuşak ve cephede üçgenler; sönmüşler gri. */
+  const TK = D.tk, tkCv = $("#tekt"), tkC = tkCv.getContext("2d");
+  // denizde levha rengi daha soluk: koyu deniz bulanık görünmesin
+  if(TK){ const c = TK.tuval.getContext("2d"), tw = TK.tuval.width, th = TK.tuval.height, im = c.getImageData(0, 0, tw, th), K = TK.kesit;
+    for(let y=0;y<th;y++){ const la = K[3] - (y+0.5)*(K[3]-K[1])/th, gy = Math.floor((B[3]-la)/(B[3]-B[1])*H);
+      for(let x=0;x<tw;x++){ const q = 4*(y*tw + x); if(!im.data[q+3]) continue;
+        const lo = K[0] + (x+0.5)*(K[2]-K[0])/tw, gx = Math.floor((lo-B[0])/(B[2]-B[0])*W);
+        const kara = gx >= 0 && gy >= 0 && gx < W && gy < H && D.land[gy*W + gx];
+        im.data[q+3] = kara ? 255 : 120; } }
+    c.putImageData(im, 0, 0); }
+  const TK_RENK = {yak:"#e0563f", ira:"#3fbf8a", don:"#f0a23c", pas:"#9a9a9a"};
+  const tkTur = s => /^(SUB|OCB|CCB)$/.test(s) ? "yak" : /^(OSR|CRB)$/.test(s) ? "ira" : /^(OTF|CTF)$/.test(s) ? "don" : "pas";
+  const levhaModu = () => !!TK && katman === "arazi" && ayar.araziMod === "levha";
+  let tkCizilen = null;
+  // çizgi boyunca eşit aralıklı noktalar (derece uzayında), yön ile
+  function boyunca(p, aralik, f){
+    let kalan = aralik/2;
+    for(let i=0;i<p.length/2-1;i++){ const x0 = p[2*i], y0 = p[2*i+1], dx = p[2*i+2]-x0, dy = p[2*i+3]-y0, L = Math.hypot(dx, dy);
+      if(L === 0 || L > 20) continue;          // boylam dikişi
+      let t = kalan;
+      while(t <= L){ f(x0 + dx*t/L, y0 + dy*t/L, dx/L, dy/L); t += aralik; }
+      kalan = t - L; } }
+  function tektCiz(){
+    const imza = `${levhaModu()}|${katman}`;
+    if(tkCizilen && tkCizilen.imza === imza && harekette()){
+      const k = olcek/tkCizilen.olcek;
+      tkCv.style.transform = `translate(${(ox - tkCizilen.ox*k).toFixed(2)}px,${(oy - tkCizilen.oy*k).toFixed(2)}px) scale(${k.toFixed(5)})`;
+      return; }
+    tkCv.style.transform = ""; tkCizilen = {ox, oy, olcek, imza};
+    const r = tkCv.getBoundingClientRect(), w = Math.round(r.width*dpr), h = Math.round(r.height*dpr);
+    if(tkCv.width !== w || tkCv.height !== h){ tkCv.width = w; tkCv.height = h; }
+    tkC.setTransform(1,0,0,1,0,0); tkC.clearRect(0, 0, w, h);
+    if(!levhaModu()) return;
+    const g = gorunen(), sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H;
+    const lo0 = B[0] + (-ox/olcek - 4)*sx, lo1 = B[0] + ((g.w - ox)/olcek + 4)*sx;
+    const la1 = B[3] - (-oy/olcek - 4)*sy, la0 = B[3] - ((h/dpr - oy)/olcek + 4)*sy;
+    const icinde = k => !(k[2] < lo0 || k[0] > lo1 || k[3] < la0 || k[1] > la1);
+    const kx = olcek/sx, ky = olcek/sy, birim = 1/Math.sqrt(kx*ky);
+    // levha renkleri: y ekseni -enlem (resim kuzeyden güneye)
+    tkC.setTransform(dpr*kx, 0, 0, dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
+    const K = TK.kesit; tkC.globalAlpha = 0.34; tkC.imageSmoothingEnabled = false;
+    tkC.drawImage(TK.tuval, K[0], -K[3], K[2]-K[0], K[3]-K[1]); tkC.globalAlpha = 1;
+    tkC.setTransform(dpr*kx, 0, 0, -dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
+    tkC.save(); tkC.beginPath(); tkC.rect(B[0], B[1], B[2]-B[0], B[3]-B[1]); tkC.clip();   // harita kutusunun dışı boş
+    tkC.lineCap = "round"; tkC.lineJoin = "round";
+    // volkan kuşakları (alan), sonra sınırlar, en üstte volkan üçgenleri
+    for(const k of TK.kusaklar){ if(!icinde(k.kutu)) continue;
+      tkC.fillStyle = k.sonuk ? "rgba(150,142,132,.28)" : "rgba(255,112,56,.26)"; tkC.fill(k.alanYol); }
+    for(const s of TK.sinirlar){ if(!icinde(s.kutu)) continue;
+      const tur = tkTur(s.s);
+      tkC.strokeStyle = "rgba(11,17,22,.55)"; tkC.lineWidth = 3.4*birim; tkC.setLineDash([]); tkC.stroke(s.yol);
+      tkC.strokeStyle = TK_RENK[tur]; tkC.lineWidth = 1.8*birim;
+      tkC.setLineDash(s.s === "CRB" ? [5*birim, 3.5*birim] : []); tkC.stroke(s.yol); }
+    tkC.setLineDash([]);
+    // dişler: yakınsak sınırda üst levha tarafında üçgenler
+    tkC.fillStyle = TK_RENK.yak;
+    for(const s of TK.sinirlar){ if(!s.u || tkTur(s.s) !== "yak" || !icinde(s.kutu)) continue;
+      const b = 4.2*birim, yol = new Path2D();
+      boyunca(s.p, 16*birim, (x, y, tx, ty) => { const nx = -ty*s.u, ny = tx*s.u;
+        yol.moveTo(x - tx*b*0.7, y - ty*b*0.7); yol.lineTo(x + nx*b*1.2, y + ny*b*1.2); yol.lineTo(x + tx*b*0.7, y + ty*b*0.7); yol.closePath(); });
+      tkC.fill(yol); }
+    // volkanlar: yay cephesinde ve yarıklarda üçgen (ekranda yukarı bakar)
+    const ucgen = (yol, x, y, b) => { yol.moveTo(x - b, y - b*0.75); yol.lineTo(x + b, y - b*0.75); yol.lineTo(x, y + b); yol.closePath(); };
+    for(const [liste, anahtar, aralik] of [[TK.kusaklar, "on", 30], [TK.yariklar, "p", 46]]){
+      for(const k of liste){ if(!icinde(k.kutu)) continue;
+        const yol = new Path2D(), b = 3.6*birim;
+        boyunca(k[anahtar], aralik*birim, (x, y) => ucgen(yol, x, y, b));
+        tkC.fillStyle = anahtar === "p" ? "#f2c14e" : k.sonuk ? "#8f887e" : "#ff6a3d";
+        tkC.strokeStyle = "rgba(11,17,22,.7)"; tkC.lineWidth = 0.9*birim; tkC.fill(yol); tkC.stroke(yol); } }
+    tkC.restore();
+    // levha adları ve hızları: tohum noktasında, ekran uzayında
+    tkC.setTransform(dpr, 0, 0, dpr, 0, 0);
+    tkC.font = `600 11px system-ui, sans-serif`; tkC.textAlign = "center"; tkC.textBaseline = "middle";
+    for(const L of Object.values(TK.levhalar)){ const [la, lo] = L.tohum;
+      const X = ox + (lo-B[0])/sx*olcek, Y = oy + (B[3]-la)/sy*olcek;
+      if(X < 30 || X > g.w - 30 || Y < g.ust + 20 || Y > g.alt - 20 || la > B[3] - 1 || la < B[1] + 1 || lo < B[0] + 1 || lo > B[2] - 1) continue;
+      const hiz = L.hiz ? `${virgul(L.hiz.toFixed(1))} cm/yıl` : "sabit";
+      tkC.lineWidth = 3; tkC.strokeStyle = "rgba(11,17,22,.8)"; tkC.fillStyle = "#f1ece2";
+      tkC.strokeText(L.ad, X, Y - 7); tkC.fillText(L.ad, X, Y - 7);
+      tkC.font = `11px system-ui, sans-serif`; tkC.fillStyle = "#cfc8bb"; tkC.strokeText(hiz, X, Y + 7); tkC.fillText(hiz, X, Y + 7);
+      tkC.font = `600 11px system-ui, sans-serif`;
+      if(L.hiz){ const [ve, vn] = L.v, m = Math.hypot(ve, vn) || 1, ux = ve/m, uy = -vn/m, ax = X, ay = Y + 30, u = 6 + 1.5*Math.min(4, m);
+        tkC.strokeStyle = "rgba(11,17,22,.8)"; tkC.lineWidth = 4; tkC.beginPath(); tkC.moveTo(ax - ux*u, ay - uy*u); tkC.lineTo(ax + ux*u, ay + uy*u); tkC.stroke();
+        tkC.strokeStyle = "#f1ece2"; tkC.lineWidth = 1.6; tkC.beginPath(); tkC.moveTo(ax - ux*u, ay - uy*u); tkC.lineTo(ax + ux*u, ay + uy*u);
+        tkC.moveTo(ax + ux*u - ux*5 - uy*4, ay + uy*u - uy*5 + ux*4); tkC.lineTo(ax + ux*u, ay + uy*u); tkC.lineTo(ax + ux*u - ux*5 + uy*4, ay + uy*u - uy*5 - ux*4); tkC.stroke(); } }
+  }
+  // kart: levha, en yakın sınır (~250 km içinde), volkan kuşağı
+  function tektSatiri(lon, lat){
+    if(!levhaModu()) return "";
+    const out = [], cz = Math.cos(lat*Math.PI/180), km = (a, b) => Math.hypot((a-lon)*cz, b-lat)*111.2;
+    const L = TK.levhalar[TK.levhaAt(lon, lat)];
+    if(L) out.push(`<b>Levha</b> ${L.ad} (${L.tur}) · ${L.hiz ? `${L.yon} ${virgul(L.hiz.toFixed(1))} cm/yıl` : "hızlar buna göre ölçülür"}`);
+    let en = null, ed = 250;
+    for(const s of TK.sinirlar){ const k = s.kutu; if(lon < k[0]-3 || lon > k[2]+3 || lat < k[1]-3 || lat > k[3]+3) continue;
+      for(let i=0;i<s.p.length/2;i++){ const d = km(s.p[2*i], s.p[2*i+1]); if(d < ed){ ed = d; en = s; } } }
+    if(en) out.push(`<b>Sınır</b> ${en.ad}, ~${Math.max(10, Math.round(ed/10)*10)} km · ${TK.siniflar[en.s] || en.s}${en.n ? " · " + en.n.replace(/^\[tasarım\]\s*/, "") : ""}${/^\[tasarım\]/.test(en.n) ? " <small>(okyanusta, tasarım)</small>" : ""}`);
+    tkC.setTransform(1,0,0,1,0,0);
+    const kus = TK.kusaklar.find(k => lon >= k.kutu[0] && lon <= k.kutu[2] && lat >= k.kutu[1] && lat <= k.kutu[3] && tkC.isPointInPath(k.alanYol, lon, lat));
+    if(kus) out.push(`<b>Volkan</b> ${kus.sonuk ? "sönmüş yay kuşağı" : "etkin yay kuşağı"} · ${kus.ad}, bu kesimde yakınlaşma ~${virgul(kus.y.toFixed(1))} cm/yıl`);
+    else { const yr = TK.yariklar.find(r => { for(let i=0;i<r.p.length/2;i++) if(km(r.p[2*i], r.p[2*i+1]) < 60) return true; return false; });
+      if(yr) out.push(`<b>Volkan</b> yarık volkanizması, seyrek · ${yr.ad}`); }
+    return out.map(t => `<div class="k-tk">${t}</div>`).join("");
+  }
+
   /* Hareketli ruzgar: Windy/earth.nullschool usulu parcaciklar. Her parcacik
      hucre koordinatinda durur, her karede bulundugu yerdeki ruzgar kadar
      ilerler ve kisa bir iz birakir; iz her karede biraz soner. Parcaciklar
@@ -1028,7 +1173,7 @@ function baslat(J, resimler){
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
     if(!G) yedekBoya();
-    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi:"Arazi, yükseklik",
+    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : "Arazi, yükseklik",
       sicaklik: ayar.sicMod!=="ort" && gunlukAl(D) ? "Sıcaklık, "+SIC_MOD[ayar.sicMod]+", "+(donem<0 ? (ayar.sicMod==="tepe" ? "yılın en sıcak ayı" : ayar.sicMod==="dip" ? "yılın en soğuk ayı" : "yıllık ortalama") : AYLAR[donem])
         : "Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
@@ -1078,7 +1223,14 @@ function baslat(J, resimler){
     const sicNot = katman==="sicaklik" && gunlukAl(D) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Sıcaklık türü">`
       + [["ort","Ortalama"],["gunduz","Gündüz"],["gece","Gece"],["tepe","Tepe"],["dip","Dip"]].map(([k,t]) =>
         `<button role="radio" data-sicmod="${k}" aria-checked="${ayar.sicMod===k}">${t}</button>`).join("") + `</div></div>` : "";
-    el.innerHTML = dolNot + sicNot + `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
+    const araziSec = katman==="arazi" && TK ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Arazi görünümü">`
+      + `<button role="radio" data-arazimod="yukseklik" aria-checked="${ayar.araziMod!=="levha"}">Yükseklik</button>`
+      + `<button role="radio" data-arazimod="levha" aria-checked="${ayar.araziMod==="levha"}">Levhalar</button></div></div>` : "";
+    if(katman==="arazi" && TK && ayar.araziMod==="levha"){
+      el.innerHTML = araziSec + `<div class="tk-not"><span><i class="yak"></i>yakınsak</span><span><i class="ira"></i>ıraksak</span>`
+        + `<span><i class="don"></i>dönüşüm</span><span><b class="vk"></b>volkan</span><span><b class="vk s"></b>sönmüş</span></div>`;
+      return; }
+    el.innerHTML = araziSec + dolNot + sicNot + `<div class="olcek"><div class="serit" style="background:${o.serit}"></div><div class="etiketler">`
       + o.etiket.map((e,k)=>`<span style="left:${e.x*100}%">${e.t}${k===o.etiket.length-1?` <span class="birim">${o.birim}</span>`:""}</span>`).join("")
       + `</div></div>`;
     etiketCakismasi();
@@ -1098,7 +1250,8 @@ function baslat(J, resimler){
   addEventListener("resize", () => etiketCakismasi());
 
   $("#aciklama").addEventListener("click", e => {
-    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]");
+    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]");
+    if(am){ ayar.araziMod = am.dataset.arazimod; ayarYaz(); katmanSec("arazi"); ciz(); }
     if(sm){ ayar.sicMod = sm.dataset.sicmod; ayarYaz(); katmanSec("sicaklik"); }
     if(z){ ayar.dolZemin = z.dataset.zemin; ayarYaz(); katmanSec("dolasim"); }
     if(p){ ayar.parcacik = !ayar.parcacik; ayarYaz(); aciklamaYaz(); ciz(); }
@@ -1198,6 +1351,7 @@ function baslat(J, resimler){
       + gunSatiri(gun)
       + karSatiri(j)
       + suSatiri(lon, lat)
+      + tektSatiri(lon, lat)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
   }
   // "Temmuz: gündüz 33°, gece 22° · her yıl ~41° / ~18° · 30 yılda bir ~46°"
@@ -1317,6 +1471,7 @@ function baslat(J, resimler){
       + `<small>${donem<0 ? "yıllık ortalama" : AYLAR[donem]} · ${kiyi}</small></div></div>`
       + (sayilar ? `<div class="k-sayilar">${sayilar}</div>` : "") + serit
       + satirlar.map(t => `<div class="k-gun">${t}</div>`).join("")
+      + tektSatiri(lon, lat)
       + `<div class="k-alt"><span>${konum}</span><span>derinlik verisi yok</span></div>`;
   }
   function kartKapat(){ sec = null; $("#kart").hidden = true; ciz(); }
@@ -1442,14 +1597,17 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
       resimYukle("data/dolasim.png").catch(() => null),
       // su katmani istege bagli: dosya yoksa ya da bozuksa harita yine acilir
-      fetch("data/su.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su};
+      fetch("data/su.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null),
+      // tektonik katman da istege bagli (tektonik/uygulama.py)
+      fetch("data/tektonik.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null),
+      resimYukle("data/levha.png").catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);

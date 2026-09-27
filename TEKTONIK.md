@@ -270,3 +270,26 @@ gösteriyordu.
 (sınıflanmış adımlar, PB2002 `steps` karşılığı), `levha_kimlik.png` (0,1°
 levha kimliği rasterı), `levha_dunya.png`, `levha_kure.png`, `levha_haritasi.png`.
 
+
+## Uygulamada (27 Eylül, sahibi: "tektonik haritasını uygulamaya yükle, volkan kuşakları ile birlikte")
+
+Arazi sekmesi → **Levhalar**. Veri `tektonik/uygulama.py`'den (`data/tektonik.json`,
+`data/levha.png`); levha modeli yeniden koşulmaz, bu klasörün çıktıları okunur.
+
+- Levha renkleri (denizde soluk), adları, Kuzey'e göre hızı ve yön oku.
+- Sınırlar `sinirlar.geojson` adımlarından: yakınsak (dalma, okyanusal
+  yakınlaşma, kıta çarpışması) kırmızı ve üst levha tarafında dişli; ıraksak
+  (sırt, kıta yarığı kesik) yeşil; dönüşüm turuncu. Dişlerin tarafı
+  geometriden: çizginin iki yanında levha kimliğine bakılır.
+- **Volkan kuşakları (kural, ölçütle):** yay volkanları dalma ve okyanusal
+  yakınlaşma adımlarında, üst levhada; cephe hendekten 150 km, kuşak
+  150-280 km. Kaynak: volkan cephesi dalan levhanın ~100-130 km derinliğe
+  indiği yerin üstünde (Syracuse ve Abers 2006), hendek-yay uzaklığı
+  çoğunlukla 100-300 km (Dickinson 1973). Yakınlaşma 1 cm/yıl altındaysa yay
+  yok. Baskın sınıfı kıta çarpışması olan sınırda yay yok (Duvar dikişi;
+  Himalaya'da etkin yay volkanı yok). Kıta yarıklarında seyrek yarık
+  volkanları (sarı). Sönmüş: güneybatı bloğunun batı kıyısında 12°K güneyi
+  (bölüm 4, `harita.py`'deki işaretlerle aynı). Okyanus sırtları da
+  volkaniktir, su altında; ayrı kuşak çizilmez. Sıcak nokta tanımlı değil.
+- Sonuç: 35 yay kuşağı parçası (4'ü sönmüş), 7 yarık. Okyanustaki sınırlar
+  ve onların yayları [tasarım]; kart bunu belirtir.
