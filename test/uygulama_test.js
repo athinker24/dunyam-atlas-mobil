@@ -177,11 +177,16 @@ const OLC = () => {
     if (dol) {
       await p.evaluate(() => document.querySelector("[data-k=dolasim]").click()); await bekle(400);
       await p.evaluate(() => document.querySelectorAll("#donem button")[1].click()); await bekle(400);
+      // Kare yazilim GPU'da (SwiftShader) yarim saniyeyi asabiliyor: sabit
+      // bekleme yerine kaplamanin dolmasi beklenir (en cok 5 s)
+      await p.waitForFunction(() => document.querySelectorAll("#kaplama path.ruzgar").length > 0, null, { timeout: 5000 }).catch(() => {});
       const d = await p.evaluate(() => ({ cizgi: [...document.querySelectorAll("#kaplama path.ruzgar")].reduce((t, e) => t + e.getAttribute("d").split("M").length - 1, 0),
         akinti: document.querySelectorAll("#kaplama marker").length ? window.__atlas.D.akintilar.length : 0 }));
       denetle("dolasim: ruzgar cizgileri ve akintilar ciziliyor", d.cizgi > 20 && d.akinti > 0, `${d.cizgi} parca, ${d.akinti} akinti`);
       // hareketli ruzgar: parcacik tuvaline bir saniyede bir seyler cizilmeli
       await p.evaluate(() => document.querySelector("#parcacik-ac").click()); await bekle(1200);
+      await p.waitForFunction(() => { const c = document.querySelector("#parcacik"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 40 && ++n > 500) return true; return false; }, null, { timeout: 5000 }).catch(() => {});
       const pc = await p.evaluate(() => { const c = document.querySelector("#parcacik"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 40) n++; return { n, gizli: c.hidden }; });
       denetle("dolasim: hareketli ruzgar parcaciklari ciziliyor", !pc.gizli && pc.n > 500, `${pc.n} piksel`);
@@ -196,6 +201,7 @@ const OLC = () => {
     if (await p.evaluate(() => !!window.__atlas.D.su)) {
       const suPiksel = () => p.evaluate(() => { const c = document.querySelector("#su"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
+      await p.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));   // cizim bitsin
       const ana = await suPiksel();
       await p.evaluate(() => document.querySelector("[data-sukol=tum]").click()); await bekle(400);
       const tum = await suPiksel();

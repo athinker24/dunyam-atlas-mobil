@@ -203,7 +203,7 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
         kes = [0] + [i for i in range(1, len(h) - 1) if int(h[i]) in sabit] + [len(h) - 1]
         pts, qs = [p[0]], [qq[0]]
         for a, b in zip(kes[:-1], kes[1:]):
-            parca = rdp(alan(sik_ornekle(rdp(p[a:b + 1], 0.3))), 0.04)
+            parca = rdp(alan(sik_ornekle(rdp(p[a:b + 1], 0.3), 0.4)), 0.1)
             # her yeni noktanın debisi: özgün yoldaki en yakın hücreden
             for v in parca[1:]:
                 j = a + int(np.argmin(np.hypot(*(p[a:b + 1] - v).T)))
