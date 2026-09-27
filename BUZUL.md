@@ -47,7 +47,7 @@ buzul çağına benzer: dağlar buzla dolu, ovalar kuru ve soğuk bozkır.
 
 - **Moren seti gölleri** (Garda, Como, Maggiore türü): büyük vadi
   buzullarının dilinde, oluğun ağzında. 172 aday: 26 büyük (besleyen buzul
-  ≥ 10.000 km²), 58 orta, 88 küçük. Büyüklerin 19'u Duvar'da. Duvar'ın
+  ≥ 10.000 km²), 58 orta, 88 küçük. Büyüklerin 21'i Duvar'ın iki yüzünde (4'ü kuzey yüzde plato kenarında), 3'ü 2'de, 2'si 1'de. Duvar'ın
   **güney** yüzündekiler 500-900 m'de, güneydeki ovaya açılıyor: İtalyan
   gölleri ile Po ovasının birebir karşılığı. **Kuzey** yüzündekiler plato
   kenarında 1.000-2.000 m'de; plato kurak, bunların bir kısmı çıkışsız ve
@@ -60,7 +60,7 @@ buzul çağına benzer: dağlar buzla dolu, ovalar kuru ve soğuk bozkır.
   4 (309). Bugün buzsuz olanlar sirk gölü (tarn) adayı.
 - **U vadileri:** buzlu vadilerin hepsi; kazıma şiddeti buz hızının
   karesiyle ölçeklendi (Herman vd. 2015), en güçlüsü Duvar'ın güney yüzü.
-- **4 (Alp benzeri):** 15-20°K'de kaldığı için buzul çağında bile küçük
+- **4 (Alp benzeri):** ~11°K'de kaldığı için buzul çağında bile küçük
   vadi buzulları var, büyük göl yok (1 orta, 1 küçük aday). Gerçek Alpler
   46°K'de.
 - 6, 7, 8, 10, 11, takımada ve güneydeki alt kıta: buzul yok denecek kadar az.
