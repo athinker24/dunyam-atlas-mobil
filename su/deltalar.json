@@ -1746,6 +1746,27 @@
   },
   {
    "enlem_boylam": [
+    29.49,
+    -13.32
+   ],
+   "hucre": 586525,
+   "hedef": "deniz",
+   "gol": null,
+   "debi_m3s": 163,
+   "havza_km2": 17441,
+   "en_yuksek_m": 3706,
+   "sicaklik_c": 16.7,
+   "buzul_yuzde": 0.0,
+   "gol_tutar": 0.0,
+   "cokel_mt_yil": 8.2,
+   "ruzgar_ms": 8.1,
+   "acik_su_km": 9,
+   "dalga_m": 0.49,
+   "gosterge": 45.9,
+   "tur": "yay biçimli (dalga törpüler)"
+  },
+  {
+   "enlem_boylam": [
     21.84,
     -33.97
    ],
@@ -1809,6 +1830,27 @@
   },
   {
    "enlem_boylam": [
+    27.82,
+    -14.55
+   ],
+   "hucre": 610717,
+   "hedef": "deniz",
+   "gol": null,
+   "debi_m3s": 61,
+   "havza_km2": 30806,
+   "en_yuksek_m": 4020,
+   "sicaklik_c": 15.5,
+   "buzul_yuzde": 0.0,
+   "gol_tutar": 0.0,
+   "cokel_mt_yil": 8.1,
+   "ruzgar_ms": 7.5,
+   "acik_su_km": 50,
+   "dalga_m": 0.83,
+   "gosterge": 12.8,
+   "tur": "küçük, dalga baskın"
+  },
+  {
+   "enlem_boylam": [
     39.16,
     20.61
    ],
@@ -1851,6 +1893,27 @@
   },
   {
    "enlem_boylam": [
+    23.77,
+    -7.43
+   ],
+   "hucre": 669402,
+   "hedef": "deniz",
+   "gol": null,
+   "debi_m3s": 133,
+   "havza_km2": 48524,
+   "en_yuksek_m": 2059,
+   "sicaklik_c": 18.1,
+   "buzul_yuzde": 0.0,
+   "gol_tutar": 0.0,
+   "cokel_mt_yil": 7.7,
+   "ruzgar_ms": 6.5,
+   "acik_su_km": 78,
+   "dalga_m": 0.78,
+   "gosterge": 13.9,
+   "tur": "küçük, dalga baskın"
+  },
+  {
+   "enlem_boylam": [
     12.7,
     14.9
    ],
@@ -1869,27 +1932,6 @@
    "dalga_m": 0.59,
    "gosterge": 27.0,
    "tur": "yay biçimli (dalga törpüler)"
-  },
-  {
-   "enlem_boylam": [
-    27.82,
-    -14.55
-   ],
-   "hucre": 610717,
-   "hedef": "deniz",
-   "gol": null,
-   "debi_m3s": 53,
-   "havza_km2": 29541,
-   "en_yuksek_m": 4020,
-   "sicaklik_c": 15.3,
-   "buzul_yuzde": 0.0,
-   "gol_tutar": 0.0,
-   "cokel_mt_yil": 7.5,
-   "ruzgar_ms": 7.5,
-   "acik_su_km": 50,
-   "dalga_m": 0.83,
-   "gosterge": 11.8,
-   "tur": "küçük, dalga baskın"
   },
   {
    "enlem_boylam": [
@@ -1974,27 +2016,6 @@
    "dalga_m": 0.5,
    "gosterge": 36.0,
    "tur": "yay biçimli (dalga törpüler)"
-  },
-  {
-   "enlem_boylam": [
-    23.77,
-    -7.43
-   ],
-   "hucre": 669402,
-   "hedef": "deniz",
-   "gol": null,
-   "debi_m3s": 101,
-   "havza_km2": 42240,
-   "en_yuksek_m": 2059,
-   "sicaklik_c": 17.8,
-   "buzul_yuzde": 0.0,
-   "gol_tutar": 0.0,
-   "cokel_mt_yil": 6.5,
-   "ruzgar_ms": 6.5,
-   "acik_su_km": 78,
-   "dalga_m": 0.78,
-   "gosterge": 11.8,
-   "tur": "küçük, dalga baskın"
   },
   {
    "enlem_boylam": [
@@ -3275,6 +3296,27 @@
    "acik_su_km": 0,
    "dalga_m": 0.5,
    "gosterge": 4.1,
+   "tur": "küçük, dalga baskın"
+  },
+  {
+   "enlem_boylam": [
+    28.78,
+    -14.37
+   ],
+   "hucre": 596705,
+   "hedef": "deniz",
+   "gol": null,
+   "debi_m3s": 55,
+   "havza_km2": 5777,
+   "en_yuksek_m": 764,
+   "sicaklik_c": 19.8,
+   "buzul_yuzde": 0.0,
+   "gol_tutar": 0.0,
+   "cokel_mt_yil": 0.8,
+   "ruzgar_ms": 8.3,
+   "acik_su_km": 10,
+   "dalga_m": 0.52,
+   "gosterge": 4.0,
    "tur": "küçük, dalga baskın"
   },
   {

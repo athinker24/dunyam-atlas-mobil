@@ -13,6 +13,7 @@ Buzul geçmişinden (`BUZUL.md`) sonraki katman. Sayılar `su/su.json`'da
 | en küçük göl | 300 km² (buzul gölü 100 km²) | küçük lekeler fırçadan |
 | göl payı | karanın **%1.68**'i, 95 göl | Dünya %1.8 (HydroLAKES, Messager vd. 2016) |
 | nehir | debi ≥ 50 m³/s veri, ≥ 100 m³/s ve ≥ 120 km haritada | kısa yamaç derecikleri kıta ölçeğinde gürültü |
+| adalar | ana kıtaya bağlı olmayan karada nehir eşiği 3 m³/s, denize dökülen kol ≥ 60 km, yan kol ≥ 40 km; paralel dereler adada 3 m³/s'den birleştirilir (ana kıta değişmez) | 50 m³/s eşiği adaların bütün nehirlerini siliyordu (takımadada 781 bin km², akış ~90 mm/yıl, en büyük debi ~100 m³/s). Akdeniz adalarının en büyük nehirleri de eşiğin altında: Simeto ~25, Tirso ~17 m³/s. Atlaslar adada nehri boyla seçer. Adalarda kol 7 → 175 (27 Eylül, sahibi: "adalarda su yok"); `su/ada_kiyas.png` |
 | paralel kollar | ~35 km (4 hücre) içinde paralel akan kol büyük komşusuna katılır (`nehir.paralel_birlestir`, 4 tur) | yumuşatılmış dağ eteğinde 200 km boyunca 6-12 km arayla birleşmeyen dere tarakları çıkıyordu; Hack yasasına göre 200 km'lik nehrin havzası ~4.000 km², eni 20-25 km. Sahibi: "olabildiğince az". Kol 1488 → 1217, denize dökülen ≥ 50 m³/s ağız 424 → 287, komşu ağız arası medyan 30 → 81 km; yarıçap 2 ve 3 de denendi, 4 en az tarak bıraktı (`su/paralel_kiyas.png`: üstte önce, altta sonra) |
 
 ## Uygulamada
@@ -114,7 +115,7 @@ hızı ve açık su mesafesinden (SPM 1977). Gösterge X = çökel / H^2.4
 Nil ~45, açık kıyıda küçük nehir ~1). **Gelgit bilinmiyor** (Dünyam'ın ayı
 tanımlı değil): Ganj türü gelgit deltası değerlendirilemez.
 
-- 158 delta: 17 nehir baskın (kuş ayağı / loblu), 61 yay biçimli, 80 küçük;
+- 160 delta (ikisi takımadada): 17 nehir baskın (kuş ayağı / loblu), 62 yay biçimli, 81 küçük;
   30'u göle dökülür (paralel kollar birleşince 132'den arttı: birleşen kolun çökeli eşiği aşıyor). Sayılar `su/deltalar.json`.
 - En büyükler: ova nehri (26.3°K 4.1°D, iç deniz) yılda ~730 milyon ton,
   Ganj-Brahmaputra'nın doğal hâli ~1.000; güneybatı platosu nehri

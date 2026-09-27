@@ -27,6 +27,24 @@ from scipy import ndimage
 
 BURASI = os.path.dirname(os.path.abspath(__file__)); KOK = os.path.dirname(BURASI)
 NEHIR_Q = 50.0
+# Adalar (ana kıtaya bağlı olmayan kara) (27 Eylül, sahibi: "adalarda su
+# yok"): 50 m³/s eşiği adaların bütün nehirlerini siliyordu. Gerçekte büyük
+# Akdeniz adalarının en büyük nehirleri bu eşiğin altında: Simeto (Sicilya)
+# ~25, Tirso (Sardinya, 152 km) ~17 m³/s. Takımadanın akışı yılda ~90 mm
+# (yarı kurak): 10 m³/s eşiği bile ana adada yalnız birkaç kol bırakıyordu.
+# Atlaslar adada nehri debiyle değil boyla seçer (kurak adaların mevsimlik
+# nehirleri de çizilir). Adada: debi >= 3 m³/s (ağ bağlı kalsın), denize
+# dökülen kol en az 60 km, yan kol en az 40 km (yoksa kıyı boyunca kısa
+# dere tarağı çıkar). Kademe ada ölçeğinde: ana nehirler orta ölçekte görünür.
+ADA_Q, ADA_BOY, ADA_KOL_BOY = 3.0, 60.0, 40.0
+
+
+def kademe_ada(q, L):
+    if q >= 300 or L >= 300:
+        return 2
+    if q >= 60 or L >= 120:
+        return 3
+    return 4
 
 
 def kademe(q, L):
@@ -175,7 +193,10 @@ def sik_ornekle(p, adim=0.25):
 def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
     ny, nx = q.shape
     qf, bf = q.ravel(), boy.ravel()
-    nm = (qf >= NEHIR_Q) & ~gm.ravel() & ~deniz.ravel()
+    kara_lab, _ = ndimage.label(~deniz, np.ones((3, 3)))
+    ana_kita = np.bincount(kara_lab.ravel())[1:].argmax() + 1
+    ada = ((kara_lab != ana_kita) & ~deniz).ravel()
+    nm = (qf >= np.where(ada, ADA_Q, NEHIR_Q)) & ~gm.ravel() & ~deniz.ravel()
     idx = np.where(nm)[0]
     # nehir içi çocuk listeleri
     g = nm[np.maximum(alici, 0)] & (alici >= 0) & nm
@@ -195,7 +216,12 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
                 break
             x = int(ch[np.argmax(bf[ch])]); stem.append(x)
         L = bf[c]
-        k = max(ust_k if katilim is not None else 1, kademe(qf[c], L))
+        if ada[c]:
+            if L < (ADA_BOY if katilim is None else ADA_KOL_BOY):
+                continue                            # adada kısa kıyı deresi / kısa yan kol
+            k = max(ust_k if katilim is not None else 1, kademe_ada(qf[c], L))
+        else:
+            k = max(ust_k if katilim is not None else 1, kademe(qf[c], L))
         stem = stem[::-1]                       # kaynaktan ağıza
         # ağız: denize/göle giren ya da katıldığı hücre sona eklenir
         uc = katilim if katilim is not None else (alici[c] if alici[c] >= 0 else None)

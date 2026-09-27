@@ -72,6 +72,16 @@ def coz(k, z, zr, kim, alan):
         sira = nehir.sira_kur(alici)
         q = nehir.debi(alici, sira, kaynak, gm).reshape(z.shape) / nehir.SANIYE_YIL
         print("paralel birleştirme tur %d: %d hücre" % (tur + 1, n))
+    # adalarda küçük dereler de (disa.ADA_Q = 3 m³/s çizilir); ana kıtaya
+    # dokunulmaz: orada 20 m³/s altını birleştirmek ağı baştan değiştiriyordu
+    # (1383 -> 1649 kol, 27 Eylül)
+    lab, _ = ndimage.label(~deniz, np.ones((3, 3)))
+    anakara = lab == (np.bincount(lab.ravel())[1:].argmax() + 1)
+    for tur in range(PARALEL_TUR):
+        alici, n = nehir.paralel_birlestir(alici, q, yuz, z.shape, yasak=gm | deniz | anakara, esik=3.0)
+        sira = nehir.sira_kur(alici)
+        q = nehir.debi(alici, sira, kaynak, gm).reshape(z.shape) / nehir.SANIYE_YIL
+        print("adalarda paralel birleştirme tur %d: %d hücre" % (tur + 1, n))
     # kaynağa en uzak yol boyu (km): kısa yamaç derelerini ayıklamak için
     ny, nx = z.shape
     dyk = 6371 * np.radians(abs(k["lat"][1] - k["lat"][0]))
