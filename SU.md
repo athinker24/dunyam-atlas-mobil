@@ -24,8 +24,10 @@ ayrı. Kademe: 1 = Q ≥ 2000 m³/s ya da ≥ 1500 km (40 kol), 2 = ≥ 600 ya d
 "Bütün kollar" hepsini çizer. Kalınlık debiyle akış yönünde artar. Su
 denizin kendi renkleriyle çizilir (sığ ton, kıyı köpüğü; büyük kollarda
 kıyıdaki gibi hafif ışıltı); tuz gölü kurumuş kum tonu, noktasız ince kıyı.
-Nehir çizgisi: basamaklar silinir, köşeler yuvarlanır, uzun dalga boylu
-hafif menderes (ovada belirgin, dağda az). Göle ya da nehre dokununca
+Nehir çizgisi: basamaklar silinir, köşeler yuvarlanır, sonra bütün ağa
+ortak yumuşak bir kaydırma alanıyla kıvrılır (1.6-24 hücre dalga boyu, ovada
+tam, dağda yarı genlik; `disa.KaydirmaAlani`). Alan konumun işlevi olduğu
+için ana kol ile ona katılan kol birleşme noktasında aynı kayar, bağ kopmaz. Göle ya da nehre dokununca
 kartta alan/derinlik/yüzey ya da o noktadaki debi. **Veri iş akışı
 (veri.yml) bu dosyayı üretmez**: iklim değişirse yukarıdaki komutlar elle
 koşulur.

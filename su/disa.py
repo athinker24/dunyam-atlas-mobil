@@ -82,19 +82,70 @@ def yumusak_kivrim(p, rng, egim=None):
     d = np.hypot(*np.diff(p, axis=0).T); s = np.concatenate([[0], np.cumsum(d)]); L = s[-1]
     if L < 2:
         return p
-    n = max(int(L / 0.5), 2)
+    n = max(int(L / 0.25), 2)
     t = np.linspace(0, L, n + 1)
     x = np.interp(t, s, p[:, 0]); y = np.interp(t, s, p[:, 1])
     dx = np.gradient(x); dy = np.gradient(y); nn = np.hypot(dx, dy) + 1e-9
     nx_, ny_ = -dy / nn, dx / nn
     # genlik dalga boyuyla orantılı (ovada 0.11, dağda 0.045 × dalga boyu;
     # sabit 0.45 hücre yakından bakınca bile görünmüyordu)
-    k = 0.11 if (egim is None or egim < 0.6) else 0.045
+    k = 0.2 if (egim is None or egim < 0.6) else 0.11   # 27 Eylül: 0.11/0.045 telefonda "çok düz"
     off = sum(k * lam * w * np.sin(2 * np.pi * t / lam + rng.uniform(0, 2 * np.pi))
-              for lam, w in ((7, 0.5), (13, 0.35), (23, 0.25)))
+              for lam, w in ((2.5, 0.35), (4, 0.45), (7, 0.5), (13, 0.35), (23, 0.25)))
     off = off * np.sin(np.pi * t / L)
     q = np.column_stack([x + nx_ * off, y + ny_ * off])
-    return rdp(q, 0.06)
+    return rdp(q, 0.04)
+
+
+class KaydirmaAlani:
+    """Bütün nehir ağına ortak, yumuşak 2B kaydırma alanı (hücre birimi).
+
+    Her kola ayrı kıvrım verilince birleşme noktalarında sıfıra inmesi
+    gerekiyordu; çok kol alan ana kollar kısa parçalara bölündüğü için düz
+    kalıyordu. Alan konumun işlevi olduğu için ana kol ve ona katılan kol
+    birleşme noktasında AYNI kadar kayar: bağ kopmaz, kıvrım kesilmez.
+    Yön ve dalga boyu (2.5-24 hücre) rastgele sabit bileşenlerin toplamı.
+    Genlik ovada tam, dağda (eğim > 25 m/hücre) yarıya iner.
+    """
+    def __init__(self, Z, shape, rng, genlik=1.25):
+        self.ny, self.nx = shape
+        self.bil = []
+        for lam, w in ((1.6, 0.14), (2.5, 0.22), (4, 0.3), (6.5, 0.35), (10, 0.35), (16, 0.3), (24, 0.25)):
+            for _ in range(2):
+                phi = rng.uniform(0, np.pi); theta = rng.uniform(0, 2 * np.pi)
+                self.bil.append((lam, w * genlik / 2 ** 0.5, np.cos(phi), np.sin(phi), np.cos(theta), np.sin(theta), rng.uniform(0, 2 * np.pi)))
+        if Z is not None:
+            z = Z.reshape(shape)
+            gy, gx = np.gradient(np.maximum(z, 0))
+            e = ndimage.gaussian_filter(np.hypot(gx, gy), 2)
+            self.carpan = np.clip(1.0 - 0.5 * np.clip((e - 8) / 25, 0, 1), 0.5, 1.0)
+        else:
+            self.carpan = None
+
+    def __call__(self, p):
+        x, y = p[:, 0], p[:, 1]
+        dx = np.zeros(len(p)); dy = np.zeros(len(p))
+        for lam, w, c, s_, dxv, dyv, ps in self.bil:
+            v = w * np.sin(2 * np.pi * (x * c + y * s_) / lam + ps)
+            dx += v * dxv; dy += v * dyv
+        if self.carpan is not None:
+            i = np.clip(np.round(y).astype(int), 0, self.ny - 1); j = np.clip(np.round(x).astype(int), 0, self.nx - 1)
+            k = self.carpan[i, j]; dx *= k; dy *= k
+        return np.column_stack([x + dx, y + dy])
+
+
+def sik_ornekle(p, adim=0.25):
+    """Köşeleri yuvarla (Chaikin, 2 tur, uçlar sabit) ve eşit aralıkla örnekle."""
+    for _ in range(2):
+        if len(p) < 3:
+            break
+        q1 = 0.75 * p[:-1] + 0.25 * p[1:]; q2 = 0.25 * p[:-1] + 0.75 * p[1:]
+        p = np.vstack([p[:1], np.column_stack([q1, q2]).reshape(-1, 2)[1:-1], p[-1:]])
+    d = np.hypot(*np.diff(p, axis=0).T); s = np.concatenate([[0], np.cumsum(d)]); L = s[-1]
+    if L < 1e-6:
+        return p
+    t = np.linspace(0, L, max(int(L / adim), 1) + 1)
+    return np.column_stack([np.interp(t, s, p[:, 0]), np.interp(t, s, p[:, 1])])
 
 
 def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
@@ -140,6 +191,9 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
     # birleşme noktaları: her kolun katıldığı hücre, ana kolda sabit tepe
     sabit = set(kol["katilim"] for kol in kollar if kol["katilim"] is not None)
     rng = np.random.default_rng(1492)
+    alan = KaydirmaAlani(Z, (ny, nx), np.random.default_rng(1493))
+    global KAYDIR
+    KAYDIR = alan              # delta.py delta kollarını aynı alanla kaydırır
     cikis = []
     for kol in kollar:
         h = np.array(kol["hucre"])
@@ -149,8 +203,7 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
         kes = [0] + [i for i in range(1, len(h) - 1) if int(h[i]) in sabit] + [len(h) - 1]
         pts, qs = [p[0]], [qq[0]]
         for a, b in zip(kes[:-1], kes[1:]):
-            parca = yumusak_kivrim(rdp(p[a:b + 1], 0.3), rng,
-                                   egim=None if Z is None else (Z[h[a]] - Z[h[b]]) / max((b - a) * 8.0, 1.0))
+            parca = rdp(alan(sik_ornekle(rdp(p[a:b + 1], 0.3))), 0.04)
             # her yeni noktanın debisi: özgün yoldaki en yakın hücreden
             for v in parca[1:]:
                 j = a + int(np.argmin(np.hypot(*(p[a:b + 1] - v).T)))
