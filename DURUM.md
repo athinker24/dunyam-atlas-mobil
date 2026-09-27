@@ -83,8 +83,9 @@ moren seti gölü adayı (26 büyük, çoğu Duvar'da), 12 fiyort (kuzey kıyıs
 Giriş noktası **`SU.md`**. Karar: fırça izleri yumuşatıldı, eşik aşınması
 200 m, 300 km² altı göl yok. Göller karanın %1.68'i (95 göl). Sahibin
 isteğiyle (kurgu) plato kolu boğazla iç denize, boğaz ağzında 10.066 km²
-tatlı göl, kuzey kolunun ucunda 4.050 km² tuz gölü. Sıradaki: uygulamaya
-göl/nehir katmanı (sahibi isterse), aylık akış rejimi.
+tatlı göl, kuzey kolunun ucunda 4.050 km² tuz gölü. Uygulamada su katmanı
+`su-katmani` dalında (27 Eylül): ana kollar / bütün kollar, dokununca göl ve
+nehir bilgisi. Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
 

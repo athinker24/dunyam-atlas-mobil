@@ -39,7 +39,8 @@ svg{display:block}
 /* ---- harita ---- */
 #harita{position:fixed;inset:0;touch-action:none;user-select:none;-webkit-user-select:none}
 #gl{position:absolute;inset:0;width:100%;height:100%}
-#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#su,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#su{transform-origin:0 0;will-change:transform}
 #kaplama{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transform-origin:0 0;will-change:transform}
 #kaplama text{font:500 10px var(--sans);letter-spacing:.06em;fill:rgba(228,223,211,.5)}
 
@@ -119,8 +120,9 @@ svg{display:block}
 .k-sayilar span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--soluk)}
 .klimagram{width:100%;height:auto}
 .klimagram text{font:10px var(--sans);fill:var(--soluk)}
-.k-kar,.k-gun{font-size:12px;color:var(--soluk);margin:2px 0 2px}
-.k-kar b,.k-gun b{color:var(--yazi);font-weight:500;margin-right:2px}
+.k-kar,.k-gun,.k-su{font-size:12px;color:var(--soluk);margin:2px 0 2px}
+.k-kar b,.k-gun b,.k-su b{color:var(--yazi);font-weight:500;margin-right:2px}
+.k-su b{color:#9cc9e8}
 .k-serit{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;margin:2px 0 8px;text-align:center;font-size:10px;color:var(--soluk)}
 .k-serit div{display:flex;flex-direction:column;align-items:center;padding:2px 0;border-radius:4px}
 .k-serit div.sec{background:rgba(255,255,255,.07);color:var(--yazi)}

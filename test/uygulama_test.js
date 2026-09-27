@@ -190,6 +190,32 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-zemin=sst]").click()); await bekle(200);
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
+    // su katmani (veride su.json varsa): goller ve nehirler #su tuvaline
+    // cizilmeli; "Butun kollar" daha cok cizmeli; anahtar kapatinca bos;
+    // gole dokununca kartta Gol satiri
+    if (await p.evaluate(() => !!window.__atlas.D.su)) {
+      const suPiksel = () => p.evaluate(() => { const c = document.querySelector("#su"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
+      const ana = await suPiksel();
+      await p.evaluate(() => document.querySelector("[data-sukol=tum]").click()); await bekle(400);
+      const tum = await suPiksel();
+      await p.evaluate(() => document.querySelector("[data-sukol=ana]").click()); await bekle(300);
+      await p.evaluate(() => document.querySelector("#ay-su").click()); await bekle(300);
+      const kapali = await suPiksel();
+      await p.evaluate(() => document.querySelector("#ay-su").click()); await bekle(300);
+      denetle("su katmani: ana kollar ve goller ciziliyor, butun kollar daha fazla, kapaliyken bos",
+        ana > 2000 && tum > ana * 1.2 && kapali === 0, `ana ${ana}, butun ${tum}, kapali ${kapali} piksel`);
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B;
+        const L = [...D.su.goller].sort((a, b) => b.alan - a.alan)[0], k = L.kutu, c = document.createElement("canvas").getContext("2d");
+        for (let i = 1; i < 20; i++) for (let j = 1; j < 20; j++) { const lo = k[0] + (k[2] - k[0]) * i / 20, la = k[1] + (k[3] - k[1]) * j / 20;
+          if (c.isPointInPath(L.yol, lo, la, "evenodd")) return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; }
+        return null; });
+      if (hedef) { await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
+        const t = await p.evaluate(() => document.querySelector("#kart-icerik .k-su")?.textContent || "");
+        denetle("gole dokununca kartta gol satiri", /Göl/.test(t) && /km²/.test(t), t.slice(0, 70));
+        await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400); }
+      else denetle("gole dokununca kartta gol satiri", false, "gol icinde nokta bulunamadi");
+    }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);
     if (kaynak) { await p.evaluate(() => document.querySelector("[data-kaynak=gri]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-kaynak=editor]").click()); await bekle(250);

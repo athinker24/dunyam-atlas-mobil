@@ -14,6 +14,19 @@ Buzul geçmişinden (`BUZUL.md`) sonraki katman. Sayılar `su/su.json`'da
 | göl payı | karanın **%1.68**'i, 95 göl | Dünya %1.8 (HydroLAKES, Messager vd. 2016) |
 | nehir | debi ≥ 50 m³/s veri, ≥ 100 m³/s ve ≥ 120 km haritada | kısa yamaç derecikleri kıta ölçeğinde gürültü |
 
+## Uygulamada
+
+`data/su.json` (`su/disa.py`, `su/uret_su.py` sonunda yazar; ~210 KB).
+Nehirler kol kol: her ağızdan ana kol kaynağa kadar, ona katılan her kol
+ayrı. Kademe: 1 = Q ≥ 2000 m³/s ya da ≥ 1500 km (40 kol), 2 = ≥ 600 ya da
+≥ 600 km, 3 = ≥ 200 ya da ≥ 250 km, 4 = ≥ 50 m³/s. Uygulama uzaktan yalnız
+1'i çizer, yakınlaştıkça (2.6×, 5×, 10×) diğerleri yumuşakça belirir;
+"Bütün kollar" hepsini çizer. Kalınlık debiyle akış yönünde artar. Tatlı
+göl koyu mavi, tuzlu göl soluk mineral tonu. Göle ya da nehre dokununca
+kartta alan/derinlik/yüzey ya da o noktadaki debi. **Veri iş akışı
+(veri.yml) bu dosyayı üretmez**: iklim değişirse yukarıdaki komutlar elle
+koşulur.
+
 ## Su bütçesi (kara, alan ağırlıklı)
 
 Yağış 958 mm/yıl, buharlaşma 652, akış **307** (akış/yağış 0.32; Dünya

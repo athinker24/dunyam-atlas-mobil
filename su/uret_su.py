@@ -184,6 +184,7 @@ def ozet_yaz(k, z, goller, sev, kapali, alici, q, boy, lat, lon, alan):
         c = x["hucreler"]; la, lo = float(lat[c // nx].mean()), float(lon[c % nx].mean())
         no, ad = en_yakin(la, lo, yer)
         tur = "buzul (moren seti)" if x["buzul_golu"] else ("yarık (tektonik)" if yarikta(la, lo) else "havza")
+        x["koken"] = tur
         gl.append(dict(enlem_boylam=[round(la, 2), round(lo, 2)], yakin=f"{no} ({ad})", koken=tur,
                        alan_km2=int(x["alan_km2"]), derin_m=int(x["derin_m"]), hacim_km3=round(x["hacim_km3"], 1),
                        seviye_m=int(x["seviye"]), cikis="var (tatlı)" if x["cikisli"] else "yok (kapalı, tuzlu)",
@@ -215,6 +216,10 @@ def main():
     print("göller: %d, karanın %%%.2f; nehir parçası %d" % (len(goller), 100 * sum(g["alan_km2"] for g in goller) / wk, len(parca)))
     np.savez_compressed(os.path.join(BURASI, "_su.npz"), sev=sev, kapali=kapali, q=q.astype(np.float32), alici=alici)
     ozet_yaz(k, z, goller, sev, kapali, alici, q, boy, lat, lon, alan)
+    import disa, pickle
+    pickle.dump(dict(goller=goller, alici=alici, q=q, boy=boy, gm=gm, deniz=deniz, lat=lat, lon=lon),
+                open(os.path.join(BURASI, "_disa.pkl"), "wb"))    # disa.py tek başına yeniden koşabilsin
+    disa.yaz(goller, alici, q, boy, gm, deniz, lat, lon)
 
     # --- harita
     r, c = np.where(~deniz); r0, r1, c0, c1 = r.min() - 6, r.max() + 6, c.min() - 6, c.max() + 6

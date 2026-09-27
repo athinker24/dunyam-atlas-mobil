@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true},
+  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana"},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -201,6 +201,42 @@ function dolOrnek(D, a, x, y){
         gy = Math.max(0, Math.min(k.h-1.001, (y+0.5)/f - 0.5)), x0 = gx|0, y0 = gy|0, fx = gx-x0, fy = gy-y0, i = y0*k.w + x0;
   return (a[i]*(1-fx) + a[i+1]*fx)*(1-fy) + (a[i+k.w]*(1-fx) + a[i+k.w+1]*fx)*fy;
 }
+/* Su: data/su.json (su/disa.py). Koordinatlar 0.01° tamsayı, fark kodlu;
+   debi 10·log10(Q). Kol kademesi 1 (büyük ana kollar) .. 4 (küçük dereler). */
+function suHazirla(S){
+  if(!S || !S.nehirler) return null;
+  const coz = kod => { const n = kod.length/2, a = new Float32Array(kod.length); let x = 0, y = 0;
+    for(let i=0;i<n;i++){ x += kod[2*i]; y += kod[2*i+1]; a[2*i] = x/100; a[2*i+1] = y/100; } return a; };
+  const kutu = a => { let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+    for(let i=0;i<a.length;i+=2){ x0=Math.min(x0,a[i]); x1=Math.max(x1,a[i]); y0=Math.min(y0,a[i+1]); y1=Math.max(y1,a[i+1]); }
+    return [x0,y0,x1,y1]; };
+  // Egriler bir kez, boylam/enlem uzayinda Path2D olarak kurulur; her karede
+  // yalniz donusumle cizilir (her karede kurmak "butun kollar"da kaydirmayi
+  // telefonda kare basina ~250 ms yavaslatiyordu, CPU x4 olcumu). Kol,
+  // taban kalinligi ayni kalan parcalara bolunur (kalinlik debiyle artar).
+  const tabanK = q => Math.max(0.55, 0.3 + 0.5*Math.log10(Math.max(q, 50)/50));
+  const nehirler = S.nehirler.map(n => { const p = coz(n.p), m = p.length/2;
+    const q = Float32Array.from(n.q, v => Math.pow(10, v/10)), parcalar = [];
+    const x = i => p[2*i], y = i => p[2*i+1];
+    let yol = null, gen = -1;
+    for(let i=0;i<m-1;i++){ const g = Math.round(tabanK(q[Math.min(i+1, m-1)])*4)/4;
+      if(g !== gen){ yol = new Path2D(); yol.moveTo(x(i), y(i)); gen = g; parcalar.push([g, yol]); }
+      const i0 = Math.max(0, i-1), i3 = Math.min(m-1, i+2);
+      yol.bezierCurveTo(x(i) + (x(i+1)-x(i0))/6, y(i) + (y(i+1)-y(i0))/6,
+        x(i+1) - (x(i3)-x(i))/6, y(i+1) - (y(i3)-y(i))/6, x(i+1), y(i+1)); }
+    return {k:n.k, p, q, parcalar, kutu:kutu(p), Q:n.Q, L:n.L}; });
+  // kalın kollar üstte kalsın: önce küçük kademeler çizilir
+  nehirler.sort((a, b) => b.k - a.k || a.Q - b.Q);
+  const golYolu = a => { const n = a.length/2, yol = new Path2D();
+    yol.moveTo((a[0]+a[2*(n-1)])/2, (a[1]+a[2*(n-1)+1])/2);
+    for(let i=0;i<n;i++){ const j = (i+1)%n; yol.quadraticCurveTo(a[2*i], a[2*i+1], (a[2*i]+a[2*j])/2, (a[2*i+1]+a[2*j+1])/2); }
+    yol.closePath(); return yol; };
+  const goller = S.goller.map(g => { const c = g.c.map(coz), yol = new Path2D();
+    for(const a of c) yol.addPath(golYolu(a));
+    return {...g, c, yol, kutu: kutu(Float32Array.from(c.flatMap(a => [...a])))}; });
+  return {nehirler, goller};
+}
+
 const PUSULA = ["kuzeyden","kuzeydoğudan","doğudan","güneydoğudan","güneyden","güneybatıdan","batıdan","kuzeybatıdan"];
 // ruzgar geldigi yonle adlandirilir: akis guneye ise "kuzeyden"
 const nereden = (u, v) => PUSULA[Math.round(((Math.atan2(-u, -v)*180/Math.PI) + 360) % 360 / 45) % 8];
@@ -578,6 +614,7 @@ function glKur(canvas){
 function baslat(J, resimler){
   const D = veriHazirla(J), {W, H, N, B} = D;
   D.dol = dolasimHazirla(D, resimler.dolasim);
+  D.su = suHazirla(resimler.su);
   // kabartma kaynaklari (kabartmaKur GL kurulurken cagrilir, once tanimli olmali)
   const KAB = {bir: resimler.kabartmaBir, editor: resimler.kabartma, gri: resimler.kabartmaGri};
   if(!KAB[ayar.kabartmaKaynak]) ayar.kabartmaKaynak = KAB.bir ? "bir" : "editor";
@@ -709,6 +746,7 @@ function baslat(J, resimler){
         const c = yedek; c.setTransform(1,0,0,1,0,0); c.fillStyle = OKYANUS_DERIN; c.fillRect(0,0,canvas.width,canvas.height);
         c.imageSmoothingEnabled = false; c.setTransform(dpr*olcek,0,0,dpr*olcek,dpr*ox,dpr*oy); c.drawImage(yedekTuval, 0, 0);
       }
+      suCiz();
       parcacik.gorunumDegisti();   // once: kaplama parcacik acikken akis cizgisi cizmesin
       kaplamaCiz();
     }
@@ -767,6 +805,66 @@ function baslat(J, resimler){
     }
     if(!(ayar.parcacik && parcacik.calisiyor)) s += ruzgarCiz(r, g);
     return `<defs>${["s","k"].map(t=>`<marker id="ak-${t}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${t==="s"?"#e39a63":"#86b9d8"}"/></marker>`).join("")}</defs>` + s;
+  }
+
+  /* --- su katmani: goller ve nehirler (Canvas2D) ---
+     Atlaslardaki gibi ölçeğe göre seyreltilir: uzaktan yalnız 1. kademe
+     (büyük ve uzun ana kollar), yakınlaştıkça 2, 3, 4. kademe yumuşakça
+     belirir; "Bütün kollar" seçilince hepsi. Çizgi noktalardan geçen
+     Catmull-Rom eğrisi (kollar ana kola tam oturur), kalınlık debiyle
+     akış yönünde artar. Önce koyu bir kılıf, üstünde su rengi: renkli
+     iklim zemininde de seçilir. */
+  const SU = D.su, suCv = $("#su"), suC = suCv.getContext("2d");
+  const SU_RENK = "#83bbe2", SU_KILIF = "rgba(7,13,18,.42)";
+  const GOL_TATLI = ["#1b4663", "#72aad2"], GOL_TUZ = ["#8aa9a0", "#d3e6dc"];   // tuzlu: soluk mineral tonu (atlaslarda tuz gölü açık renkle gösterilir)
+  const yumusak = (a, b, x) => { const t = Math.max(0, Math.min(1, (x-a)/(b-a))); return t*t*(3-2*t); };
+  function suGorunurluk(k){
+    if(ayar.suKol === "tum" || k === 1) return 1;
+    const z = olcek/sigOlcek;
+    return k === 2 ? yumusak(1.7, 2.6, z) : k === 3 ? yumusak(3.4, 5, z) : yumusak(7, 10, z);
+  }
+  // Kaydirma/yakinlastirma surerken yeniden boyanmaz: son cizim CSS ile
+  // kaydirilip olceklenir (Dolasim kaplamasi gibi); hareket bitince bir kez
+  // cizilir. "Butun kollar"da boyama kare basina ~250 ms tutuyordu (bulut
+  // makinesi, yazilim GPU, CPU x4); bekleyen hesap degil boyamaydi.
+  let suCizilen = null;
+  function suCiz(){
+    const imza = `${ayar.su}|${ayar.suKol}|${katman}`;
+    if(suCizilen && suCizilen.imza === imza && harekette()){
+      const k = olcek/suCizilen.olcek;
+      suCv.style.transform = `translate(${(ox - suCizilen.ox*k).toFixed(2)}px,${(oy - suCizilen.oy*k).toFixed(2)}px) scale(${k.toFixed(5)})`;
+      return; }
+    suCv.style.transform = ""; suCizilen = {ox, oy, olcek, imza};
+    const w = Math.round(suCv.getBoundingClientRect().width*dpr), h = Math.round(suCv.getBoundingClientRect().height*dpr);
+    if(suCv.width !== w || suCv.height !== h){ suCv.width = w; suCv.height = h; }
+    suC.setTransform(1,0,0,1,0,0); suC.clearRect(0, 0, w, h);
+    if(!SU || !ayar.su) return;
+    suC.setTransform(dpr,0,0,dpr,0,0);
+    const g = gorunen(), sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H;
+    // gorunen alanin enlem/boylam kutusu (payli)
+    const lo0 = B[0] + (-ox/olcek - 4)*sx, lo1 = B[0] + ((g.w - ox)/olcek + 4)*sx;
+    const la1 = B[3] - (-oy/olcek - 4)*sy, la0 = B[3] - ((h/dpr - oy)/olcek + 4)*sy;
+    const icinde = k => !(k[2] < lo0 || k[0] > lo1 || k[3] < la0 || k[1] > la1);
+    const zf = Math.max(1, Math.min(3.2, Math.sqrt(olcek/sigOlcek)));
+    const soluk = katman === "dolasim" ? 0.45 : 1;
+    // boylam/enlem -> ekran (dogrusal); cizgi kalinligi yol birimine cevrilir
+    const kx = olcek/sx, ky = olcek/sy, birim = 1/Math.sqrt(kx*ky);
+    suC.setTransform(dpr*kx, 0, 0, -dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
+    suC.globalAlpha = soluk;
+    for(const L of SU.goller){ if(!icinde(L.kutu)) continue;
+      suC.fillStyle = (L.tuz ? GOL_TUZ : GOL_TATLI)[0]; suC.fill(L.yol, "evenodd"); }
+    suC.lineCap = "round"; suC.lineJoin = "round";
+    const cizilecek = [];
+    for(const n of SU.nehirler){ const a = suGorunurluk(n.k); if(a > 0.02 && icinde(n.kutu)) cizilecek.push([n, a]); }
+    for(const kilif of [true, false]){
+      suC.strokeStyle = kilif ? SU_KILIF : SU_RENK;
+      for(const [n, a] of cizilecek){ suC.globalAlpha = a*soluk*(kilif ? 0.9 : 1);
+        for(const [g, yol] of n.parcalar){ suC.lineWidth = (g*zf + (kilif ? 1 : 0))*birim; suC.stroke(yol); } } }
+    // gol kiyilari en ustte: nehir agzi kiyi cizgisinin altinda kalir
+    suC.lineWidth = Math.min(1.6, 0.8*zf)*birim;
+    for(const L of SU.goller){ if(!icinde(L.kutu)) continue; suC.globalAlpha = 0.85*soluk;
+      suC.strokeStyle = (L.tuz ? GOL_TUZ : GOL_TATLI)[1]; suC.stroke(L.yol); }
+    suC.globalAlpha = 1;
   }
 
   /* Hareketli ruzgar: Windy/earth.nullschool usulu parcaciklar. Her parcacik
@@ -1026,9 +1124,15 @@ function baslat(J, resimler){
   for(const b of kaynakDugme) b.addEventListener("click", () => {
     ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); ciz(); });
   kaynakYaz();
-  for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-deniz","deniz"],["ay-bant","bant"]]){
+  const suKolDugme = [...document.querySelectorAll("#su-kollar button")];
+  function suKolYaz(){ for(const b of suKolDugme){ b.setAttribute("aria-checked", String(b.dataset.sukol===ayar.suKol)); b.disabled = !ayar.su; }
+    $("#su-kollar").classList.toggle("pasif", !ayar.su); }
+  for(const b of suKolDugme) b.addEventListener("click", () => { ayar.suKol = b.dataset.sukol; ayarYaz(); suKolYaz(); ciz(); });
+  if(!D.su){ $("#ay-su").closest("label").hidden = true; $("#su-kollar").hidden = true; }
+  suKolYaz();
+  for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-deniz","deniz"],["ay-bant","bant"],["ay-su","su"]]){
     const el = $("#"+id); el.checked = ayar[k];
-    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); katmanSec(katman); });
+    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); katmanSec(katman); });
   }
   $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${virgul(v)}</dd>`).join("")
     + `<dt>hücre</dt><dd>${virgul(((B[2]-B[0])/W).toFixed(2))}°</dd>`;
@@ -1055,6 +1159,7 @@ function baslat(J, resimler){
       + klimagram(T, P, donem, karAl(D).ortuAy[j], karAl(D).kar.map(a=>a[j]), gun)
       + gunSatiri(gun)
       + karSatiri(j)
+      + suSatiri(lon, lat)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
   }
   // "Temmuz: gündüz 33°, gece 22° · her yıl ~41° / ~18° · 30 yılda bir ~46°"
@@ -1067,6 +1172,31 @@ function baslat(J, resimler){
     const s = gun.reduce((a, o, m) => o.tepe > gun[a].tepe ? m : a, 0), c = gun.reduce((a, o, m) => o.dip < gun[a].dip ? m : a, 0);
     const fark = gun.reduce((t, o) => t + (o.gunduz - o.gece)/12, 0);
     return `<div class="k-gun"><b>Gün</b> gündüz-gece farkı ~${Math.round(fark)}° · yılın en sıcak günü ~${r(gun[s].tepe)} (${AYLAR[s]}), en soğuk gecesi ~${r(gun[c].dip)} (${AYLAR[c]}) · 30 yılda bir ${r(gun[s].rekS)} / ${r(gun[c].rekC)}</div>`;
+  }
+  // "Göl: tatlı, taşar · 10.066 km², en derin 248 m" ya da
+  // "Nehir: burada ~450 m³/s · ana kol, 2.690 km, ağızda 20.250 m³/s".
+  // Nehir: noktaya en yakın kol (ekranda ~10 px ya da bir hücre içinde);
+  // görünmeyen kademeler de sayılır, kart her zaman bilgi verir.
+  const KADEME_AD = ["", "büyük ana kol", "ana kol", "kol", "küçük kol"];
+  function suSatiri(lon, lat){
+    if(!SU || !ayar.su) return "";
+    const bin = n => Math.round(n).toLocaleString("tr-TR");
+    suC.setTransform(1,0,0,1,0,0);
+    for(const L of SU.goller){ const k = L.kutu;
+      if(lon < k[0] || lon > k[2] || lat < k[1] || lat > k[3] || !suC.isPointInPath(L.yol, lon, lat, "evenodd")) continue;
+      return `<div class="k-su"><b>Göl</b> ${L.tuz ? "kapalı, tuzlu" : "tatlı, taşar"} · ${bin(L.alan)} km², en derin ${bin(L.derin)} m, yüzey ${bin(L.sev)} m`
+        + `${L.koken && L.koken !== "havza" ? " · köken: "+L.koken : ""}</div>`; }
+    const sx = (B[2]-B[0])/W, tol = Math.max(0.6*sx, 10/olcek*sx), cz = Math.cos(lat*Math.PI/180);
+    let en = null, ed = tol*tol;
+    for(const n of SU.nehirler){ const k = n.kutu;
+      if(lon < k[0]-tol || lon > k[2]+tol || lat < k[1]-tol || lat > k[3]+tol) continue;
+      for(let i=0;i<n.p.length/2;i++){ const dx = (n.p[2*i]-lon)*cz, dy = n.p[2*i+1]-lat, d = dx*dx + dy*dy;
+        if(d < ed || (en && d === ed && n.Q > en.n.Q)){ ed = d; en = {n, q: n.q[i]}; } } }
+    if(!en) return "";
+    const yuv = v => v >= 1000 ? Math.round(v/100)*100 : v >= 100 ? Math.round(v/10)*10 : Math.round(v);
+    const parca = [`burada ~${bin(yuv(en.q))} m³/s`, `${KADEME_AD[en.n.k]}, ${bin(en.n.L)} km`];
+    if(en.n.Q > en.q*1.05) parca.push(`aşağı ucunda ${bin(yuv(en.n.Q))} m³/s`);
+    return `<div class="k-su"><b>Nehir</b> ${parca.join(" · ")}</div>`;
   }
   // "Kar: Kasım–Mart yağar · örtü 4 ay, en çok Şubat'ta 120 mm su"
   function karSatiri(j){
@@ -1269,12 +1399,14 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
-      resimYukle("data/dolasim.png").catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim};
+      resimYukle("data/dolasim.png").catch(() => null),
+      // su katmani istege bagli: dosya yoksa ya da bozuksa harita yine acilir
+      fetch("data/su.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);

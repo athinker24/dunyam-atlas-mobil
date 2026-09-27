@@ -16,6 +16,7 @@
 <body>
 <main id="harita" aria-label="Harita">
   <canvas id="gl"></canvas>
+  <canvas id="su"></canvas>
   <canvas id="parcacik" hidden></canvas>
   <svg id="kaplama" aria-hidden="true"></svg>
 </main>
@@ -72,6 +73,11 @@
     <button role="radio" data-kaynak="gri" aria-checked="false">Yükseklik</button>
   </div>
   <label class="anahtar"><span>Piksel görünümü<small>Yumuşatma yok, modelin hücreleri olduğu gibi</small></span><input type="checkbox" id="ay-piksel"><i></i></label>
+  <label class="anahtar"><span>Göller ve nehirler<small>Uzaktan yalnız büyük ana kollar; yakınlaştıkça kollar açılır</small></span><input type="checkbox" id="ay-su" checked><i></i></label>
+  <div class="secim" id="su-kollar" role="radiogroup" aria-label="Nehir kolları">
+    <button role="radio" data-sukol="ana" aria-checked="true">Ana kollar</button>
+    <button role="radio" data-sukol="tum" aria-checked="false">Bütün kollar</button>
+  </div>
   <label class="anahtar"><span>Deniz dokusu<small>Deneme, yalnız görünüş: sığ/derin tonu kıyıya uzaklıktan</small></span><input type="checkbox" id="ay-deniz" checked><i></i></label>
   <label class="anahtar"><span>Enlem ve boylam<small>30° aralıklı, yakınlaşınca 10°</small></span><input type="checkbox" id="ay-izgara" checked><i></i></label>
   <label class="anahtar"><span>Bantlı renk<small>Sıcaklık ve yağış altı eşit alanlı banda iner</small></span><input type="checkbox" id="ay-bant"><i></i></label>
