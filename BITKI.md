@@ -32,32 +32,63 @@ karşılaştırılmalı.
 | biyom | pay |
 |---|---|
 | Ilık yaprak dökmeyen orman | %20 |
-| Maki ve sert yapraklı çalılık | %19 |
-| Bozkır (serin otlak) | %18 |
+| Bozkır (serin otlak) | %14 |
+| Tropikal kuru orman ve savan | %13 |
 | Ilıman yaprak döken orman | %10 |
-| Tropikal kuru orman ve savan | %8 |
+| Maki ve sert yapraklı çalılık | %9 |
 | Serin karışık orman | %8 |
 | Tayga | %7 |
-| Tropikal mevsimsel orman | %4 |
-| Tundra | %2 |
+| Tundra | %7 |
+| Tropikal mevsimsel orman | %6 |
+| Kurak çalılık ve dikenli savan | %3 |
 | Buz ve kutup çölü | %2 |
 | Soğuk yaprak döken orman | %2 |
 | Soğuk çöl ve yarı çöl | %0.4 |
 
-**Yazı kurak düzeltmesi (27 Eylül, sahibi: "savan çok mu oldu"):** BIOME1
-yağışın zamanına bakmaz; kışı ılık (en soğuk ay >= 15.5 °C) ama yağışı kışın
-düşen yerleri de tropik savan sayıyordu. Savanın yarısı (karanın %8.9'u)
-böyleydi. Köppen Cs ölçütüyle (sıcak yarının en kurak ayı < 40 mm ve soğuk
-yarının en yağışlı ayının üçte birinden az) bu yerler maki oldu: savan
-%17 → %8 (Köppen Aw %8.9), maki %10 → %19 (Köppen Cs %15). Güneyde maki ile
-savan enlem boyunca şeritler hâlinde değişiyor: basınç kuşaklarının yıllık
-salınımından (CLAUDE.md §8), yağış rejimi enlemle ters dönüyor. Karşılaştırma
-`bitki/savan_kiyas.png`.
+## Köppen'le denetim (27 Eylül, sahibi: "savan çok mu oldu", "tekrar kontrol et, dünyamın bilgilerine uygun")
 
-Tropikal yağmur ormanı %0: `k_itcz` 0.6 kararı (CLAUDE.md §2.2) Af'yi bilerek
-sıfırlamıştı; bitki örtüsü bunu doğal olarak izliyor. Sıcak çöl ve sıcak
-otlak da %0: sıcak yazlı yerlerde nem oranı 0.28'in altına inmiyor. Plato
-bozkır (sahibinin isteği).
+Biyom, motorun kendi Köppen sınıfıyla (`motor/koppen.py`, aynı ince ızgarada,
+aynı aylık sıcaklık ve yağıştan) sınıf sınıf karşılaştırıldı. Bulunan dört
+tutarsızlık ve düzeltmesi (`bitki.siniflandir` sonu):
+
+1. **ET'nin yarısı bozkırdı.** BIOME1'in serin otu yalnız GDD0 >= 500 ister;
+   Köppen ET'de (en sıcak ay < 10 °C) GDD5 medyanı 62, Tw 6.5 °C iken bozkır
+   çıkıyordu. En sıcak ay < 10 °C ya da GDD5 < 350 olan otlak tundra: ET →
+   %81 tundra, %10 buz. Kuzey kıyısı artık tundra.
+2. **İlk savan düzeltmesi tropikte yanlıştı.** Yazı kurak ölçütü kendi
+   hesabımla aranıyordu; tropikte kurak mevsim en sıcak aylara düştüğü için
+   Aw'nin yarısı ve BSh'nin %92'si maki olmuştu (güneydeki şeritler de
+   buradandı). Düzeltme yalnız Köppen Cs'de uygulanıyor.
+3. **Cs dışında maki.** Sert yapraklı çalı (BIOME1) yağışı yazın olan kurak
+   yerde (BSh, kurak Cw) Akdeniz makisi değil: yeni ad "Kurak çalılık ve
+   dikenli savan" (Sahel, Caatinga benzeri).
+4. **Am savan çıkıyordu.** Köppen Am muson ormanı iklimidir; nem oranı
+   burada düşük (Am medyan 0.74 < 0.80), çünkü motorun yağışı Dünya'nınkinin
+   iki katı mevsimsel (CLAUDE.md §8): yağış birkaç ayda boşalıp akışa
+   gidiyor. Am → tropikal mevsimsel orman.
+
+Denetim sonrası eşleşme (Köppen sınıfının kara alanında biyom payı):
+
+| Köppen | pay | biyom |
+|---|---|---|
+| Am | %2.9 | %100 mevsimsel orman |
+| Aw | %9.0 | %88 kuru orman ve savan, %12 mevsimsel orman |
+| BSh | %1.5 | %72 kurak çalılık, %28 savan |
+| BSk | %11.2 | %85 bozkır (plato), %6 tundra (yüksek) |
+| Csa / Csb | %8.2 / %6.8 | %67 / %53 maki, gerisi ılık yaprak dökmeyen (daha nemli Akdeniz: pırnal, defne ormanı) |
+| Cwa | %13.5 | %53 ılık yaprak dökmeyen, %21 ılıman yaprak döken, %14 savan |
+| Cwb | %10.9 | %64 ılık yaprak dökmeyen (yayla ormanı, Yunnan benzeri), %15 savan (miombo benzeri) |
+| Dw* | %10.3 | karışık ve yaprak döken orman, tayga; %13 bozkır |
+| Df* | %10.6 | yaprak döken, karışık, tayga; %13-21 bozkır (orman-bozkır geçişi) |
+| Ds* | %4.4 | tayga ve bozkır (yazı kurak kıta içi) |
+| ET | %6.7 | %81 tundra |
+| EF | %1.3 | %100 buz |
+
+Dünyam'a özgü kalanlar (hata değil): tropikal yağmur ormanı %0 (`k_itcz`
+kararı, Af yok); ılık yaprak dökmeyen ormanın büyük olması Cw'nin baskınlığından
+(motor sınırı: yağış çok mevsimsel, Cf azınlık); Dfc'nin %13'ü bozkır (Tc
+−26 °C, nem oranı 0.62: permafrostun tuttuğu su hesaba girmiyor, gerçekte
+Yakutya karaçam ormanıdır). Karşılaştırma görseli `bitki/denetim_kiyas.png`.
 
 ## Sıradaki
 

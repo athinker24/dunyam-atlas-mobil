@@ -28,7 +28,7 @@
     128,
     52
    ],
-   "pay": 0.0371
+   "pay": 0.0608
   },
   "3": {
    "ad": "Tropikal kuru orman ve savan",
@@ -39,7 +39,7 @@
     170,
     62
    ],
-   "pay": 0.0838
+   "pay": 0.1251
   },
   "4": {
    "ad": "Ilık yaprak dökmeyen orman",
@@ -105,18 +105,18 @@
     128,
     72
    ],
-   "pay": 0.1862
+   "pay": 0.0904
   },
   "10": {
-   "ad": "Sıcak otlak ve çalılık",
-   "ne": "Sıcak ve yarı kurak; ağaçsız ya da çok seyrek ağaçlı otlak.",
-   "ornek": "Sahel, Avustralya'nın iç otlakları",
+   "ad": "Kurak çalılık ve dikenli savan",
+   "ne": "Sıcak ve yarı kurak, yağışı yazın; kuraklığa dayanıklı dikenli çalı, seyrek ağaç ve ot.",
+   "ornek": "Sahel, Hindistan'ın dikenli çalılıkları, Brezilya Caatinga'sı",
    "renk": [
     214,
     176,
     96
    ],
-   "pay": 0.0002
+   "pay": 0.031
   },
   "11": {
    "ad": "Bozkır (serin otlak)",
@@ -127,7 +127,7 @@
     200,
     138
    ],
-   "pay": 0.1833
+   "pay": 0.1398
   },
   "12": {
    "ad": "Tundra",
@@ -138,7 +138,7 @@
     176,
     170
    ],
-   "pay": 0.0223
+   "pay": 0.0659
   },
   "13": {
    "ad": "Sıcak çöl",

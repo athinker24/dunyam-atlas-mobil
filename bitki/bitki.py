@@ -64,8 +64,8 @@ BIYOM = {
         "Doğu Sibirya karaçam ormanları", (112, 132, 112)),
     9: ("Maki ve sert yapraklı çalılık", "Ilık, kurak yaz; kuraklığa dayanıklı sert yapraklı çalı ve seyrek ağaç.",
         "Akdeniz kıyıları, Kaliforniya chaparral'ı", (150, 128, 72)),
-    10: ("Sıcak otlak ve çalılık", "Sıcak ve yarı kurak; ağaçsız ya da çok seyrek ağaçlı otlak.",
-         "Sahel, Avustralya'nın iç otlakları", (214, 176, 96)),
+    10: ("Kurak çalılık ve dikenli savan", "Sıcak ve yarı kurak, yağışı yazın; kuraklığa dayanıklı dikenli çalı, seyrek ağaç ve ot.",
+         "Sahel, Hindistan'ın dikenli çalılıkları, Brezilya Caatinga'sı", (214, 176, 96)),
     11: ("Bozkır (serin otlak)", "Soğuk kışlı, yarı kurak; uzun ya da kısa otlu ağaçsız ova.",
          "Kazak ve Moğol bozkırı, Kuzey Amerika çayırları", (208, 200, 138)),
     12: ("Tundra", "Ağaç yetişemeyecek kadar kısa ve serin yaz; yosun, liken, cüce çalı.",
@@ -89,15 +89,7 @@ def degiskenler(d, w):
     return Tc, Tw, gdd5, gdd0, np.clip(alfa, 0, 1)
 
 
-def yazi_kurak(T, P):
-    """Köppen Cs ölçütü: yılın sıcak yarısındaki en kurak ay < 40 mm ve soğuk
-    yarının en yağışlı ayının üçte birinden az (yağış kışın)."""
-    o = np.argsort(T, axis=0)
-    yaz = np.take_along_axis(P, o[6:], 0); kis = np.take_along_axis(P, o[:6], 0)
-    return (yaz.min(0) < 40) & (yaz.min(0) < kis.max(0) / 3)
-
-
-def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz, cs=None):
+def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz, K=None):
     # bitki işlev tipleri (Prentice vd. 1992 Tablo 1)
     te = (Tc >= 15.5) & (alfa >= 0.80)
     tr = (Tc >= 15.5) & (alfa >= 0.45) & (alfa <= 0.95)
@@ -133,14 +125,30 @@ def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz, cs=None):
     k[tr & ~te] = 3
     k[tr & te] = 2
     k[te & ~tr] = 1
-    # BIOME1 yağışın ZAMANINA bakmaz: kışı ılık (Tc >= 15.5) ama yazı kurak
-    # yerleri de tropik yağmurla yeşeren (savan) sayıyordu. Yazı kurak
-    # (Akdeniz rejimi) yerde kuraklık sıcak mevsime düşer, sert yapraklılar
-    # baskındır (maki, chaparral). 27 Eylül, sahibi: "savan çok mu oldu":
-    # savanın yarısı (karanın %8.9'u) böyleydi; düzeltmeyle savan %8.4,
-    # Köppen Aw %8.9 ile uyumlu.
-    if cs is not None:
-        k[(k == 3) & cs] = 9
+    # Köppen'le (motorun kendi sınıfı, aynı ızgarada) üç düzeltme, 27 Eylül
+    # denetimi (sahibi: "savan çok mu oldu", "dünyamın bilgilerine uygun"):
+    # 1) Tundra: BIOME1'in serin otu (GDD0 >= 500) Tw < 10 °C yerleri de
+    #    kapsıyordu ve Köppen ET'nin yarısı bozkır çıkıyordu (GDD5 medyan 62,
+    #    Tw 6.5 °C). En sıcak ay 10 °C altı ya da GDD5 < 350 ise tundra
+    #    (Köppen'in ET sınırı ağaç sınırıdır; 350 BIOME1'in boreal ağaç eşiği).
+    k[(k == 11) & ((Tw < 10) | (gdd5 < 350))] = 12
+    if K is not None:
+        Cs = np.isin(K, (8, 9, 10))
+        # 2) BIOME1 yağışın ZAMANINA bakmaz: kışı ılık (Tc >= 15.5) Akdeniz
+        #    ikliminde (Köppen Cs) kurak mevsim yaza düşer, sert yapraklılar
+        #    baskındır: savan değil maki. Önceki sürüm Cs'yi kendi ölçütüyle
+        #    arıyordu ve tropikte kurak mevsim en sıcak aylara denk geldiği
+        #    için Aw'nin yarısını da maki yapıyordu; artık yalnız Köppen Cs.
+        k[(k == 3) & Cs] = 9
+        # 3) Sert yapraklı çalı Cs dışında (yağış yazın; BSh, kurak Cw):
+        #    maki değil kurak çalılık ve dikenli savan (BIOME1'in "xerophytic
+        #    woods/scrub" biyomu ikisini birlikte tutar).
+        k[(k == 9) & ~Cs] = 10
+        # 4) Köppen Am (muson iklimi) muson ormanıdır. Burada nem oranı
+        #    düşük çıkıyor (Am medyan 0.74 < 0.80) çünkü motorun yağışı
+        #    Dünya'nınkinin iki katı mevsimsel (CLAUDE.md §8): yağış birkaç
+        #    ayda boşalıp akışa gidiyor. Am'de savan -> mevsimsel orman.
+        k[(K == 2) & np.isin(k, (3, 10))] = 2
     k[buz] = 15
     return k
 
@@ -151,7 +159,9 @@ def main():
     w = uret.dunya_yukle()
     d = akim.hesapla(iklim)
     Tc, Tw, gdd5, gdd0, alfa = degiskenler(d, w)
-    k = siniflandir(Tc, Tw, gdd5, gdd0, alfa, d["buzul"], yazi_kurak(d["Tay"], d["Pay"]))
+    from motor import koppen
+    K = koppen.classify(d["Tay"], d["Pay"])
+    k = siniflandir(Tc, Tw, gdd5, gdd0, alfa, d["buzul"], K)
     z, lat, lon = d["z"], d["lat"], d["lon"]
     su = np.load(os.path.join(KOK, "su", "_su.npz"))
     gol = np.isfinite(su["sev"])
