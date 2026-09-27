@@ -98,6 +98,33 @@ oralarda"; sonra "platoya göl", "ikisi birlikte, tatlı göl 10.000 km²",
   51'i 100 km² üstünde. Duvar'ın kuzey yüzündekiler (kurak plato) çoğunlukla
   kuru ya da kapalı.
 
+## Deltalar (27 Eylül, `su/delta.py`)
+
+Nehrin çökel akısı ile ağızdaki dalganın dengesi. Çökel BQART'tan
+(Syvitski ve Milliman 2007: debi, havza alanı, en yüksek nokta, havza
+sıcaklığı, buzul payı, göllerin tuttuğu pay); dalga ağızdaki yıllık rüzgâr
+hızı ve açık su mesafesinden (SPM 1977). Gösterge X = çökel / H^2.4
+(Nienhuis vd.); eşikler Dünya örnekleriyle kaba ayarlı (Mississippi ~300,
+Nil ~45, açık kıyıda küçük nehir ~1). **Gelgit bilinmiyor** (Dünyam'ın ayı
+tanımlı değil): Ganj türü gelgit deltası değerlendirilemez.
+
+- 132 delta: 16 nehir baskın (kuş ayağı / loblu), 52 yay biçimli, 64 küçük;
+  23'ü göle dökülür. Sayılar `su/deltalar.json`.
+- En büyükler: ova nehri (26.3°K 4.1°D, iç deniz) yılda ~730 milyon ton,
+  Ganj-Brahmaputra'nın doğal hâli ~1.000; güneybatı platosu nehri
+  (18.2°K 20.6°B) ~720, çok korunaklı kıyı (H ~0.5 m); Alt Kıta'nın büyük
+  nehri (3.1°K 18.3°D) ~270.
+- İç deniz korunaklı (dalga ~0.5-1 m): büyük deltaların çoğu orada.
+  1'den gelen en büyük debili nehir (37.1°K 11.7°B) açık, dalgalı kıyıya
+  (~3 m) döküldüğü için yalnız küçük, dalga baskın delta yapar.
+- Göl deltaları: plato kolunun tatlı göle girdiği yerde (~30 Mt/yıl,
+  Selenga-Baykal türü) en büyüğü; kapalı tuz göllerinde iç deltalar.
+- Uygulamada: ağızda yelpaze gibi açılan 2-5 kol (96 delta; tepe ağızdan
+  12·Qs^0.45 km yukarıda). **Kolların yeri ve biçimi tasarımdır**: ~10 km'lik
+  arazi dağıtıcı kolları çözmez; deltanın varlığı ve büyüklüğü hesaptan.
+  Nehir baskın 1., yay biçimli 2., küçük 3. kademede görünür. Dokununca
+  kartta Delta satırı. Yeniden üretmek: `python su/delta.py` (uret_su.py'den sonra).
+
 ## Yöntem ve sınırlar
 
 - **Akış** (`su/akim.py`): aylık kar kovası (uygulamayla aynı eşikler) ve

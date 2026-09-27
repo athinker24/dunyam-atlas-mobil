@@ -85,7 +85,7 @@ Giriş noktası **`SU.md`**. Karar: fırça izleri yumuşatıldı, eşik aşınm
 isteğiyle (kurgu) plato kolu boğazla iç denize, boğaz ağzında 10.066 km²
 tatlı göl, kuzey kolunun ucunda 4.050 km² tuz gölü. Uygulamada su katmanı
 `su-katmani` dalında (27 Eylül): ana kollar / bütün kollar, dokununca göl ve
-nehir bilgisi. Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
+nehir bilgisi. Deltalar `delta` dalında (132 delta, uygulamada çatallı ağızlar). Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
 

@@ -234,7 +234,17 @@ function suHazirla(S){
   const goller = S.goller.map(g => { const c = g.c.map(coz), yol = new Path2D();
     for(const a of c) yol.addPath(golYolu(a));
     return {...g, c, yol, kutu: kutu(Float32Array.from(c.flatMap(a => [...a])))}; });
-  return {nehirler, goller};
+  // deltalar: ağızda yelpaze gibi açılan kollar (su/delta.py). Kademe:
+  // nehir baskın 1, yay biçimli 2, küçük 3 (ana kollarla aynı seyreltme)
+  const deltalar = (S.deltalar || []).map(d => { const c = d.c.map(coz);
+    const yollar = c.map(p => { const m = p.length/2, yol = new Path2D(), x = i => p[2*i], y = i => p[2*i+1];
+      yol.moveTo(x(0), y(0));
+      for(let i=0;i<m-1;i++){ const i0 = Math.max(0, i-1), i3 = Math.min(m-1, i+2);
+        yol.bezierCurveTo(x(i) + (x(i+1)-x(i0))/6, y(i) + (y(i+1)-y(i0))/6, x(i+1) - (x(i3)-x(i))/6, y(i+1) - (y(i3)-y(i))/6, x(i+1), y(i+1)); }
+      return yol; });
+    const k = /^nehir/.test(d.tur) ? 1 : /^yay/.test(d.tur) ? 2 : 3;
+    return {...d, k, yollar, g: tabanK(d.q / Math.pow(c.length, 0.8)), kutu: kutu(Float32Array.from(c.flatMap(a => [...a])))}; });
+  return {nehirler, goller, deltalar};
 }
 
 const PUSULA = ["kuzeyden","kuzeydoğudan","doğudan","güneydoğudan","güneyden","güneybatıdan","batıdan","kuzeybatıdan"];
@@ -856,8 +866,12 @@ function baslat(J, resimler){
     suC.lineCap = "round"; suC.lineJoin = "round";
     const cizilecek = [];
     for(const n of SU.nehirler){ const a = suGorunurluk(n.k); if(a > 0.02 && icinde(n.kutu)) cizilecek.push([n, a]); }
+    const deltaCiz = [];
+    for(const d of SU.deltalar){ const a = suGorunurluk(d.k); if(a > 0.02 && icinde(d.kutu)) deltaCiz.push([d, a]); }
     for(const kilif of [true, false]){
       suC.strokeStyle = kilif ? SU_KILIF : SU_RENK;
+      for(const [d, a] of deltaCiz){ suC.globalAlpha = a*soluk*(kilif ? 0.9 : 1); suC.lineWidth = (d.g*zf + (kilif ? 1 : 0))*birim;
+        for(const yol of d.yollar) suC.stroke(yol); }
       for(const [n, a] of cizilecek){ suC.globalAlpha = a*soluk*(kilif ? 0.9 : 1);
         for(const [g, yol] of n.parcalar){ suC.lineWidth = (g*zf + (kilif ? 1 : 0))*birim; suC.stroke(yol); } } }
     // gol kiyilari en ustte: nehir agzi kiyi cizgisinin altinda kalir
@@ -1186,17 +1200,22 @@ function baslat(J, resimler){
       if(lon < k[0] || lon > k[2] || lat < k[1] || lat > k[3] || !suC.isPointInPath(L.yol, lon, lat, "evenodd")) continue;
       return `<div class="k-su"><b>Göl</b> ${L.tuz ? "kapalı, tuzlu" : "tatlı, taşar"} · ${bin(L.alan)} km², en derin ${bin(L.derin)} m, yüzey ${bin(L.sev)} m`
         + `${L.koken && L.koken !== "havza" ? " · köken: "+L.koken : ""}</div>`; }
+    let delta = "";
+    { let en = null, ed = 1e9;
+      for(const d of SU.deltalar){ const km = Math.hypot((d.agiz[1]-lon)*Math.cos(lat*Math.PI/180), d.agiz[0]-lat)*111.2;
+        if(km < d.r*1.1 && km < ed){ ed = km; en = d; } }
+      if(en) delta = `<div class="k-su"><b>Delta</b> ${en.tur} · ${en.hedef === "göl" ? "göle dökülür" : "denize dökülür"} · yılda ~${bin(en.Qs)} milyon ton çökel</div>`; }
     const sx = (B[2]-B[0])/W, tol = Math.max(0.6*sx, 10/olcek*sx), cz = Math.cos(lat*Math.PI/180);
     let en = null, ed = tol*tol;
     for(const n of SU.nehirler){ const k = n.kutu;
       if(lon < k[0]-tol || lon > k[2]+tol || lat < k[1]-tol || lat > k[3]+tol) continue;
       for(let i=0;i<n.p.length/2;i++){ const dx = (n.p[2*i]-lon)*cz, dy = n.p[2*i+1]-lat, d = dx*dx + dy*dy;
         if(d < ed || (en && d === ed && n.Q > en.n.Q)){ ed = d; en = {n, q: n.q[i]}; } } }
-    if(!en) return "";
+    if(!en) return delta;
     const yuv = v => v >= 1000 ? Math.round(v/100)*100 : v >= 100 ? Math.round(v/10)*10 : Math.round(v);
     const parca = [`burada ~${bin(yuv(en.q))} m³/s`, `${KADEME_AD[en.n.k]}, ${bin(en.n.L)} km`];
     if(en.n.Q > en.q*1.05) parca.push(`aşağı ucunda ${bin(yuv(en.n.Q))} m³/s`);
-    return `<div class="k-su"><b>Nehir</b> ${parca.join(" · ")}</div>`;
+    return `<div class="k-su"><b>Nehir</b> ${parca.join(" · ")}</div>` + delta;
   }
   // "Kar: Kasım–Mart yağar · örtü 4 ay, en çok Şubat'ta 120 mm su"
   function karSatiri(j){
