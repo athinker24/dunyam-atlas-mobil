@@ -81,12 +81,19 @@ def yonlendir(z, deniz, seviye, kapali):
     return yeni, np.array(sira2, dtype=np.int64)
 
 
-def debi(alici, sira, kaynak):
-    """kaynak m3/yıl; yukarıdan aşağı biriktirir (sıranın tersi)."""
+def debi(alici, sira, kaynak, gol=None):
+    """kaynak m3/yıl; yukarıdan aşağı biriktirir (sıranın tersi).
+
+    Göl hücrelerinde eksi (buharlaşma) kırpılmaz, gölün çıkışına kadar
+    taşınır: gölün bütün yüzeyinin buharlaşması çıkıştan düşülür. Önce her
+    hücrede sıfıra kırpılıyordu; yalnız nehrin geçtiği göl hücrelerinin
+    buharlaşması düşülüyor, çıkış debisi ~%60 fazla çıkıyordu (tatlı gölde
+    397 yerine su dengesinden ~245 m³/s). Kara hücresinde kırpılır."""
     q = kaynak.ravel().astype(np.float64).copy()
+    g = np.zeros(q.size, bool) if gol is None else gol.ravel()
     for c in sira[::-1]:
         r = alici[c]
-        if q[c] < 0:
+        if q[c] < 0 and not (g[c] and r >= 0 and g[r]):
             q[c] = 0.0
         if r >= 0:
             q[r] += q[c]

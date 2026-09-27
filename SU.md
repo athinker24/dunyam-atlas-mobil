@@ -11,7 +11,7 @@ Buzul geçmişinden (`BUZUL.md`) sonraki katman. Sayılar `su/su.json`'da
 | arazi | fırça ölçeği (10-30 km) yumuşatıldı (`su/duzelt.py`) | çizimdeki fırça darbeleri paralel cetvel nehirler ve binlerce minik göl üretiyordu |
 | eşik aşınması | 200 m | taşan gölün çıkışı eşiği zamanla kazar; eşiği 200 m'den sığ çukur boşalmış sayılır. Aşınmasız hâlde göller karanın %7.3'ü (3.248 göl), Duvar'ın güney ovası Hazar büyüklüğünde tuzlu iç deniz oluyordu (`su/secenekler.png`) |
 | en küçük göl | 300 km² (buzul gölü 100 km²) | küçük lekeler fırçadan |
-| göl payı | karanın **%1.25**'i, 92 göl | Dünya %1.8 (HydroLAKES, Messager vd. 2016) |
+| göl payı | karanın **%1.68**'i, 95 göl | Dünya %1.8 (HydroLAKES, Messager vd. 2016) |
 | nehir | debi ≥ 50 m³/s veri, ≥ 100 m³/s ve ≥ 120 km haritada | kısa yamaç derecikleri kıta ölçeğinde gürültü |
 
 ## Su bütçesi (kara, alan ağırlıklı)
@@ -24,49 +24,63 @@ karası ~0.35-0.40).
 | debi (m³/s) | boy (km) | havza (km²) | kaynak | ağız |
 |---|---|---|---|---|
 | 19.510 | 2.064 | 0.56 milyon | 11 (Alt Kıta orta kuşağı) | 3.1°K 18.3°D |
+| 14.938 | 3.507 | 2.63 milyon | 7 (Alt Kıta doğu kıyısı sırası) | 26.3°K 4.1°D |
 | 14.808 | 2.960 | 2.82 milyon | 10 (Güneybatı platosu) | 18.2°K 20.6°B |
 | 13.964 | 1.430 | 0.46 milyon | 10 (Güneybatı platosu) | 2.1°K 28.6°B |
-| 13.826 | 3.410 | 2.35 milyon | 7 (Alt Kıta doğu kıyısı sırası) | 26.3°K 4.1°D |
 | 12.419 | 1.609 | 0.64 milyon | meseta (İber yaylası) | 37.0°K 11.7°B |
 | 11.976 | 4.275 | 2.46 milyon | 5 (İber kuzey sırası) | 26.6°K 32.2°B |
 | 10.858 | 1.101 | 0.29 milyon | yarımada (Yarımada omurgası) | 1.6°K 9.7°B |
-| 8.375 | 4.271 | 3.84 milyon | 3 (Duvar) | 36.4°K 8.0°B |
+| 8.196 | 758 | 0.17 milyon | yarımada (Yarımada omurgası) | 4.4°K 2.6°B |
 
 Karşılaştırma: Mississippi ~17.000, Ganj-Brahmaputra ~38.000, Kongo ~41.000 m³/s.
 Duvar'ın güneyindeki ova kuru bir ova olarak kaldı: Duvar'dan inen sayısız
 dere eteğe paralel akan ova nehrinde birleşip iç denize dökülüyor (Ganj
 ovası gibi).
 
-## Plato kolu (sahibin isteği, kurgu)
+## Plato kolu, tatlı göl ve tuz gölü (sahibin isteği, kurgu)
 
 Sahibi haritaya çizdi: "bozkırda platoya büyük bir kol, o kadar dağ var
-oralarda". Nehir plato doğusundan (49.4°K 17.5°D) batıya plato boyunca
-akar, 1'in güney ucu ile Duvar'ın batı ucu arasındaki ~2.250 m'lik sırtı
-bir boğazla keser ve iç denize (35.7°K 8.3°B) dökülür. Yol çizilen hattın
-~100 km'lik koridorunda en alçak geçitten geçer (`su/duzelt.py`
-`KURGU_NEHIRLER`).
+oralarda"; sonra "platoya göl", "ikisi birlikte, tatlı göl 10.000 km²",
+"küçük tuz gölü". Tasarımlar `su/duzelt.py`'de (`KURGU_NEHIRLER`,
+`TATLI_GOL`, `TUZ_GOLU`); göl seviyeleri ve debiler yine su dengesinden.
 
-- **Hikâye:** öncül nehir. Sırt yükselmeden önce de oradaydı ve yükselirken
-  yatağını kazdı (İndus, Arun, Kolorado gibi); buzul erimesinde taşan plato
-  suyu boğazı derinleştirdi. Plato çanağının dibindeki tuz gölü bu yüzden
-  yok: çanak artık bu nehre boşalıyor.
-- **Debi:** plato kurak (yağış ~300 mm, akış ~0), su çevre dağlardan gelir.
-  Boğazda ~600 m³/s (Amu Derya'nın tarihsel debisi ~1.400, Ren 2.300); boğazdan
-  sonra nemli kıyı ovasının kollarıyla ağızda **8.400 m³/s**. Kurak bölgeyi
-  geçen "yabancı nehir" (Nil, Amu Derya türü).
-- Platodaki kapalı tuz gölleri (Duvar'ın kuzey eteği ve 9 boyunca) bu nehre
-  bağlı değil; toplam girdileri ~1.470 m³/s. Bağlanırlarsa boğazdaki debi
-  ~2.000 m³/s olur, ama o zaman 9 yarığının tuz gölleri tatlanır ya da kurur.
+- **Plato kolu:** plato doğusundan (49.4°K 17.5°D) batıya plato boyunca
+  akar, 1'in güney ucu ile Duvar'ın batı ucu arasındaki ~2.250 m'lik sırtı
+  bir boğazla keser, iç denize (36.4°K 8.0°B) dökülür. Yol çizilen hattın
+  ~100 km'lik koridorunda en alçak geçitten geçer. Hikâye: öncül nehir;
+  sırt yükselirken yatağını kazdı (İndus, Arun, Kolorado gibi), buzul
+  erimesinde taşan plato suyu boğazı derinleştirdi.
+- **Tatlı göl (10.066 km², 248 m derin, 792 m'de):** boğaz ağzının önünde,
+  sert kaya eşiğinin tuttuğu bir çöküntü havzası. Nehir onu besler (yılda
+  14.5 km³), yüzeyinden ~6.8 km³ buharlaşır, kalanı eşikten boğaza taşar:
+  **~260 m³/s**. Platonun tek büyük tatlı suyu. Balkaş'ın üçte ikisi.
+- **Tuz gölü (4.050 km², 102 m derin, 667 m'de, kapalı):** kuzeydeki
+  dağlardan (2) inen kolun aşağı ucunda (48.5°K 14.5°D). Kol yılda ~2.6 km³
+  getirir, göl bunu buharlaştıracak büyüklükte dengelenir ve taşmaz; kol
+  artık plato koluna katılmaz. Büyük Tuz Gölü (Utah) boyutunda.
+- **Su bütçesi sınırı:** plato kurak (yağış ~230-290 mm, açık su yılda
+  ~970 mm buharlaştırır); nehrin suyu çevre dağlardan. Eski büyük tuz gölü
+  (18.500 km²) yılda 12.5 km³ harcardı, tatlı göle yetecek su kalmazdı; bu
+  yüzden tuz gölü küçük seçildi. Daha çok su istenirse 9 yarığının kapalı
+  tuz gölleri (~46 km³/yıl) plato koluna bağlanabilir; o zaman o göller
+  tatlanır ya da kurur.
+- Ağızda, boğazdan sonra kıyı ovasının kollarıyla: 8.160 m³/s.
 
 ## Göller
 
 - **Köken:** 51 buzul gölü (moren seti; Duvar'ın güney eteğinde dar, uzun,
-  Garda/Como türü), 5 yarık gölü, 36 havza gölü. 27'si kapalı ve tuzlu.
-- **En büyükler:** Alt Kıta orta kuşağında 78.400 km² tatlı göl (224 m
-  derin, 1.370 m'de; Victoria'dan büyük); 9 yarığının güney ucunda
-  56.800 km², **557 m derin** yarık gölü (Baykal türü, tatlı); 9 boyunca
-  bir dizi kapalı tuz gölü (yarık kurak platoda); 2'nin
-  dağlarında 814 m derin bir dağ gölü.
+  Garda/Como türü), 5 yarık gölü, 39 havza gölü. 24 tanesi kapalı ve tuzlu.
+- **En büyükler:**
+  - Duvar'ın kuzey eteğindeki kapalı havzada (35.7°K 27.4°D, 1.820 m)
+    81.900 km², 404 m derin **tuz gölü**: Duvar'ın kuzey yüzünün eriyen
+    kar ve buz suyu kurak platoda burada biter (Tarım havzası ve eski Lop
+    Nur türü; Aral'ın 1960 öncesi 68.000 km²).
+  - Alt Kıta orta kuşağında 78.400 km² tatlı göl (224 m derin, 1.370 m'de;
+    Victoria'dan büyük).
+  - 9 boyunca 73.800 km² kapalı tuz gölü (44.8°K 28.9°D).
+  - 9 yarığının güney ucunda 56.800 km², **557 m derin** yarık gölü (Baykal
+    türü, tatlı); kuzey ucunda 42.200 km² kapalı yarık gölü.
+  - 2'nin dağlarında 814 m derin bir dağ gölü.
 - Buzul çağında buzun kazıdığı yerlere oyulan 84 oluktan 66'sı su tutuyor,
   51'i 100 km² üstünde. Duvar'ın kuzey yüzündekiler (kurak plato) çoğunlukla
   kuru ya da kapalı.

@@ -30,7 +30,8 @@ def hazirla():
     z, lat, lon = k["z"].astype(np.float64), k["lat"], k["lon"]
     zr = duzelt.yumusat(z)
     zr, kim = duzelt.buzul_golleri(zr, lat, lon)
-    zr, _, yollar = duzelt.kurgu_nehirler(zr, z, lat, lon)
+    zr, yatak, yollar = duzelt.kurgu_nehirler(zr, z, lat, lon)
+    zr, _ = duzelt.tuz_golu(zr, z, yatak, lat, lon)
     zr, tatli, alan_t = duzelt.tatli_gol(zr, z, yollar[duzelt.TATLI_GOL["nehir"]], lat, lon)
     print("tatlı göl havzası %.0f km2" % alan_t)
     dy = 6371e3 * np.radians(abs(lat[1] - lat[0]))
@@ -58,12 +59,12 @@ def coz(k, z, zr, kim, alan):
     gm = np.isfinite(sev)
     kaynak = np.where(gm, k["P"] - k["Egol"], k["R"]) * alan / 1000
     kaynak[deniz] = 0
-    q = nehir.debi(alici, sira, kaynak).reshape(z.shape) / nehir.SANIYE_YIL
+    q = nehir.debi(alici, sira, kaynak, gm).reshape(z.shape) / nehir.SANIYE_YIL
     yuz = np.where(gm, sev, zr)
     for _ in range(3):
         alici = nehir.yana_katil(alici, q, yuz, z.shape)
         sira = nehir.sira_kur(alici)
-        q = nehir.debi(alici, sira, kaynak).reshape(z.shape) / nehir.SANIYE_YIL
+        q = nehir.debi(alici, sira, kaynak, gm).reshape(z.shape) / nehir.SANIYE_YIL
     # kaynağa en uzak yol boyu (km): kısa yamaç derelerini ayıklamak için
     ny, nx = z.shape
     dyk = 6371 * np.radians(abs(k["lat"][1] - k["lat"][0]))

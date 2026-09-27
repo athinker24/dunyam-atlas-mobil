@@ -238,3 +238,40 @@ def tatli_gol(z2, z, yol, lat, lon):
         if halka[n]:
             z3[n] = min(z2[n], g["seviye_m"] + 5.0)
     return z3, m, float(alan[m].sum())
+
+
+# Tuz gölü (sahibi, 27 Eylül: "1 olsun, küçük tuz gölü"): kuzeydeki
+# dağlardan (2) inen ve plato koluna katılan kolun aşağı ucunda kapalı bir
+# çöküntü. Kol yılda ~4 km³ getirir; göl, buharlaşması bunu karşılayacak
+# büyüklükte dengelenir (~5.800 km², Büyük Tuz Gölü türü) ve taşmaz. Kolun
+# gölden sonraki kısmı kurur; plato koluna katılmaz. Havza bu dengeden
+# büyük oyulur (tam dolu alanı ~9.000 km²): göl seviyesini su belirler.
+TUZ_GOLU = dict(merkez=(48.3, 14.5), havza_km2=9000.0, derinlik_m=250.0, yataktan_uzak_hucre=3)
+
+
+def tuz_golu(z2, z, yatak, lat, lon):
+    g = TUZ_GOLU
+    from scipy import ndimage as nd
+    ny, nx = z.shape
+    i0 = int(np.argmin(np.abs(lat - g["merkez"][0]))); j0 = int(np.argmin(np.abs(lon - g["merkez"][1])))
+    dyk = 6371 * np.radians(abs(lat[1] - lat[0]))
+    dxk = (6371 * np.radians(lon[1] - lon[0]) * np.cos(np.radians(lat)))[:, None] * np.ones((1, nx))
+    ii, jj = np.indices(z.shape)
+    uz = np.hypot((ii - i0) * dyk, (jj - j0) * dxk) + gurultu(z.shape, TOHUM + 11) * 15.0
+    yasak = nd.binary_dilation(yatak, np.ones((3, 3)), iterations=g["yataktan_uzak_hucre"])
+    lo, hi = 5.0, 300.0
+    for _ in range(40):
+        r = (lo + hi) / 2
+        m = (uz <= r) & (z >= 0) & ~yasak
+        if (dxk * dyk)[m].sum() > g["havza_km2"]:
+            hi = r
+        else:
+            lo = r
+    m = nd.binary_fill_holes((uz <= r) & (z >= 0)) & ~yasak
+    lab, _ = nd.label(m); m = lab == lab[i0, j0]
+    halka = nd.binary_dilation(m, np.ones((3, 3))) & ~m
+    kenar = float(z2[halka].min())
+    oran = np.clip((r - uz) / r, 0, 1)
+    z3 = z2.copy()
+    z3[m] = np.minimum(z2[m], kenar - 5.0 - g["derinlik_m"] * oran[m] ** 0.5)
+    return z3, m
