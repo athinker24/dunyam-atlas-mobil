@@ -39,8 +39,8 @@ svg{display:block}
 /* ---- harita ---- */
 #harita{position:fixed;inset:0;touch-action:none;user-select:none;-webkit-user-select:none}
 #gl{position:absolute;inset:0;width:100%;height:100%}
-#su,#tekt,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#su,#tekt{transform-origin:0 0;will-change:transform}
+#su,#tekt,#bitki,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#su,#tekt,#bitki{transform-origin:0 0;will-change:transform}
 #kaplama{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transform-origin:0 0;will-change:transform}
 #kaplama text{font:500 10px var(--sans);letter-spacing:.06em;fill:rgba(228,223,211,.5)}
 
@@ -86,6 +86,11 @@ svg{display:block}
 .tk-not i.yak{background:#e0563f}.tk-not i.ira{background:#3fbf8a}.tk-not i.don{background:#f0a23c}
 .tk-not .vk{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8px solid #ff6a3d}
 .tk-not .vk.s{border-bottom-color:#8f887e}
+.bk-not{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);gap:4px 14px;margin-bottom:4px;font-size:11px;color:var(--yazi-2);overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+.bk-not::-webkit-scrollbar{display:none}
+.bk-not span{display:flex;align-items:center;gap:5px}
+.bk-not i{display:block;width:11px;height:11px;border-radius:2px}
+.bk-not b{font-weight:500;color:var(--soluk)}
 .gruplar{display:flex;align-items:center;gap:12px;width:100%;text-align:left}
 .gruplar .cubuk{flex:1;display:flex;height:7px;border-radius:1px;overflow:hidden}
 .gruplar .cubuk i{display:block;height:100%}
@@ -131,6 +136,9 @@ svg{display:block}
 .k-su b{color:#9cc9e8}
 .k-tk{font-size:12px;color:var(--soluk);margin:2px 0 2px}
 .k-tk b{color:#f0b48a;font-weight:500;margin-right:2px}
+.k-bk{font-size:12px;color:var(--soluk);margin:2px 0 2px}
+.k-bk b{color:#a9cf8c;font-weight:500;margin-right:2px}
+.k-bk small{display:block;opacity:.8}
 .k-serit{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;margin:2px 0 8px;text-align:center;font-size:10px;color:var(--soluk)}
 .k-serit div{display:flex;flex-direction:column;align-items:center;padding:2px 0;border-radius:4px}
 .k-serit div.sec{background:rgba(255,255,255,.07);color:var(--yazi)}

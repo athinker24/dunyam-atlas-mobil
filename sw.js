@@ -11,10 +11,10 @@
 
    AD'yi yalnizca KABUK listesi degistiginde artir. Kod ve veri guncellemesi
    icin gerekmez: ag-once zaten tazesini getirir. */
-const AD = 'dunyam-atlas-v7';   // v7: tektonik katman (data/tektonik.json, data/levha.png)
+const AD = 'dunyam-atlas-v8';   // v8: bitki örtüsü (data/bitki.json, data/bitki.png)
 const KABUK = [
   './', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'data/atlas.json',
-  'data/doku.png', 'data/yukseklik.png', 'data/kabartma.jpg', 'data/kabartma_gri.jpg', 'data/kabartma_bir.jpg', 'data/dolasim.png', 'data/su.json', 'data/tektonik.json', 'data/levha.png',
+  'data/doku.png', 'data/yukseklik.png', 'data/kabartma.jpg', 'data/kabartma_gri.jpg', 'data/kabartma_bir.jpg', 'data/dolasim.png', 'data/su.json', 'data/tektonik.json', 'data/levha.png', 'data/bitki.json', 'data/bitki.png',
   'icons/icon-192.png', 'icons/icon-512.png',
   'icons/icon-maskable-192.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png',
 ];

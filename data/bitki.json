@@ -1,0 +1,177 @@
+{
+ "ne": "Dünyam doğal bitki örtüsü (bitki/bitki.py); yöntem BITKI.md",
+ "kesit": [
+  -44.47265625,
+  -7.119140625,
+  43.154296875,
+  60.029296875
+ ],
+ "kodlar": "R = biyom kodu, G = alfa*200, B = en soğuk ay + 100 °C",
+ "biyomlar": {
+  "1": {
+   "ad": "Tropikal yağmur ormanı",
+   "ne": "Yıl boyu sıcak ve nemli; yaprağını dökmeyen, çok katlı sık orman.",
+   "ornek": "Amazon, Kongo, Borneo",
+   "renk": [
+    22,
+    92,
+    48
+   ],
+   "pay": 0.0001
+  },
+  "2": {
+   "ad": "Tropikal mevsimsel orman",
+   "ne": "Sıcak, kurak bir mevsimi olan; kurak ayda yaprağının bir kısmını döken orman.",
+   "ornek": "Hindistan'ın batı kıyısı, Güneydoğu Asya muson ormanları",
+   "renk": [
+    60,
+    128,
+    52
+   ],
+   "pay": 0.0371
+  },
+  "3": {
+   "ad": "Tropikal kuru orman ve savan",
+   "ne": "Uzun kurak mevsim: seyrek ağaçlı otlak ya da kuru mevsimde yaprak döken orman.",
+   "ornek": "Serengeti, Brezilya Cerrado'su",
+   "renk": [
+    176,
+    170,
+    62
+   ],
+   "pay": 0.1725
+  },
+  "4": {
+   "ad": "Ilık yaprak dökmeyen orman",
+   "ne": "Kışı ılık, yağışı bol; defne, meşe, kâfur gibi geniş yapraklı yeşil orman.",
+   "ornek": "Güney Çin, Güney Japonya, Karadeniz'in doğusu",
+   "renk": [
+    48,
+    138,
+    108
+   ],
+   "pay": 0.2011
+  },
+  "5": {
+   "ad": "Ilıman yaprak döken orman",
+   "ne": "Kışı soğuk, yazı ılık ve nemli; kayın, meşe, akçaağaç.",
+   "ornek": "Batı ve Orta Avrupa, ABD'nin doğusu",
+   "renk": [
+    120,
+    170,
+    70
+   ],
+   "pay": 0.0963
+  },
+  "6": {
+   "ad": "Serin karışık orman",
+   "ne": "Yaprak döken ağaçlarla iğne yapraklıların karışığı; kışı sert.",
+   "ornek": "Güney İskandinavya, Büyük Göller çevresi",
+   "renk": [
+    70,
+    118,
+    90
+   ],
+   "pay": 0.0755
+  },
+  "7": {
+   "ad": "Tayga (iğne yapraklı kuzey ormanı)",
+   "ne": "Uzun, çok soğuk kış, kısa yaz; ladin, köknar, çam.",
+   "ornek": "Sibirya, Kanada",
+   "renk": [
+    40,
+    84,
+    78
+   ],
+   "pay": 0.074
+  },
+  "8": {
+   "ad": "Soğuk yaprak döken orman",
+   "ne": "Çok soğuk ve kuru kış; kışın yaprağını döken iğne yapraklı (karaçam).",
+   "ornek": "Doğu Sibirya karaçam ormanları",
+   "renk": [
+    112,
+    132,
+    112
+   ],
+   "pay": 0.0163
+  },
+  "9": {
+   "ad": "Maki ve sert yapraklı çalılık",
+   "ne": "Ilık, kurak yaz; kuraklığa dayanıklı sert yapraklı çalı ve seyrek ağaç.",
+   "ornek": "Akdeniz kıyıları, Kaliforniya chaparral'ı",
+   "renk": [
+    150,
+    128,
+    72
+   ],
+   "pay": 0.0976
+  },
+  "10": {
+   "ad": "Sıcak otlak ve çalılık",
+   "ne": "Sıcak ve yarı kurak; ağaçsız ya da çok seyrek ağaçlı otlak.",
+   "ornek": "Sahel, Avustralya'nın iç otlakları",
+   "renk": [
+    214,
+    176,
+    96
+   ],
+   "pay": 0.0002
+  },
+  "11": {
+   "ad": "Bozkır (serin otlak)",
+   "ne": "Soğuk kışlı, yarı kurak; uzun ya da kısa otlu ağaçsız ova.",
+   "ornek": "Kazak ve Moğol bozkırı, Kuzey Amerika çayırları",
+   "renk": [
+    208,
+    200,
+    138
+   ],
+   "pay": 0.1833
+  },
+  "12": {
+   "ad": "Tundra",
+   "ne": "Ağaç yetişemeyecek kadar kısa ve serin yaz; yosun, liken, cüce çalı.",
+   "ornek": "Kuzey Kanada, Sibirya kıyısı; dağlarda ağaç sınırının üstü",
+   "renk": [
+    156,
+    176,
+    170
+   ],
+   "pay": 0.0223
+  },
+  "13": {
+   "ad": "Sıcak çöl",
+   "ne": "Çok az yağış, sıcak; seyrek çalı ya da çıplak toprak.",
+   "ornek": "Sahra, Arabistan",
+   "renk": [
+    232,
+    206,
+    146
+   ],
+   "pay": 0.0
+  },
+  "14": {
+   "ad": "Soğuk çöl ve yarı çöl",
+   "ne": "Az yağış, soğuk kış; seyrek çalı (pelin, geven).",
+   "ornek": "Gobi, Tibet'in kuzeyi, Patagonya",
+   "renk": [
+    190,
+    176,
+    150
+   ],
+   "pay": 0.0036
+  },
+  "15": {
+   "ad": "Buz ve kutup çölü",
+   "ne": "Kalıcı kar ve buz ya da bitkinin yaşayamayacağı kadar soğuk.",
+   "ornek": "Antarktika, Grönland; en yüksek zirveler",
+   "renk": [
+    238,
+    242,
+    246
+   ],
+   "pay": 0.0203
+  }
+ }
+}

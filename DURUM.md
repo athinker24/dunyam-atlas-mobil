@@ -87,6 +87,15 @@ tatlı göl, kuzey kolunun ucunda 4.050 km² tuz gölü. Uygulamada su katmanı
 (27 Eylül): ana kollar / bütün kollar, dokununca göl ve
 nehir bilgisi. Deltalar (160 delta, uygulamada çatallı ağızlar). Su deniz renkleriyle çizilir. Nehir çizgisi bütün ağa ortak kaydırma alanıyla kıvrılır, düz arazide (plato) 200-900 km'lik büyük kıvrım (sahibi: "çok düz"). Paralel dere tarakları birleştirildi (~35 km, sahibi: "olabildiğince az"). Adalarda ayrı eşik (3 m³/s, ≥ 60 km): takımadada 175 kol (sahibi: "adalarda su yok"). Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
 
+## Ansiklopedi yönü (27 Eylül, sahibi)
+
+Uygulama bir ansiklopediye büyüyecek: iklim, dağlar, nehirler, toprak,
+bitki örtüsü, ileride hayvanlar ve canlılar. Karar: özellikler şimdilik
+mevcut sekmelere yerleştirilir, hepsi bitince gruplar hâlinde yeni iskelet
+kurulur. Merak Planet Advisor'dan eksikler sırası: **bitki örtüsü (yapıldı,
+`BITKI.md`) → toprak → yaşanabilirlik**; toplumlar/zincir en sona, "olası
+okuma, tahmin değil" etiketiyle.
+
 ## Tektonik katman (27 Eylül)
 
 Arazi sekmesinde "Yükseklik / Levhalar". Levhalar, sınırlar ve volkan
