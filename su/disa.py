@@ -63,7 +63,41 @@ def kivir(p, rng, duzey=2, oran=0.16):
     return p
 
 
-def nehirler(alici, q, boy, gm, deniz, lat, lon):
+def yumusak_kivrim(p, rng, egim=None):
+    """Uzun dalga boylu yanal kıvrım (hücre birimi). Rastgele beyaz titreme
+    el yapımı görünüyordu; onsuz da D8'in düz ışınları cetvel gibi kalıyordu.
+    Yol 0.5 hücre aralıkla yeniden örneklenir, yana 7, 13 ve 23 hücre dalga
+    boylu üç sinüsün toplamı kadar kaydırılır; zarf sin(πs/L) uçlarda sıfır,
+    birleşme noktaları yerinde kalır. Genlik dalga boyuyla orantılı: ovada
+    (eğim < 0.6 m/km) 0.11, dağda 0.045 katı. Sonra hafifçe sadeleştirilir."""
+    if len(p) < 2:
+        return p
+    # önce köşeleri yuvarla (Chaikin, iki tur, uçlar sabit): düz ovada su
+    # basma yolu dik açılı dönüyordu
+    for _ in range(2):
+        if len(p) < 3:
+            break
+        q1 = 0.75 * p[:-1] + 0.25 * p[1:]; q2 = 0.25 * p[:-1] + 0.75 * p[1:]
+        p = np.vstack([p[:1], np.column_stack([q1, q2]).reshape(-1, 2)[1:-1], p[-1:]])
+    d = np.hypot(*np.diff(p, axis=0).T); s = np.concatenate([[0], np.cumsum(d)]); L = s[-1]
+    if L < 2:
+        return p
+    n = max(int(L / 0.5), 2)
+    t = np.linspace(0, L, n + 1)
+    x = np.interp(t, s, p[:, 0]); y = np.interp(t, s, p[:, 1])
+    dx = np.gradient(x); dy = np.gradient(y); nn = np.hypot(dx, dy) + 1e-9
+    nx_, ny_ = -dy / nn, dx / nn
+    # genlik dalga boyuyla orantılı (ovada 0.11, dağda 0.045 × dalga boyu;
+    # sabit 0.45 hücre yakından bakınca bile görünmüyordu)
+    k = 0.11 if (egim is None or egim < 0.6) else 0.045
+    off = sum(k * lam * w * np.sin(2 * np.pi * t / lam + rng.uniform(0, 2 * np.pi))
+              for lam, w in ((7, 0.5), (13, 0.35), (23, 0.25)))
+    off = off * np.sin(np.pi * t / L)
+    q = np.column_stack([x + nx_ * off, y + ny_ * off])
+    return rdp(q, 0.06)
+
+
+def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
     ny, nx = q.shape
     qf, bf = q.ravel(), boy.ravel()
     nm = (qf >= NEHIR_Q) & ~gm.ravel() & ~deniz.ravel()
@@ -115,8 +149,8 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon):
         kes = [0] + [i for i in range(1, len(h) - 1) if int(h[i]) in sabit] + [len(h) - 1]
         pts, qs = [p[0]], [qq[0]]
         for a, b in zip(kes[:-1], kes[1:]):
-            parca = rdp(p[a:b + 1], 0.75)
-            parca = kivir(parca, rng)
+            parca = yumusak_kivrim(rdp(p[a:b + 1], 0.3), rng,
+                                   egim=None if Z is None else (Z[h[a]] - Z[h[b]]) / max((b - a) * 8.0, 1.0))
             # her yeni noktanın debisi: özgün yoldaki en yakın hücreden
             for v in parca[1:]:
                 j = a + int(np.argmin(np.hypot(*(p[a:b + 1] - v).T)))
@@ -206,7 +240,9 @@ def goller_kiyi(goller, shape, lat, lon, S=3):
 
 
 def yaz(goller, alici, q, boy, gm, deniz, lat, lon):
-    n = nehirler(alici, q, boy, gm, deniz, lat, lon)
+    zp = os.path.join(BURASI, "_akim.npz")
+    Z = np.load(zp)["z"].astype(float).ravel() if os.path.exists(zp) else None
+    n = nehirler(alici, q, boy, gm, deniz, lat, lon, Z)
     l = goller_kiyi(goller, q.shape, lat, lon)
     veri = dict(ne="Dünyam gölleri ve nehirleri (su/uret_su.py, su/disa.py)", kademe_esikleri=dict(
         k1="Q>=2000 m3/s ya da boy>=1500 km", k2="Q>=600 ya da >=600 km", k3="Q>=200 ya da >=250 km", k4="Q>=50"),

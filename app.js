@@ -214,7 +214,8 @@ function suHazirla(S){
   // yalniz donusumle cizilir (her karede kurmak "butun kollar"da kaydirmayi
   // telefonda kare basina ~250 ms yavaslatiyordu, CPU x4 olcumu). Kol,
   // taban kalinligi ayni kalan parcalara bolunur (kalinlik debiyle artar).
-  const tabanK = q => Math.max(0.55, 0.3 + 0.5*Math.log10(Math.max(q, 50)/50));
+  // kalinlik debinin logaritmasiyla: kaynak ~0.5 px, 20.000 m3/s ~2.2 px
+  const tabanK = q => Math.max(0.5, 0.3 + 0.62*Math.log10(Math.max(q, 50)/50));
   const nehirler = S.nehirler.map(n => { const p = coz(n.p), m = p.length/2;
     const q = Float32Array.from(n.q, v => Math.pow(10, v/10)), parcalar = [];
     const x = i => p[2*i], y = i => p[2*i+1];
@@ -825,8 +826,14 @@ function baslat(J, resimler){
      akış yönünde artar. Önce koyu bir kılıf, üstünde su rengi: renkli
      iklim zemininde de seçilir. */
   const SU = D.su, suCv = $("#su"), suC = suCv.getContext("2d");
-  const SU_RENK = "#83bbe2", SU_KILIF = "rgba(7,13,18,.42)";
-  const GOL_TATLI = ["#1b4663", "#72aad2"], GOL_TUZ = ["#8aa9a0", "#d3e6dc"];   // tuzlu: soluk mineral tonu (atlaslarda tuz gölü açık renkle gösterilir)
+  // Koyu zeminde hiyerarsi koyudan parlağa (Stamen, Dark Matter): büyük
+  // kollar parlak, küçükler sönük. Koyu kılıf kaldırıldı: nehri yol gibi
+  // gösteriyordu. Göllerin kıyısına içten yumuşak bir ışık (waterlining'in
+  // sade hâli), tuz gölü noktalı kıyıyla (mevsimlik, kuruyan kıyı).
+  const SU_ACIK = [168, 214, 242], SU_KOYU = [96, 150, 190];
+  const suRenk = t => `rgb(${SU_KOYU.map((v, i) => Math.round(v + (SU_ACIK[i]-v)*t)).join(",")})`;
+  const GOL_TATLI = ["#1f5475", "#8cc3e6"], GOL_TUZ = ["#8d9f95", "#d6e2da"];
+  const COKEL = "214,196,150";   // delta ovasi ve denizdeki cokel bulutu
   const yumusak = (a, b, x) => { const t = Math.max(0, Math.min(1, (x-a)/(b-a))); return t*t*(3-2*t); };
   function suGorunurluk(k){
     if(ayar.suKol === "tum" || k === 1) return 1;
@@ -860,24 +867,35 @@ function baslat(J, resimler){
     // boylam/enlem -> ekran (dogrusal); cizgi kalinligi yol birimine cevrilir
     const kx = olcek/sx, ky = olcek/sy, birim = 1/Math.sqrt(kx*ky);
     suC.setTransform(dpr*kx, 0, 0, -dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
+    // delta: agizda cokel bulutu (yarisi delta ovasi, yarisi denizde bulanik su)
     suC.globalAlpha = soluk;
-    for(const L of SU.goller){ if(!icinde(L.kutu)) continue;
-      suC.fillStyle = (L.tuz ? GOL_TUZ : GOL_TATLI)[0]; suC.fill(L.yol, "evenodd"); }
+    for(const d of SU.deltalar){ if(suGorunurluk(d.k) < 0.02 || !icinde(d.kutu)) continue;
+      const r = d.r/111.2*1.1, x = d.agiz[1], y = d.agiz[0];
+      const g = suC.createRadialGradient(x, y, 0, x, y, r);
+      const a0 = Math.min(0.32, 0.1 + 0.04*Math.log10(1 + d.Qs)) * suGorunurluk(d.k);
+      g.addColorStop(0, `rgba(${COKEL},${a0.toFixed(3)})`); g.addColorStop(1, `rgba(${COKEL},0)`);
+      suC.fillStyle = g; suC.beginPath(); suC.arc(x, y, r, 0, Math.PI*2); suC.fill(); }
+    // goller: dolgu, icten yumusak kiyi isigi, ince kiyi cizgisi
+    for(const L of SU.goller){ if(!icinde(L.kutu)) continue; const r = L.tuz ? GOL_TUZ : GOL_TATLI;
+      suC.globalAlpha = soluk*(L.tuz ? 0.8 : 1); suC.fillStyle = r[0]; suC.fill(L.yol, "evenodd");
+      suC.save(); suC.clip(L.yol, "evenodd");
+      for(const [gen, al] of [[7, 0.10], [3.5, 0.16]]){ suC.globalAlpha = al*soluk; suC.strokeStyle = r[1]; suC.lineWidth = gen*zf*birim; suC.stroke(L.yol); }
+      suC.restore(); }
     suC.lineCap = "round"; suC.lineJoin = "round";
+    const parlak = g => Math.max(0, Math.min(1, (g - 0.5)/1.6));
     const cizilecek = [];
     for(const n of SU.nehirler){ const a = suGorunurluk(n.k); if(a > 0.02 && icinde(n.kutu)) cizilecek.push([n, a]); }
-    const deltaCiz = [];
-    for(const d of SU.deltalar){ const a = suGorunurluk(d.k); if(a > 0.02 && icinde(d.kutu)) deltaCiz.push([d, a]); }
-    for(const kilif of [true, false]){
-      suC.strokeStyle = kilif ? SU_KILIF : SU_RENK;
-      for(const [d, a] of deltaCiz){ suC.globalAlpha = a*soluk*(kilif ? 0.9 : 1); suC.lineWidth = (d.g*zf + (kilif ? 1 : 0))*birim;
-        for(const yol of d.yollar) suC.stroke(yol); }
-      for(const [n, a] of cizilecek){ suC.globalAlpha = a*soluk*(kilif ? 0.9 : 1);
-        for(const [g, yol] of n.parcalar){ suC.lineWidth = (g*zf + (kilif ? 1 : 0))*birim; suC.stroke(yol); } } }
-    // gol kiyilari en ustte: nehir agzi kiyi cizgisinin altinda kalir
-    suC.lineWidth = Math.min(1.6, 0.8*zf)*birim;
-    for(const L of SU.goller){ if(!icinde(L.kutu)) continue; suC.globalAlpha = 0.85*soluk;
-      suC.strokeStyle = (L.tuz ? GOL_TUZ : GOL_TATLI)[1]; suC.stroke(L.yol); }
+    for(const d of SU.deltalar){ const a = suGorunurluk(d.k); if(a <= 0.02 || !icinde(d.kutu)) continue;
+      suC.globalAlpha = a*soluk*0.85; suC.strokeStyle = suRenk(parlak(d.g)); suC.lineWidth = d.g*zf*birim;
+      for(const yol of d.yollar) suC.stroke(yol); }
+    for(const [n, a] of cizilecek) for(const [g, yol] of n.parcalar){
+      const t = parlak(g); suC.globalAlpha = a*soluk*(0.55 + 0.45*t); suC.strokeStyle = suRenk(t);
+      suC.lineWidth = g*zf*birim; suC.stroke(yol); }
+    // gol kiyilari en ustte: nehir agzi kiyi cizgisinin altinda kalir; tuzlu kiyi noktali
+    for(const L of SU.goller){ if(!icinde(L.kutu)) continue; suC.globalAlpha = 0.9*soluk;
+      suC.strokeStyle = (L.tuz ? GOL_TUZ : GOL_TATLI)[1]; suC.lineWidth = Math.min(1.4, 0.7*zf)*birim;
+      suC.setLineDash(L.tuz ? [1.5*birim*zf, 2.5*birim*zf] : []); suC.stroke(L.yol); }
+    suC.setLineDash([]);
     suC.globalAlpha = 1;
   }
 

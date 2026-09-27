@@ -180,8 +180,8 @@ def main():
 
 # --- uygulama için çatallanan ağız kolları -----------------------------------
 # Delta görünüşü: ağızdan r km yukarıdaki "tepe"den kıyıya yelpaze gibi açılan
-# 2-5 kol. r = 12·Qs^0.45 km (Qs Mt/yıl: 700 -> ~230 km, Nil deltası ~160 km;
-# 60 -> ~75 km; 10 -> ~35 km). Kol sayısı nehir baskında 3-5, yay biçimlide 2-3,
+# 2-5 kol. r = 8·Qs^0.45 km (Qs Mt/yıl: 700 -> ~150 km, Nil deltası ~160 km;
+# 60 -> ~50 km; 10 -> ~23 km). Kol sayısı nehir baskında 3-5, yay biçimlide 2-3,
 # küçükte 2. Kolların YERİ tasarımdır: ~10 km'lik arazi dağıtıcı kolları
 # çözmez; delta varlığı ve büyüklüğü hesaptan, çatalların biçimi değil.
 def catallar(tut, alici, q, deniz, gm, lat, lon):
@@ -198,7 +198,7 @@ def catallar(tut, alici, q, deniz, gm, lat, lon):
     out = []
     for t in tut:
         c = t["hucre"]; i, j = divmod(c, nx)
-        r_km = 12 * t["cokel_mt_yil"] ** 0.45
+        r_km = 8 * t["cokel_mt_yil"] ** 0.45
         # tepe: ana koldan r_km yukarı
         x, L = c, 0.0
         while L < r_km and son[x] > bas[x]:
@@ -223,7 +223,13 @@ def catallar(tut, alici, q, deniz, gm, lat, lon):
         yollar_ = []
         for h in hedefler:
             p = np.array([[aj, ai], [kj[h], ki[h]]], float)
-            p = disa.kivir(np.vstack([p[0], (p[0] + p[1]) / 2 + rng.normal(0, 0.8, 2), p[1]]), rng, duzey=3, oran=0.13)
+            # kol, tepeden nehrin yönünde çıkıp kıyıya kıvrılır (ikinci derece
+            # Bézier), sonra hafif kıvrım: düz yelpaze telleri pençe gibi duruyordu
+            L = np.hypot(*(p[1] - p[0]))
+            kontrol = p[0] + np.array([yon[1], yon[0]]) * 0.55 * L
+            tt = np.linspace(0, 1, 12)[:, None]
+            p = (1 - tt) ** 2 * p[0] + 2 * (1 - tt) * tt * kontrol + tt ** 2 * p[1]
+            p = disa.yumusak_kivrim(p, rng, egim=0.0)
             lo = lon[0] + p[:, 0] * (lon[1] - lon[0]); la = lat[0] + p[:, 1] * (lat[1] - lat[0])
             X = np.round(lo * 100).astype(int); Y = np.round(la * 100).astype(int)
             kod = [int(X[0]), int(Y[0])]
