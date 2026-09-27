@@ -68,8 +68,16 @@ haritalar `tektonik/harita.py` (Equal Earth ve küreler). Okyanus içindeki
 sırt, hendek ve üçlü kavşaklar **tasarımdır**, araziden ölçülmedi.
 
 Açık karar yok: kaçış bloğunun ve 9'daki Baykal tipi yarığın ayrıntısını
-sahibi Claude'a bıraktı ("sen belirlersin"), ikisi kesin. Sıradaki: buzul geçmişi, sonra su
-dengeli göller ve nehirler.
+sahibi Claude'a bıraktı ("sen belirlersin"), ikisi kesin. Buzul geçmişi `BUZUL.md`'de.
+
+## Buzul geçmişi (27 Eylül, `buzul` dalında)
+
+Giriş noktası **`BUZUL.md`**. Karar: buzul çağı −6 °C, eğiklik 22°,
+deniz −120 m; ovalarda kıta buz örtüsü yok (kurak, kar çizgisi yüksek).
+Sonuç dağ buzulu: doruğunda karanın %6.7'si buz, bugün %2.2. İzler: 172
+moren seti gölü adayı (26 büyük, çoğu Duvar'da), 12 fiyort (kuzey kıyısı),
+~3.000 sirk. Sıradaki: su dengeli göller ve nehirler; göl adaylarının
+hangisinin su tuttuğu orada belirlenir.
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
 
