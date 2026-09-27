@@ -213,20 +213,6 @@
   },
   {
    "enlem_boylam": [
-    47.46,
-    2.55
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "havza",
-   "alan_km2": 10331,
-   "derin_m": 255,
-   "hacim_km3": 1598.7,
-   "seviye_m": 792,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 17.21
-  },
-  {
-   "enlem_boylam": [
     33.37,
     24.29
    ],
@@ -238,6 +224,20 @@
    "seviye_m": 1855,
    "cikis": "yok (kapalı, tuzlu)",
    "giren_km3_yil": 6.84
+  },
+  {
+   "enlem_boylam": [
+    47.5,
+    1.93
+   ],
+   "yakin": "1 (Kuzey batı kolu)",
+   "koken": "havza",
+   "alan_km2": 10066,
+   "derin_m": 248,
+   "hacim_km3": 1509.5,
+   "seviye_m": 792,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 17.15
   },
   {
    "enlem_boylam": [
@@ -1439,8 +1439,8 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 8416,
-   "boy_km": 4292,
+   "debi_m3s": 8429,
+   "boy_km": 4282,
    "havza_km2": 3909331,
    "agiz": [
     36.43,

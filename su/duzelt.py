@@ -112,7 +112,7 @@ BOGAZ_ESIK_M = 1200.0    # yol boyunca özgün arazi bunu ilk aşınca boğaz ba
 # plato tabanının hemen altında, en derin yeri eşiğin 250 m altında
 # (eşik aşınması kuralı 200 m'den sığ çukuru boşaltırdı).
 TATLI_GOL = dict(nehir="plato_kolu", alan_km2=10000.0, seviye_m=792.0, derinlik_m=250.0,
-                 bogazdan_uzak_hucre=4, boy_hucre=22)
+                 bogazdan_uzak_hucre=4, boy_hucre=9)
 
 
 def _en_alcak_yol(z, a, b, maske):
