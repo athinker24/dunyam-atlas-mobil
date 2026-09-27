@@ -89,7 +89,15 @@ def degiskenler(d, w):
     return Tc, Tw, gdd5, gdd0, np.clip(alfa, 0, 1)
 
 
-def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz):
+def yazi_kurak(T, P):
+    """Köppen Cs ölçütü: yılın sıcak yarısındaki en kurak ay < 40 mm ve soğuk
+    yarının en yağışlı ayının üçte birinden az (yağış kışın)."""
+    o = np.argsort(T, axis=0)
+    yaz = np.take_along_axis(P, o[6:], 0); kis = np.take_along_axis(P, o[:6], 0)
+    return (yaz.min(0) < 40) & (yaz.min(0) < kis.max(0) / 3)
+
+
+def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz, cs=None):
     # bitki işlev tipleri (Prentice vd. 1992 Tablo 1)
     te = (Tc >= 15.5) & (alfa >= 0.80)
     tr = (Tc >= 15.5) & (alfa >= 0.45) & (alfa <= 0.95)
@@ -125,6 +133,14 @@ def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz):
     k[tr & ~te] = 3
     k[tr & te] = 2
     k[te & ~tr] = 1
+    # BIOME1 yağışın ZAMANINA bakmaz: kışı ılık (Tc >= 15.5) ama yazı kurak
+    # yerleri de tropik yağmurla yeşeren (savan) sayıyordu. Yazı kurak
+    # (Akdeniz rejimi) yerde kuraklık sıcak mevsime düşer, sert yapraklılar
+    # baskındır (maki, chaparral). 27 Eylül, sahibi: "savan çok mu oldu":
+    # savanın yarısı (karanın %8.9'u) böyleydi; düzeltmeyle savan %8.4,
+    # Köppen Aw %8.9 ile uyumlu.
+    if cs is not None:
+        k[(k == 3) & cs] = 9
     k[buz] = 15
     return k
 
@@ -135,7 +151,7 @@ def main():
     w = uret.dunya_yukle()
     d = akim.hesapla(iklim)
     Tc, Tw, gdd5, gdd0, alfa = degiskenler(d, w)
-    k = siniflandir(Tc, Tw, gdd5, gdd0, alfa, d["buzul"])
+    k = siniflandir(Tc, Tw, gdd5, gdd0, alfa, d["buzul"], yazi_kurak(d["Tay"], d["Pay"]))
     z, lat, lon = d["z"], d["lat"], d["lon"]
     su = np.load(os.path.join(KOK, "su", "_su.npz"))
     gol = np.isfinite(su["sev"])

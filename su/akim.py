@@ -70,7 +70,7 @@ def hesapla(iklim_npz, deniz=0.0):
     R += kalan_kar
     kar[:] = np.minimum(kar, kar0)
     return dict(z=z, lat=lat, lon=lon, P=P.sum(0), PE=PE.sum(0), AET=AET, R=R, Egol=Egol,
-                Pay=P, Tay=T, buzul=kalan_kar > 0)
+                Pay=P, Tay=T, PEay=PE, buzul=kalan_kar > 0)
 
 
 if __name__ == "__main__":
@@ -80,4 +80,4 @@ if __name__ == "__main__":
     ort = lambda a: float((a * wgt).sum() / wgt.sum())
     print("kara ort. yağış %.0f  PE %.0f  gerçek buh. %.0f  akış %.0f  göl buh. %.0f mm/yıl; akış/yağış %.2f"
           % (ort(d["P"]), ort(d["PE"]), ort(d["AET"]), ort(d["R"]), ort(d["Egol"]), ort(d["R"]) / ort(d["P"])))
-    np.savez_compressed(os.path.join(BURASI, "_akim.npz"), **{k: np.asarray(v, dtype=np.float32) if np.asarray(v).dtype == np.float64 else v for k, v in d.items() if k not in ("Pay", "Tay")})
+    np.savez_compressed(os.path.join(BURASI, "_akim.npz"), **{k: np.asarray(v, dtype=np.float32) if np.asarray(v).dtype == np.float64 else v for k, v in d.items() if k not in ("Pay", "Tay", "PEay")})

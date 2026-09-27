@@ -32,10 +32,10 @@ karşılaştırılmalı.
 | biyom | pay |
 |---|---|
 | Ilık yaprak dökmeyen orman | %20 |
+| Maki ve sert yapraklı çalılık | %19 |
 | Bozkır (serin otlak) | %18 |
-| Tropikal kuru orman ve savan | %17 |
-| Maki ve sert yapraklı çalılık | %10 |
 | Ilıman yaprak döken orman | %10 |
+| Tropikal kuru orman ve savan | %8 |
 | Serin karışık orman | %8 |
 | Tayga | %7 |
 | Tropikal mevsimsel orman | %4 |
@@ -43,6 +43,16 @@ karşılaştırılmalı.
 | Buz ve kutup çölü | %2 |
 | Soğuk yaprak döken orman | %2 |
 | Soğuk çöl ve yarı çöl | %0.4 |
+
+**Yazı kurak düzeltmesi (27 Eylül, sahibi: "savan çok mu oldu"):** BIOME1
+yağışın zamanına bakmaz; kışı ılık (en soğuk ay >= 15.5 °C) ama yağışı kışın
+düşen yerleri de tropik savan sayıyordu. Savanın yarısı (karanın %8.9'u)
+böyleydi. Köppen Cs ölçütüyle (sıcak yarının en kurak ayı < 40 mm ve soğuk
+yarının en yağışlı ayının üçte birinden az) bu yerler maki oldu: savan
+%17 → %8 (Köppen Aw %8.9), maki %10 → %19 (Köppen Cs %15). Güneyde maki ile
+savan enlem boyunca şeritler hâlinde değişiyor: basınç kuşaklarının yıllık
+salınımından (CLAUDE.md §8), yağış rejimi enlemle ters dönüyor. Karşılaştırma
+`bitki/savan_kiyas.png`.
 
 Tropikal yağmur ormanı %0: `k_itcz` 0.6 kararı (CLAUDE.md §2.2) Af'yi bilerek
 sıfırlamıştı; bitki örtüsü bunu doğal olarak izliyor. Sıcak çöl ve sıcak
