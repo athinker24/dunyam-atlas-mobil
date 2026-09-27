@@ -975,10 +975,14 @@ function baslat(J, resimler){
       tkCv.style.transform = `translate(${(ox - tkCizilen.ox*k).toFixed(2)}px,${(oy - tkCizilen.oy*k).toFixed(2)}px) scale(${k.toFixed(5)})`;
       return; }
     tkCv.style.transform = ""; tkCizilen = {ox, oy, olcek, imza};
+    // Kapalıyken tuval sıfırlanıp gizlenir (boyut yeniden atanır): tam tuval
+    // clearRect, headless Chromium'da (GitHub testi) sonraki okumada eski
+    // pikselleri döndürüyordu; gizli tuval birleştirmeye de girmez.
+    if(!levhaModu()){ if(!tkCv.hidden){ tkCv.width = tkCv.width; tkCv.hidden = true; } return; }
+    tkCv.hidden = false;
     const r = tkCv.getBoundingClientRect(), w = Math.round(r.width*dpr), h = Math.round(r.height*dpr);
     if(tkCv.width !== w || tkCv.height !== h){ tkCv.width = w; tkCv.height = h; }
     tkC.setTransform(1,0,0,1,0,0); tkC.clearRect(0, 0, w, h);
-    if(!levhaModu()) return;
     const g = gorunen(), sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H;
     const lo0 = B[0] + (-ox/olcek - 4)*sx, lo1 = B[0] + ((g.w - ox)/olcek + 4)*sx;
     const la1 = B[3] - (-oy/olcek - 4)*sy, la0 = B[3] - ((h/dpr - oy)/olcek + 4)*sy;
