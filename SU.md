@@ -27,7 +27,7 @@ kıyıdaki gibi hafif ışıltı); tuz gölü kurumuş kum tonu, noktasız ince 
 Nehir çizgisi: basamaklar silinir, köşeler yuvarlanır, sonra bütün ağa
 ortak yumuşak bir kaydırma alanıyla kıvrılır (1.6-24 hücre dalga boyu, ovada
 tam, dağda yarı genlik; `disa.KaydirmaAlani`). Alan konumun işlevi olduğu
-için ana kol ile ona katılan kol birleşme noktasında aynı kayar, bağ kopmaz. Göle ya da nehre dokununca
+için ana kol ile ona katılan kol birleşme noktasında aynı kayar, bağ kopmaz. Düz arazide (plato tabanı, kıyı ovası) buna 200-900 km dalga boyunda 1-5 hücrelik büyük salınım eklenir (27 Eylül, sahibi: plato nehri "çok düz"); göl ve kıyıdan ~7 hücre içinde söner, ağızlar yerinde kalır. Alanın kendini katladığı kara payı %0.7'den %1.3'e çıktı (Jacobian < 0), yalnız küçük dalgalarda ve görünmüyor. Göle ya da nehre dokununca
 kartta alan/derinlik/yüzey ya da o noktadaki debi. **Veri iş akışı
 (veri.yml) bu dosyayı üretmez**: iklim değişirse yukarıdaki komutlar elle
 koşulur.

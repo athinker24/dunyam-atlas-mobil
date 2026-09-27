@@ -107,30 +107,54 @@ class KaydirmaAlani:
     Yön ve dalga boyu (2.5-24 hücre) rastgele sabit bileşenlerin toplamı.
     Genlik ovada tam, dağda (eğim > 25 m/hücre) yarıya iner.
     """
-    def __init__(self, Z, shape, rng, genlik=1.25):
+    def __init__(self, Z, shape, rng, genlik=1.25, su=None):
         self.ny, self.nx = shape
         self.bil = []
         for lam, w in ((1.6, 0.14), (2.5, 0.22), (4, 0.3), (6.5, 0.35), (10, 0.35), (16, 0.3), (24, 0.25)):
             for _ in range(2):
                 phi = rng.uniform(0, np.pi); theta = rng.uniform(0, 2 * np.pi)
                 self.bil.append((lam, w * genlik / 2 ** 0.5, np.cos(phi), np.sin(phi), np.cos(theta), np.sin(theta), rng.uniform(0, 2 * np.pi)))
+        # 27 Eylül, sahibi: plato nehri "çok düz". Hücre ~10 km; en uzun 24
+        # hücrelik bileşen 300 km'lik düz ovada kaybolur. Düz arazide (plato
+        # tabanı, kıyı ovası) 300-900 km dalga boyunda 2-4.5 hücrelik büyük
+        # salınım eklenir. Her bileşenin eğimi ≤ 0.35: alan kendini
+        # katlamaz, kollar birbirini kesmez. Göl ve kıyıdan 10 hücre içinde
+        # sönümlenir: göl kıyısı ve ağız kaymaz, nehir göle/denize bağlı kalır.
+        self.buyuk = []
+        for lam, w in ((20, 1.1), (34, 1.9), (55, 3.1), (90, 5.0)):
+            for _ in range(2):
+                phi = rng.uniform(0, np.pi); theta = rng.uniform(0, 2 * np.pi)
+                self.buyuk.append((lam, w / 2 ** 0.5, np.cos(phi), np.sin(phi), np.cos(theta), np.sin(theta), rng.uniform(0, 2 * np.pi)))
+        self.carpan = self.duz = None
         if Z is not None:
             z = Z.reshape(shape)
             gy, gx = np.gradient(np.maximum(z, 0))
             e = ndimage.gaussian_filter(np.hypot(gx, gy), 2)
             self.carpan = np.clip(1.0 - 0.5 * np.clip((e - 8) / 25, 0, 1), 0.5, 1.0)
-        else:
-            self.carpan = None
+            e6 = ndimage.gaussian_filter(np.hypot(gx, gy), 6)
+            duz = np.clip((25 - e6) / 15, 0, 1)
+            if su is not None:
+                uz = ndimage.distance_transform_edt(~su.reshape(shape))
+                duz = duz * np.clip((uz - 1) / 6, 0, 1)
+            self.duz = ndimage.gaussian_filter(duz, 4)
+
+    @staticmethod
+    def _topla(bil, x, y):
+        dx = np.zeros(len(x)); dy = np.zeros(len(x))
+        for lam, w, c, s_, dxv, dyv, ps in bil:
+            v = w * np.sin(2 * np.pi * (x * c + y * s_) / lam + ps)
+            dx += v * dxv; dy += v * dyv
+        return dx, dy
 
     def __call__(self, p):
         x, y = p[:, 0], p[:, 1]
-        dx = np.zeros(len(p)); dy = np.zeros(len(p))
-        for lam, w, c, s_, dxv, dyv, ps in self.bil:
-            v = w * np.sin(2 * np.pi * (x * c + y * s_) / lam + ps)
-            dx += v * dxv; dy += v * dyv
+        dx, dy = self._topla(self.bil, x, y)
         if self.carpan is not None:
             i = np.clip(np.round(y).astype(int), 0, self.ny - 1); j = np.clip(np.round(x).astype(int), 0, self.nx - 1)
             k = self.carpan[i, j]; dx *= k; dy *= k
+            bx, by = self._topla(self.buyuk, x, y)
+            k = ndimage.map_coordinates(self.duz, [y, x], order=1, mode="nearest")
+            dx += bx * k; dy += by * k
         return np.column_stack([x + dx, y + dy])
 
 
@@ -191,7 +215,7 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
     # birleşme noktaları: her kolun katıldığı hücre, ana kolda sabit tepe
     sabit = set(kol["katilim"] for kol in kollar if kol["katilim"] is not None)
     rng = np.random.default_rng(1492)
-    alan = KaydirmaAlani(Z, (ny, nx), np.random.default_rng(1493))
+    alan = KaydirmaAlani(Z, (ny, nx), np.random.default_rng(1493), su=(gm | deniz))
     global KAYDIR
     KAYDIR = alan              # delta.py delta kollarını aynı alanla kaydırır
     cikis = []
