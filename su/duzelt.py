@@ -86,3 +86,84 @@ def buzul_golleri(zr, lat, lon):
             kim[k] = g["no"]
         z2[c] = max(z2[c], dil_z + MOREN_M)
     return z2.reshape(ny, nx), kim.reshape(ny, nx)
+
+
+# --- Sahibin istediği nehirler (kurgu; 27 Eylül) ------------------------------
+# "Bozkırda platoya büyük bir kol istiyorum, o kadar dağ var oralarda": plato
+# doğusundan (9'un batı eteği) batıya plato boyunca, sonra güneybatıya 1'in
+# güney ucu ile Duvar'ın batı ucu arasındaki sırtı keserek iç denize.
+# Nokta dizisi sahibin haritaya çizdiği hattan (enlem, boylam); yol bu
+# koridorun içinde en alçak geçitten geçer. Sırtta açılan boğaz: nehir
+# sırt yükselmeden önce de oradaydı ve yükselirken yatağını kazdı (öncül
+# nehir: İndus, Arun, Kolorado gibi). Buzul erimesinde taşan plato suyu da
+# boğazı derinleştirdi.
+KURGU_NEHIRLER = {
+    "plato_kolu": [(49.44, 17.45), (47.68, 12.61), (47.24, 7.25), (47.77, 1.1),
+                   (46.45, -2.5), (44.17, -5.14), (41.09, -7.16), (38.36, -8.04), (35.73, -8.31)],
+}
+KORIDOR_HUCRE = 10       # çizilen hattan en çok ~100 km sapabilir
+
+
+def _en_alcak_yol(z, a, b, maske):
+    """a'dan b'ye, maske içinde; maliyet = mesafe × (1 + aşılan yükseklik/200 m)."""
+    import heapq
+    ny, nx = z.shape
+    en = {a: 0.0}; geri = {}; h = [(0.0, a)]
+    taban = min(z[a], z[b])
+    while h:
+        d, c = heapq.heappop(h)
+        if c == b:
+            break
+        if d > en.get(c, np.inf):
+            continue
+        i, j = c
+        for di in (-1, 0, 1):
+            for dj in (-1, 0, 1):
+                if di == dj == 0:
+                    continue
+                n = (i + di, j + dj)
+                if not (0 <= n[0] < ny and 0 <= n[1] < nx) or not maske[n]:
+                    continue
+                m = np.hypot(di, dj) * (1 + max(z[n] - taban, 0) / 200.0)
+                if d + m < en.get(n, np.inf):
+                    en[n] = d + m; geri[n] = c; heapq.heappush(h, (d + m, n))
+    yol = [b]
+    while yol[-1] != a:
+        yol.append(geri[yol[-1]])
+    return yol[::-1]
+
+
+def kurgu_nehirler(zr, z, lat, lon):
+    """Sahibin nehirlerini yatağa oyar: yol boyunca yükseklik denize doğru
+    hiç artmaz (gerekirse boğaz açılır), yatak iki yanından 10 m alçak."""
+    ny, nx = zr.shape
+    z2 = zr.copy(); yatak = np.zeros(zr.shape, bool)
+    for ad, noktalar in KURGU_NEHIRLER.items():
+        hc = [(int(np.argmin(np.abs(lat - la))), int(np.argmin(np.abs(lon - lo)))) for la, lo in noktalar]
+        yol = []
+        for a, b in zip(hc[:-1], hc[1:]):
+            # koridor: iki nokta arasındaki doğruya uzaklık
+            ii, jj = np.indices(zr.shape)
+            d = np.array(b) - np.array(a); L = max(np.hypot(*d), 1)
+            t = np.clip(((ii - a[0]) * d[0] + (jj - a[1]) * d[1]) / L**2, 0, 1)
+            uz = np.hypot(ii - (a[0] + t * d[0]), jj - (a[1] + t * d[1]))
+            maske = uz <= KORIDOR_HUCRE
+            parca = _en_alcak_yol(z2, a, b, maske)
+            yol += parca if not yol else parca[1:]
+        seviye = np.inf
+        for n in yol:
+            if z[n] < 0:
+                break
+            seviye = min(seviye - 0.5, z2[n] - 10.0)
+            z2[n] = seviye; yatak[n] = True
+        # vadi: yatağın yanları yatağa doğru eğimli olsun
+        for n in yol:
+            if not yatak[n]:
+                continue
+            i, j = n
+            for di in (-1, 0, 1):
+                for dj in (-1, 0, 1):
+                    a_, b_ = i + di, j + dj
+                    if 0 <= a_ < ny and 0 <= b_ < nx and not yatak[a_, b_] and z[a_, b_] >= 0:
+                        z2[a_, b_] = min(z2[a_, b_], z2[n] + 150.0)
+    return z2, yatak

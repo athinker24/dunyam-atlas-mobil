@@ -82,7 +82,7 @@ moren seti gölü adayı (26 büyük, çoğu Duvar'da), 12 fiyort (kuzey kıyıs
 
 Giriş noktası **`SU.md`**. Karar: fırça izleri yumuşatıldı, eşik aşınması
 200 m, 300 km² altı göl yok. Göller karanın %1.3'ü (93 göl: 51 buzul, 5
-yarık, 37 havza; 28 kapalı tuzlu). En büyük nehir 20.250 m³/s. Sıradaki:
+yarık, 36 havza). Sahibin isteğiyle plato kolu (kurgu, boğazla iç denize; ağızda 8.400 m³/s). Sıradaki:
 uygulamaya göl/nehir katmanı (sahibi isterse), aylık akış rejimi.
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen

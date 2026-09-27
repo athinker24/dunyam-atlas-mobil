@@ -12,8 +12,8 @@
   "buharlasma": 652,
   "akis": 307
  },
- "gol_payi_kara_yuzde": 1.3,
- "gol_sayisi": 93,
+ "gol_payi_kara_yuzde": 1.25,
+ "gol_sayisi": 92,
  "goller": [
   {
    "enlem_boylam": [
@@ -98,20 +98,6 @@
    "seviye_m": 2516,
    "cikis": "var (tatlı)",
    "giren_km3_yil": 1.69
-  },
-  {
-   "enlem_boylam": [
-    49.94,
-    13.43
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "havza",
-   "alan_km2": 18489,
-   "derin_m": 4,
-   "hacim_km3": 32.3,
-   "seviye_m": 788,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 12.5
   },
   {
    "enlem_boylam": [
@@ -1320,21 +1306,6 @@
  ],
  "en_buyuk_30_nehir": [
   {
-   "debi_m3s": 20253,
-   "boy_km": 2693,
-   "havza_km2": 1510040,
-   "agiz": [
-    37.05,
-    -11.65
-   ],
-   "kaynak": [
-    54.36,
-    -2.42
-   ],
-   "kaynak_yakini": "1 (Kuzey batı kolu)",
-   "doker": "deniz"
-  },
-  {
    "debi_m3s": 19510,
    "boy_km": 2064,
    "havza_km2": 560564,
@@ -1395,6 +1366,21 @@
    "doker": "deniz"
   },
   {
+   "debi_m3s": 12419,
+   "boy_km": 1609,
+   "havza_km2": 638412,
+   "agiz": [
+    37.05,
+    -11.65
+   ],
+   "kaynak": [
+    47.59,
+    -13.93
+   ],
+   "kaynak_yakini": "meseta (İber yaylası)",
+   "doker": "deniz"
+  },
+  {
    "debi_m3s": 11976,
    "boy_km": 4275,
    "havza_km2": 2462146,
@@ -1422,6 +1408,21 @@
     -6.55
    ],
    "kaynak_yakini": "yarımada (Yarımada omurgası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 8375,
+   "boy_km": 4271,
+   "havza_km2": 3840068,
+   "agiz": [
+    36.43,
+    -8.04
+   ],
+   "kaynak": [
+    37.31,
+    15.51
+   ],
+   "kaynak_yakini": "3 (Duvar)",
    "doker": "deniz"
   },
   {
@@ -1753,21 +1754,6 @@
    ],
    "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
    "doker": "kapalı göl"
-  },
-  {
-   "debi_m3s": 1441,
-   "boy_km": 379,
-   "havza_km2": 27161,
-   "agiz": [
-    4.44,
-    -1.63
-   ],
-   "kaynak": [
-    7.34,
-    -1.98
-   ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
-   "doker": "deniz"
   }
  ]
 }
