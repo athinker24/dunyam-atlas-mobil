@@ -177,7 +177,7 @@ takımadanın altına dalar; takımada ile Duvar arasındaki deniz, geri
 **Sahip:** 9, 3 ve 2 arasına bir levha daha; ayrıntıyı Claude belirler.
 **Ölçüler:** ~5,1 milyon km², ort. 1.567 m, %43'ü 1.500 m üstü, %42'si
 700-1.500 m arası yayla; en yüksek 6.760 m (2).
-**Hikâye (Claude, sahibin onayına açık):** büyük çarpışmanın basıncı
+**Hikâye (Claude; sahip ayrıntıyı bıraktı, kesin):** büyük çarpışmanın basıncı
 kuzeydoğu bloğunu doğuya, açık okyanusa doğru sıkıştırıp itti (Hindistan
 çarpışmasının Güney Çin ve Çinhindi'ni doğuya itmesi gibi, kaçış
 tektoniği). Batı sınırı 9: plato bloğunun ittiği bindirme kuşağı. Kuzey

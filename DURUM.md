@@ -67,8 +67,8 @@ Model `tektonik/levhalar.py` (13 kapalı levha, Bird 2003 sınır sınıfları),
 haritalar `tektonik/harita.py` (Equal Earth ve küreler). Okyanus içindeki
 sırt, hendek ve üçlü kavşaklar **tasarımdır**, araziden ölçülmedi.
 
-Sahibinin onayını bekleyen: 9'un hesaplanan sınıfa göre Baykal tipi rifte
-dönmesi ve kuzeydoğudaki kaçış bloğu. Sıradaki: buzul geçmişi, sonra su
+Açık karar yok: kaçış bloğunun ve 9'daki Baykal tipi yarığın ayrıntısını
+sahibi Claude'a bıraktı ("sen belirlersin"), ikisi kesin. Sıradaki: buzul geçmişi, sonra su
 dengeli göller ve nehirler.
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
