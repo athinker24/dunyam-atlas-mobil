@@ -17,7 +17,7 @@
     92,
     48
    ],
-   "pay": 0.0001
+   "pay": 0.0
   },
   "2": {
    "ad": "Tropikal mevsimsel orman",
@@ -28,7 +28,7 @@
     128,
     52
    ],
-   "pay": 0.0608
+   "pay": 0.0399
   },
   "3": {
    "ad": "Tropikal kuru orman ve savan",
@@ -39,7 +39,7 @@
     170,
     62
    ],
-   "pay": 0.1251
+   "pay": 0.0822
   },
   "4": {
    "ad": "Ilık yaprak dökmeyen orman",
@@ -50,7 +50,7 @@
     138,
     108
    ],
-   "pay": 0.2011
+   "pay": 0.2709
   },
   "5": {
    "ad": "Ilıman yaprak döken orman",
@@ -105,7 +105,7 @@
     128,
     72
    ],
-   "pay": 0.0904
+   "pay": 0.0832
   },
   "10": {
    "ad": "Kurak çalılık ve dikenli savan",
@@ -116,7 +116,7 @@
     176,
     96
    ],
-   "pay": 0.031
+   "pay": 0.0179
   },
   "11": {
    "ad": "Bozkır (serin otlak)",
@@ -161,6 +161,17 @@
     150
    ],
    "pay": 0.0036
+  },
+  "16": {
+   "ad": "Kuru ağaçlık ve açık orman",
+   "ne": "Uzun kurak kışlı, yağışı yazın; kışın yaprağını döken seyrek ağaçlar, altında ot ve çalı. Kurak değil ama orman kapanamaz.",
+   "ornek": "Hindistan'ın kuru yaprak döken ormanları, Güney Afrika bushveld'i",
+   "renk": [
+    132,
+    150,
+    78
+   ],
+   "pay": 0.0144
   },
   "15": {
    "ad": "Buz ve kutup çölü",

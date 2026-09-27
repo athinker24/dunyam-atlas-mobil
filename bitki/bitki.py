@@ -15,8 +15,8 @@ dağlarda sıcaklık yükseklikle düşer (5.2 K/km) ve ağaç sınırı kendili
 çıkar.
 
 Eşikler (bitki işlev tipleri, Prentice vd. 1992 Tablo 1):
-  tropik yaprak dökmeyen      Tc >= 15.5, alfa >= 0.80
-  tropik yağmurla yeşeren     Tc >= 15.5, 0.45 <= alfa <= 0.95
+  tropik yaprak dökmeyen      Tc >= 15.5, alfa >= 0.80   (burada Tc >= 18, Köppen A)
+  tropik yağmurla yeşeren     Tc >= 15.5, 0.45 <= alfa <= 0.95   (burada Tc >= 18)
   ılık yaprak dökmeyen        Tc >= 5,    alfa >= 0.65
   ılıman yaz yeşil (yaprak döken) -15 <= Tc <= 15.5, GDD5 >= 1200, alfa >= 0.65
   serin iğne yapraklı         -19 <= Tc <= 5, GDD5 >= 900, alfa >= 0.65
@@ -74,6 +74,8 @@ BIYOM = {
          "Sahra, Arabistan", (232, 206, 146)),
     14: ("Soğuk çöl ve yarı çöl", "Az yağış, soğuk kış; seyrek çalı (pelin, geven).",
          "Gobi, Tibet'in kuzeyi, Patagonya", (190, 176, 150)),
+    16: ("Kuru ağaçlık ve açık orman", "Uzun kurak kışlı, yağışı yazın; kışın yaprağını döken seyrek ağaçlar, altında ot ve çalı. Kurak değil ama orman kapanamaz.",
+         "Hindistan'ın kuru yaprak döken ormanları, Güney Afrika bushveld'i", (132, 150, 78)),
     15: ("Buz ve kutup çölü", "Kalıcı kar ve buz ya da bitkinin yaşayamayacağı kadar soğuk.",
          "Antarktika, Grönland; en yüksek zirveler", (238, 242, 246)),
 }
@@ -91,8 +93,14 @@ def degiskenler(d, w):
 
 def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz, K=None):
     # bitki işlev tipleri (Prentice vd. 1992 Tablo 1)
-    te = (Tc >= 15.5) & (alfa >= 0.80)
-    tr = (Tc >= 15.5) & (alfa >= 0.45) & (alfa <= 0.95)
+    # Tropik eşiği BIOME1'de Tc >= 15.5 °C; burada Köppen A sınırı 18 °C
+    # (27 Eylül, sahibi işaretli bölge: "iklim olarak çok az kısmı savan").
+    # 15.5-18 °C'lik kışı ılık C iklimleri (Cwa, Cwb, Cfa) tropik sayılıp
+    # savan çıkıyordu; atlasın iklim haritası oraya C diyor. Köppen'in 18 °C
+    # sınırı da bitki örtüsünden türetilmişti (sıcak ister "megaterm" bitkiler).
+    TROPIK = 18.0
+    te = (Tc >= TROPIK) & (alfa >= 0.80)
+    tr = (Tc >= TROPIK) & (alfa >= 0.45) & (alfa <= 0.95)
     wte = (Tc >= 5) & (alfa >= 0.65)
     ts = (Tc >= -15) & (Tc <= 15.5) & (gdd5 >= 1200) & (alfa >= 0.65)
     ctc = (Tc >= -19) & (Tc <= 5) & (gdd5 >= 900) & (alfa >= 0.65)
@@ -149,6 +157,18 @@ def siniflandir(Tc, Tw, gdd5, gdd0, alfa, buz, K=None):
         #    Dünya'nınkinin iki katı mevsimsel (CLAUDE.md §8): yağış birkaç
         #    ayda boşalıp akışa gidiyor. Am'de savan -> mevsimsel orman.
         k[(K == 2) & np.isin(k, (3, 10))] = 2
+        # 5) Köppen f (her ay yağışlı: Cfa, Cfb, Df) kurak çalılık olamaz;
+        #    nem oranı 0.65'in biraz altında kalan bu yerler ormandır (ılık
+        #    kışlıysa yaprak dökmeyen, değilse yaprak döken).
+        # 6) Kurak çalılık yalnız Köppen B'de (BS, BW). İklimi kurak olmayan
+        #    (Cw, Dw) ama nem oranı ormana yetmeyen yerde (0.28-0.65) örtü
+        #    kuru ağaçlık / açık ormandır (sahibi işaretli bölge, 27 Eylül:
+        #    "iklim olarak çok az kısmı savan ama tamamen kurak bitki örtüsü").
+        B = np.isin(K, (4, 5, 6, 7))
+        k[(k == 10) & ~B & ~np.isin(K, (14, 15, 16, 25, 26, 27, 28))] = 16
+        f = np.isin(K, (14, 15, 16, 25, 26, 27, 28))
+        k[(k == 10) & f & (Tc >= 5)] = 4
+        k[(k == 10) & f & (Tc < 5)] = 5
     k[buz] = 15
     return k
 

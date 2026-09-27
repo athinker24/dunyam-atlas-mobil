@@ -31,18 +31,19 @@ karşılaştırılmalı.
 
 | biyom | pay |
 |---|---|
-| Ilık yaprak dökmeyen orman | %20 |
+| Ilık yaprak dökmeyen orman | %27 |
 | Bozkır (serin otlak) | %14 |
-| Tropikal kuru orman ve savan | %13 |
 | Ilıman yaprak döken orman | %10 |
-| Maki ve sert yapraklı çalılık | %9 |
+| Maki ve sert yapraklı çalılık | %8 |
+| Tropikal kuru orman ve savan | %8 |
 | Serin karışık orman | %8 |
 | Tayga | %7 |
 | Tundra | %7 |
-| Tropikal mevsimsel orman | %6 |
-| Kurak çalılık ve dikenli savan | %3 |
+| Tropikal mevsimsel orman | %4 |
 | Buz ve kutup çölü | %2 |
+| Kurak çalılık ve dikenli savan | %2 |
 | Soğuk yaprak döken orman | %2 |
+| Kuru ağaçlık ve açık orman | %1 |
 | Soğuk çöl ve yarı çöl | %0.4 |
 
 ## Köppen'le denetim (27 Eylül, sahibi: "savan çok mu oldu", "tekrar kontrol et, dünyamın bilgilerine uygun")
@@ -67,17 +68,31 @@ tutarsızlık ve düzeltmesi (`bitki.siniflandir` sonu):
    iki katı mevsimsel (CLAUDE.md §8): yağış birkaç ayda boşalıp akışa
    gidiyor. Am → tropikal mevsimsel orman.
 
+İkinci denetim (sahibi işaretli bölge: "iklim olarak çok az kısmı savan ama
+tamamen kurak bitki örtüsü yazmışsın"):
+
+5. **Tropik sınırı 18 °C (Köppen A).** BIOME1 tropik bitkileri en soğuk ay
+   15.5 °C'den başlatır; kışı 15.5-18 °C olan C iklimleri (Cwa, Cwb, Cfa)
+   tropik sayılıp savan çıkıyordu, atlasın iklim haritası oraya C diyor.
+   Köppen'in 18 °C sınırı da sıcak isteyen (megaterm) bitkilerden türetildi.
+6. **Kurak çalılık yalnız Köppen B'de.** İklimi kurak olmayan (Cw, Dw) ama
+   nem oranı ormana yetmeyen yerde (0.28-0.65) yeni sınıf "kuru ağaçlık ve
+   açık orman" (Hindistan'ın kuru yaprak döken ormanı, bushveld); Cf/Df (her
+   ay yağışlı) yerde orman. İşaretli bölgede kurak örtü %52 → %12 (yalnız
+   BS'de), savan %40 → %22 (bölgenin Aw payı %25). Görsel
+   `bitki/bolge_kiyas.png`.
+
 Denetim sonrası eşleşme (Köppen sınıfının kara alanında biyom payı):
 
 | Köppen | pay | biyom |
 |---|---|---|
 | Am | %2.9 | %100 mevsimsel orman |
-| Aw | %9.0 | %88 kuru orman ve savan, %12 mevsimsel orman |
-| BSh | %1.5 | %72 kurak çalılık, %28 savan |
+| Aw | %9.0 | %88 savan ve kuru orman, %12 mevsimsel orman |
+| BSh | %1.5 | %81 kurak çalılık, %19 savan |
 | BSk | %11.2 | %85 bozkır (plato), %6 tundra (yüksek) |
-| Csa / Csb | %8.2 / %6.8 | %67 / %53 maki, gerisi ılık yaprak dökmeyen (daha nemli Akdeniz: pırnal, defne ormanı) |
-| Cwa | %13.5 | %53 ılık yaprak dökmeyen, %21 ılıman yaprak döken, %14 savan |
-| Cwb | %10.9 | %64 ılık yaprak dökmeyen (yayla ormanı, Yunnan benzeri), %15 savan (miombo benzeri) |
+| Csa / Csb | %8.2 / %6.8 | %61 / %49 maki, gerisi ılık yaprak dökmeyen (daha nemli Akdeniz: pırnal, defne ormanı) |
+| Cwa | %13.5 | %70 ılık yaprak dökmeyen, %21 ılıman yaprak döken, %9 kuru ağaçlık |
+| Cwb | %10.9 | %89 ılık yaprak dökmeyen (yayla ormanı, Yunnan benzeri) |
 | Dw* | %10.3 | karışık ve yaprak döken orman, tayga; %13 bozkır |
 | Df* | %10.6 | yaprak döken, karışık, tayga; %13-21 bozkır (orman-bozkır geçişi) |
 | Ds* | %4.4 | tayga ve bozkır (yazı kurak kıta içi) |
