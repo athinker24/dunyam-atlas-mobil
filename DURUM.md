@@ -78,14 +78,14 @@ Sonuç dağ buzulu: doruğunda karanın %6.7'si buz, bugün %2.2. İzler: 172
 moren seti gölü adayı (26 büyük, çoğu Duvar'da), 12 fiyort (kuzey kıyısı),
 ~3.000 sirk. Göller ve nehirler `SU.md`'de.
 
-## Göller ve nehirler (27 Eylül, `su` dalında)
+## Göller ve nehirler (27 Eylül, yayında)
 
 Giriş noktası **`SU.md`**. Karar: fırça izleri yumuşatıldı, eşik aşınması
 200 m, 300 km² altı göl yok. Göller karanın %1.68'i (95 göl). Sahibin
 isteğiyle (kurgu) plato kolu boğazla iç denize, boğaz ağzında 10.066 km²
 tatlı göl, kuzey kolunun ucunda 4.050 km² tuz gölü. Uygulamada su katmanı
-`su-katmani` dalında (27 Eylül): ana kollar / bütün kollar, dokununca göl ve
-nehir bilgisi. Deltalar `delta` dalında (132 delta, uygulamada çatallı ağızlar). Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
+(27 Eylül): ana kollar / bütün kollar, dokununca göl ve
+nehir bilgisi. Deltalar (132 delta, uygulamada çatallı ağızlar). Su deniz renkleriyle çizilir. Nehir çizgisi bütün ağa ortak kaydırma alanıyla kıvrılır, düz arazide (plato) 200-900 km'lik büyük kıvrım (sahibi: "çok düz"). Sıradaki: aylık akış rejimi, göl/nehir adları (sahibi verirse).
 
 ## Yayın (Cloudflare) — 26 Eylül'de öğrenilen
 
@@ -166,6 +166,7 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 - Birleşmiş eski dallar: `gunluk-sicaklik`, `deniz-deneme`, `deniz-yumusak`,
   `deniz-kart`, `durum`, `sanity-okyanussuz`, `durum-masaustu-bitti`,
   `tunel-yerel-bind`, `yalniz-repo`, `tektonik`, `durum-duzelt` (bayat),
+  `buzul`, `su`, `su-katmani`, `delta`, `su-gorunum`, `nehir-kivrim`,
   `nehir-deneme` (boş). Silmek
   sahibinde (bulut oturumunun silme izni yok, 403).
 
