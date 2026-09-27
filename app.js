@@ -857,7 +857,9 @@ function baslat(J, resimler){
     const w = Math.round(suCv.getBoundingClientRect().width*dpr), h = Math.round(suCv.getBoundingClientRect().height*dpr);
     if(suCv.width !== w || suCv.height !== h){ suCv.width = w; suCv.height = h; }
     suC.setTransform(1,0,0,1,0,0); suC.clearRect(0, 0, w, h);
-    if(!SU || !ayar.su) return;
+    // Dolasim'da su cizilmez: ruzgar ve akinti okunurlugu; o sekmede
+    // ayrica boyama maliyeti (yazilim GPU'da ~0.5 s) katmanin gecikmesine yol aciyordu
+    if(!SU || !ayar.su || katman === "dolasim") return;
     suC.setTransform(dpr,0,0,dpr,0,0);
     const g = gorunen(), sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H;
     // gorunen alanin enlem/boylam kutusu (payli)
@@ -865,7 +867,7 @@ function baslat(J, resimler){
     const la1 = B[3] - (-oy/olcek - 4)*sy, la0 = B[3] - ((h/dpr - oy)/olcek + 4)*sy;
     const icinde = k => !(k[2] < lo0 || k[0] > lo1 || k[3] < la0 || k[1] > la1);
     const zf = Math.max(1, Math.min(3.2, Math.sqrt(olcek/sigOlcek)));
-    const soluk = katman === "dolasim" ? 0.45 : 1;
+    const soluk = 1;
     // boylam/enlem -> ekran (dogrusal); cizgi kalinligi yol birimine cevrilir
     const kx = olcek/sx, ky = olcek/sy, birim = 1/Math.sqrt(kx*ky);
     suC.setTransform(dpr*kx, 0, 0, -dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
@@ -883,7 +885,7 @@ function baslat(J, resimler){
       suC.fillStyle = rgb(L.tuz ? karis(DZ.sig, [150,142,112], 0.5) : (L.alan > 20000 ? DZ.orta : karis(DZ.orta, DZ.sig, 0.35))); suC.fill(L.yol, "evenodd");
       suC.save(); suC.clip(L.yol, "evenodd");
       const kiyi = L.tuz ? [176,168,136] : DZ.sig;   // tuz golu: kurumus kiyi tuz/kum rengi
-      for(const [gen, al] of [[14, 0.18], [8, 0.28], [4, 0.45]]){ suC.globalAlpha = al*soluk; suC.strokeStyle = rgb(kiyi); suC.lineWidth = gen*zf*birim; suC.stroke(L.yol); }
+      for(const [gen, al] of [[10, 0.25], [4, 0.45]]){ suC.globalAlpha = al*soluk; suC.strokeStyle = rgb(kiyi); suC.lineWidth = gen*zf*birim; suC.stroke(L.yol); }
       suC.globalAlpha = (L.tuz ? 0.55 : 0.8)*soluk; suC.strokeStyle = rgb(L.tuz ? [196,188,154] : DZ.kopuk); suC.lineWidth = 1.6*zf*birim; suC.stroke(L.yol);
       suC.restore(); }
     suC.lineCap = "round"; suC.lineJoin = "round";
@@ -895,6 +897,7 @@ function baslat(J, resimler){
     for(const [n, a] of cizilecek) for(const [g, yol] of n.parcalar) kollar.push([g, yol, a]);
     // once isilti (genis, soluk), sonra su
     for(const isilti of [true, false]) for(const [g, yol, a] of kollar){
+      if(isilti && g < 1) continue;     // isilti yalniz buyuk kollarda: kucuklerde gorunmuyor, maliyeti iki katti
       const t = parlak(g), w = g*zf;
       if(isilti){ suC.globalAlpha = a*soluk*0.16; suC.strokeStyle = rgb(DZ.isik); suC.lineWidth = (w*2.6 + 1.5)*birim; }
       else { suC.globalAlpha = a*soluk*(0.75 + 0.25*t); suC.strokeStyle = rgb(karis(DZ.kopuk, DZ.isik, 0.35 + 0.65*t)); suC.lineWidth = w*birim; }

@@ -21,8 +21,11 @@ Nehirler kol kol: her ağızdan ana kol kaynağa kadar, ona katılan her kol
 ayrı. Kademe: 1 = Q ≥ 2000 m³/s ya da ≥ 1500 km (40 kol), 2 = ≥ 600 ya da
 ≥ 600 km, 3 = ≥ 200 ya da ≥ 250 km, 4 = ≥ 50 m³/s. Uygulama uzaktan yalnız
 1'i çizer, yakınlaştıkça (2.6×, 5×, 10×) diğerleri yumuşakça belirir;
-"Bütün kollar" hepsini çizer. Kalınlık debiyle akış yönünde artar. Tatlı
-göl koyu mavi, tuzlu göl soluk mineral tonu. Göle ya da nehre dokununca
+"Bütün kollar" hepsini çizer. Kalınlık debiyle akış yönünde artar. Su
+denizin kendi renkleriyle çizilir (sığ ton, kıyı köpüğü; büyük kollarda
+kıyıdaki gibi hafif ışıltı); tuz gölü kurumuş kum tonu, noktasız ince kıyı.
+Nehir çizgisi: basamaklar silinir, köşeler yuvarlanır, uzun dalga boylu
+hafif menderes (ovada belirgin, dağda az). Göle ya da nehre dokununca
 kartta alan/derinlik/yüzey ya da o noktadaki debi. **Veri iş akışı
 (veri.yml) bu dosyayı üretmez**: iklim değişirse yukarıdaki komutlar elle
 koşulur.
