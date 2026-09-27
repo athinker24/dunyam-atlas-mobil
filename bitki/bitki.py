@@ -192,21 +192,56 @@ def main():
     pay = {int(c): float(wgt[k == c].sum() / wgt.sum()) for c in BIYOM}
     for c, (ad, *_r) in BIYOM.items():
         print("%2d %-38s %%%5.1f" % (c, ad, 100 * pay[c]))
-    # uygulama: R = biyom kodu, G = alfa*200, B = Tc+100 (°C), kara kutusuna kırpılmış
+    # uygulama: R = biyom kodu, G = alfa*200, B = Tc+100 (°C), kara kutusuna
+    # kırpılmış, kaynak ızgaranın 2 katı çözünürlükte (~0.044°; sahibi 27 Eylül:
+    # "piksel piksel, bulanık"). Sınıflar yumuşak argmax ile büyütülür (her
+    # sınıfın göstergesi ara değerlenip hafif yumuşatılır, en büyüğü seçilir):
+    # merdiven sınırlar yuvarlanır, yeni sınıf uydurulmaz. Kıyı ve göl
+    # kıyısı yükseklik ve göl maskesinin ara değerlemesinden.
+    from scipy import ndimage
+    F = 2
     ii, jj = np.where(kara)
     i0, i1, j0, j1 = ii.min(), ii.max() + 1, jj.min(), jj.max() + 1
-    rgb = np.stack([k, np.round(alfa * 200), np.clip(np.round(Tc + 100), 0, 255)], -1)[i0:i1, j0:j1].astype(np.uint8)
-    Image.fromarray(rgb, "RGB").save(os.path.join(KOK, "data", "bitki.png"), optimize=True)
+    kc = k[i0:i1, j0:j1]
+    en = None; secim = None
+    for c in np.unique(kc):
+        if c == 0:
+            continue
+        g = ndimage.gaussian_filter(ndimage.zoom((kc == c).astype(np.float32), F, order=1), 0.9)
+        if en is None:
+            en = g; secim = np.full(g.shape, c, np.uint8)
+        else:
+            b = g > en; en[b] = g[b]; secim[b] = c
+    zc = ndimage.zoom(z[i0:i1, j0:j1].astype(np.float32), F, order=1)
+    gc = ndimage.zoom(gol[i0:i1, j0:j1].astype(np.float32), F, order=1)
+    secim[(zc < 0) | (gc >= 0.5)] = 0
+    # alfa ve Tc: denizi en yakın kara değeriyle doldurup ara değerle
+    _, (yi, xi) = ndimage.distance_transform_edt(~kara[i0:i1, j0:j1], return_indices=True)
+    doldur = lambda a: ndimage.zoom(a[i0:i1, j0:j1][yi, xi].astype(np.float32), F, order=1)
+    # Görüntü paletli PNG (indeks = biyom kodu, palet = biyom rengi): tarayıcı
+    # renkleri doğrudan çözer, uygulamada piksel döngüsü gerekmez (ilk açılış
+    # CPU x4'te ~0.9 s idi). Kartın okuduğu değerler ayrı, kaynak
+    # çözünürlükte bitki_veri.png'de (R = kod, G = alfa*200, B = Tc+100).
+    im = Image.fromarray(secim, "P")
+    pal = [12, 24, 34] * 256
+    for c, (_a, _n, _o, r) in BIYOM.items():
+        pal[3 * c:3 * c + 3] = list(r)
+    im.putpalette(pal)
+    im.save(os.path.join(KOK, "data", "bitki.png"), optimize=True, transparency=0)
+    veri_rgb = np.stack([kc, np.round(alfa[i0:i1, j0:j1] * 50) * 4, np.clip(np.round(Tc[i0:i1, j0:j1] + 100), 0, 255)], -1).astype(np.uint8)
+    Image.fromarray(veri_rgb, "RGB").save(os.path.join(KOK, "data", "bitki_veri.png"), optimize=True)
+    rgb = secim
     dl, dn = lat[1] - lat[0], lon[1] - lon[0]
     kesit = [float(lon[j0] - dn / 2), float(lat[i1 - 1] + dl / 2), float(lon[j1 - 1] + dn / 2), float(lat[i0] - dl / 2)]
     veri = dict(ne="Dünyam doğal bitki örtüsü (bitki/bitki.py); yöntem BITKI.md",
-                kesit=kesit, kodlar="R = biyom kodu, G = alfa*200, B = en soğuk ay + 100 °C",
+                kesit=kesit, kodlar="bitki.png: paletli, indeks = biyom kodu (0 boş), 2 kat çözünürlük; bitki_veri.png: kaynak çözünürlük, R = biyom kodu, G = alfa*200, B = en soğuk ay + 100 °C (ikisi aynı kesit)",
                 biyomlar={str(c): dict(ad=a, ne=n, ornek=o, renk=list(r), pay=round(pay[c], 4)) for c, (a, n, o, r) in BIYOM.items()})
     with open(os.path.join(KOK, "data", "bitki.json"), "w", encoding="utf-8") as fh:
         json.dump(veri, fh, ensure_ascii=False, indent=1)
     np.savez_compressed(os.path.join(BURASI, "_bitki.npz"), k=k, Tc=Tc.astype(np.float32), Tw=Tw.astype(np.float32),
                         gdd5=gdd5.astype(np.float32), gdd0=gdd0.astype(np.float32), alfa=alfa.astype(np.float32), lat=lat, lon=lon)
-    print("bitki.png %dx%d %.0f KB" % (rgb.shape[1], rgb.shape[0], os.path.getsize(os.path.join(KOK, "data", "bitki.png")) / 1024))
+    print("bitki.png %dx%d %.0f KB, bitki_veri.png %.0f KB" % (rgb.shape[1], rgb.shape[0], os.path.getsize(os.path.join(KOK, "data", "bitki.png")) / 1024,
+                                                           os.path.getsize(os.path.join(KOK, "data", "bitki_veri.png")) / 1024))
 
 
 if __name__ == "__main__":

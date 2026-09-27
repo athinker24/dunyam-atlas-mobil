@@ -6,7 +6,7 @@
   43.154296875,
   60.029296875
  ],
- "kodlar": "R = biyom kodu, G = alfa*200, B = en soğuk ay + 100 °C",
+ "kodlar": "bitki.png: paletli, indeks = biyom kodu (0 boş), 2 kat çözünürlük; bitki_veri.png: kaynak çözünürlük, R = biyom kodu, G = alfa*200, B = en soğuk ay + 100 °C (ikisi aynı kesit)",
  "biyomlar": {
   "1": {
    "ad": "Tropikal yağmur ormanı",

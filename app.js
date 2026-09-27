@@ -943,32 +943,33 @@ function baslat(J, resimler){
   }
 
   /* --- bitki örtüsü (Arazi > Bitki): bitki/bitki.py'nin biyom haritası.
-     Renkler kabartmayla çarpılıp bir kez boyanır (ilk açılışta); kaydırırken
-     su ve tektonik katmanı gibi CSS ile kayar. data/bitki.png: R = biyom
-     kodu, G = alfa*200 (AET/PE), B = en soğuk ay + 100 °C. */
-  const BJ = resimler.bitkiJ, BI = BJ && resimler.bitki ? resimler.bitki : null;
+     data/bitki.png paletli (renkler dosyada, ~0.044°); kabartma tuvalin
+     kendi "multiply" birleştirmesiyle çarpılır, piksel döngüsü yok (eski
+     yol ilk açılışta CPU x4'te ~0.9 s sürüyordu). Kartın değerleri
+     data/bitki_veri.png'den (R = kod, G = alfa*200, B = en soğuk ay + 100),
+     dokunulan nokta için tek piksel okunur. Kaydırırken CSS ile kayar. */
+  const BJ = resimler.bitkiJ, BI = BJ && resimler.bitki ? resimler.bitki : null, BV = resimler.bitkiVeri;
   const bkCv = $("#bitki"), bkC = bkCv.getContext("2d");
-  let BK = null;     // {tuval, kod, alfa, tc, w, h}
+  let BK = null;     // {tuval, veri (okuma tuvali)}
   function bitkiKur(){
     if(BK || !BI) return BK;
-    const w = BI.naturalWidth, h = BI.naturalHeight, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
-    const c = cv.getContext("2d", {willReadFrequently:true}); c.drawImage(BI, 0, 0);
-    const im = c.getImageData(0, 0, w, h), kod = new Uint8Array(w*h), alfa = new Uint8Array(w*h), tc = new Uint8Array(w*h);
-    // kabartma: harita kutusu B'yi kaplar; bitki kesitinin her pikseli için örneklenir
-    const kab = KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor, K = BJ.kesit;
-    let kv = null, kw = 0, kh = 0;
-    if(kab){ kw = kab.naturalWidth; kh = kab.naturalHeight; const kc = document.createElement("canvas"); kc.width = kw; kc.height = kh;
-      const x = kc.getContext("2d", {willReadFrequently:true}); x.drawImage(kab, 0, 0); kv = x.getImageData(0, 0, kw, kh).data; }
-    const renk = {}; for(const [k, v] of Object.entries(BJ.biyomlar)) renk[k] = v.renk;
-    for(let y=0;y<h;y++){ const la = K[3] - (y+0.5)*(K[3]-K[1])/h, ky = Math.floor((B[3]-la)/(B[3]-B[1])*kh);
-      for(let x=0;x<w;x++){ const i = y*w + x, q = 4*i, k = im.data[q]; kod[i] = k; alfa[i] = im.data[q+1]; tc[i] = im.data[q+2];
-        const r = renk[k]; if(!r){ im.data[q+3] = 0; continue; }
-        let g = 1;
-        if(kv){ const lo = K[0] + (x+0.5)*(K[2]-K[0])/w, kx = Math.floor((lo-B[0])/(B[2]-B[0])*kw);
-          if(kx >= 0 && ky >= 0 && kx < kw && ky < kh) g = Math.max(0.45, Math.min(1.35, kv[4*(ky*kw + kx)]/128)); }
-        im.data[q] = Math.min(255, r[0]*g); im.data[q+1] = Math.min(255, r[1]*g); im.data[q+2] = Math.min(255, r[2]*g); im.data[q+3] = 255; } }
-    c.putImageData(im, 0, 0);
-    return BK = {tuval: cv, kod, alfa, tc, w, h};
+    const w = BI.naturalWidth, h = BI.naturalHeight, K = BJ.kesit, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+    const c = cv.getContext("2d"); c.drawImage(BI, 0, 0);
+    const kab = KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor;
+    if(kab){
+      // kabartma harita kutusu B'yi kaplar: bitki kesitine göre yerleştir
+      const kx = w/(K[2]-K[0]), ky = h/(K[3]-K[1]);
+      c.globalCompositeOperation = "multiply"; c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
+      c.drawImage(kab, (B[0]-K[0])*kx, (K[3]-B[3])*ky, (B[2]-B[0])*kx, (B[3]-B[1])*ky);
+      // kabartma ortası ~128: çarpım yarıya indirir, kendisiyle toplayıp 2 katına çıkar
+      c.globalCompositeOperation = "lighter"; c.drawImage(cv, 0, 0);
+      // multiply saydam denize de boyadı: kara maskesi yeniden uygulanır
+      c.globalCompositeOperation = "destination-in"; c.drawImage(BI, 0, 0);
+      c.globalCompositeOperation = "source-over"; }
+    let veri = null;
+    if(BV){ const v = document.createElement("canvas"); v.width = BV.naturalWidth; v.height = BV.naturalHeight;
+      veri = v.getContext("2d", {willReadFrequently:true}); veri.drawImage(BV, 0, 0); }
+    return BK = {tuval: cv, veri};
   }
   const bitkiModu = () => !!BI && katman === "arazi" && ayar.araziMod === "bitki";
   let bkCizilen = null;
@@ -987,16 +988,17 @@ function baslat(J, resimler){
     bkC.setTransform(1,0,0,1,0,0); bkC.clearRect(0, 0, w, h);
     const sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H, kx = olcek/sx, ky = olcek/sy, K = BJ.kesit;
     bkC.setTransform(dpr*kx, 0, 0, dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
-    bkC.imageSmoothingEnabled = olcek/sigOlcek < 4;     // yakında hücreler seçilsin
+    bkC.imageSmoothingEnabled = true; bkC.imageSmoothingQuality = "high";
     bkC.drawImage(BK.tuval, K[0], -K[3], K[2]-K[0], K[3]-K[1]);
   }
   function bitkiSatiri(lon, lat){
-    if(!bitkiModu() || !bitkiKur()) return "";
-    const K = BJ.kesit, x = Math.floor((lon-K[0])/(K[2]-K[0])*BK.w), y = Math.floor((K[3]-lat)/(K[3]-K[1])*BK.h);
-    if(x < 0 || y < 0 || x >= BK.w || y >= BK.h) return "";
-    const i = y*BK.w + x, b = BJ.biyomlar[BK.kod[i]]; if(!b) return "";
+    if(!bitkiModu() || !bitkiKur() || !BK.veri) return "";
+    const K = BJ.kesit, W2 = BV.naturalWidth, H2 = BV.naturalHeight;
+    const x = Math.floor((lon-K[0])/(K[2]-K[0])*W2), y = Math.floor((K[3]-lat)/(K[3]-K[1])*H2);
+    if(x < 0 || y < 0 || x >= W2 || y >= H2) return "";
+    const p = BK.veri.getImageData(x, y, 1, 1).data, b = BJ.biyomlar[p[0]]; if(!b) return "";
     return `<div class="k-bk"><b>Bitki örtüsü</b> ${b.ad} · ${b.ne} <small>Dünya'da: ${b.ornek}</small></div>`
-      + `<div class="k-bk"><b>Neden</b> en soğuk ay ${eksi(BK.tc[i] - 100)} °C · nem oranı (gerçek / olası buharlaşma) ${virgul((BK.alfa[i]/200).toFixed(2))}</div>`;
+      + `<div class="k-bk"><b>Neden</b> en soğuk ay ${eksi(p[2] - 100)} °C · nem oranı (gerçek / olası buharlaşma) ${virgul((p[1]/200).toFixed(2))}</div>`;
   }
 
   /* --- tektonik katman (Arazi > Levhalar): levha renkleri, sınırlar,
@@ -1665,7 +1667,7 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
@@ -1677,8 +1679,9 @@ async function acilis(){
       resimYukle("data/levha.png").catch(() => null),
       // bitki örtüsü de isteğe bağlı (bitki/bitki.py)
       fetch("data/bitki.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null),
-      resimYukle("data/bitki.png").catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki};
+      resimYukle("data/bitki.png").catch(() => null),
+      resimYukle("data/bitki_veri.png").catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);

@@ -2,6 +2,12 @@
 
 Doğal (potansiyel) bitki örtüsü: insan dokunmasaydı iklimin kuracağı biyom.
 Üretici `bitki/bitki.py` (~20 s), çıktı `data/bitki.png` + `data/bitki.json`.
+`bitki.png` paletli (renkler dosyada) ve kaynak ızgaranın 2 katı (~0.044°,
+1994×1528): sınıflar yumuşak argmax ile büyütülür, merdiven sınırlar
+yuvarlanır (sahibi 27 Eylül: "piksel piksel, bulanık"). Uygulama kabartmayı
+tuvalin "multiply" birleştirmesiyle çarpar; piksel döngüsü yok. Kartın
+değerleri kaynak çözünürlükte `data/bitki_veri.png`'de (R = kod, G = nem
+oranı×200, B = en soğuk ay + 100 °C).
 Uygulamada Arazi sekmesi → **Bitki örtüsü**; dokununca kartta biyom, ne olduğu,
 Dünya'daki örnekleri ve nedeni (en soğuk ay, nem oranı).
 
