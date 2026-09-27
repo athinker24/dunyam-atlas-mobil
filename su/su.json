@@ -1348,9 +1348,9 @@
  ],
  "en_buyuk_30_nehir": [
   {
-   "debi_m3s": 19510,
-   "boy_km": 2064,
-   "havza_km2": 560564,
+   "debi_m3s": 19496,
+   "boy_km": 2067,
+   "havza_km2": 560379,
    "agiz": [
     3.12,
     18.33
@@ -1363,24 +1363,24 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 14938,
-   "boy_km": 3507,
-   "havza_km2": 2630291,
+   "debi_m3s": 15143,
+   "boy_km": 3551,
+   "havza_km2": 2627530,
    "agiz": [
     26.32,
     4.09
    ],
    "kaynak": [
-    11.03,
-    14.99
+    10.85,
+    14.9
    ],
    "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 14808,
-   "boy_km": 2960,
-   "havza_km2": 2823067,
+   "debi_m3s": 14785,
+   "boy_km": 3056,
+   "havza_km2": 2820628,
    "agiz": [
     18.24,
     -20.61
@@ -1393,9 +1393,9 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 13964,
-   "boy_km": 1430,
-   "havza_km2": 463908,
+   "debi_m3s": 13958,
+   "boy_km": 1469,
+   "havza_km2": 465920,
    "agiz": [
     2.07,
     -28.61
@@ -1408,9 +1408,24 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 12419,
-   "boy_km": 1609,
-   "havza_km2": 638412,
+   "debi_m3s": 11976,
+   "boy_km": 4341,
+   "havza_km2": 2462146,
+   "agiz": [
+    26.59,
+    -32.21
+   ],
+   "kaynak": [
+    48.65,
+    -28.17
+   ],
+   "kaynak_yakini": "5 (İber kuzey sırası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 11456,
+   "boy_km": 1628,
+   "havza_km2": 583624,
    "agiz": [
     37.05,
     -11.65
@@ -1423,54 +1438,24 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 11976,
-   "boy_km": 4275,
-   "havza_km2": 2462146,
-   "agiz": [
-    26.59,
-    -32.21
-   ],
-   "kaynak": [
-    48.82,
-    -27.82
-   ],
-   "kaynak_yakini": "5 (İber kuzey sırası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 10858,
-   "boy_km": 1101,
-   "havza_km2": 285427,
+   "debi_m3s": 10866,
+   "boy_km": 1118,
+   "havza_km2": 285618,
    "agiz": [
     1.63,
     -9.71
    ],
    "kaynak": [
-    6.2,
-    -6.55
+    7.51,
+    -6.81
    ],
    "kaynak_yakini": "yarımada (Yarımada omurgası)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 8196,
-   "boy_km": 758,
-   "havza_km2": 174167,
-   "agiz": [
-    4.44,
-    -2.59
-   ],
-   "kaynak": [
-    8.57,
-    -7.16
-   ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 8164,
+   "debi_m3s": 8985,
    "boy_km": 4282,
-   "havza_km2": 3709160,
+   "havza_km2": 3763153,
    "agiz": [
     36.43,
     -8.04
@@ -1483,24 +1468,39 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 6633,
-   "boy_km": 1217,
-   "havza_km2": 319075,
+   "debi_m3s": 8907,
+   "boy_km": 780,
+   "havza_km2": 185490,
+   "agiz": [
+    4.44,
+    -2.59
+   ],
+   "kaynak": [
+    8.57,
+    -7.16
+   ],
+   "kaynak_yakini": "yarımada (Yarımada omurgası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 7745,
+   "boy_km": 1086,
+   "havza_km2": 366520,
    "agiz": [
     31.07,
     4.53
    ],
    "kaynak": [
-    32.39,
+    32.74,
     11.65
    ],
    "kaynak_yakini": "3 (Duvar)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 5696,
-   "boy_km": 2005,
-   "havza_km2": 431360,
+   "debi_m3s": 5675,
+   "boy_km": 2038,
+   "havza_km2": 430392,
    "agiz": [
     26.76,
     -30.63
@@ -1513,9 +1513,9 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 4655,
-   "boy_km": 721,
-   "havza_km2": 111816,
+   "debi_m3s": 5290,
+   "boy_km": 735,
+   "havza_km2": 122845,
    "agiz": [
     4.79,
     8.31
@@ -1528,9 +1528,9 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 4079,
+   "debi_m3s": 5216,
    "boy_km": 1509,
-   "havza_km2": 348641,
+   "havza_km2": 385013,
    "agiz": [
     46.8,
     40.74
@@ -1543,24 +1543,9 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 3308,
-   "boy_km": 527,
-   "havza_km2": 77348,
-   "agiz": [
-    1.89,
-    -7.51
-   ],
-   "kaynak": [
-    6.11,
-    -6.55
-   ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 2893,
-   "boy_km": 535,
-   "havza_km2": 48467,
+   "debi_m3s": 4072,
+   "boy_km": 563,
+   "havza_km2": 72566,
    "agiz": [
     4.0,
     -3.3
@@ -1573,39 +1558,24 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2852,
-   "boy_km": 538,
-   "havza_km2": 70439,
-   "agiz": [
-    37.66,
-    -15.16
-   ],
-   "kaynak": [
-    41.44,
-    -17.89
-   ],
-   "kaynak_yakini": "meseta (İber yaylası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 2607,
-   "boy_km": 987,
-   "havza_km2": 178011,
+   "debi_m3s": 3413,
+   "boy_km": 1039,
+   "havza_km2": 205764,
    "agiz": [
     8.75,
     4.44
    ],
    "kaynak": [
-    14.11,
+    14.02,
     9.36
    ],
    "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2470,
-   "boy_km": 1158,
-   "havza_km2": 120819,
+   "debi_m3s": 3339,
+   "boy_km": 1185,
+   "havza_km2": 138611,
    "agiz": [
     37.4,
     -12.26
@@ -1618,54 +1588,54 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2457,
-   "boy_km": 487,
-   "havza_km2": 99584,
+   "debi_m3s": 3156,
+   "boy_km": 541,
+   "havza_km2": 75160,
    "agiz": [
-    3.82,
-    21.4
+    1.89,
+    -7.51
    ],
    "kaynak": [
     6.11,
-    18.5
+    -6.55
    ],
-   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "kaynak_yakini": "yarımada (Yarımada omurgası)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2428,
-   "boy_km": 1331,
-   "havza_km2": 271024,
+   "debi_m3s": 2949,
+   "boy_km": 560,
+   "havza_km2": 75436,
    "agiz": [
-    13.05,
-    -39.51
+    37.66,
+    -15.16
    ],
    "kaynak": [
-    13.49,
-    -33.27
+    40.47,
+    -18.41
    ],
-   "kaynak_yakini": "10 (Güneybatı platosu)",
+   "kaynak_yakini": "meseta (İber yaylası)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2160,
-   "boy_km": 432,
-   "havza_km2": 69489,
+   "debi_m3s": 2949,
+   "boy_km": 516,
+   "havza_km2": 89630,
    "agiz": [
     -2.24,
     -17.45
    ],
    "kaynak": [
-    0.57,
-    -18.68
+    -3.21,
+    -20.52
    ],
    "kaynak_yakini": "6 (Güney çarpışma noktası)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2084,
-   "boy_km": 1513,
-   "havza_km2": 695667,
+   "debi_m3s": 2516,
+   "boy_km": 1561,
+   "havza_km2": 738187,
    "agiz": [
     11.12,
     -4.97
@@ -1678,9 +1648,114 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 1909,
-   "boy_km": 347,
-   "havza_km2": 31251,
+   "debi_m3s": 2381,
+   "boy_km": 1331,
+   "havza_km2": 267994,
+   "agiz": [
+    13.05,
+    -39.51
+   ],
+   "kaynak": [
+    13.49,
+    -33.27
+   ],
+   "kaynak_yakini": "10 (Güneybatı platosu)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2356,
+   "boy_km": 524,
+   "havza_km2": 97589,
+   "agiz": [
+    3.82,
+    21.4
+   ],
+   "kaynak": [
+    6.11,
+    18.5
+   ],
+   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2303,
+   "boy_km": 547,
+   "havza_km2": 76808,
+   "agiz": [
+    49.79,
+    38.63
+   ],
+   "kaynak": [
+    51.28,
+    34.15
+   ],
+   "kaynak_yakini": "2 (Kuzeydoğu kıyı sırası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2218,
+   "boy_km": 514,
+   "havza_km2": 75746,
+   "agiz": [
+    34.76,
+    -0.13
+   ],
+   "kaynak": [
+    38.1,
+    0.66
+   ],
+   "kaynak_yakini": "plato (Plato çanağı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2168,
+   "boy_km": 268,
+   "havza_km2": 35514,
+   "agiz": [
+    6.64,
+    16.83
+   ],
+   "kaynak": [
+    5.67,
+    15.42
+   ],
+   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2159,
+   "boy_km": 309,
+   "havza_km2": 27574,
+   "agiz": [
+    7.08,
+    23.42
+   ],
+   "kaynak": [
+    7.08,
+    21.05
+   ],
+   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2088,
+   "boy_km": 299,
+   "havza_km2": 32406,
+   "agiz": [
+    9.01,
+    20.52
+   ],
+   "kaynak": [
+    7.08,
+    20.79
+   ],
+   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2081,
+   "boy_km": 362,
+   "havza_km2": 34683,
    "agiz": [
     2.59,
     11.73
@@ -1693,108 +1768,33 @@
    "doker": "deniz"
   },
   {
-   "debi_m3s": 1894,
-   "boy_km": 234,
-   "havza_km2": 30017,
+   "debi_m3s": 1993,
+   "boy_km": 496,
+   "havza_km2": 51222,
    "agiz": [
-    6.64,
-    16.83
+    36.78,
+    -17.09
    ],
    "kaynak": [
-    5.58,
-    15.51
-   ],
-   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1842,
-   "boy_km": 741,
-   "havza_km2": 177424,
-   "agiz": [
-    10.5,
-    -38.45
-   ],
-   "kaynak": [
-    13.32,
-    -33.79
-   ],
-   "kaynak_yakini": "10 (Güneybatı platosu)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1789,
-   "boy_km": 306,
-   "havza_km2": 22838,
-   "agiz": [
-    7.08,
-    23.42
-   ],
-   "kaynak": [
-    7.08,
-    21.14
-   ],
-   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1777,
-   "boy_km": 534,
-   "havza_km2": 76158,
-   "agiz": [
-    43.73,
-    40.83
-   ],
-   "kaynak": [
-    43.11,
-    37.13
-   ],
-   "kaynak_yakini": "9 (Plato doğusu sırası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1765,
-   "boy_km": 420,
-   "havza_km2": 64668,
-   "agiz": [
-    34.5,
-    -18.68
-   ],
-   "kaynak": [
-    35.11,
-    -22.72
+    39.68,
+    -18.33
    ],
    "kaynak_yakini": "meseta (İber yaylası)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 1758,
-   "boy_km": 583,
-   "havza_km2": 143180,
+   "debi_m3s": 1964,
+   "boy_km": 476,
+   "havza_km2": 59290,
    "agiz": [
-    1.01,
-    -12.61
-   ],
-   "kaynak": [
-    4.97,
-    -14.55
-   ],
-   "kaynak_yakini": "6 (Güney çarpışma noktası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1441,
-   "boy_km": 379,
-   "havza_km2": 27161,
-   "agiz": [
-    4.44,
-    -1.63
-   ],
-   "kaynak": [
-    7.34,
+    35.2,
     -1.98
    ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
+   "kaynak": [
+    38.54,
+    -0.57
+   ],
+   "kaynak_yakini": "plato (Plato çanağı)",
    "doker": "deniz"
   }
  ]

@@ -137,3 +137,59 @@ def yana_katil(alici, q, yuz, shape, esik=20.0, oran=2.0, tolerans=15.0):
         if hedef >= 0:
             yeni[c] = hedef
     return yeni
+
+
+def paralel_birlestir(alici, q, yuz, shape, yasak=None, esik=20.0, yaricap=4, tolerans=15.0, oran=1.1):
+    """Birbirine yakın paralel akan dereleri birleştirir (27 Eylül, sahibi).
+
+    Yumuşatılmış dağ eteği düzgün bir eğik düzlem; su orada hücreden hücreye
+    dümdüz iner ve 200 km boyunca 6-12 km arayla akan, hiç birleşmeyen dere
+    tarakları çıkıyordu. Hack yasasına göre 200 km'lik bir nehrin havzası
+    ~4.000 km², ortalama eni 20-25 km: gerçekte bunlar birleşir.
+
+    yana_katil'in genişletilmişi: dere hücresi, `yaricap` hücre içinde (bir
+    hücre ~9 km) debisi kendisininkinin en az `oran` katı olan BAŞKA bir
+    derenin hücresine katılır. Koşullar: hedef en çok `tolerans` m yüksekte,
+    aradaki hücreler de (sırt aşılmasın) ikisinin yükseğinden en çok
+    `tolerans` m yüksekte, hedef kendi aşağı yolunda değil. Hedefin debisi
+    büyük olduğu için döngü oluşmaz (aşağı yolda debi azalmaz).
+    """
+    ny, nx = shape
+    qf = q.ravel(); yf = yuz.ravel(); yeni = alici.copy()
+    yf2 = yf.reshape(shape)
+    kom = [(di, dj) for di in range(-yaricap, yaricap + 1) for dj in range(-yaricap, yaricap + 1)
+           if (di or dj) and di * di + dj * dj <= yaricap * yaricap + 1]
+    aday = np.where(qf >= esik)[0]
+    if yasak is not None:
+        aday = aday[~yasak.ravel()[aday]]
+    say = 0
+    for c in aday:
+        i, j = divmod(int(c), nx)
+        # kendi aşağı yolu (yarıçapın birkaç katı kadar)
+        asagi = set(); x = int(c)
+        for _ in range(4 * yaricap + 2):
+            x = int(alici[x])
+            if x < 0:
+                break
+            asagi.add(x)
+        en, hedef = qf[c] * oran, -1
+        for di, dj in kom:
+            a, b = i + di, j + dj
+            if not (0 <= a < ny and 0 <= b < nx):
+                continue
+            k = a * nx + b
+            if qf[k] <= en or k in asagi or alici[k] == c or yf[k] > yf[c] + tolerans:
+                continue
+            if yasak is not None and yasak[a, b]:
+                continue
+            # aradaki hücreler: sırt aşılmasın
+            n = max(abs(di), abs(dj)); ust = max(yf[c], yf[k]) + tolerans; gec = True
+            for t in range(1, n):
+                ii = i + round(di * t / n); jj = j + round(dj * t / n)
+                if yf2[ii, jj] > ust:
+                    gec = False; break
+            if gec:
+                en, hedef = qf[k], k
+        if hedef >= 0 and hedef != alici[c]:
+            yeni[c] = hedef; say += 1
+    return yeni, say

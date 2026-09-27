@@ -21,6 +21,7 @@ from ciz import golge, font
 ASINMA = 200.0
 EN_KUCUK_GOL, EN_KUCUK_BUZUL_GOLU = 300.0, 100.0
 NEHIR_Q = 50.0          # m3/s: veri olarak nehir sayılan en küçük debi
+PARALEL_TUR = 4        # paralel dere birleştirme turu (0 = kapalı)
 CIZIM_Q = 100.0         # kıta haritasında çizilen en küçük debi
 CIZIM_BOY = 120.0       # km; bundan kısa ve CIZIM_Q*10'dan küçük dere çizilmez (yamaç derecikleri)
 
@@ -65,6 +66,12 @@ def coz(k, z, zr, kim, alan):
         alici = nehir.yana_katil(alici, q, yuz, z.shape)
         sira = nehir.sira_kur(alici)
         q = nehir.debi(alici, sira, kaynak, gm).reshape(z.shape) / nehir.SANIYE_YIL
+    # paralel dere tarakları: yakın kollar birleşir (nehir.paralel_birlestir)
+    for tur in range(PARALEL_TUR):
+        alici, n = nehir.paralel_birlestir(alici, q, yuz, z.shape, yasak=gm | deniz)
+        sira = nehir.sira_kur(alici)
+        q = nehir.debi(alici, sira, kaynak, gm).reshape(z.shape) / nehir.SANIYE_YIL
+        print("paralel birleştirme tur %d: %d hücre" % (tur + 1, n))
     # kaynağa en uzak yol boyu (km): kısa yamaç derelerini ayıklamak için
     ny, nx = z.shape
     dyk = 6371 * np.radians(abs(k["lat"][1] - k["lat"][0]))

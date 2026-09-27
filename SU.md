@@ -13,6 +13,7 @@ Buzul geçmişinden (`BUZUL.md`) sonraki katman. Sayılar `su/su.json`'da
 | en küçük göl | 300 km² (buzul gölü 100 km²) | küçük lekeler fırçadan |
 | göl payı | karanın **%1.68**'i, 95 göl | Dünya %1.8 (HydroLAKES, Messager vd. 2016) |
 | nehir | debi ≥ 50 m³/s veri, ≥ 100 m³/s ve ≥ 120 km haritada | kısa yamaç derecikleri kıta ölçeğinde gürültü |
+| paralel kollar | ~35 km (4 hücre) içinde paralel akan kol büyük komşusuna katılır (`nehir.paralel_birlestir`, 4 tur) | yumuşatılmış dağ eteğinde 200 km boyunca 6-12 km arayla birleşmeyen dere tarakları çıkıyordu; Hack yasasına göre 200 km'lik nehrin havzası ~4.000 km², eni 20-25 km. Sahibi: "olabildiğince az". Kol 1488 → 1217, denize dökülen ≥ 50 m³/s ağız 424 → 287, komşu ağız arası medyan 30 → 81 km; yarıçap 2 ve 3 de denendi, 4 en az tarak bıraktı (`su/paralel_kiyas.png`: üstte önce, altta sonra) |
 
 ## Uygulamada
 
@@ -113,8 +114,8 @@ hızı ve açık su mesafesinden (SPM 1977). Gösterge X = çökel / H^2.4
 Nil ~45, açık kıyıda küçük nehir ~1). **Gelgit bilinmiyor** (Dünyam'ın ayı
 tanımlı değil): Ganj türü gelgit deltası değerlendirilemez.
 
-- 132 delta: 16 nehir baskın (kuş ayağı / loblu), 52 yay biçimli, 64 küçük;
-  23'ü göle dökülür. Sayılar `su/deltalar.json`.
+- 158 delta: 17 nehir baskın (kuş ayağı / loblu), 61 yay biçimli, 80 küçük;
+  30'u göle dökülür (paralel kollar birleşince 132'den arttı: birleşen kolun çökeli eşiği aşıyor). Sayılar `su/deltalar.json`.
 - En büyükler: ova nehri (26.3°K 4.1°D, iç deniz) yılda ~730 milyon ton,
   Ganj-Brahmaputra'nın doğal hâli ~1.000; güneybatı platosu nehri
   (18.2°K 20.6°B) ~720, çok korunaklı kıyı (H ~0.5 m); Alt Kıta'nın büyük
