@@ -102,6 +102,17 @@ KURGU_NEHIRLER = {
                    (46.45, -2.5), (44.17, -5.14), (41.09, -7.16), (38.36, -8.04), (35.73, -8.31)],
 }
 KORIDOR_HUCRE = 10       # çizilen hattan en çok ~100 km sapabilir
+# Platoda yatak bu seviyenin altına inmez: plato çanağının dibindeki tuz
+# gölü (seviye ~788 m) nehre boşalmasın (sahibi: "ikisi birlikte").
+PLATO_TABAN_M = 795.0     # tatlı gölün (792 m) hemen üstü: göl yukarıdaki yatağa geri taşmasın
+BOGAZ_ESIK_M = 1200.0    # yol boyunca özgün arazi bunu ilk aşınca boğaz başlar
+# Tatlı göl (sahibi: 10.000 km²): boğaz ağzının önünde, nehrin üstünde.
+# Plato kenarında bir çöküntü havzası; boğaz ağzında sert kaya eşiği onu
+# tutar. Göl dolar, taşar, boğaza akar (Baykal -> Angara gibi). Seviye
+# plato tabanının hemen altında, en derin yeri eşiğin 250 m altında
+# (eşik aşınması kuralı 200 m'den sığ çukuru boşaltırdı).
+TATLI_GOL = dict(nehir="plato_kolu", alan_km2=10000.0, seviye_m=792.0, derinlik_m=250.0,
+                 bogazdan_uzak_hucre=4, boy_hucre=22)
 
 
 def _en_alcak_yol(z, a, b, maske):
@@ -137,7 +148,7 @@ def kurgu_nehirler(zr, z, lat, lon):
     """Sahibin nehirlerini yatağa oyar: yol boyunca yükseklik denize doğru
     hiç artmaz (gerekirse boğaz açılır), yatak iki yanından 10 m alçak."""
     ny, nx = zr.shape
-    z2 = zr.copy(); yatak = np.zeros(zr.shape, bool)
+    z2 = zr.copy(); yatak = np.zeros(zr.shape, bool); yollar = {}
     for ad, noktalar in KURGU_NEHIRLER.items():
         hc = [(int(np.argmin(np.abs(lat - la))), int(np.argmin(np.abs(lon - lo)))) for la, lo in noktalar]
         yol = []
@@ -150,12 +161,16 @@ def kurgu_nehirler(zr, z, lat, lon):
             maske = uz <= KORIDOR_HUCRE
             parca = _en_alcak_yol(z2, a, b, maske)
             yol += parca if not yol else parca[1:]
-        seviye = np.inf
+        seviye = np.inf; bogaz = False
         for n in yol:
             if z[n] < 0:
                 break
+            bogaz = bogaz or z[n] > BOGAZ_ESIK_M
             seviye = min(seviye - 0.5, z2[n] - 10.0)
-            z2[n] = seviye; yatak[n] = True
+            if PLATO_TABAN_M is not None and not bogaz and seviye < PLATO_TABAN_M:
+                seviye = max(seviye, min(PLATO_TABAN_M, z2[n]))
+            z2[n] = min(z2[n], seviye); yatak[n] = True
+        yollar[ad] = [n for n in yol if z[n] >= 0]
         # vadi: yatağın yanları yatağa doğru eğimli olsun
         for n in yol:
             if not yatak[n]:
@@ -166,4 +181,60 @@ def kurgu_nehirler(zr, z, lat, lon):
                     a_, b_ = i + di, j + dj
                     if 0 <= a_ < ny and 0 <= b_ < nx and not yatak[a_, b_] and z[a_, b_] >= 0:
                         z2[a_, b_] = min(z2[a_, b_], z2[n] + 150.0)
-    return z2, yatak
+    return z2, yatak, yollar
+
+
+def tatli_gol(z2, z, yol, lat, lon):
+    """Boğaz ağzının önünde, nehir yolunun iki yanına yayılan göl havzası.
+
+    Göl maskesi: yolun boğazdan 'bogazdan_uzak_hucre' ile 'boy_hucre' kadar
+    yukarısındaki parçasına uzaklığı r'den az olan hücreler (+ belirlenimci
+    gürültülü kıyı). r, alan hedefe oturana kadar ayarlanır. İç: seviye −
+    derinlik × (kıyıdan uzaklık oranı)^0.5; çevre halkası seviyenin üstünde;
+    çıkış (eşik) boğaz yönündeki yol hücresi, tam seviyede.
+    """
+    g = TATLI_GOL
+    ny, nx = z.shape
+    i0 = next(k for k, n in enumerate(yol) if z[n] > BOGAZ_ESIK_M)
+    esik = yol[i0 - g["bogazdan_uzak_hucre"]]
+    eksen = yol[max(0, i0 - g["bogazdan_uzak_hucre"] - g["boy_hucre"]):i0 - g["bogazdan_uzak_hucre"]]
+    dyk = 6371 * np.radians(abs(lat[1] - lat[0]))
+    dxk = (6371 * np.radians(lon[1] - lon[0]) * np.cos(np.radians(lat)))[:, None] * np.ones((1, nx))
+    alan = dxk * dyk
+    ii, jj = np.indices(z.shape)
+    uz = np.full(z.shape, np.inf)
+    for (a, b) in eksen:
+        uz = np.minimum(uz, np.hypot((ii - a) * dyk, (jj - b) * dxk))
+    uz = uz + gurultu(z.shape, TOHUM + 7) * 18.0
+    r_lo, r_hi = 5.0, 200.0
+    for _ in range(40):
+        r = (r_lo + r_hi) / 2
+        m = (uz <= r) & (z >= 0)
+        if alan[m].sum() > g["alan_km2"]:
+            r_hi = r
+        else:
+            r_lo = r
+    from scipy import ndimage as nd
+    m = nd.binary_fill_holes((uz <= r) & (z >= 0))
+    lab, n = nd.label(m); m = lab == lab[esik]
+    oran = np.clip((r - uz) / r, 0, 1)
+    z3 = z2.copy()
+    z3[m] = g["seviye_m"] - g["derinlik_m"] * oran[m] ** 0.5 - 5.0
+    halka = nd.binary_dilation(m, np.ones((3, 3))) & ~m
+    z3[halka] = np.maximum(z3[halka], g["seviye_m"] + 20.0)
+    # çıkış: eşikten boğaza giden ilk yol hücresi tam seviyede, sonrası
+    # denize kadar hiç yükselmez (platoda yatak tabanı 800 m'ydi; gölün
+    # altında kalınca çıkışı tıkıyordu)
+    k = yol.index(esik)
+    sev = g["seviye_m"]; cikti = False
+    for n in yol[k:]:
+        if m[n] and not cikti:
+            continue
+        cikti = True
+        sev = min(sev - 0.5, z3[n]) if sev != g["seviye_m"] else g["seviye_m"]
+        z3[n] = min(z3[n], sev)
+    # giriş: yukarıdan gelen yatak halkayı delsin
+    for n in yol[:k]:
+        if halka[n]:
+            z3[n] = min(z2[n], g["seviye_m"] + 5.0)
+    return z3, m, float(alan[m].sum())

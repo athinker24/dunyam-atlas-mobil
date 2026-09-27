@@ -50,6 +50,7 @@ def agac(z, deniz):
     dugum_hucre[deniz.ravel()] = DENIZ
     uf = [0]                                           # union-find: düğüm -> temsilci düğüm
     cocuk = [None]; esik_z = [np.inf]; esik_h = [-1]; ebeveyn = [-1]; kardes_giris = [None]
+    deniz_giris = {}                                   # denize bağlanan düğüm -> eşiğin öbür yanındaki hücre
     def bul(a):
         r = a
         while uf[r] != r:
@@ -90,6 +91,7 @@ def agac(z, deniz):
             if ra == bul(0) or rb == bul(0):
                 x = nb if ra == bul(0) else na
                 esik_z[x] = zf[c]; esik_h[x] = c; ebeveyn[x] = 0
+                deniz_giris[x] = k0 if ra == bul(0) else k1
                 uf[bul(x) if False else (rb if ra == bul(0) else ra)] = bul(0)
                 continue
             n = len(uf); uf.append(n)
@@ -103,7 +105,7 @@ def agac(z, deniz):
             r0 = n
         dugum_hucre[c] = kok_dugum[bul(r0)]
     return dict(dugum_hucre=dugum_hucre, cocuk=cocuk, esik_z=np.array(esik_z), esik_h=np.array(esik_h),
-                ebeveyn=np.array(ebeveyn), kardes_giris=kardes_giris)
+                ebeveyn=np.array(ebeveyn), kardes_giris=kardes_giris, deniz_giris=deniz_giris)
 
 
 def coz(z, deniz, R, P, E, alan, asinma=0.0):
@@ -169,7 +171,9 @@ def coz(z, deniz, R, P, E, alan, asinma=0.0):
         if cocuk[n] is not None:
             a, b = cocuk[n]; Rsub[n] = Rsub[a] + Rsub[b]
     # Eşik aşınması: çukur derinliği (eşik − taban) asinma'dan azsa taşan
-    # su eşiği zamanla kazmış sayılır; çukur su tutmaz, su geçer.
+    # su eşiği zamanla kazmış sayılır; çukur su tutmaz, su geçer. (Kapalı
+    # sığ çukurları da kapsar: kapsamayınca kurak bölgelerde binlerce km²
+    # 3 m'lik tuz tavası çıkıp göl payı %3.3'e fırlıyordu.)
     derinlik = np.where(np.isfinite(A["esik_z"]), A["esik_z"] - np.where(np.isfinite(en_z), en_z, 0), np.inf)
     silik = np.zeros(M, bool); silik[1:] = derinlik[1:] < asinma
     Scap = np.where(silik, -np.inf, Stop); Scap[0] = np.inf
@@ -187,23 +191,88 @@ def coz(z, deniz, R, P, E, alan, asinma=0.0):
             else:
                 tout[n] = saat; saat += 1
     icinde = lambda y, n: tin[n] <= tin[y] and tout[y] <= tout[n]
-    Q = np.zeros(M)
+    # Denize bağlanan bir kökün taşan suyu doğrudan denize gitmeyebilir:
+    # eşiğin öbür yanından inip denize bağlı başka bir kökün gölüne düşebilir
+    # (ör. plato suyu, çıkışı boğaza açılan tatlı göle). O yüzden kökler
+    # arası taşma da izlenir; kökler, taşma miktarları sabitlenene dek
+    # yeniden çözülür (taşma yalnız artar, yakınsar).
+    # Hedef: eşiğin öbür yanından, denizden su basma yolunu (yalnız deniz
+    # tohumlu) aşağı izle; ilk girilen BAŞKA kökün çukurunda o çukurun dibine
+    # in. Yalnız en dik inişle bakılınca iniş bazen vericinin kendi çukuruna
+    # geri dönüyor, su denize gitmiş sayılıyordu.
+    kok_of = np.zeros(M, np.int64)
+    for n in range(M - 1, 0, -1):
+        kok_of[n] = n if A["ebeveyn"][n] <= 0 else kok_of[A["ebeveyn"][n]]
+    ebv = A["ebeveyn"]
+    for n in range(1, M):            # ebeveyn her zaman çocuktan sonra oluşur
+        pass
+    kok_of = np.arange(M)
+    for n in range(M - 1, 0, -1):
+        if ebv[n] > 0:
+            pass
+    def kok_bul(n):
+        while ebv[n] > 0:
+            n = ebv[n]
+        return n
+    import heapq as _hq
+    fl = np.full(ny * nx, -1, dtype=np.int64); gor = deniz.ravel().copy()
+    h = [(zf[c], c) for c in np.where(gor)[0]]; _hq.heapify(h)
+    while h:
+        v, c = _hq.heappop(h)
+        i, j = divmod(int(c), nx)
+        for di, dj in D8:
+            a_, b_ = i + di, j + dj
+            if 0 <= a_ < ny and 0 <= b_ < nx:
+                kk = a_ * nx + b_
+                if not gor[kk]:
+                    gor[kk] = True; fl[kk] = c; _hq.heappush(h, (max(zf[kk], v), kk))
+    kok_hedef = {}
     for r in kokler:
-        yig = [(r, [])]
-        while yig:
-            n, giren = yig.pop()
-            Q[n] = Rsub[n] + sum(t for _, t in giren)
-            if cocuk[n] is None:
-                continue
-            a, b = cocuk[n]
-            ga_, gb_ = [(y, t) for y, t in giren if icinde(y, a)], [(y, t) for y, t in giren if not icinde(y, a)]
-            Wa = Rsub[a] + sum(t for _, t in ga_); Wb = Rsub[b] + sum(t for _, t in gb_)
-            gb, ga = giris_yaprak[n]
-            if Wa > Scap[a] and Wb < Scap[b]:
-                gb_ = gb_ + [(gb, Wa - Suse[a])]
-            elif Wb > Scap[b] and Wa < Scap[a]:
-                ga_ = ga_ + [(ga, Wb - Suse[b])]
-            yig.append((a, ga_)); yig.append((b, gb_))
+        e = A["deniz_giris"].get(r)
+        if e is None:
+            continue
+        c = e
+        for _ in range(100000):
+            if c < 0 or deniz.ravel()[c]:
+                break
+            d = dh[c]
+            if d > 0:
+                kr = kok_bul(int(d))
+                if kr != r and zf[c] < A["esik_z"][kr]:
+                    y = int(yap_of[max(dh[son[c]], 0)])
+                    if y > 0 and kok_bul(y) == kr:
+                        kok_hedef[r] = y
+                    break
+            c = fl[c]
+    kok_ext = {}
+    Q = np.zeros(M)
+    for gecis in range(50):
+        onceki = dict(kok_ext); yeni_ext = {}
+        for r in kokler:
+            yig = [(r, kok_ext.get(r, []))]
+            while yig:
+                n, giren = yig.pop()
+                Q[n] = Rsub[n] + sum(t for _, t in giren)
+                if cocuk[n] is None:
+                    continue
+                a, b = cocuk[n]
+                ga_, gb_ = [(y, t) for y, t in giren if icinde(y, a)], [(y, t) for y, t in giren if not icinde(y, a)]
+                Wa = Rsub[a] + sum(t for _, t in ga_); Wb = Rsub[b] + sum(t for _, t in gb_)
+                gb, ga = giris_yaprak[n]
+                if Wa > Scap[a] and Wb < Scap[b]:
+                    gb_ = gb_ + [(gb, Wa - Suse[a])]
+                elif Wb > Scap[b] and Wa < Scap[a]:
+                    ga_ = ga_ + [(ga, Wb - Suse[b])]
+                yig.append((a, ga_)); yig.append((b, gb_))
+            if r in kok_hedef and Q[r] >= Scap[r]:
+                y = kok_hedef[r]
+                hedef_kok = y
+                while A["ebeveyn"][hedef_kok] > 0:
+                    hedef_kok = A["ebeveyn"][hedef_kok]
+                yeni_ext.setdefault(hedef_kok, []).append((y, Q[r] - Suse[r]))
+        kok_ext = yeni_ext
+        if {k: round(sum(t for _, t in v)) for k, v in kok_ext.items()} == {k: round(sum(t for _, t in v)) for k, v in onceki.items()}:
+            break
     dolu = Q >= Scap
     fazla = np.where(dolu, Q - Stop, 0.0)
     print("  su dengesi: %d kök, %.0fs" % (len(kokler), time.time() - t0), flush=True)

@@ -30,7 +30,9 @@ def hazirla():
     z, lat, lon = k["z"].astype(np.float64), k["lat"], k["lon"]
     zr = duzelt.yumusat(z)
     zr, kim = duzelt.buzul_golleri(zr, lat, lon)
-    zr, _ = duzelt.kurgu_nehirler(zr, z, lat, lon)
+    zr, _, yollar = duzelt.kurgu_nehirler(zr, z, lat, lon)
+    zr, tatli, alan_t = duzelt.tatli_gol(zr, z, yollar[duzelt.TATLI_GOL["nehir"]], lat, lon)
+    print("tatlı göl havzası %.0f km2" % alan_t)
     dy = 6371e3 * np.radians(abs(lat[1] - lat[0]))
     dx = (6371e3 * np.radians(lon[1] - lon[0]) * np.cos(np.radians(lat)))[:, None]
     return k, z, zr, kim, lat, lon, dx * dy * np.ones_like(z)
