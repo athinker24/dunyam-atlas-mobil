@@ -955,7 +955,8 @@ function baslat(J, resimler){
     if(BK || !BI) return BK;
     const w = BI.naturalWidth, h = BI.naturalHeight, K = BJ.kesit, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
     const c = cv.getContext("2d"); c.drawImage(BI, 0, 0);
-    const kab = KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor;
+    // gölge kapalıysa ya da kaynak yoksa çarpma adımı atlanır (düz renkler)
+    const kab = ayar.kabartma ? (KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor) : null;
     if(kab){
       // kabartma harita kutusu B'yi kaplar: bitki kesitine göre yerleştir
       const kx = w/(K[2]-K[0]), ky = h/(K[3]-K[1]);
@@ -1382,7 +1383,7 @@ function baslat(J, resimler){
   for(const b of kaynakDugme) b.hidden = !KAB[b.dataset.kaynak];
   if(kaynakDugme.filter(b=>!b.hidden).length < 2) $("#kabartma-kaynak").hidden = true;
   for(const b of kaynakDugme) b.addEventListener("click", () => {
-    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); ciz(); });
+    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); BK = null; ciz(); });
   kaynakYaz();
   const suKolDugme = [...document.querySelectorAll("#su-kollar button")];
   function suKolYaz(){ for(const b of suKolDugme){ b.setAttribute("aria-checked", String(b.dataset.sukol===ayar.suKol)); b.disabled = !ayar.su; }
@@ -1392,7 +1393,7 @@ function baslat(J, resimler){
   suKolYaz();
   for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-deniz","deniz"],["ay-bant","bant"],["ay-su","su"]]){
     const el = $("#"+id); el.checked = ayar[k];
-    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); katmanSec(katman); });
+    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); if(k==="kabartma") BK = null; katmanSec(katman); });
   }
   $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${virgul(v)}</dd>`).join("")
     + `<dt>hücre</dt><dd>${virgul(((B[2]-B[0])/W).toFixed(2))}°</dd>`;
