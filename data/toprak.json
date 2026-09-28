@@ -1,0 +1,176 @@
+{
+ "ne": "Dünyam toprak türleri (toprak/toprak.py); yöntem TOPRAK.md",
+ "kesit": [
+  -44.47265625,
+  -7.119140625,
+  43.154296875,
+  60.029296875
+ ],
+ "topraklar": {
+  "1": {
+   "ad": "Ferralsol",
+   "ne": "Şiddetle yıkanmış tropik toprak; demir ve alüminyum oksitleri kalır, besin ağaçta.",
+   "ornek": "Amazon, Kongo havzası",
+   "renk": [
+    150,
+    92,
+    58
+   ],
+   "pay": 0.0303
+  },
+  "2": {
+   "ad": "Lixisol",
+   "ne": "Savan toprağı; belirgin kurak mevsimde kil B ufkunda birikir, orta verimli.",
+   "ornek": "Batı Afrika savanı, Hindistan yarımadası",
+   "renk": [
+    176,
+    138,
+    78
+   ],
+   "pay": 0.0802
+  },
+  "3": {
+   "ad": "Acrisol",
+   "ne": "Nemli (sub)tropik orman toprağı; asit, düşük baz doygunluğu, yıkanmış.",
+   "ornek": "Güneydoğu Asya, Güney Çin",
+   "renk": [
+    140,
+    100,
+    66
+   ],
+   "pay": 0.2069
+  },
+  "4": {
+   "ad": "Luvisol",
+   "ne": "Ilıman orman ya da Akdeniz toprağı; kil B ufkunda birikir, baz doygunluğu yüksek.",
+   "ornek": "Orta Avrupa, Akdeniz kıyıları",
+   "renk": [
+    168,
+    122,
+    74
+   ],
+   "pay": 0.1425
+  },
+  "5": {
+   "ad": "Cambisol",
+   "ne": "Genç, az gelişmiş orman toprağı; henüz belirgin bir B ufku kurmamış.",
+   "ornek": "Kuzey Avrupa, dağ eteği ormanları",
+   "renk": [
+    150,
+    130,
+    92
+   ],
+   "pay": 0.0587
+  },
+  "6": {
+   "ad": "Podzol",
+   "ne": "İğne yapraklı orman toprağı; asit, kül-gri yıkanma ufku, altında demir birikimi.",
+   "ornek": "Sibirya, Kanada tayga kuşağı",
+   "renk": [
+    172,
+    168,
+    150
+   ],
+   "pay": 0.0583
+  },
+  "7": {
+   "ad": "Chernozem",
+   "ne": "Nemli step toprağı; derin, siyah, humusça çok zengin — dünyanın en verimli toprağı.",
+   "ornek": "Ukrayna, Kuzey Amerika prerileri",
+   "renk": [
+    58,
+    46,
+    38
+   ],
+   "pay": 0.0277
+  },
+  "8": {
+   "ad": "Kastanozem",
+   "ne": "Kurak step toprağı; kestane rengi, Chernozem'den daha az humus ve daha sığ kireç.",
+   "ornek": "Kazakistan bozkırı, Moğolistan",
+   "renk": [
+    120,
+    84,
+    54
+   ],
+   "pay": 0.0945
+  },
+  "9": {
+   "ad": "Cryosol",
+   "ne": "Donmuş toprak; 100 cm içinde permafrost, çözülme yalnız yaz üstünde.",
+   "ornek": "Sibirya ve Kanada tundrası",
+   "renk": [
+    140,
+    156,
+    158
+   ],
+   "pay": 0.0251
+  },
+  "10": {
+   "ad": "Calcisol",
+   "ne": "Kurak toprak; buharlaşma kireci yüzeye yakın biriktirir, organik madde çok az.",
+   "ornek": "Sahra, Orta Asya çölleri",
+   "renk": [
+    206,
+    186,
+    140
+   ],
+   "pay": 0.0031
+  },
+  "11": {
+   "ad": "Leptosol",
+   "ne": "Sığ, taşlı dağ toprağı; ana kayaya 25 cm içinde ulaşılır, erozyon sürekli yeniler.",
+   "ornek": "Alp ve Himalaya yamaçları, her yüksek dağ",
+   "renk": [
+    144,
+    132,
+    118
+   ],
+   "pay": 0.1392
+  },
+  "12": {
+   "ad": "Andosol",
+   "ne": "Taze volkanik külden; hafif, süngerimsi, yüksek su tutar, genelde verimli.",
+   "ornek": "Java, Etiyopya ve Meksika yaylaları",
+   "renk": [
+    98,
+    90,
+    70
+   ],
+   "pay": 0.0182
+  },
+  "13": {
+   "ad": "Solonchak",
+   "ne": "Tuzlu toprak; dışa akışsız havzada buharlaşma tuzu yüzeye taşır.",
+   "ornek": "Hazar çevresi, Büyük Tuz Gölü havzası",
+   "renk": [
+    196,
+    192,
+    176
+   ],
+   "pay": 0.0026
+  },
+  "14": {
+   "ad": "Fluvisol",
+   "ne": "Taşkın ovası toprağı; genç, katmanlı, her taşkında tazelenir — nehir tarımının temeli.",
+   "ornek": "Nil, Ganj, Mekong deltaları",
+   "renk": [
+    108,
+    88,
+    62
+   ],
+   "pay": 0.0939
+  },
+  "15": {
+   "ad": "Buz / çıplak kaya",
+   "ne": "Toprak oluşmamış; kalıcı buz ya da aşınmamış kaya yüzeyi.",
+   "ornek": "Antarktika, yüksek buzullar",
+   "renk": [
+    232,
+    236,
+    240
+   ],
+   "pay": 0.0188
+  }
+ }
+}
