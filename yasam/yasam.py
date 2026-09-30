@@ -16,6 +16,11 @@ buharlaşma sürümü kullanıldı: motorun yağışı Dünya'nınkinden fazla v
 formülü şişer. AET zaten su modelinin (su/akim.py) toprak kovasından geçmiş
 gerçek buharlaşmasıdır. Çıktı g kuru madde / m² / yıl.
 
+Nehir ve göl kıyısı: büyük nehrin (debi >= 50, su/disa.py ile aynı eşik) 1
+hücre (~9 km) içinde ve göl kıyısında yeraltı suyuna ve taşkına erişim var;
+su tavanı kalkar, buharlaşma olası buharlaşmaya (PE) çıkar (galeri ormanı,
+vaha etkisi). Sıcaklık tavanı yine geçerli.
+
 Sınırlar (bilerek kaba): ışık, mevsim uzunluğu, toprak besini, eğim, yangın,
 otlayıcı hesaba girmez; yalnız yıllık ortalama sıcaklık ve gerçek buharlaşma.
 Buzul (hiç erimeyen kar) ayrı sınıf. Dünya'nın kara ortalaması bu yöntemle
@@ -64,7 +69,12 @@ def main():
     gol = np.isfinite(su["sev"])
     kara = (z >= 0) & ~gol
     T = d["Tay"].mean(0)
-    n, nt, na = npp(T, d["AET"])
+    q = su["q"]
+    nehir = ndimage.binary_dilation((q >= 50) & ~su["kapali"] & kara, iterations=1)
+    kiyi = ndimage.binary_dilation(gol, iterations=1) & ~gol
+    sulak = (nehir | kiyi) & kara
+    aet = np.where(sulak, np.maximum(d["AET"], d["PE"]), d["AET"])
+    n, nt, na = npp(T, aet)
     sinir = (nt < na).astype(np.uint8)          # 1 = sıcaklık sınırlıyor, 0 = su
     k = np.digitize(n, ESIKLER).astype(np.uint8)
     k = np.clip(k, 1, 7)
@@ -75,6 +85,8 @@ def main():
     ort = float((n * wgt).sum() / wgt.sum())
     for c, (ad, *_r) in SINIF.items():
         print("%d %-16s %%%5.1f" % (c, ad, 100 * pay[c]))
+    print("nehir/göl kıyısı: kara alanının %%%.1f, ortalama NPP artışı %.0f g/m²/yıl" % (
+        100 * float((sulak * wgt).sum() / wgt.sum()), float(((n - npp(T, d["AET"])[0]) * sulak * wgt).sum() / (sulak * wgt).sum())))
     print("kara ortalaması %.0f g/m²/yıl; sıcaklık sınırlı pay %%%.0f" % (ort, 100 * float(((sinir == 1) * wgt).sum() / wgt.sum())))
     ii, jj = np.where(kara)
     i0, i1, j0, j1 = ii.min(), ii.max() + 1, jj.min(), jj.max() + 1
@@ -100,8 +112,8 @@ def main():
     im.save(os.path.join(KOK, "data", "yasam.png"), optimize=True, transparency=0)
     dl, dn = lat[1] - lat[0], lon[1] - lon[0]
     kesit = [float(lon[j0] - dn / 2), float(lat[i1 - 1] + dl / 2), float(lon[j1 - 1] + dn / 2), float(lat[i0] - dl / 2)]
-    # kart: R = sınıf + 16 * sınırlayıcı (1 sıcaklık), G = NPP / 12, B = yıllık sıcaklık + 100
-    r = kc + 16 * sinir[i0:i1, j0:j1]
+    # kart: R = sınıf + 16 * sınırlayıcı (1 sıcaklık) + 32 * nehir/göl kıyısı, G = NPP / 12, B = yıllık sıcaklık + 100
+    r = kc + 16 * sinir[i0:i1, j0:j1] + 32 * sulak[i0:i1, j0:j1]
     g_ = np.clip(np.round(n[i0:i1, j0:j1] / 12), 0, 255)
     b_ = np.clip(np.round(T[i0:i1, j0:j1] + 100), 0, 255)
     Image.fromarray(np.stack([r, g_, b_], -1).astype(np.uint8), "RGB").save(os.path.join(KOK, "data", "yasam_veri.png"), optimize=True)

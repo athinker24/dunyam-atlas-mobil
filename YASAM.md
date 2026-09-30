@@ -30,9 +30,18 @@ bölünerek okunur hâle getirildi.
 
 ## Sonuç (kara alanına göre, 28 Eylül)
 
-Çok kıt %0.0, çok düşük %2.4, düşük %12.0, orta %18.0, yüksek %14.9, çok yüksek
-%26.9, uç düzey %23.9, buz %1.9. Kara ortalaması 1256 g/m²/yıl; alanın %27'sinde
+Çok kıt %0.0, çok düşük %2.4, düşük %12.0, orta %17.7, yüksek %14.6, çok yüksek
+%25.1, uç düzey %26.3, buz %1.9. Kara ortalaması 1281 g/m²/yıl; alanın %29'unda
 sıcaklık, geri kalanında su sınırlayıcı.
+
+## Nehir ve göl kıyısı (28 Eylül, sahibi sordu: "nehir çevreleri falan ayırdın mı")
+
+İlk sürümde yoktu; yalnız yıllık sıcaklık ve AET vardı. Şimdi büyük nehrin
+(debi >= 50) 1 hücre (~9 km) çevresi ve göl kıyısı su erişimli sayılır: AET,
+olası buharlaşma (PE) düzeyine çıkar, yani su tavanı kalkar, sıcaklık tavanı
+kalır. Karanın %10.6'sı bu bölgede, ortalama artış 240 g/m²/yıl. Kartta
+"nehir ya da göl kıyısı: su erişimi var" satırı çıkar (R'nin 32 bitinde).
+Gerçek taşkın ovası genişliği bundan çok daha değişken; 1 hücre kabaca ölçüdür.
 
 ## Sınırlar (bilerek kaba)
 

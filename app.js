@@ -1057,7 +1057,7 @@ function baslat(J, resimler){
 
   /* --- genel yaşanabilirlik (Arazi > Yaşanabilirlik): yasam/yasam.py'nin net birincil üretim sınıfları.
      Bitki örtüsüyle birebir aynı çizim yolu: data/yasam.png paletli, kabartma
-     "multiply" ile çarpılır, kart data/yasam_veri.png'den okunur (R = sınıf + 16 × sınırlayıcı, G = NPP/12, B = sıcaklık + 100). */
+     "multiply" ile çarpılır, kart data/yasam_veri.png'den okunur (R = sınıf + 16 × sınırlayıcı + 32 × kıyı, G = NPP/12, B = sıcaklık + 100). */
   const YJ = resimler.yasamJ, YS = YJ && resimler.yasam ? resimler.yasam : null, YV = resimler.yasamVeri;
   const ysCv = $("#yasam"), ysC = ysCv.getContext("2d");
   let YK = null;     // {tuval, veri (okuma tuvali)}
@@ -1105,7 +1105,7 @@ function baslat(J, resimler){
     const p = YK.veri.getImageData(x, y, 1, 1).data, c = YJ.siniflar[p[0] & 15]; if(!c) return "";
     const npp = p[1]*12, buz = (p[0] & 15) === 8;
     return `<div class="k-bk"><b>Yaşanabilirlik</b> ${c.ad} · ${c.ne} <small>Dünya'da: ${c.ornek}</small></div>`
-      + (buz ? "" : `<div class="k-bk"><b>Üretim</b> ~${npp.toLocaleString("tr-TR")} g/m²/yıl · yıllık ortalama ${eksi(p[2] - 100)} °C · ${p[0] >> 4 ? "sıcaklık sınırlıyor" : "su sınırlıyor"}</div>`);
+      + (buz ? "" : `<div class="k-bk"><b>Üretim</b> ~${npp.toLocaleString("tr-TR")} g/m²/yıl · yıllık ortalama ${eksi(p[2] - 100)} °C · ${(p[0] >> 4) & 1 ? "sıcaklık sınırlıyor" : "su sınırlıyor"}${p[0] & 32 ? " · nehir ya da göl kıyısı: su erişimi var" : ""}</div>`);
   }
 
   /* --- tektonik katman (Arazi > Levhalar): levha renkleri, sınırlar,
