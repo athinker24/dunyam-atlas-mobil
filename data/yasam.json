@@ -1,0 +1,108 @@
+{
+ "ne": "Dünyam genel yaşanabilirlik = Miami/Lieth net birincil üretim (yasam/yasam.py); yöntem YASAM.md",
+ "kesit": [
+  -44.47265625,
+  -7.119140625,
+  43.154296875,
+  60.029296875
+ ],
+ "ortalama": 1256,
+ "siniflar": {
+  "1": {
+   "ad": "Yaşam çok kıt",
+   "ne": "Üretim neredeyse yok: kurak çöl ya da kışı bitmeyen soğuk. Bitki seyrek, hayvan az.",
+   "ornek": "Sahra'nın içi, Antarktika kıyı çölleri",
+   "renk": [
+    78,
+    70,
+    66
+   ],
+   "alt": 0,
+   "pay": 0.0
+  },
+  "2": {
+   "ad": "Çok düşük",
+   "ne": "Cılız bitki örtüsü; yağmurdan ya da yazdan sonra kısa bir canlanma.",
+   "ornek": "Yarı çöller, yüksek tundra",
+   "renk": [
+    146,
+    116,
+    74
+   ],
+   "alt": 50,
+   "pay": 0.0242
+  },
+  "3": {
+   "ad": "Düşük",
+   "ne": "Otlak ve tundra düzeyi; yılın çoğunda kıt ama yaşam sürer.",
+   "ornek": "Kuru bozkır, kuzey tundrası",
+   "renk": [
+    188,
+    166,
+    86
+   ],
+   "alt": 250,
+   "pay": 0.1203
+  },
+  "4": {
+   "ad": "Orta",
+   "ne": "Otlaklar, açık ormanlar ve tayga.",
+   "ornek": "Büyük Ovalar, Sibirya taygası",
+   "renk": [
+    150,
+    182,
+    82
+   ],
+   "alt": 600,
+   "pay": 0.1795
+  },
+  "5": {
+   "ad": "Yüksek",
+   "ne": "Yoğun orman ve verimli otlak; büyük hayvan topluluklarını taşır.",
+   "ornek": "Orta Avrupa ormanları, Doğu ABD",
+   "renk": [
+    100,
+    166,
+    80
+   ],
+   "alt": 1000,
+   "pay": 0.149
+  },
+  "6": {
+   "ad": "Çok yüksek",
+   "ne": "Sıcak, nemli, uzun büyüme dönemi; sık orman.",
+   "ornek": "Güney Çin, Güneydoğu ABD, Atlantik Ormanı",
+   "renk": [
+    48,
+    136,
+    78
+   ],
+   "alt": 1400,
+   "pay": 0.2694
+  },
+  "7": {
+   "ad": "Uç düzey",
+   "ne": "Yıl boyu sıcak ve su kısıtı yok: dünyanın en üretken bölgeleri.",
+   "ornek": "Amazon, Kongo, Endonezya",
+   "renk": [
+    16,
+    96,
+    72
+   ],
+   "alt": 1750,
+   "pay": 0.2388
+  },
+  "8": {
+   "ad": "Buz",
+   "ne": "Kalıcı buz örtüsü: üretim yok.",
+   "ornek": "Antarktika, Grönland",
+   "renk": [
+    232,
+    236,
+    240
+   ],
+   "alt": null,
+   "pay": 0.0188
+  }
+ }
+}

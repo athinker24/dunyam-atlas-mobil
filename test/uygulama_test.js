@@ -269,7 +269,7 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
     // toprak turleri (veride toprak.json varsa): Arazi > Toprak #toprak
-    // tuvaline toprak haritasi; kartta Toprak satiri; Yukseklik'e donunce bos
+    // tuvaline uretim haritasi; kartta Yasanabilirlik satiri; Yukseklik'e donunce bos
     if (await p.evaluate(() => !!document.querySelector("#toprak") && fetch("data/toprak.json").then(r => r.ok)).catch(() => false)) {
       const tpPiksel = () => p.evaluate(() => { const c = document.querySelector("#toprak"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
@@ -288,6 +288,28 @@ const OLC = () => {
       const kapali = await tpPiksel();
       denetle("toprak turleri: harita ciziliyor, kartta toprak satiri, yukseklikte bos",
         acik > 50000 && kapali === 0 && /Toprak/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
+      await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
+    }
+    // genel yasanabilirlik (veride yasam.json varsa): Arazi > Yasanabilirlik #yasam
+    // tuvaline uretim haritasi; kartta Yasanabilirlik satiri; Yukseklik'e donunce bos
+    if (await p.evaluate(() => !!document.querySelector("#yasam") && fetch("data/yasam.json").then(r => r.ok)).catch(() => false)) {
+      const ysPiksel = () => p.evaluate(() => { const c = document.querySelector("#yasam"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
+      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-arazimod=yasam]").click());
+      await p.waitForFunction(() => { const c = document.querySelector("#yasam"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
+      const acik = await ysPiksel();
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+        return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
+      await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
+      const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
+      await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400);
+      await p.evaluate(() => document.querySelector("[data-arazimod=yukseklik]").click());
+      await p.waitForFunction(() => document.querySelector("#yasam").hidden, null, { timeout: 5000 }).catch(() => {});
+      const kapali = await ysPiksel();
+      denetle("genel yasanabilirlik: harita ciziliyor, kartta yasanabilirlik satiri, yukseklikte bos",
+        acik > 50000 && kapali === 0 && /Yaşanabilirlik/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);

@@ -93,8 +93,12 @@ Uygulama bir ansiklopediye büyüyecek: iklim, dağlar, nehirler, toprak,
 bitki örtüsü, ileride hayvanlar ve canlılar. Karar: özellikler şimdilik
 mevcut sekmelere yerleştirilir, hepsi bitince gruplar hâlinde yeni iskelet
 kurulur. Merak Planet Advisor'dan eksikler sırası: **bitki örtüsü (yapıldı,
-`BITKI.md`) → toprak → yaşanabilirlik**; toplumlar/zincir en sona, "olası
-okuma, tahmin değil" etiketiyle.
+`BITKI.md`) → toprak (yapıldı, `TOPRAK.md`) → yaşanabilirlik (yapıldı, `YASAM.md`)**;
+toplumlar/zincir en sona, "olası okuma, tahmin değil" etiketiyle. Sahibi
+yaşanabilirliği insana özgü değil, genel koşullar olarak istedi (28 Eylül):
+ölçü net birincil üretim. Tarımsal verimlilik sorusu ("yalnız toprak türü
+belirlemez") şimdilik bekletildi; toprak + eğim + su erişimi ile ayrı katman
+olabilir. Toprak ve yaşanabilirlik veri.yml ile üretilmez, elle koşulur.
 
 ## Tektonik katman (27 Eylül)
 
