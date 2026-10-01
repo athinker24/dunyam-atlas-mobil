@@ -3,3 +3,4 @@ __pycache__/
 *.log
 site/
 bitki/_*.npz
+toprak/_*.npz

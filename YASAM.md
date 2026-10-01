@@ -1,69 +1,100 @@
-# Genel yaşanabilirlik
+# Yaşanabilirlik
 
-İnsana özgü değil (sahibi 28 Eylül: "direkt insan için değil, genel şartlar"):
-ölçü, iklimin bitki ve hayvan yaşamına verdiği üretim tavanı, yani **net birincil
-üretim (NPP)**: bir yerin bir yılda bitki kütlesine çevirebileceği enerji. Besin
-zincirinin tamamı buna yaslanır. Üretici `yasam/yasam.py` (~40 s), çıktı
-`data/yasam.png` + `yasam_veri.png` + `yasam.json`. Uygulamada Arazi sekmesi →
-**Yaşanabilirlik**; kartta sınıf, g/m²/yıl, yıllık ortalama sıcaklık ve sınırlayan
-etken. Çizim yolu bitki örtüsü ve toprakla aynı (`BITKI.md`).
+Yerleşik yaşam (bitki, hayvan ve insan) için çok etkenli endeks, 0-100. Üretici
+`yasam/yasam.py` (~1 dk), çıktı `data/yasam.png` (geniş, yumuşak nehir çevresi,
+varsayılan) ve `yasam_dar.png` (nehrin hemen yanı), her ikisi için `*_veri.png`,
+`yasam.json`. Uygulamada Arazi sekmesi → **Yaşanabilirlik**; kartta sınıf, puan,
+zayıf ve iyi yönler. Çizim yolu bitki örtüsü ve toprakla aynı (`BITKI.md`).
 
-**Veri iş akışı (veri.yml) bunu üretmez**: iklim değişirse `python yasam/yasam.py`
-elle koşulur (`buzul/_iklim_bugun025.npz`'yi okur, `su/akim.py` üzerinden).
+**Veri iş akışı (veri.yml) bunu üretmez.** Bağımlılıklar: `bitki/_bitki.npz`,
+`toprak/_toprak.npz` (`toprak/toprak.py` yazar), `su/_akim.npz`, `su/_su.npz`,
+`data/su.json`, `data/tektonik.json`. İklim değişirse sıra: bitki, toprak, yasam.
 
-## Yöntem
+## Neden baştan (1 Ekim, sahibi)
 
-Miami modeli (Lieth 1975): iki bağımsız tavan, gerçek üretim küçük olanı
-(Liebig'in en az etken yasası).
+İlk sürüm yalnız net birincil üretime (Miami/Lieth NPP) bakıyordu. Bu dünya
+ılık ve nemli olduğu için NPP tavana yapışıyor, ilk sürümde karanın %52'si en
+üst iki sınıftaydı: "sanki bütün dünya mükemmel ötesi yaşanabilir". Sahibi
+etken listesini verdi (arazi, iklim, yağış, sıcaklık, suya ve denize erişim,
+mevsimsel değişim, insan yaşamı için alan); NPP artık yalnız gıda etkeninin bir
+parçası.
 
-- sıcaklık tavanı: NPP_T = 3000 / (1 + exp(1.315 − 0.119 T)), T yıllık ortalama °C
-- su tavanı: NPP_A = 3000 (1 − exp(−0.0009695 (AET − 20))), AET yıllık gerçek buharlaşma mm
+## Etkenler (her biri 0-1)
 
-Su tavanında Miami'nin yağış sürümü yerine Lieth'in buharlaşma sürümü var: motorun
-yağışı Dünya'nınkinden fazla ve mevsimsel (CLAUDE.md §8), yağış formülü şişerdi.
-AET, su modelinin toprak kovasından geçmiş buharlaşmasıdır (`bitki/` ile aynı).
+| # | etken | ağırlık | ne bakıyor |
+|---|---|---|---|
+| 0 | Sıcaklık | 3 | yıllık ortalama (nüfus yoğunluğu ~13 °C'de tepe, ikinci küçük tepe ~27 °C: Xu vd. 2020, PNAS; Gauss, σ 12 ve 5), en soğuk ay (0 at −40 °C, 1 at −12 °C), en sıcak ay (1 at 28 °C, 0 at 36 °C); üçünün en zayıfı |
+| 1 | Su | 3 | nem oranı AET/PE (0.10 → 0, 0.60 → 1), nehir ve göl erişimi (aşağıda), aşırı yağış (> 2500 mm/yıl yarıya kadar ceza) |
+| 2 | Gıda | 2 | Miami NPP (100 → 0, 900 g/m²/yıl → 1) ve büyüme sezonu GDD5 (400 → 0, 1700 → 1); küçük olan |
+| 3 | Mevsimsellik | 1.5 | yıllık sıcaklık aralığı (25 K → 1, 60 K → 0), kurak ay sayısı (P < 25 mm ve T > 5 °C; 3 → 1, 10 → 0), yağışın en yağışlı 3 aya yığılması (pay 0.50 → 1, 0.95 → 0, musonu cezalandırır); üçünün geometrik ortalaması |
+| 4 | Arazi | 1.5 | yumuşatılmış eğim (40 m/hücre → 1, 300 → 0, `toprak/toprak.py` ile aynı yöntem) × yükseklik (2000 m → 1, 5000 m → 0; kalıcı yerleşim ~5100 m'de biter, 5400 m üstünde oksijen yetmez) |
+| 5 | Toprak | 1.5 | WRB türünün tarımsal verimlilik sırası (Chernozem 1.0, Fluvisol 0.95, Kastanozem 0.85, Luvisol ve Andosol 0.8, Cambisol 0.7, Lixisol 0.55, Acrisol 0.45, Ferralsol 0.4, Podzol 0.35, Calcisol 0.3, Leptosol 0.2, Cryosol 0.15, Solonchak 0.1); yargıdır, ölçüm değil |
+| 6 | Deniz | 0.5 | kıyıya uzaklık: 0.6 + 0.4 exp(−d/400 km) (balık, ticaret, ılımanlık; zorunlu değil, bonus) |
+| 7 | Tehlike | 1 | çarpışma, dalma ve dönüşüm levha sınırı çevresi ~40 km (deprem, −0.15) ve volkan kuşağı (−0.30); en çok 0.6'ya iner |
+| 8 | Alan | çarpan | çevredeki ~50 km'de elverişli (≥ 0.5) kara payı: dar bir şerit ya da vadi 0.7, geniş ova 1.0 ("insan yaşamı için yeterli alan var mı") |
 
-Sınıflar mutlak NPP eşikleriyle (g kuru madde/m²/yıl): <50, 50-250, 250-600,
-600-1000, 1000-1400, 1400-1750, >1750; kalıcı buz ayrı. İlk denemede üst sınıf
-%44.7 çıktı (eşikler Dünya'ya göre, bu dünya ılık ve nemli); üst sınıf ikiye
-bölünerek okunur hâle getirildi.
+**Birleşim:** etkenlerin ağırlıklı geometrik ortalaması (bir etken 0 ise sonuç 0:
+telafi edilemez), çarpı kritik dört etkenin (sıcaklık, su, gıda, arazi) en
+zayıfının karekökü, çarpı alan etkeni. Kritik terim eklendi çünkü ortalama tek
+ağır kısıtı söndürüyordu: 3640 m'deki La Paz ilk denemede 82 puan çıkıyordu.
 
-## Sonuç (kara alanına göre, 28 Eylül)
+**Sınıflar** (mutlak puan): Yaşanmaz < 25, Çok zor 25-45, Zor 45-62, Orta 62-78,
+Elverişli 78-90, Çok elverişli >= 90; kalıcı buz ayrı. Eşikler ve ağırlıklar
+seçimdir; aşağıdaki Dünya örnekleriyle sağlandı.
 
-Varsayılan (geniş, yumuşak): çok kıt %0.0, çok düşük %2.4, düşük %12.0, orta %17.3,
-yüksek %13.8, çok yüksek %22.8, uç düzey %29.7, buz %1.9; kara ortalaması
-1310 g/m²/yıl. Dar seçenekte uç düzey %28.5, kara ortalaması 1303.
+## Nehir ve göl kıyısı
 
-## Nehir ve göl kıyısı (28 Eylül ve 1 Ekim, sahibi: "nehir çevreleri falan ayırdın mı", "tam alamamışsın", sonra "direkt yanları yapmayalım, iki seçenekli, varsayılan geniş ve yumuşak")
+Su etkeninde nem oranı, nehre yakınlık ağırlığı w (0..1) kadar 1'e yaklaşır
+(alfa + w (1 − alfa)); gıda etkeninde AET olası buharlaşmaya (PE) yaklaşır.
+Nehirler uygulamada çizilen gerçek çizgilerdir (`data/su.json`, bütün kademeler,
+ham ızgara yolu değil). İki seçenek (uygulamada "Nehir çevresi" ayarı):
+**Geniş, yumuşak** (varsayılan, debiye göre 2.5 / 5 / 8 hücre, ~9.7 km/hücre,
+kosinüsle söner, göl kıyısı 3) ve **Nehrin yanı** (1 / 2 / 3 hücre, keskin). Yeni
+modelde seçeneğin etkisi küçük (kara ortalaması 55.4 ve 55.3), çünkü yaşanabilir
+bölgelerde su zaten sınırlayıcı değil; asıl fark kurak yerlerde.
 
-İlk sürümde yoktu. İkinci sürüm ham ızgaradaki q >= 50 hücrelerinin 1 hücre
-çevresini aldı ama yanlıştı: uygulamada çizilen nehir ham ızgara yolu değil,
-ortak kaydırma alanıyla kıvrılmış çizgi (`SU.md`), üstelik küçük kollar (kademe
-2-4, 1385 nehirden 1341'i) hiç yoktu. Şimdi `data/su.json`'daki çizilen çizgilerin
-kendisi ızgaraya işleniyor (`nehir_sinifi`: 1 < 200 m³/s, 2 < 2000, 3 >= 2000) ve
-iki seçenek üretiliyor; uygulamada Yaşanabilirlik görünümünde "Nehir çevresi"
-ayarı:
+## Dünya örnekleriyle sağlama
 
-| seçenek | yarıçap (hücre ~9.7 km) | etki | su erişimli alan | kara ort. |
-|---|---|---|---|---|
-| Geniş, yumuşak (varsayılan, `yasam.png`) | 2.5 / 5 / 8, göl 3 | kosinüsle söner | %26.3 | 1310 |
-| Nehrin yanı (`yasam_dar.png`) | 1 / 2 / 3, göl 1 | tam etki, keskin | %18.4 | 1303 |
+Düz, 50 m (La Paz 3640 m), orta toprak (0.8), kıyıya 100 km, nehirsiz, tehlikesiz;
+iklim değerleri ezbere ve yaklaşık, yalnız sıralama sağlaması. `python yasam/yasam.py`
+her koşuda bu tabloyu basar.
 
-Etki ağırlığı w (0..1) kadar AET olası buharlaşmaya (PE) yaklaşır: AET + w (PE − AET).
-Yani nehre en yakın yerde su tavanı tamamen kalkar, uzaklaştıkça sıcaklık ve gerçek
-buharlaşmanın verdiği tavana yumuşakça döner (galeri ormanı, vaha etkisi; sıcaklık
-tavanı her zaman geçerli). Kartta w >= 0.25 olan yerde "nehir ya da göl kıyısı: su
-erişimi var" satırı çıkar (R'nin 32 bitinde). Legend payları seçeneğe göre
-(`pay`, `pay_dar`). Görsel doğrulama: koridor ile çizilen çizgiler üst üste
-çizildi, hizalı. Gerçek taşkın ovası genişliği nehirden nehire çok değişir; yarıçaplar
-kabaca ölçüdür. `su.json` yeniden üretilirse bu betik de koşulmalı.
+| yer | puan | sınıf | not |
+|---|---|---|---|
+| Paris | 96 | Çok elverişli | |
+| Nairobi | 88 | Elverişli | yükseklik 1650 m, hafif ceza |
+| Şangay | 90 | Çok elverişli | |
+| Singapur | 75 | Orta | sıcaklık 0.70 (27 °C ikinci tepede) |
+| Moskova | 75 | Orta | sıcaklık 0.70 |
+| Mumbai | 69 | Orta | muson yığılması ve 7 kurak ay |
+| La Paz | 52 | Zor | yükseklik |
+| Ulan Batur | 32 | Çok zor | soğuk ve kurak |
+| Yakutsk | 3 | Yaşanmaz | ortalama −8.8 °C Xu nişinin dışı |
+| Kahire, Phoenix | 0 | Yaşanmaz | nehirsiz (Nil'in w'si eklenseydi yükselirdi) |
 
-## Sınırlar (bilerek kaba)
+Beklenen kusurlar: Kahire gibi nehir vahaları ancak harita üzerinde nehir
+koridoruyla doğru çıkar, tabloda w = 0. Yakutsk gibi yerlerde gerçekte insan
+yaşıyor; puan "yoğun yerleşime elverişlilik"tir, "hayatta kalınabilir mi" değil.
 
-- Yalnız yıllık ortalama sıcaklık ve gerçek buharlaşma. Işık, büyüme mevsimi
-  uzunluğu, toprak besini, eğim, yangın ve otlayıcı hesapta yok.
-- Dünya'nın kara ortalaması bu yöntemle ~700 g/m²/yıl; buradaki 1256 iklimin
-  ılık ve nemli, büyük sıcak çölün olmamasından. Hata değil, ama mutlak sayıyı
-  Dünya'yla karşılaştırırken bunu bil.
-- Tarımsal verimlilik ayrı bir soru (yalnız toprak türü belirlemez): toprak,
-  eğim ve su erişimi ile ayrı katman olabilir, şimdilik bekletildi.
+## Sonuç (kara alanına göre, 1 Ekim)
+
+Yaşanmaz %23.1, çok zor %4.6, zor %15.5, orta %24.6, elverişli %18.7, çok elverişli
+%11.7, buz %1.9. Kara ortalaması 55.4 puan. Etken ortalamaları: sıcaklık 0.64, su
+0.97, gıda 0.82, mevsimsellik 0.93, arazi 0.78, toprak 0.57, deniz 0.79, tehlike 0.99,
+alan 0.92. En iyi bölge ~13 °C ılıman ova kuşağı (batı ve kuzey-orta) ile doğu kıyısı;
+sıcak güney ovaları "orta" (sıcaklık ve toprak), kurak plato "zor", dağlar ve
+kuzey yaşanmaz.
+
+## Sınırlar ve eksikler
+
+- Yağış bu motorda iki kat fazla mevsimsel (CLAUDE.md §8); kurak ay ve yığılma
+  cezaları bunu Dünya'dan fazla vurur.
+- Su etkeni neredeyse hiçbir yerde sınırlayıcı değil (0.97): motorun yağışı Dünya'dan
+  fazla. Gerçek kurak kuşak az.
+- Eksik: hastalık yükü (tropik), sel (nehir ovasının tehlikesi), deniz ve kıyı
+  fırtınası, kış yağışının kar olarak düşmesi, rüzgâr ve yangın, mineral kaynaklar.
+  Sel ve tropik hastalık sonraki aday etkenler.
+- Kıyıya uzaklık ızgara hücresiyle (~9.8 km, boylam yönünde 0.8 çarpanı) hesaplanıyor,
+  yüksek enlemde kaba.
+- Tarımsal verimlilik ayrı bir soru olarak bekliyor (yalnız toprak türü belirlemez);
+  bu endeks gıda ve toprağı zaten içeriyor ama tarım katmanı ayrı olabilir.

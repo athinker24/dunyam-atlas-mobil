@@ -1,109 +1,144 @@
 {
- "ne": "Dünyam genel yaşanabilirlik = Miami/Lieth net birincil üretim (yasam/yasam.py); yöntem YASAM.md",
+ "ne": "Dünyam yaşanabilirlik endeksi (yasam/yasam.py); yöntem YASAM.md",
  "kesit": [
   -44.47265625,
   -7.119140625,
   43.154296875,
   60.029296875
  ],
- "ortalama": 1310,
- "ortalama_dar": 1303,
- "kodlar": "yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin hemen yanı); yasam*_veri.png: R = sınıf + 16 * sıcaklık sınırlı + 32 * su erişimli, G = NPP/12, B = yıllık sıcaklık + 100",
+ "ortalama": 55.4,
+ "ortalama_dar": 55.3,
+ "yukseklik": 764,
+ "kodlar": "yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin yanı); yasam*_veri.png dikey 4 bölüm: 0 = R sınıf + 16 * su erişimli, G puan * 2.5; 1-3 = dokuz etken 0-255 (RGB sırayla)",
+ "etkenler": [
+  {
+   "ad": "Sıcaklık",
+   "ne": "yıllık ortalama, en soğuk ve en sıcak ay",
+   "agirlik": 3.0
+  },
+  {
+   "ad": "Su",
+   "ne": "nem oranı, nehir ve göl erişimi",
+   "agirlik": 3.0
+  },
+  {
+   "ad": "Gıda",
+   "ne": "bitki üretimi ve büyüme sezonu",
+   "agirlik": 2.0
+  },
+  {
+   "ad": "Mevsimsellik",
+   "ne": "sıcaklık aralığı, kurak ay sayısı ve yağışın yığılması",
+   "agirlik": 1.5
+  },
+  {
+   "ad": "Arazi",
+   "ne": "eğim ve yükseklik",
+   "agirlik": 1.5
+  },
+  {
+   "ad": "Toprak",
+   "ne": "toprak türünün verimliliği",
+   "agirlik": 1.5
+  },
+  {
+   "ad": "Deniz",
+   "ne": "kıyıya uzaklık",
+   "agirlik": 0.5
+  },
+  {
+   "ad": "Tehlike",
+   "ne": "deprem ve volkan",
+   "agirlik": 1.0
+  },
+  {
+   "ad": "Alan",
+   "ne": "çevredeki elverişli kara genişliği",
+   "agirlik": 0
+  }
+ ],
  "siniflar": {
   "1": {
-   "ad": "Yaşam çok kıt",
-   "ne": "Üretim neredeyse yok: kurak çöl ya da kışı bitmeyen soğuk. Bitki seyrek, hayvan az.",
-   "ornek": "Sahra'nın içi, Antarktika kıyı çölleri",
+   "ad": "Yaşanmaz",
+   "ne": "Bir ya da birkaç etken tek başına yaşamı engelliyor: ölümcül soğuk ya da sıcak, susuzluk, yüksek dağ.",
+   "ornek": "Sahra'nın içi, Tibet'in yüksek platosu, Antarktika",
    "renk": [
-    78,
-    70,
-    66
+    96,
+    62,
+    62
    ],
    "alt": 0,
-   "pay": 0.0,
-   "pay_dar": 0.0
+   "pay": 0.2309,
+   "pay_dar": 0.231
   },
   "2": {
-   "ad": "Çok düşük",
-   "ne": "Cılız bitki örtüsü; yağmurdan ya da yazdan sonra kısa bir canlanma.",
-   "ornek": "Yarı çöller, yüksek tundra",
+   "ad": "Çok zor",
+   "ne": "Çok seyrek yaşam; geçim zor, insan yerleşimi küçük ve dağınık.",
+   "ornek": "Sahel'in kuzeyi, Yakutya, Patagonya",
    "renk": [
-    146,
-    116,
-    74
+    176,
+    92,
+    64
    ],
-   "alt": 50,
-   "pay": 0.0241,
-   "pay_dar": 0.0242
+   "alt": 25,
+   "pay": 0.0458,
+   "pay_dar": 0.0459
   },
   "3": {
-   "ad": "Düşük",
-   "ne": "Otlak ve tundra düzeyi; yılın çoğunda kıt ama yaşam sürer.",
-   "ornek": "Kuru bozkır, kuzey tundrası",
+   "ad": "Zor",
+   "ne": "Yaşanır ama bir ya da iki ağır kısıt var: soğuk kış, kuraklık, dik arazi ya da kıtanın içi.",
+   "ornek": "Orta Asya bozkırı, İç Moğolistan, Anadolu platosu",
    "renk": [
-    188,
-    166,
-    86
+    214,
+    160,
+    78
    ],
-   "alt": 250,
-   "pay": 0.1201,
-   "pay_dar": 0.1202
+   "alt": 45,
+   "pay": 0.1547,
+   "pay_dar": 0.1552
   },
   "4": {
    "ad": "Orta",
-   "ne": "Otlaklar, açık ormanlar ve tayga.",
-   "ornek": "Büyük Ovalar, Sibirya taygası",
+   "ne": "Kabul edilebilir koşullar, belirgin zayıf yönlerle; tarım mümkün ama güvenli değil.",
+   "ornek": "Doğu Avrupa, Orta Anadolu, Kuzey Hindistan",
    "renk": [
-    150,
-    182,
-    82
+    220,
+    208,
+    104
    ],
-   "alt": 600,
-   "pay": 0.1733,
-   "pay_dar": 0.1758
+   "alt": 62,
+   "pay": 0.2456,
+   "pay_dar": 0.2462
   },
   "5": {
-   "ad": "Yüksek",
-   "ne": "Yoğun orman ve verimli otlak; büyük hayvan topluluklarını taşır.",
-   "ornek": "Orta Avrupa ormanları, Doğu ABD",
+   "ad": "Elverişli",
+   "ne": "Çoğu etken iyi: ılıman, yeterli su, düz ya da hafif eğimli, verimli toprak.",
+   "ornek": "Batı Avrupa, Kuzey Çin ovası, Kuzeydoğu ABD",
    "renk": [
-    100,
-    166,
-    80
+    132,
+    186,
+    88
    ],
-   "alt": 1000,
-   "pay": 0.1383,
-   "pay_dar": 0.1416
+   "alt": 78,
+   "pay": 0.1874,
+   "pay_dar": 0.1872
   },
   "6": {
-   "ad": "Çok yüksek",
-   "ne": "Sıcak, nemli, uzun büyüme dönemi; sık orman.",
-   "ornek": "Güney Çin, Güneydoğu ABD, Atlantik Ormanı",
+   "ad": "Çok elverişli",
+   "ne": "Hemen her etken uygun, geniş ve düz alan: dünyanın en yoğun yerleşilen bölgeleri.",
+   "ornek": "Ganj ovası, Yangtze deltası, Po ovası",
    "renk": [
-    48,
-    136,
-    78
+    40,
+    142,
+    84
    ],
-   "alt": 1400,
-   "pay": 0.228,
-   "pay_dar": 0.2349
+   "alt": 90,
+   "pay": 0.1168,
+   "pay_dar": 0.1158
   },
   "7": {
-   "ad": "Uç düzey",
-   "ne": "Yıl boyu sıcak ve su kısıtı yok: dünyanın en üretken bölgeleri.",
-   "ornek": "Amazon, Kongo, Endonezya",
-   "renk": [
-    16,
-    96,
-    72
-   ],
-   "alt": 1750,
-   "pay": 0.2974,
-   "pay_dar": 0.2846
-  },
-  "8": {
    "ad": "Buz",
-   "ne": "Kalıcı buz örtüsü: üretim yok.",
+   "ne": "Kalıcı buz örtüsü.",
    "ornek": "Antarktika, Grönland",
    "renk": [
     232,

@@ -204,6 +204,7 @@ def main():
     buzul = a["buzul"]
     k[buzul] = 15
     k[~kara] = 0
+    np.savez_compressed(os.path.join(BURASI, "_toprak.npz"), k=k, lat=lat, lon=lon)   # yasam/yasam.py okur
     wgt = np.cos(np.radians(lat))[:, None] * kara
     pay = {int(c): float(wgt[k == c].sum() / wgt.sum()) for c in TOPRAK}
     for c, (ad, *_r) in TOPRAK.items():
