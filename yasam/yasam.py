@@ -83,7 +83,9 @@ def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f
     # nüfus yoğunluğunun yıllık ortalama sıcaklığa dağılımı (Xu vd. 2020): ana tepe ~13 °C,
     # ikinci küçük tepe ~27 °C (musonlu Asya). Düz bir "uygun aralık" yerine kademeli.
     konfor = np.maximum(np.exp(-((T - 13) / 12.0) ** 2), 0.7 * np.exp(-((T - 27) / 5.0) ** 2))
-    sic = np.minimum(np.minimum(konfor, ss(Tc, -40, -12)), 1 - ss(Tw, 28, 36))
+    # en sıcak ay: 33 °C'den 40 °C'ye söner. İlk sürüm 28-36 idi; Dünya sağlamasında Ganj
+    # ovası (en sıcak ay ~32) ve Mezopotamya (~35) "zor / yaşanmaz" çıktı (1 Ekim)
+    sic = np.minimum(np.minimum(konfor, ss(Tc, -40, -12)), 1 - ss(Tw, 33, 40))
     alfa_e = alfa + w * (1 - alfa)
     su = ss(alfa_e, 0.10, 0.60) * (1 - 0.5 * ss(P, 2500, 4500))
     aet_e = aet + w * np.maximum(pe - aet, 0)
@@ -91,7 +93,11 @@ def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f
     # toprak (Acrisol 0.45) üretimi sınırlar; en fakir toprakta bile %40 kalır
     # (otlatma, ormancılık, teraslı tarım). Ayrı ağırlıkla sayılmaz: çift sayım olurdu.
     gida = np.minimum(ss(npp(T, aet_e), 100, 900), ss(gdd5, 400, 1700)) * (0.4 + 0.6 * toprak_f)
-    mev = np.cbrt((1 - ss(Tw - Tc, 25, 60)) * (1 - ss(kuru_ay, 3, 10)) * (1 - ss(pay3, 0.50, 0.95)))
+    # nehirden sulanan yerde yağışın zamanı önemsizleşir: kurak ay ve yığılma cezası
+    # su erişimiyle (w) azalır. Yoksa Nil vadisi 12 kurak ayla "çok zor" çıkıyordu.
+    kuru_e = kuru_ay * (1 - w)
+    pay3_e = pay3 - w * np.maximum(pay3 - 0.25, 0)
+    mev = np.cbrt((1 - ss(Tw - Tc, 25, 60)) * (1 - ss(kuru_e, 3, 10)) * (1 - ss(pay3_e, 0.50, 0.95)))
     arazi = (1 - ss(egim, 40, 300)) * (1 - ss(z, 2000, 5000))
     toprak_e = toprak_f
     deniz = 0.6 + 0.4 * np.exp(-kiyi_km / 400.0)
@@ -189,27 +195,30 @@ def alan_etkeni(S0, kara):
 
 
 def dunya_orneklari():
-    """Bilinen Dünya yerlerinin yaklaşık iklimiyle kaba sağlama (düz, 50 m, orta toprak,
-    kıyıya 100 km, tehlikesiz, nehirsiz). Kaynak: yaklaşık iklim normalleri, ezbere."""
-    # ad: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, z, pay3 (en yağışlı 3 ayın payı)
-    O = {"Paris": (11.5, 4, 20, 2300, 0.85, 640, 520, 610, 0, 50, 0.28),
-         "Şangay": (17, 4.5, 28, 3700, 0.9, 1150, 800, 880, 0, 5, 0.45),
-         "Moskova": (5.8, -6.5, 18, 1900, 0.8, 700, 450, 560, 0, 150, 0.36),
-         "Yakutsk": (-8.8, -38, 19, 1300, 0.6, 240, 150, 250, 3, 100, 0.50),
-         "Kahire": (22, 14, 29, 6500, 0.08, 25, 25, 1500, 12, 20, 0.55),
-         "Phoenix": (23.5, 12, 34, 6800, 0.1, 190, 190, 1900, 10, 330, 0.40),
-         "Singapur": (27, 26, 28, 9500, 1.0, 2300, 1500, 1500, 0, 10, 0.36),
-         "Mumbai": (27.5, 24, 30, 9000, 0.6, 2400, 1000, 1700, 7, 10, 0.80),
-         "Nairobi": (17.5, 15.5, 19.5, 4900, 0.7, 960, 750, 1100, 3, 1650, 0.55),
-         "La Paz": (8.5, 6, 11, 1400, 0.5, 570, 300, 600, 6, 3640, 0.70),
-         "Ulan Batur": (-0.4, -22, 17, 1100, 0.45, 270, 210, 480, 6, 1350, 0.75)}
+    """Gerçek dünya bölgeleriyle sağlama: aynı etkenler, yaklaşık iklim normalleri ve
+    arazi (ezbere, kaba), gerçek nüfus yoğunluğuyla karşılaştırma için. YASAM.md'de tablo.
+    sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı"""
+    B = {
+        "Po ovası (Bologna)":             (14, 2.5, 25, 3000, 0.75, 800, 600, 800, 0, 0.32, 15, 50, 0.95, 80, 0.85, 0.5, 1.0),
+        "Kuzey Çin ovası (Zhengzhou)":    (15, 0.5, 27.5, 3500, 0.55, 640, 520, 950, 2, 0.55, 15, 100, 0.95, 500, 0.95, 0.5, 1.0),
+        "Paris havzası":                  (11.5, 4, 20, 2300, 0.85, 640, 520, 610, 0, 0.28, 30, 80, 0.80, 150, 1.0, 0.3, 1.0),
+        "Ukrayna bozkırı (Harkov)":       (7.5, -6.5, 20.5, 2200, 0.55, 520, 450, 650, 0, 0.36, 25, 150, 1.00, 450, 1.0, 0.2, 1.0),
+        "Etiyopya yaylası (Addis Ababa)": (16, 14.5, 18, 4000, 0.70, 1100, 800, 1100, 4, 0.60, 110, 2350, 0.80, 600, 0.70, 0.2, 0.9),
+        "Ganj ovası (Patna)":             (26, 16.5, 32, 7500, 0.60, 1100, 900, 1500, 6, 0.70, 15, 50, 0.95, 400, 0.95, 1.0, 1.0),
+        "Yunnan yaylası (Kunming)":       (15.5, 9, 20.5, 3700, 0.70, 1000, 750, 1050, 4, 0.55, 120, 1890, 0.45, 600, 0.85, 0.2, 0.85),
+        "Amazon ormanı (Manaus)":         (27.5, 26.5, 28.5, 8000, 0.95, 2300, 1400, 1450, 0, 0.42, 20, 50, 0.40, 1300, 1.0, 0.3, 1.0),
+        "Nil vadisi (Kahire)":            (22, 14, 29, 6500, 0.08, 25, 25, 1500, 12, 0.55, 15, 20, 0.95, 150, 1.0, 1.0, 0.75),
+        "Mezopotamya (Bağdat)":           (23, 10, 35, 6500, 0.10, 150, 150, 1800, 8, 0.50, 15, 40, 0.80, 450, 1.0, 1.0, 0.85),
+        "Kanada kalkanı (Thompson)":      (-3, -24, 16, 1100, 0.70, 540, 330, 380, 0, 0.40, 40, 230, 0.35, 600, 1.0, 0.3, 1.0),
+        "Sibirya taygası (Yakutsk)":      (-8.8, -38, 19, 1300, 0.60, 240, 150, 250, 3, 0.50, 30, 100, 0.35, 1000, 1.0, 0.3, 1.0),
+        "Sahra içi":                      (24, 13, 34, 6800, 0.02, 15, 15, 2200, 12, 0.60, 30, 400, 0.30, 900, 1.0, 0.0, 1.0),
+        "Tibet platosu (Nagqu)":          (-1, -13, 9, 300, 0.50, 430, 300, 450, 0, 0.80, 150, 4500, 0.15, 1500, 0.85, 0.2, 0.8),
+    }
     out = {}
-    for ad, (T, Tc, Tw, g5, al, P, ae, pe, dm, z, p3) in O.items():
-        f = etkenler(np.array([T]), np.array([Tc]), np.array([Tw]), np.array([g5]), np.array([al]), np.array([P]),
-                     np.array([ae]), np.array([pe]), np.array([dm]), np.array([p3]), np.array([30.0]), np.array([z]),
-                     np.array([0.8]), np.array([100.0]), np.array([1.0]), np.array([0.0]))
-        S = float(birlestir(f)[0] * 100)
-        out[ad] = (S, [float(x[0]) for x in f])
+    for ad, v in B.items():
+        T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan = [np.array([float(x)]) for x in v]
+        f = etkenler(T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w)
+        out[ad] = (float(birlestir(f)[0] * (0.7 + 0.3 * ss(alan, 0.10, 0.60))[0] * 100), [float(x[0]) for x in f])
     return out
 
 
@@ -266,9 +275,9 @@ def varyant(ad, genis, G, kutu):
 
 def main():
     ornek = dunya_orneklari()
-    print("Dünya örnekleri (düz, 50 m, orta toprak): puan; sıcaklık/su/gıda/mevsim/arazi")
+    print("Dünya bölgeleri: puan; sıcaklık/su/gıda/mevsim/arazi")
     for ad, (S, f) in ornek.items():
-        print("  %-11s %5.1f   %s" % (ad, S, " ".join("%.2f" % x for x in f[:5])))
+        print("  %-31s %5.1f   %s" % (ad, S, " ".join("%.2f" % x for x in f[:5])))
     d = akim.hesapla(os.path.join(KOK, "buzul", "_iklim_bugun025.npz"))
     z, lat, lon = d["z"], d["lat"], d["lon"]
     su = np.load(os.path.join(KOK, "su", "_su.npz"))
