@@ -25,10 +25,10 @@ parçası.
 |---|---|---|---|
 | 0 | Sıcaklık | 3 | yıllık ortalama (nüfus yoğunluğu ~13 °C'de tepe, ikinci küçük tepe ~27 °C: Xu vd. 2020, PNAS; Gauss, σ 12 ve 5), en soğuk ay (0 at −40 °C, 1 at −12 °C), en sıcak ay (1 at 28 °C, 0 at 36 °C); üçünün en zayıfı |
 | 1 | Su | 3 | nem oranı AET/PE (0.10 → 0, 0.60 → 1), nehir ve göl erişimi (aşağıda), aşırı yağış (> 2500 mm/yıl yarıya kadar ceza) |
-| 2 | Gıda | 2 | Miami NPP (100 → 0, 900 g/m²/yıl → 1) ve büyüme sezonu GDD5 (400 → 0, 1700 → 1); küçük olan |
+| 2 | Gıda | 2 | Miami NPP (100 → 0, 900 g/m²/yıl → 1) ve büyüme sezonu GDD5 (400 → 0, 1700 → 1); küçük olan, çarpı (0.4 + 0.6 × toprak) |
 | 3 | Mevsimsellik | 1.5 | yıllık sıcaklık aralığı (25 K → 1, 60 K → 0), kurak ay sayısı (P < 25 mm ve T > 5 °C; 3 → 1, 10 → 0), yağışın en yağışlı 3 aya yığılması (pay 0.50 → 1, 0.95 → 0, musonu cezalandırır); üçünün geometrik ortalaması |
 | 4 | Arazi | 1.5 | yumuşatılmış eğim (40 m/hücre → 1, 300 → 0, `toprak/toprak.py` ile aynı yöntem) × yükseklik (2000 m → 1, 5000 m → 0; kalıcı yerleşim ~5100 m'de biter, 5400 m üstünde oksijen yetmez) |
-| 5 | Toprak | 1.5 | WRB türünün tarımsal verimlilik sırası (Chernozem 1.0, Fluvisol 0.95, Kastanozem 0.85, Luvisol ve Andosol 0.8, Cambisol 0.7, Lixisol 0.55, Acrisol 0.45, Ferralsol 0.4, Podzol 0.35, Calcisol 0.3, Leptosol 0.2, Cryosol 0.15, Solonchak 0.1); yargıdır, ölçüm değil |
+| 5 | Toprak | 0 (gıdanın içinde) | WRB türünün tarımsal verimlilik sırası (Chernozem 1.0, Fluvisol 0.95, Kastanozem 0.85, Luvisol ve Andosol 0.8, Cambisol 0.7, Lixisol 0.55, Acrisol 0.45, Ferralsol 0.4, Podzol 0.35, Calcisol 0.3, Leptosol 0.2, Cryosol 0.15, Solonchak 0.1); yargıdır, ölçüm değil |
 | 6 | Deniz | 0.5 | kıyıya uzaklık: 0.6 + 0.4 exp(−d/400 km) (balık, ticaret, ılımanlık; zorunlu değil, bonus) |
 | 7 | Tehlike | 1 | çarpışma, dalma ve dönüşüm levha sınırı çevresi ~40 km (deprem, −0.15) ve volkan kuşağı (−0.30); en çok 0.6'ya iner |
 | 8 | Alan | çarpan | çevredeki ~50 km'de elverişli (≥ 0.5) kara payı: dar bir şerit ya da vadi 0.7, geniş ova 1.0 ("insan yaşamı için yeterli alan var mı") |
@@ -61,7 +61,7 @@ her koşuda bu tabloyu basar.
 
 | yer | puan | sınıf | not |
 |---|---|---|---|
-| Paris | 96 | Çok elverişli | |
+| Paris | 96 (toprak gıdaya girmeden önce; şimdi 91) | Çok elverişli | |
 | Nairobi | 88 | Elverişli | yükseklik 1650 m, hafif ceza |
 | Şangay | 90 | Çok elverişli | |
 | Singapur | 75 | Orta | sıcaklık 0.70 (27 °C ikinci tepede) |
@@ -76,14 +76,28 @@ Beklenen kusurlar: Kahire gibi nehir vahaları ancak harita üzerinde nehir
 koridoruyla doğru çıkar, tabloda w = 0. Yakutsk gibi yerlerde gerçekte insan
 yaşıyor; puan "yoğun yerleşime elverişlilik"tir, "hayatta kalınabilir mi" değil.
 
+## Toprak gıdanın içinde (1 Ekim, sahibi: "bayağı verimli işaretlenmiş, öyle mi gerçekte de")
+
+İlk dokuz etkenli sürümde toprak ayrı etkendi, ağırlığı 14.5'te 1.5. Güneybatıdaki
+1500-2000 m Cwb yaylası (alanın %72'si Acrisol, toprak 0.51) bu yüzden 90 puanla
+"çok elverişli" çıkıyordu: toprak puanı toplamı yalnız ~%6 düşürüyordu. Dünya'daki
+subtropikal yaylalardan verimli olanlar (Kenya, Etiyopya) volkanik ya da besince
+zengin topraklı; Acrisol'lü olanlar (Yunnan'ın kırmızı toprakları) teraslama ve
+gübreyle ayakta. Şimdi toprak gıda etkeninin çarpanı: gıda × (0.4 + 0.6 × toprak);
+en fakir toprakta bile %40 kalır (otlatma, ormancılık). Ayrı ağırlığı 0 (çift sayım
+olmasın), kartta yine görünür. Gıda kritik dört etkenden biri olduğu için etkisi
+belirgin. O yaylada medyan puan 90 → 76 ("orta"); içinden geçen nehir vadileri
+(Fluvisol) 96 ile öne çıkıyor.
+
 ## Sonuç (kara alanına göre, 1 Ekim)
 
-Yaşanmaz %23.1, çok zor %4.6, zor %15.5, orta %24.6, elverişli %18.7, çok elverişli
-%11.7, buz %1.9. Kara ortalaması 55.4 puan. Etken ortalamaları: sıcaklık 0.64, su
-0.97, gıda 0.82, mevsimsellik 0.93, arazi 0.78, toprak 0.57, deniz 0.79, tehlike 0.99,
-alan 0.92. En iyi bölge ~13 °C ılıman ova kuşağı (batı ve kuzey-orta) ile doğu kıyısı;
-sıcak güney ovaları "orta" (sıcaklık ve toprak), kurak plato "zor", dağlar ve
-kuzey yaşanmaz.
+Yaşanmaz %23.4, çok zor %4.7, zor %15.6, orta %33.9, elverişli %13.9, çok elverişli
+%6.6, buz %1.9. Kara ortalaması 53.4 puan. Etken ortalamaları: sıcaklık 0.64, su
+0.97, gıda 0.64, mevsimsellik 0.93, arazi 0.78, toprak 0.57, deniz 0.79, tehlike 0.99,
+alan 0.92. En iyi bölge ~13 °C ılıman ova kuşağı (batı ve kuzey-orta) ile doğu kıyısı
+ve nehir vadileri; sıcak güney ovaları "orta" (sıcaklık ve toprak), kurak plato "zor",
+dağlar ve kuzey yaşanmaz. Dünya örnekleri (orta toprak 0.8): Paris 91, Şangay 89,
+Nairobi 88, Singapur 75, Moskova 75, Mumbai 68, La Paz 51, Ulan Batur 31.
 
 ## Sınırlar ve eksikler
 

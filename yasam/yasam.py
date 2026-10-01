@@ -9,10 +9,10 @@ sıcak ve nemli olduğu için neredeyse her yer tavana yapışıyordu (sahibi 1 
   0 sıcaklık      yıllık ortalama (insan nüfusu ~13 °C çevresinde yoğunlaşır,
                   Xu vd. 2020, PNAS), en soğuk ay ve en sıcak ay uçları
   1 su            AET/PE (nem oranı), nehir ve göl erişimi, aşırı yağış
-  2 gıda          Miami NPP ve büyüme sezonu (GDD5)
+  2 gıda          Miami NPP ve büyüme sezonu (GDD5), toprak verimliliğiyle çarpılır
   3 mevsimsellik  yıllık sıcaklık aralığı, kurak ay sayısı, yağışın en yağışlı 3 aya yığılması
   4 arazi         eğim (yumuşatılmış) ve yükseklik (kalıcı yerleşim ~5100 m'de biter)
-  5 toprak        WRB türünün verimlilik sırası (toprak/toprak.py)
+  5 toprak        WRB türünün verimlilik sırası (toprak/toprak.py); ağırlığı 0, gıdanın içinde
   6 deniz         kıyıya uzaklık (balık, ticaret, ılımanlık)
   7 tehlike       çarpışma/dönüşüm levha sınırı (deprem) ve volkan kuşağı
   8 alan          çevredeki ~50 km'de elverişli kara payı: dar bir şerit mi, geniş bir ova mı
@@ -56,7 +56,7 @@ ETKEN = [
     ("Gıda", "bitki üretimi ve büyüme sezonu", 2.0),
     ("Mevsimsellik", "sıcaklık aralığı, kurak ay sayısı ve yağışın yığılması", 1.5),
     ("Arazi", "eğim ve yükseklik", 1.5),
-    ("Toprak", "toprak türünün verimliliği", 1.5),
+    ("Toprak", "toprak türünün verimliliği (gıdanın içinde)", 0.0),
     ("Deniz", "kıyıya uzaklık", 0.5),
     ("Tehlike", "deprem ve volkan", 1.0),
 ]
@@ -87,7 +87,10 @@ def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f
     alfa_e = alfa + w * (1 - alfa)
     su = ss(alfa_e, 0.10, 0.60) * (1 - 0.5 * ss(P, 2500, 4500))
     aet_e = aet + w * np.maximum(pe - aet, 0)
-    gida = np.minimum(ss(npp(T, aet_e), 100, 900), ss(gdd5, 400, 1700))
+    # toprak gıdanın içinde çarpan: iklim ne kadar iyi olursa olsun yıkanmış, asidik
+    # toprak (Acrisol 0.45) üretimi sınırlar; en fakir toprakta bile %40 kalır
+    # (otlatma, ormancılık, teraslı tarım). Ayrı ağırlıkla sayılmaz: çift sayım olurdu.
+    gida = np.minimum(ss(npp(T, aet_e), 100, 900), ss(gdd5, 400, 1700)) * (0.4 + 0.6 * toprak_f)
     mev = np.cbrt((1 - ss(Tw - Tc, 25, 60)) * (1 - ss(kuru_ay, 3, 10)) * (1 - ss(pay3, 0.50, 0.95)))
     arazi = (1 - ss(egim, 40, 300)) * (1 - ss(z, 2000, 5000))
     toprak_e = toprak_f
