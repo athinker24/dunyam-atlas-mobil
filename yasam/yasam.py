@@ -16,10 +16,13 @@ buharlaşma sürümü kullanıldı: motorun yağışı Dünya'nınkinden fazla v
 formülü şişer. AET zaten su modelinin (su/akim.py) toprak kovasından geçmiş
 gerçek buharlaşmasıdır. Çıktı g kuru madde / m² / yıl.
 
-Nehir ve göl kıyısı: büyük nehrin (debi >= 50, su/disa.py ile aynı eşik) 1
-hücre (~9 km) içinde ve göl kıyısında yeraltı suyuna ve taşkına erişim var;
-su tavanı kalkar, buharlaşma olası buharlaşmaya (PE) çıkar (galeri ormanı,
-vaha etkisi). Sıcaklık tavanı yine geçerli.
+Nehir ve göl kıyısı: uygulamada çizilen nehirlerin kendisi (data/su.json, bütün
+kademeler, ortak kaydırma alanıyla kıvrılmış gerçek çizgi; ham ızgara yolu
+değil) ızgaraya işlenir, çevresinde debiye göre genişleyen bir koridor ve göl
+kıyısı yeraltı suyuna ve taşkına erişimlidir: su tavanı kalkar, buharlaşma
+olası buharlaşmaya (PE) çıkar (galeri ormanı, vaha etkisi). Koridor yarı
+genişliği: debi < 200 m³/s 1 hücre (~9 km), 200-2000 2 hücre, >= 2000 3 hücre.
+Sıcaklık tavanı yine geçerli.
 
 Sınırlar (bilerek kaba): ışık, mevsim uzunluğu, toprak besini, eğim, yangın,
 otlayıcı hesaba girmez; yalnız yıllık ortalama sıcaklık ve gerçek buharlaşma.
@@ -62,6 +65,32 @@ def npp(Tyil, AET):
     return np.minimum(nt, na), nt, na
 
 
+def nehir_koridoru(lat, lon, shape):
+    """data/su.json'daki çizilen nehirler (0.01° fark kodlu, tepe başına
+    10·log10 debi) ızgaraya işlenir; debi sınıfına göre 1/2/3 hücre koridor."""
+    j = json.load(open(os.path.join(KOK, "data", "su.json"), encoding="utf-8"))
+    dl, dn = lat[1] - lat[0], lon[1] - lon[0]
+    sinif = np.zeros(shape, np.uint8)             # hücreden geçen en büyük debi sınıfı (1..3)
+    for n in j["nehirler"]:
+        kod = np.asarray(n["p"], float).reshape(-1, 2)
+        xy = np.cumsum(kod, axis=0) / 100.0
+        Q = 10 ** (np.asarray(n["q"], float) / 10.0)
+        for i in range(len(xy) - 1):
+            (x0, y0), (x1, y1) = xy[i], xy[i + 1]
+            adim = max(2, int(np.hypot(x1 - x0, y1 - y0) / (0.4 * abs(dn))) + 1)
+            t = np.linspace(0, 1, adim)
+            qa = max(Q[i], Q[min(i + 1, len(Q) - 1)])
+            c = 1 if qa < 200 else 2 if qa < 2000 else 3
+            r = np.round((lat[0] - (y0 + t * (y1 - y0))) / -dl).astype(int)
+            k = np.round(((x0 + t * (x1 - x0)) - lon[0]) / dn).astype(int)
+            ok = (r >= 0) & (r < shape[0]) & (k >= 0) & (k < shape[1])
+            sinif[r[ok], k[ok]] = np.maximum(sinif[r[ok], k[ok]], c)
+    out = np.zeros(shape, bool)
+    for c in (1, 2, 3):
+        out |= ndimage.distance_transform_edt(~(sinif >= c)) <= c
+    return out
+
+
 def main():
     d = akim.hesapla(os.path.join(KOK, "buzul", "_iklim_bugun025.npz"))
     z, lat, lon = d["z"], d["lat"], d["lon"]
@@ -69,8 +98,7 @@ def main():
     gol = np.isfinite(su["sev"])
     kara = (z >= 0) & ~gol
     T = d["Tay"].mean(0)
-    q = su["q"]
-    nehir = ndimage.binary_dilation((q >= 50) & ~su["kapali"] & kara, iterations=1)
+    nehir = nehir_koridoru(lat, lon, kara.shape) & kara
     kiyi = ndimage.binary_dilation(gol, iterations=1) & ~gol
     sulak = (nehir | kiyi) & kara
     aet = np.where(sulak, np.maximum(d["AET"], d["PE"]), d["AET"])

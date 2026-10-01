@@ -30,18 +30,24 @@ bölünerek okunur hâle getirildi.
 
 ## Sonuç (kara alanına göre, 28 Eylül)
 
-Çok kıt %0.0, çok düşük %2.4, düşük %12.0, orta %17.7, yüksek %14.6, çok yüksek
-%25.1, uç düzey %26.3, buz %1.9. Kara ortalaması 1281 g/m²/yıl; alanın %29'unda
+Çok kıt %0.0, çok düşük %2.4, düşük %12.0, orta %17.6, yüksek %14.2, çok yüksek
+%23.5, uç düzey %28.5, buz %1.9. Kara ortalaması 1303 g/m²/yıl; alanın %30'unda
 sıcaklık, geri kalanında su sınırlayıcı.
 
-## Nehir ve göl kıyısı (28 Eylül, sahibi sordu: "nehir çevreleri falan ayırdın mı")
+## Nehir ve göl kıyısı (28 Eylül ve 1 Ekim, sahibi: "nehir çevreleri falan ayırdın mı", sonra "tam alamamışsın")
 
-İlk sürümde yoktu; yalnız yıllık sıcaklık ve AET vardı. Şimdi büyük nehrin
-(debi >= 50) 1 hücre (~9 km) çevresi ve göl kıyısı su erişimli sayılır: AET,
-olası buharlaşma (PE) düzeyine çıkar, yani su tavanı kalkar, sıcaklık tavanı
-kalır. Karanın %10.6'sı bu bölgede, ortalama artış 240 g/m²/yıl. Kartta
-"nehir ya da göl kıyısı: su erişimi var" satırı çıkar (R'nin 32 bitinde).
-Gerçek taşkın ovası genişliği bundan çok daha değişken; 1 hücre kabaca ölçüdür.
+İlk sürümde yoktu. İkinci sürüm ham ızgaradaki q >= 50 hücrelerinin 1 hücre
+çevresini aldı ama yanlıştı: uygulamada çizilen nehir ham ızgara yolu değil,
+ortak kaydırma alanıyla kıvrılmış çizgi (`SU.md`), üstelik küçük kollar (kademe
+2-4, 1385 nehirden 1341'i) hiç yoktu. Şimdi `data/su.json`'daki çizilen çizgilerin
+kendisi ızgaraya işleniyor (`nehir_koridoru`): bütün kademeler, çevresinde debiye
+göre koridor (< 200 m³/s 1 hücre ~9 km, 200-2000 2 hücre, >= 2000 3 hücre) ve göl
+kıyısı. Bu bölgelerde AET olası buharlaşmaya (PE) çıkar, yani su tavanı kalkar,
+sıcaklık tavanı kalır. Karanın %18.4'ü koridorda, ortalama artış 254 g/m²/yıl.
+Kartta "nehir ya da göl kıyısı: su erişimi var" satırı çıkar (R'nin 32 bitinde).
+Görsel doğrulama: koridor ile çizilen çizgiler üst üste çizildi, hizalı.
+Gerçek taşkın ovası genişliği nehirden nehire çok değişir; sınıf genişlikleri
+kabaca ölçüdür. `su.json` yeniden üretilirse bu betik de koşulmalı.
 
 ## Sınırlar (bilerek kaba)
 
