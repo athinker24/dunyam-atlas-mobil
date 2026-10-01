@@ -323,6 +323,35 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-arazimod=yukseklik]").click()); await bekle(300);
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
+    // tarimsal verimlilik (veride tarim.json varsa): Arazi > Tarim #tarim
+    // tuvaline harita; kartta Tarim satiri; sulamali/yagmur secenegi cizimi degistirir; Yukseklik'e donunce bos
+    if (await p.evaluate(() => !!document.querySelector("#tarim") && fetch("data/tarim.json").then(r => r.ok)).catch(() => false)) {
+      const trPiksel = () => p.evaluate(() => { const c = document.querySelector("#tarim"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
+      const trRenk = () => p.evaluate(() => { const c = document.querySelector("#tarim"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data; let t = 0; for (let i = 0; i < x.length; i += 4) if (x[i+3] > 30) t += x[i] + 2*x[i+1] + 3*x[i+2]; return t; });
+      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-arazimod=tarim]").click());
+      await p.waitForFunction(() => { const c = document.querySelector("#tarim"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+        let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
+      const acik = await trPiksel(), srenk = await trRenk();
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+        return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
+      await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
+      const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
+      await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400);
+      await p.evaluate(() => document.querySelector("[data-arazimod=tarim]").click()); await bekle(400);
+      await p.evaluate(() => document.querySelector("[data-tarimsu=yagmur]")?.click()); await bekle(600);
+      const ypx = await trPiksel(), yrenk = await trRenk(), ysec = await p.evaluate(() => document.querySelector("[data-tarimsu=yagmur]")?.getAttribute("aria-checked"));
+      await p.evaluate(() => document.querySelector("[data-tarimsu=sulamali]")?.click()); await bekle(600);
+      const ssec = await p.evaluate(() => document.querySelector("[data-tarimsu=sulamali]")?.getAttribute("aria-checked"));
+      await p.evaluate(() => document.querySelector("[data-arazimod=yukseklik]").click());
+      await p.waitForFunction(() => document.querySelector("#tarim").hidden, null, { timeout: 5000 }).catch(() => {});
+      const kapali = await trPiksel();
+      denetle("tarimsal verimlilik: harita ciziliyor, kartta Tarim satiri, yukseklikte bos",
+        acik > 50000 && kapali === 0 && /Tarım/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
+      denetle("tarim: sulamali / yalniz yagmur secenegi cizimi ve secimi degistirir", ypx > 50000 && yrenk !== srenk && ysec === "true" && ssec === "true", `sulamali ${srenk}, yagmur ${yrenk}, yagmur secili ${ysec}, sulamali secili ${ssec}`);
+      await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
+    }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);
     if (kaynak) { await p.evaluate(() => document.querySelector("[data-kaynak=gri]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-kaynak=editor]").click()); await bekle(250);

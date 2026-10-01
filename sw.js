@@ -11,10 +11,10 @@
 
    AD'yi yalnizca KABUK listesi degistiginde artir. Kod ve veri guncellemesi
    icin gerekmez: ag-once zaten tazesini getirir. */
-const AD = 'dunyam-atlas-v12';   // v12: yaşanabilirlikte nehir çevresi seçeneği
+const AD = 'dunyam-atlas-v13';   // v12: yaşanabilirlikte nehir çevresi seçeneği
 const KABUK = [
   './', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'data/atlas.json',
-  'data/doku.png', 'data/yukseklik.png', 'data/kabartma.jpg', 'data/kabartma_gri.jpg', 'data/kabartma_bir.jpg', 'data/dolasim.png', 'data/su.json', 'data/tektonik.json', 'data/levha.png', 'data/bitki.json', 'data/bitki.png', 'data/bitki_veri.png', 'data/toprak.json', 'data/toprak.png', 'data/toprak_veri.png', 'data/yasam.json', 'data/yasam.png', 'data/yasam_veri.png', 'data/yasam_dar.png', 'data/yasam_dar_veri.png',
+  'data/doku.png', 'data/yukseklik.png', 'data/kabartma.jpg', 'data/kabartma_gri.jpg', 'data/kabartma_bir.jpg', 'data/dolasim.png', 'data/su.json', 'data/tektonik.json', 'data/levha.png', 'data/bitki.json', 'data/bitki.png', 'data/bitki_veri.png', 'data/toprak.json', 'data/toprak.png', 'data/toprak_veri.png', 'data/yasam.json', 'data/yasam.png', 'data/yasam_veri.png', 'data/yasam_dar.png', 'data/yasam_dar_veri.png', 'data/tarim.json', 'data/tarim.png', 'data/tarim_veri.png', 'data/tarim_yagmur.png', 'data/tarim_yagmur_veri.png',
   'icons/icon-192.png', 'icons/icon-512.png',
   'icons/icon-maskable-192.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png',
 ];

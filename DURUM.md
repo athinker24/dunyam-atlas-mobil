@@ -204,3 +204,7 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 ## Genel temizlik (1 Ekim)
 
 Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; yalnız yazılıyor, hiçbir yerde okunmuyor) ve hiçbir belgede ya da kodda adı geçmeyen 11 önizleme PNG'si (~13 MB) silindi. Kullanılmayan değişken ve import'lar temizlendi (`pyflakes` temiz). Katman çıktıları ve 31 tarayıcı testi değişmedi. Not: `toprak/toprak.py` `su/_disa.pkl` ister; bu dosya git'te yok, `su/uret_su.py` üretir.
+
+## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
+
+Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.

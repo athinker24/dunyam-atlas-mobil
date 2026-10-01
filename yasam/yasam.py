@@ -196,11 +196,8 @@ def alan_etkeni(S0, kara):
     return 0.7 + 0.3 * ss(pay, 0.10, 0.60), pay
 
 
-def dunya_orneklari():
-    """Gerçek dünya bölgeleriyle sağlama: aynı etkenler, yaklaşık iklim normalleri ve
-    arazi (ezbere, kaba), gerçek nüfus yoğunluğuyla karşılaştırma için. YASAM.md'de tablo.
-    sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı"""
-    B = {
+# sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı
+DUNYA_ORNEKLERI = {
         "Po ovası (Bologna)":             (14, 2.5, 25, 3000, 0.75, 800, 600, 800, 0, 0.32, 15, 50, 0.95, 80, 0.85, 0.5, 1.0),
         "Kuzey Çin ovası (Zhengzhou)":    (15, 0.5, 27.5, 3500, 0.55, 640, 520, 950, 2, 0.55, 15, 100, 0.95, 500, 0.95, 0.5, 1.0),
         "Paris havzası":                  (11.5, 4, 20, 2300, 0.85, 640, 520, 610, 0, 0.28, 30, 80, 0.80, 150, 1.0, 0.3, 1.0),
@@ -216,8 +213,14 @@ def dunya_orneklari():
         "Sahra içi":                      (24, 13, 34, 6800, 0.02, 15, 15, 2200, 12, 0.60, 30, 400, 0.30, 900, 1.0, 0.0, 1.0),
         "Tibet platosu (Nagqu)":          (-1, -13, 9, 300, 0.50, 430, 300, 450, 0, 0.80, 150, 4500, 0.15, 1500, 0.85, 0.2, 0.8),
     }
+
+
+def dunya_orneklari():
+    """Gerçek dünya bölgeleriyle sağlama: aynı etkenler, yaklaşık iklim normalleri ve
+    arazi (ezbere, kaba), gerçek nüfus yoğunluğuyla karşılaştırma için. YASAM.md'de tablo.
+    sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı"""
     out = {}
-    for ad, v in B.items():
+    for ad, v in DUNYA_ORNEKLERI.items():
         T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan = [np.array([float(x)]) for x in v]
         f = etkenler(T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w)
         out[ad] = (float(birlestir(f)[0] * (0.7 + 0.3 * ss(alan, 0.10, 0.60))[0] * 100), [float(x[0]) for x in f])
