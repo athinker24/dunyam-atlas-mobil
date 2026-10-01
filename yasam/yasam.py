@@ -20,8 +20,9 @@ Nehir ve göl kıyısı: uygulamada çizilen nehirlerin kendisi (data/su.json, b
 kademeler, ortak kaydırma alanıyla kıvrılmış gerçek çizgi; ham ızgara yolu
 değil) ızgaraya işlenir, çevresinde debiye göre genişleyen bir koridor ve göl
 kıyısı yeraltı suyuna ve taşkına erişimlidir: su tavanı kalkar, buharlaşma
-olası buharlaşmaya (PE) çıkar (galeri ormanı, vaha etkisi). Koridor yarı
-genişliği: debi < 200 m³/s 1 hücre (~9 km), 200-2000 2 hücre, >= 2000 3 hücre.
+olası buharlaşmaya (PE) çıkar (galeri ormanı, vaha etkisi). İki seçenek (uygulamada
+ayar): "Geniş, yumuşak" (varsayılan; debiye göre 2.5 / 5 / 8 hücre, etki kosinüsle
+sönerek) ve "Dar" (nehrin hemen yanı, debiye göre 1 / 2 / 3 hücre, tam etki).
 Sıcaklık tavanı yine geçerli.
 
 Sınırlar (bilerek kaba): ışık, mevsim uzunluğu, toprak besini, eğim, yangın,
@@ -65,12 +66,13 @@ def npp(Tyil, AET):
     return np.minimum(nt, na), nt, na
 
 
-def nehir_koridoru(lat, lon, shape):
+def nehir_sinifi(lat, lon, shape):
     """data/su.json'daki çizilen nehirler (0.01° fark kodlu, tepe başına
-    10·log10 debi) ızgaraya işlenir; debi sınıfına göre 1/2/3 hücre koridor."""
+    10·log10 debi) ızgaraya işlenir; hücreden geçen en büyük debi sınıfı:
+    1 < 200 m³/s, 2 < 2000, 3 >= 2000 (0 = nehir yok)."""
     j = json.load(open(os.path.join(KOK, "data", "su.json"), encoding="utf-8"))
     dl, dn = lat[1] - lat[0], lon[1] - lon[0]
-    sinif = np.zeros(shape, np.uint8)             # hücreden geçen en büyük debi sınıfı (1..3)
+    sinif = np.zeros(shape, np.uint8)
     for n in j["nehirler"]:
         kod = np.asarray(n["p"], float).reshape(-1, 2)
         xy = np.cumsum(kod, axis=0) / 100.0
@@ -85,39 +87,54 @@ def nehir_koridoru(lat, lon, shape):
             k = np.round(((x0 + t * (x1 - x0)) - lon[0]) / dn).astype(int)
             ok = (r >= 0) & (r < shape[0]) & (k >= 0) & (k < shape[1])
             sinif[r[ok], k[ok]] = np.maximum(sinif[r[ok], k[ok]], c)
-    out = np.zeros(shape, bool)
+    return sinif
+
+
+# koridor yarıçapı (hücre, ~9.7 km): dar = nehrin hemen yanı, tam etki;
+# geniş = debiye göre daha büyük alan, etki kosinüsle yumuşakça söner
+DAR_R = {1: 1, 2: 2, 3: 3}
+GENIS_R = {1: 2.5, 2: 5, 3: 8}
+GOL_DAR, GOL_GENIS = 1, 3
+
+
+def su_agirligi(sinif, gol, genis):
+    """0..1 su erişimi ağırlığı: nehir ve göl kıyısına uzaklığa göre."""
+    R = GENIS_R if genis else DAR_R
+    w = np.zeros(sinif.shape, np.float32)
     for c in (1, 2, 3):
-        out |= ndimage.distance_transform_edt(~(sinif >= c)) <= c
-    return out
+        dist = ndimage.distance_transform_edt(~(sinif >= c))
+        w = np.maximum(w, _profil(dist, R[c], genis))
+    dg = ndimage.distance_transform_edt(~gol)
+    return np.maximum(w, _profil(dg, GOL_GENIS if genis else GOL_DAR, genis))
 
 
-def main():
-    d = akim.hesapla(os.path.join(KOK, "buzul", "_iklim_bugun025.npz"))
-    z, lat, lon = d["z"], d["lat"], d["lon"]
-    su = np.load(os.path.join(KOK, "su", "_su.npz"))
-    gol = np.isfinite(su["sev"])
-    kara = (z >= 0) & ~gol
-    T = d["Tay"].mean(0)
-    nehir = nehir_koridoru(lat, lon, kara.shape) & kara
-    kiyi = ndimage.binary_dilation(gol, iterations=1) & ~gol
-    sulak = (nehir | kiyi) & kara
-    aet = np.where(sulak, np.maximum(d["AET"], d["PE"]), d["AET"])
+def _profil(dist, r, genis):
+    if not genis:
+        return (dist <= r).astype(np.float32)
+    return np.where(dist < r, 0.5 * (1 + np.cos(np.pi * dist / r)), 0).astype(np.float32)
+
+
+def varyant(ad, genis, d, T, sinif, gol, kara, buzul, lat, kutu):
+    """Bir nehir çevresi varyantını hesaplar; ad: '' (geniş, varsayılan) ya da '_dar'."""
+    w = su_agirligi(sinif, gol, genis) * kara
+    # su erişimi ağırlığı kadar AET olası buharlaşmaya (PE) yaklaşır
+    aet = d["AET"] + w * np.maximum(d["PE"] - d["AET"], 0)
     n, nt, na = npp(T, aet)
     sinir = (nt < na).astype(np.uint8)          # 1 = sıcaklık sınırlıyor, 0 = su
-    k = np.digitize(n, ESIKLER).astype(np.uint8)
-    k = np.clip(k, 1, 7)
-    k[d["buzul"]] = 8
+    k = np.clip(np.digitize(n, ESIKLER), 1, 7).astype(np.uint8)
+    k[buzul] = 8
     k[~kara] = 0
     wgt = np.cos(np.radians(lat))[:, None] * kara
     pay = {c: float(wgt[k == c].sum() / wgt.sum()) for c in SINIF}
     ort = float((n * wgt).sum() / wgt.sum())
-    for c, (ad, *_r) in SINIF.items():
-        print("%d %-16s %%%5.1f" % (c, ad, 100 * pay[c]))
-    print("nehir/göl kıyısı: kara alanının %%%.1f, ortalama NPP artışı %.0f g/m²/yıl" % (
-        100 * float((sulak * wgt).sum() / wgt.sum()), float(((n - npp(T, d["AET"])[0]) * sulak * wgt).sum() / (sulak * wgt).sum())))
-    print("kara ortalaması %.0f g/m²/yıl; sıcaklık sınırlı pay %%%.0f" % (ort, 100 * float(((sinir == 1) * wgt).sum() / wgt.sum())))
-    ii, jj = np.where(kara)
-    i0, i1, j0, j1 = ii.min(), ii.max() + 1, jj.min(), jj.max() + 1
+    sulak = (w >= 0.25) & kara
+    print("== nehir çevresi:", "geniş, yumuşak" if genis else "dar")
+    for c, (a_, *_r) in SINIF.items():
+        print("%d %-16s %%%5.1f" % (c, a_, 100 * pay[c]))
+    print("su erişimli (w >= 0.25): kara alanının %%%.1f, ortalama NPP artışı %.0f g/m²/yıl; kara ortalaması %.0f" % (
+        100 * float((sulak * wgt).sum() / wgt.sum()),
+        float(((n - npp(T, d["AET"])[0]) * (w > 0) * wgt).sum() / ((w > 0) * wgt).sum()), ort))
+    i0, i1, j0, j1 = kutu
     kc = k[i0:i1, j0:j1]
     F = 2
     en = None; secim = None
@@ -129,7 +146,7 @@ def main():
             en = g; secim = np.full(g.shape, c, np.uint8)
         else:
             m = g > en; en[m] = g[m]; secim[m] = c
-    zc = ndimage.zoom(z[i0:i1, j0:j1].astype(np.float32), F, order=1)
+    zc = ndimage.zoom(d["z"][i0:i1, j0:j1].astype(np.float32), F, order=1)
     gc = ndimage.zoom(gol[i0:i1, j0:j1].astype(np.float32), F, order=1)
     secim[(zc < 0) | (gc >= 0.5)] = 0
     im = Image.fromarray(secim, "P")
@@ -137,20 +154,39 @@ def main():
     for c, (_a, _n, _o, r, _e) in SINIF.items():
         pal[3 * c:3 * c + 3] = list(r)
     im.putpalette(pal)
-    im.save(os.path.join(KOK, "data", "yasam.png"), optimize=True, transparency=0)
-    dl, dn = lat[1] - lat[0], lon[1] - lon[0]
-    kesit = [float(lon[j0] - dn / 2), float(lat[i1 - 1] + dl / 2), float(lon[j1 - 1] + dn / 2), float(lat[i0] - dl / 2)]
-    # kart: R = sınıf + 16 * sınırlayıcı (1 sıcaklık) + 32 * nehir/göl kıyısı, G = NPP / 12, B = yıllık sıcaklık + 100
+    im.save(os.path.join(KOK, "data", "yasam%s.png" % ad), optimize=True, transparency=0)
+    # kart: R = sınıf + 16 * sınırlayıcı (1 sıcaklık) + 32 * nehir/göl kıyısı (w >= 0.25), G = NPP / 12, B = yıllık sıcaklık + 100
     r = kc + 16 * sinir[i0:i1, j0:j1] + 32 * sulak[i0:i1, j0:j1]
     g_ = np.clip(np.round(n[i0:i1, j0:j1] / 12), 0, 255)
     b_ = np.clip(np.round(T[i0:i1, j0:j1] + 100), 0, 255)
-    Image.fromarray(np.stack([r, g_, b_], -1).astype(np.uint8), "RGB").save(os.path.join(KOK, "data", "yasam_veri.png"), optimize=True)
+    Image.fromarray(np.stack([r, g_, b_], -1).astype(np.uint8), "RGB").save(os.path.join(KOK, "data", "yasam%s_veri.png" % ad), optimize=True)
+    return pay, ort, secim.shape
+
+
+def main():
+    d = akim.hesapla(os.path.join(KOK, "buzul", "_iklim_bugun025.npz"))
+    z, lat, lon = d["z"], d["lat"], d["lon"]
+    su = np.load(os.path.join(KOK, "su", "_su.npz"))
+    gol = np.isfinite(su["sev"])
+    kara = (z >= 0) & ~gol
+    T = d["Tay"].mean(0)
+    sinif = nehir_sinifi(lat, lon, kara.shape)
+    ii, jj = np.where(kara)
+    kutu = (ii.min(), ii.max() + 1, jj.min(), jj.max() + 1)
+    i0, i1, j0, j1 = kutu
+    pay, ort, sek = varyant("", True, d, T, sinif, gol, kara, d["buzul"], lat, kutu)
+    pay_d, ort_d, _ = varyant("_dar", False, d, T, sinif, gol, kara, d["buzul"], lat, kutu)
+    dl, dn = lat[1] - lat[0], lon[1] - lon[0]
+    kesit = [float(lon[j0] - dn / 2), float(lat[i1 - 1] + dl / 2), float(lon[j1 - 1] + dn / 2), float(lat[i0] - dl / 2)]
     veri = dict(ne="Dünyam genel yaşanabilirlik = Miami/Lieth net birincil üretim (yasam/yasam.py); yöntem YASAM.md",
-                kesit=kesit, ortalama=round(ort),
-                siniflar={str(c): dict(ad=a, ne=nn, ornek=o, renk=list(rr), alt=e, pay=round(pay[c], 4)) for c, (a, nn, o, rr, e) in SINIF.items()})
+                kesit=kesit, ortalama=round(ort), ortalama_dar=round(ort_d),
+                kodlar="yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin hemen yanı); yasam*_veri.png: R = sınıf + 16 * sıcaklık sınırlı + 32 * su erişimli, G = NPP/12, B = yıllık sıcaklık + 100",
+                siniflar={str(c): dict(ad=a, ne=nn, ornek=o, renk=list(rr), alt=e, pay=round(pay[c], 4), pay_dar=round(pay_d[c], 4))
+                          for c, (a, nn, o, rr, e) in SINIF.items()})
     with open(os.path.join(KOK, "data", "yasam.json"), "w", encoding="utf-8") as fh:
         json.dump(veri, fh, ensure_ascii=False, indent=1)
-    print("yasam.png %dx%d %.0f KB" % (secim.shape[1], secim.shape[0], os.path.getsize(os.path.join(KOK, "data", "yasam.png")) / 1024))
+    print("yasam.png %dx%d %.0f KB, yasam_dar.png %.0f KB" % (sek[1], sek[0], os.path.getsize(os.path.join(KOK, "data", "yasam.png")) / 1024,
+                                                           os.path.getsize(os.path.join(KOK, "data", "yasam_dar.png")) / 1024))
 
 
 if __name__ == "__main__":

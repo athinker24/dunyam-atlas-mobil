@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik"},
+  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik", yasamKiyi:"genis"},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -1061,21 +1061,24 @@ function baslat(J, resimler){
   const YJ = resimler.yasamJ, YS = YJ && resimler.yasam ? resimler.yasam : null, YV = resimler.yasamVeri;
   const ysCv = $("#yasam"), ysC = ysCv.getContext("2d");
   let YK = null;     // {tuval, veri (okuma tuvali)}
+  // nehir çevresi seçeneği: geniş ve yumuşak (varsayılan) ya da nehrin hemen yanı
+  const yasamRes = () => ayar.yasamKiyi === "dar" && resimler.yasamDar && resimler.yasamDarVeri ? [resimler.yasamDar, resimler.yasamDarVeri] : [YS, YV];
   function yasamKur(){
     if(YK || !YS) return YK;
-    const w = YS.naturalWidth, h = YS.naturalHeight, K = YJ.kesit, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
-    const c = cv.getContext("2d"); c.drawImage(YS, 0, 0);
+    const [Y, V] = yasamRes();
+    const w = Y.naturalWidth, h = Y.naturalHeight, K = YJ.kesit, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+    const c = cv.getContext("2d"); c.drawImage(Y, 0, 0);
     const kab = ayar.kabartma ? (KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor) : null;
     if(kab){
       const kx = w/(K[2]-K[0]), ky = h/(K[3]-K[1]);
       c.globalCompositeOperation = "multiply"; c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
       c.drawImage(kab, (B[0]-K[0])*kx, (K[3]-B[3])*ky, (B[2]-B[0])*kx, (B[3]-B[1])*ky);
       c.globalCompositeOperation = "lighter"; c.drawImage(cv, 0, 0);
-      c.globalCompositeOperation = "destination-in"; c.drawImage(YS, 0, 0);
+      c.globalCompositeOperation = "destination-in"; c.drawImage(Y, 0, 0);
       c.globalCompositeOperation = "source-over"; }
     let veri = null;
-    if(YV){ const v = document.createElement("canvas"); v.width = YV.naturalWidth; v.height = YV.naturalHeight;
-      veri = v.getContext("2d", {willReadFrequently:true}); veri.drawImage(YV, 0, 0); }
+    if(V){ const v = document.createElement("canvas"); v.width = V.naturalWidth; v.height = V.naturalHeight;
+      veri = v.getContext("2d", {willReadFrequently:true}); veri.drawImage(V, 0, 0); }
     return YK = {tuval: cv, veri};
   }
   const yasamModu = () => !!YS && katman === "arazi" && ayar.araziMod === "yasam";
@@ -1099,7 +1102,7 @@ function baslat(J, resimler){
   }
   function yasamSatiri(lon, lat){
     if(!yasamModu() || !yasamKur() || !YK.veri) return "";
-    const K = YJ.kesit, W2 = YV.naturalWidth, H2 = YV.naturalHeight;
+    const K = YJ.kesit, V = yasamRes()[1], W2 = V.naturalWidth, H2 = V.naturalHeight;
     const x = Math.floor((lon-K[0])/(K[2]-K[0])*W2), y = Math.floor((K[3]-lat)/(K[3]-K[1])*H2);
     if(x < 0 || y < 0 || x >= W2 || y >= H2) return "";
     const p = YK.veri.getImageData(x, y, 1, 1).data, c = YJ.siniflar[p[0] & 15]; if(!c) return "";
@@ -1403,8 +1406,12 @@ function baslat(J, resimler){
         `<span><i style="background:rgb(${b.renk.join(",")})"></i>${b.ad.replace(/ \(.*\)/, "")} <b>%${Math.round(b.pay*100)}</b></span>`).join("") + `</div>`;
       return; }
     if(katman==="arazi" && YS && ayar.araziMod==="yasam"){
-      el.innerHTML = araziSec + `<div class="bk-not">` + Object.entries(YJ.siniflar).filter(([, c]) => c.pay >= 0.005).map(([, c]) =>
-        `<span><i style="background:rgb(${c.renk.join(",")})"></i>${c.ad} <b>%${Math.round(c.pay*100)}</b></span>`).join("") + `</div>`;
+      const dar = ayar.yasamKiyi === "dar" && resimler.yasamDar, pk = dar ? "pay_dar" : "pay";
+      const kiyiSec = resimler.yasamDar ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Nehir çevresi">`
+        + [["genis","Geniş, yumuşak"],["dar","Nehrin yanı"]].map(([k, t]) =>
+          `<button role="radio" data-yasamkiyi="${k}" aria-checked="${dar ? k==="dar" : k==="genis"}">${t}</button>`).join("") + `</div></div>` : "";
+      el.innerHTML = araziSec + kiyiSec + `<div class="bk-not">` + Object.entries(YJ.siniflar).filter(([, c]) => c[pk] >= 0.005).map(([, c]) =>
+        `<span><i style="background:rgb(${c.renk.join(",")})"></i>${c.ad} <b>%${Math.round(c[pk]*100)}</b></span>`).join("") + `</div>`;
       return; }
     if(katman==="arazi" && TP && ayar.araziMod==="toprak"){
       const liste = Object.entries(TPJ.topraklar).filter(([, t]) => t.pay >= 0.005).sort((a, b) => b[1].pay - a[1].pay);
@@ -1435,7 +1442,8 @@ function baslat(J, resimler){
   addEventListener("resize", () => etiketCakismasi());
 
   $("#aciklama").addEventListener("click", e => {
-    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]");
+    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]"), yk = e.target.closest("[data-yasamkiyi]");
+    if(yk){ ayar.yasamKiyi = yk.dataset.yasamkiyi; ayarYaz(); YK = null; katmanSec("arazi"); ciz(); }
     if(am){ ayar.araziMod = am.dataset.arazimod; ayarYaz(); katmanSec("arazi"); ciz(); }
     if(sm){ ayar.sicMod = sm.dataset.sicmod; ayarYaz(); katmanSec("sicaklik"); }
     if(z){ ayar.dolZemin = z.dataset.zemin; ayarYaz(); katmanSec("dolasim"); }
@@ -1785,7 +1793,7 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
@@ -1806,8 +1814,10 @@ async function acilis(){
       // genel yaşanabilirlik de isteğe bağlı (yasam/yasam.py)
       fetch("data/yasam.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null),
       resimYukle("data/yasam.png").catch(() => null),
-      resimYukle("data/yasam_veri.png").catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri};
+      resimYukle("data/yasam_veri.png").catch(() => null),
+      resimYukle("data/yasam_dar.png").catch(() => null),
+      resimYukle("data/yasam_dar_veri.png").catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);

@@ -6,7 +6,9 @@
   43.154296875,
   60.029296875
  ],
- "ortalama": 1303,
+ "ortalama": 1310,
+ "ortalama_dar": 1303,
+ "kodlar": "yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin hemen yanı); yasam*_veri.png: R = sınıf + 16 * sıcaklık sınırlı + 32 * su erişimli, G = NPP/12, B = yıllık sıcaklık + 100",
  "siniflar": {
   "1": {
    "ad": "Yaşam çok kıt",
@@ -18,7 +20,8 @@
     66
    ],
    "alt": 0,
-   "pay": 0.0
+   "pay": 0.0,
+   "pay_dar": 0.0
   },
   "2": {
    "ad": "Çok düşük",
@@ -30,7 +33,8 @@
     74
    ],
    "alt": 50,
-   "pay": 0.0242
+   "pay": 0.0241,
+   "pay_dar": 0.0242
   },
   "3": {
    "ad": "Düşük",
@@ -42,7 +46,8 @@
     86
    ],
    "alt": 250,
-   "pay": 0.1202
+   "pay": 0.1201,
+   "pay_dar": 0.1202
   },
   "4": {
    "ad": "Orta",
@@ -54,7 +59,8 @@
     82
    ],
    "alt": 600,
-   "pay": 0.1758
+   "pay": 0.1733,
+   "pay_dar": 0.1758
   },
   "5": {
    "ad": "Yüksek",
@@ -66,7 +72,8 @@
     80
    ],
    "alt": 1000,
-   "pay": 0.1416
+   "pay": 0.1383,
+   "pay_dar": 0.1416
   },
   "6": {
    "ad": "Çok yüksek",
@@ -78,7 +85,8 @@
     78
    ],
    "alt": 1400,
-   "pay": 0.2349
+   "pay": 0.228,
+   "pay_dar": 0.2349
   },
   "7": {
    "ad": "Uç düzey",
@@ -90,7 +98,8 @@
     72
    ],
    "alt": 1750,
-   "pay": 0.2846
+   "pay": 0.2974,
+   "pay_dar": 0.2846
   },
   "8": {
    "ad": "Buz",
@@ -102,7 +111,8 @@
     240
    ],
    "alt": null,
-   "pay": 0.0188
+   "pay": 0.0188,
+   "pay_dar": 0.0188
   }
  }
 }

@@ -310,6 +310,17 @@ const OLC = () => {
       const kapali = await ysPiksel();
       denetle("genel yasanabilirlik: harita ciziliyor, kartta yasanabilirlik satiri, yukseklikte bos",
         acik > 50000 && kapali === 0 && /Yaşanabilirlik/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
+      // nehir cevresi secenegi: dar secilince yeniden cizilir, genise donunce de
+      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-arazimod=yasam]").click()); await bekle(400);
+      const ysRenk = () => p.evaluate(() => { const c = document.querySelector("#yasam"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data; let t = 0; for (let i = 0; i < x.length; i += 4) if (x[i+3] > 30) t += x[i] + 2*x[i+1] + 3*x[i+2]; return t; });
+      const gpx = await ysPiksel(), grenk = await ysRenk();
+      await p.evaluate(() => document.querySelector("[data-yasamkiyi=dar]").click()); await bekle(600);
+      const dpx = await ysPiksel(), drenk = await ysRenk(); const dsec = await p.evaluate(() => document.querySelector("[data-yasamkiyi=dar]").getAttribute("aria-checked"));
+      await p.evaluate(() => document.querySelector("[data-yasamkiyi=genis]").click()); await bekle(600);
+      const gsec = await p.evaluate(() => document.querySelector("[data-yasamkiyi=genis]").getAttribute("aria-checked"));
+      denetle("yasanabilirlik: nehir cevresi secenegi (genis/dar) cizimi ve secimi degistirir", gpx > 50000 && dpx > 50000 && drenk !== grenk && dsec === "true" && gsec === "true", `genis ${gpx}/${grenk}, dar ${dpx}/${drenk}, dar secili ${dsec}, genis secili ${gsec}`);
+      await p.evaluate(() => document.querySelector("[data-arazimod=yukseklik]").click()); await bekle(300);
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);
