@@ -200,3 +200,7 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 - Bulutta `test/uygulama_test.js`'in "güncelleme denetimi yeni veride
   yeniler" maddesi yerelde zaman aşımına düşüyor (değişmemiş `main`'de de);
   GitHub'da geçiyor. Karar GitHub'daki `uygulama testi` sonucudur.
+
+## Genel temizlik (1 Ekim)
+
+Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; yalnız yazılıyor, hiçbir yerde okunmuyor) ve hiçbir belgede ya da kodda adı geçmeyen 11 önizleme PNG'si (~13 MB) silindi. Kullanılmayan değişken ve import'lar temizlendi (`pyflakes` temiz). Katman çıktıları ve 31 tarayıcı testi değişmedi. Not: `toprak/toprak.py` `su/_disa.pkl` ister; bu dosya git'te yok, `su/uret_su.py` üretir.

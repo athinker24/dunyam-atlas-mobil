@@ -1,5 +1,5 @@
 """Göl + nehir seçeneklerini yan yana çizer. python su/harita.py 0 50 150 300"""
-import os, sys, json
+import os, sys
 import numpy as np
 from PIL import Image, ImageDraw
 BURASI = os.path.dirname(os.path.abspath(__file__)); KOK = os.path.dirname(BURASI)

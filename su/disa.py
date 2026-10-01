@@ -240,7 +240,6 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
                     yig.append((int(ch), k, int(s)))
     # birleşme noktaları: her kolun katıldığı hücre, ana kolda sabit tepe
     sabit = set(kol["katilim"] for kol in kollar if kol["katilim"] is not None)
-    rng = np.random.default_rng(1492)
     alan = KaydirmaAlani(Z, (ny, nx), np.random.default_rng(1493), su=(gm | deniz))
     global KAYDIR
     KAYDIR = alan              # delta.py delta kollarını aynı alanla kaydırır
@@ -273,7 +272,6 @@ def es_egri(f, seviye=0.5):
     """Marching squares: f'in 'seviye' eş değer eğrileri, kapalı halkalar (satır, sütun)."""
     ny, nx = f.shape
     b = f >= seviye
-    kenar = {}
     def nokta(i1, j1, i2, j2):
         a, c = f[i1, j1], f[i2, j2]
         t = (seviye - a) / (c - a) if c != a else 0.5

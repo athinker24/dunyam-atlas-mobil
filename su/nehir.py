@@ -7,7 +7,7 @@ yataktan geçilir, çıkışlı göller eşiklerinden taşar, kapalı göller so
 noktadır. Debi: kara hücrelerinde akış R, göl hücrelerinde P − E_göl
 (negatif olabilir, akış sıfırın altına inmez).
 """
-import heapq, os, sys
+import heapq, os
 import numpy as np
 BURASI = os.path.dirname(os.path.abspath(__file__))
 D8 = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]

@@ -82,7 +82,7 @@ BIYOM = {
 
 
 def degiskenler(d, w):
-    T, P = d["Tay"], d["Pay"]
+    T = d["Tay"]
     _, ay_gun = akim.ay_gunleri(w)
     Tc, Tw = T.min(0), T.max(0)
     gdd5 = (np.maximum(T - 5, 0) * ay_gun).sum(0)
@@ -217,7 +217,6 @@ def main():
     secim[(zc < 0) | (gc >= 0.5)] = 0
     # alfa ve Tc: denizi en yakın kara değeriyle doldurup ara değerle
     _, (yi, xi) = ndimage.distance_transform_edt(~kara[i0:i1, j0:j1], return_indices=True)
-    doldur = lambda a: ndimage.zoom(a[i0:i1, j0:j1][yi, xi].astype(np.float32), F, order=1)
     # Görüntü paletli PNG (indeks = biyom kodu, palet = biyom rengi): tarayıcı
     # renkleri doğrudan çözer, uygulamada piksel döngüsü gerekmez (ilk açılış
     # CPU x4'te ~0.9 s idi). Kartın okuduğu değerler ayrı, kaynak

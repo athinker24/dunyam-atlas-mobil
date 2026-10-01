@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw
 BURASI = os.path.dirname(os.path.abspath(__file__)); KOK = os.path.dirname(BURASI)
 sys.path.insert(0, BURASI); sys.path.insert(0, os.path.join(KOK, "buzul"))
 import gol, nehir, duzelt
-from ciz import golge, font
+from ciz import golge
 
 ASINMA = 200.0
 EN_KUCUK_GOL, EN_KUCUK_BUZUL_GOLU = 300.0, 100.0

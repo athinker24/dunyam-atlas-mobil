@@ -281,7 +281,7 @@ def kureler(duz, cikti, merkezler=((20, 0), (-20, 180)), cap=1100):
     y, x = np.mgrid[0:cap, 0:cap]; X = (x - cap / 2) / (cap / 2); Y = (cap / 2 - y) / (cap / 2); r2 = X ** 2 + Y ** 2; ic = r2 <= 1
     Zc = np.sqrt(np.clip(1 - r2, 0, 1))
     for k, (f0, l0) in enumerate(merkezler):
-        f0r, l0r = np.radians(f0), np.radians(l0)
+        f0r = np.radians(f0)
         la = np.degrees(np.arcsin(np.clip(Zc * np.sin(f0r) + Y * np.cos(f0r), -1, 1)))
         lo = l0 + np.degrees(np.arctan2(X, Zc * np.cos(f0r) - Y * np.sin(f0r)))
         lo = (lo + 180) % 360 - 180

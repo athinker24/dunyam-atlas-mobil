@@ -19,7 +19,7 @@ alır, E_göl = 2·PE − AET (nemli yerde ≈ PE). Kurak havzalarda Aral ~1000,
 Hazar ~1000 mm/yıl mertebesine oturur; yalnız PE kullanılınca %30-40 az
 çıkıyordu. Ay ortalaması 0 °C altındaysa buz örtüsü, 0.
 """
-import json, os, sys
+import os, sys
 import numpy as np
 BURASI = os.path.dirname(os.path.abspath(__file__))
 KOK = os.path.dirname(BURASI)

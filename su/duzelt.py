@@ -40,7 +40,6 @@ def gurultu(shape, tohum=TOHUM):
 def yumusat(z):
     kara = z >= 0
     # denizi kıyıdaki kara yüksekliğiyle doldurup yumuşat: kıyı dibe çekilmesin
-    ic = np.where(kara, z, np.nan)
     idx = ndimage.distance_transform_edt(~kara, return_distances=False, return_indices=True)
     dolgu = z[tuple(idx)]
     ys = ndimage.gaussian_filter(np.where(kara, z, dolgu), SIGMA)

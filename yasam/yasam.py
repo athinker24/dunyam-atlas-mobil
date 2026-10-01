@@ -267,7 +267,6 @@ def varyant(ad, genis, G, kutu):
     # kart verisi, dikey 4 bölüm (her biri kaynak çözünürlükte, h yüksekliğinde):
     #   0: R = sınıf + 16 * su erişimli, G = puan * 2.5, B = 0
     #   1-3: dokuz etken (0-1 → 0-255), sırayla RGB, RGB, RGB
-    h = i1 - i0
     b0 = np.stack([kc + 16 * sulak[i0:i1, j0:j1], np.clip(np.round(S[i0:i1, j0:j1] * 2.5), 0, 250), np.zeros_like(kc)], -1)
     fb = [np.clip(np.round(x[i0:i1, j0:j1] * 255), 0, 255) for x in f]
     bol = [b0] + [np.stack(fb[3 * m:3 * m + 3], -1) for m in range(3)]
