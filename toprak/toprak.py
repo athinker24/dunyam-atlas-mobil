@@ -39,6 +39,7 @@ göl/havza), `tektonik/` (volkan kuşakları) — hepsi aynı kaynak ızgarada
   volkan kuşağı (`data/tektonik.json`) Andosol   — taze volkanik külden,
                                                    hafif ama verimli
   kapalı havza (`su` kapalı göl/çukur) Solonchak — tuz birikimi, dışa akışsız
+  alüvyon ovası (dağ önü, düz, alçak, nehir ağı yoğun) Fluvisol — önülke havzası
   taşkın ovası (büyük nehir, düz)   Fluvisol    — genç, tortul, her taşkında
                                                    yenilenir
   buz/kalıcı kar                    (toprak yok) — çıplak buz/kaya
@@ -97,7 +98,16 @@ NEHIR_Q = 50.0        # su/disa.py ile aynı: bu debinin üstü "büyük nehir"
 TASKIN_EGIM = 25.0    # m/hücre altı düz sayılır
 TASKIN_UZAK_HUCRE = 2  # nehirden bu kadar hücre içi taşkın ovası
 VOLKAN_KM = 5.0        # yarık volkanizması buffer'ı (km, tektonik/uygulama.py'deki CEPHE_KM'den küçük: nokta veri)
-HAVZA_UZAK_HUCRE = 6   # kapalı gölden bu kadar hücre içi (~55 km) tuzlu toprak etkisi
+HAVZA_UZAK_HUCRE = 6
+# alüvyon ovası (önülke havzası): yüksek dağın önündeki düz, alçak, nehir ağı yoğun
+# ova, dağdan inen nehirlerin tortusuyla dolar (İndus-Ganj, Po, Mezopotamya).
+# Sahibi 1 Ekim: "duvarın güneyinin çok verimli olmasını istiyordum". Eşikler bu
+# ızgarada ölçülerek seçildi: karanın %12.7'si, Duvar'ın güney şeridinin %36'sı.
+ALUVYON_Z = 700.0        # m altı
+ALUVYON_EGIM = 60.0      # m/hücre altı (yumuşatılmış eğim)
+ALUVYON_NEHIR_Q = 20.0   # m³/s: yoğunluğa sayılan dere
+ALUVYON_YOGUNLUK = 0.06  # 4 hücrelik Gauss içinde nehir hücresi payı
+ALUVYON_DAG_HUCRE = 50   # 2000 m üstü araziye en çok ~490 km   # kapalı gölden bu kadar hücre içi (~55 km) tuzlu toprak etkisi
 
 
 def _egim(z):
@@ -182,6 +192,10 @@ def siniflandir(kb, alfa, P, z, q, kapali, lat, lon):
     # 2) örtüler: sırayla, sonraki önceki geçersiz kılar
     egim = _egim(z)
     k[egim >= EGIM_ESIK] = 11                                    # dağlık
+    yog = ndimage.gaussian_filter(((q >= ALUVYON_NEHIR_Q) & (z >= 0)).astype(np.float32), 4)
+    dag = ndimage.distance_transform_edt(~(z >= 2000))
+    aluvyon = (z >= 0) & (z < ALUVYON_Z) & (egim < ALUVYON_EGIM) & (yog >= ALUVYON_YOGUNLUK) & (dag <= ALUVYON_DAG_HUCRE)
+    k[aluvyon] = 14                                              # alüvyon ovası (önülke)
     k[_volkan_maske(lat, lon, kb.shape)] = 12                    # volkan kuşağı
     havza = ndimage.distance_transform_edt(~kapali) <= HAVZA_UZAK_HUCRE
     k[havza & (alfa < 0.5)] = 13                                 # kapalı/kurak havza

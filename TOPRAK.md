@@ -95,6 +95,22 @@ baskınlığından geliyor — motorun yağışı çok mevsimsel olduğu için C
 kalıyor, biyom haritasında zaten böyleydi. Calcisol ve Solonchak küçük çünkü
 bu dünyada gerçek sıcak çöl (BWh) ve kapalı havza azınlıkta.
 
+## Alüvyon ovası (1 Ekim, sahibi: "duvarın güneyinin çok verimli olmasını istiyordum")
+
+Duvar bir çarpışma dağı (Himalaya benzeri). Böyle bir dağın önündeki ova bir önülke
+havzasıdır: dağdan inen nehirlerin tortusuyla dolar ve baştan sona alüvyondur (İndus-Ganj,
+Po ovası, Mezopotamya). İlk sürümde alüvyon (Fluvisol) yalnız büyük nehrin 2 hücre
+yanındaydı, ovanın geri kalanı iklimden Acrisol ya da Luvisol alıyordu; Duvar'ın güney
+şeridi bu yüzden toprak 0.64'te kalıyordu.
+
+Yeni kural (dağlık örtüsünden sonra, volkandan önce): yükseklik < 700 m, yumuşatılmış eğim
+< 60 m/hücre, 4 hücrelik Gauss içinde nehir hücresi (debi >= 20 m³/s) payı >= 0.06 ve 2000 m
+üstü araziye ~490 km (50 hücre) içinde olan kara Fluvisol. Eşikler bu ızgarada ölçülerek
+seçildi: karanın %12.7'si, Duvar'ın güney şeridinin %36'sı. Fluvisol %9.4 → %17.4,
+Acrisol %20.7 → %18.6. Yaşanabilirlikte Duvar'ın güney kuşağı kesintisiz "elverişli /
+çok elverişli" oldu. Orada kalan sınır sıcaklık (yıllık ~20 °C, insan nişinin 13 °C
+tepesinden uzak): fizik, değiştirilmedi.
+
 ## Sıradaki
 
 Yaşanabilirlik (sahibinin sırası: bitki → toprak → yaşanabilirlik → sonra

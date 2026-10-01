@@ -89,11 +89,12 @@ olmasın), kartta yine görünür. Gıda kritik dört etkenden biri olduğu içi
 belirgin. O yaylada medyan puan 90 → 76 ("orta"); içinden geçen nehir vadileri
 (Fluvisol) 96 ile öne çıkıyor.
 
-## Sonuç (kara alanına göre, 1 Ekim)
+## Sonuç (kara alanına göre, 1 Ekim, alüvyon ovası kuralından sonra)
 
-Yaşanmaz %23.4, çok zor %4.7, zor %15.6, orta %33.9, elverişli %13.9, çok elverişli
-%6.6, buz %1.9. Kara ortalaması 53.4 puan. Etken ortalamaları: sıcaklık 0.64, su
-0.97, gıda 0.64, mevsimsellik 0.93, arazi 0.78, toprak 0.57, deniz 0.79, tehlike 0.99,
+Yaşanmaz %23.4, çok zor %4.6, zor %15.2, orta %33.0, elverişli %13.8, çok elverişli
+%8.1, buz %1.9. Kara ortalaması 53.9 puan. Toprak modeline önülke alüvyon ovası
+eklendi (`TOPRAK.md`): Duvar'ın güney kuşağı "elverişli / çok elverişli". Etken
+ortalamaları: sıcaklık 0.64, su 0.97, gıda 0.65, mevsimsellik 0.93, arazi 0.78, toprak 0.60, deniz 0.79, tehlike 0.99,
 alan 0.92. En iyi bölge ~13 °C ılıman ova kuşağı (batı ve kuzey-orta) ile doğu kıyısı
 ve nehir vadileri; sıcak güney ovaları "orta" (sıcaklık ve toprak), kurak plato "zor",
 dağlar ve kuzey yaşanmaz. Dünya örnekleri (orta toprak 0.8): Paris 91, Şangay 89,
