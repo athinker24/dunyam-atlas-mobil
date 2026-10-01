@@ -6,8 +6,8 @@
   43.154296875,
   60.029296875
  ],
- "ortalama": 60.4,
- "ortalama_yagmur": 59.5,
+ "ortalama": 57.3,
+ "ortalama_yagmur": 56.4,
  "yukseklik": 764,
  "kodlar": "tarim.png (sulamalı, varsayılan) ve tarim_yagmur.png (yalnız yağmur); tarim*_veri.png dikey 3 bölüm: 0 = R sınıf + 16 * sulanan, G puan * 2.5, B en zayıf etken (0-3); 1 = RGB ısı, su, toprak 0-255; 2 = R arazi",
  "etkenler": [
@@ -39,8 +39,8 @@
     70
    ],
    "alt": 0,
-   "pay": 0.2065,
-   "pay_yagmur": 0.2065
+   "pay": 0.2116,
+   "pay_yagmur": 0.2117
   },
   "2": {
    "ad": "Çok düşük",
@@ -52,8 +52,8 @@
     78
    ],
    "alt": 15,
-   "pay": 0.0406,
-   "pay_yagmur": 0.041
+   "pay": 0.0366,
+   "pay_yagmur": 0.0369
   },
   "3": {
    "ad": "Düşük",
@@ -65,8 +65,8 @@
     92
    ],
    "alt": 35,
-   "pay": 0.0597,
-   "pay_yagmur": 0.0637
+   "pay": 0.079,
+   "pay_yagmur": 0.0832
   },
   "4": {
    "ad": "Orta",
@@ -78,8 +78,8 @@
     100
    ],
    "alt": 55,
-   "pay": 0.2946,
-   "pay_yagmur": 0.3101
+   "pay": 0.3267,
+   "pay_yagmur": 0.3398
   },
   "5": {
    "ad": "Yüksek",
@@ -91,8 +91,8 @@
     90
    ],
    "alt": 78,
-   "pay": 0.1254,
-   "pay_yagmur": 0.1345
+   "pay": 0.0935,
+   "pay_yagmur": 0.1048
   },
   "6": {
    "ad": "Çok yüksek",
@@ -104,8 +104,8 @@
     82
    ],
    "alt": 92,
-   "pay": 0.2543,
-   "pay_yagmur": 0.2254
+   "pay": 0.2338,
+   "pay_yagmur": 0.2049
   },
   "7": {
    "ad": "Buz",

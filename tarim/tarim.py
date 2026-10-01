@@ -56,14 +56,17 @@ ETKEN = [
 ]
 
 
-def etkenler(Tw, gdd5, alfa, P, kuru_ay, egim, z, toprak_f, w):
+def etkenler(T, Tw, gdd5, alfa, P, kuru_ay, egim, z, toprak_f, w):
     """Dört etken (0-1). w: nehir/göl erişimi 0-1 (yağmur varyantında 0)."""
-    isi = ss(gdd5, 800, 2600) * (1 - ss(Tw, 34, 41))
+    # kalıcı donmuş toprak: yıllık ortalama -1 °C altında başlar, -9 °C'de sürekli olur
+    # (Yakutsk -8.8 °C; yaz sıcak olsa da kök bölgesi ve drenaj sınırlı). Yoksa Yakutsk 32 çıkıyordu.
+    isi = ss(gdd5, 800, 2600) * (1 - ss(Tw, 34, 41)) * (1 - 0.7 * ss(T, -1, -9))
     alfa_e = alfa + w * (1 - alfa)
     kuru_e = kuru_ay * (1 - w)
     su = ss(alfa_e, 0.25, 0.70) * (1 - 0.5 * ss(kuru_e, 4, 9)) * (1 - 0.3 * ss(P, 2500, 4500))
-    # toprak sırası 0-0.8 arasında 0-1'e açılır: Acrisol (0.45) ~0.6, Podzol (0.3) ~0.3, Çernozem 1
-    toprak = ss(toprak_f, 0.0, 0.80)
+    # toprak sırası 0.05-0.9 arasında 0-1'e açılır: Acrisol (0.45) ~0.45, Podzol (0.3) ~0.24, Çernozem 1.
+    # İlk sürüm 0-0.8 idi; Amazon'un yıkanmış toprağı 65 ile "orta" çıkıyordu (1 Ekim).
+    toprak = ss(toprak_f, 0.05, 0.90)
     arazi = (1 - ss(egim, 60, 300)) * (1 - ss(z, 2500, 4500))
     return [isi, su, toprak, arazi]
 
@@ -81,14 +84,14 @@ def orneklerden():
         T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan = [np.array([float(x)]) for x in v]
         r = []
         for ww in (w, np.zeros(1)):
-            r.append(float(birlestir(etkenler(Tw, g5, al, P, dm, eg, z, tf, ww))[0] * 100))
+            r.append(float(birlestir(etkenler(T, Tw, g5, al, P, dm, eg, z, tf, ww))[0] * 100))
         out[ad] = tuple(r)
     return out
 
 
 def varyant(ad, sulamali, G, kutu):
     w = ys.su_agirligi(G["sinif"], G["gol"], True) * G["kara"] if sulamali else np.zeros(G["z"].shape, np.float32)
-    f = etkenler(G["Tw"], G["gdd5"], G["alfa"], G["P"], G["kuru_ay"], G["egim"], G["z"], G["toprak_f"], w)
+    f = etkenler(G["T"], G["Tw"], G["gdd5"], G["alfa"], G["P"], G["kuru_ay"], G["egim"], G["z"], G["toprak_f"], w)
     S = 100 * birlestir(f)
     sinir = np.argmin(np.stack(f), axis=0).astype(np.uint8)
     k = np.clip(np.digitize(S, ESIKLER), 1, 6).astype(np.uint8)
@@ -150,7 +153,7 @@ def main():
     for c, v in ys.TOPRAK_VERIM.items():
         tv[c] = v
     kuru_ay = ((d["Pay"] < 25) & (d["Tay"] > 5)).sum(0).astype(np.float32)
-    G = dict(Tw=b["Tw"], gdd5=b["gdd5"], alfa=b["alfa"], P=d["P"], kuru_ay=kuru_ay, egim=tp._egim(z), z=z,
+    G = dict(T=d["Tay"].mean(0), Tw=b["Tw"], gdd5=b["gdd5"], alfa=b["alfa"], P=d["P"], kuru_ay=kuru_ay, egim=tp._egim(z), z=z,
              toprak_f=tv[topraklar], gol=gol, kara=kara, buzul=d["buzul"],
              sinif=ys.nehir_sinifi(lat, lon, kara.shape), wgt=np.cos(np.radians(lat))[:, None] * kara)
     ii, jj = np.where(kara)
