@@ -1,0 +1,124 @@
+{
+ "ne": "Dünyam tarımsal verimlilik endeksi (tarim/tarim.py); yöntem TARIM.md",
+ "kesit": [
+  -44.47265625,
+  -7.119140625,
+  43.154296875,
+  60.029296875
+ ],
+ "ortalama": 60.4,
+ "ortalama_yagmur": 59.5,
+ "yukseklik": 764,
+ "kodlar": "tarim.png (sulamalı, varsayılan) ve tarim_yagmur.png (yalnız yağmur); tarim*_veri.png dikey 3 bölüm: 0 = R sınıf + 16 * sulanan, G puan * 2.5, B en zayıf etken (0-3); 1 = RGB ısı, su, toprak 0-255; 2 = R arazi",
+ "etkenler": [
+  {
+   "ad": "Isı",
+   "ne": "büyüme sezonunun sıcaklığı ve sıcak ay"
+  },
+  {
+   "ad": "Su",
+   "ne": "yağmur ve (sulamalıda) nehir erişimi, kurak ay"
+  },
+  {
+   "ad": "Toprak",
+   "ne": "toprak türünün tarımsal sırası"
+  },
+  {
+   "ad": "Arazi",
+   "ne": "eğim ve yükseklik"
+  }
+ ],
+ "siniflar": {
+  "1": {
+   "ad": "Elverişsiz",
+   "ne": "Ekin yetişmez: don, çöl, buz ya da çok dik ve yüksek arazi.",
+   "ornek": "Sahra'nın içi, Tibet platosu, Sibirya'nın kuzeyi",
+   "renk": [
+    110,
+    84,
+    70
+   ],
+   "alt": 0,
+   "pay": 0.2065,
+   "pay_yagmur": 0.2065
+  },
+  "2": {
+   "ad": "Çok düşük",
+   "ne": "Ancak otlatma ya da kıt, riskli ekim; verim çoğu yıl yetersiz.",
+   "ornek": "Sahel'in kuzeyi, İç Asya kurak bozkırı",
+   "renk": [
+    190,
+    128,
+    78
+   ],
+   "alt": 15,
+   "pay": 0.0406,
+   "pay_yagmur": 0.041
+  },
+  "3": {
+   "ad": "Düşük",
+   "ne": "Bir ağır kısıt var: kısa sezon, kuraklık, fakir toprak ya da eğim.",
+   "ornek": "Kanada kalkanı'nın güneyi, Patagonya",
+   "renk": [
+    214,
+    176,
+    92
+   ],
+   "alt": 35,
+   "pay": 0.0597,
+   "pay_yagmur": 0.0637
+  },
+  "4": {
+   "ad": "Orta",
+   "ne": "Ekim yapılır; belirgin bir kısıt verimi sınırlar.",
+   "ornek": "Orta Anadolu, Sahel, Amazon'un yıkanmış toprakları",
+   "renk": [
+    196,
+    206,
+    100
+   ],
+   "alt": 55,
+   "pay": 0.2946,
+   "pay_yagmur": 0.3101
+  },
+  "5": {
+   "ad": "Yüksek",
+   "ne": "Sezon, su ve toprak büyük ölçüde uygun; hafif kısıtlar.",
+   "ornek": "Ukrayna, Paris havzası, Kuzeydoğu ABD",
+   "renk": [
+    120,
+    184,
+    90
+   ],
+   "alt": 78,
+   "pay": 0.1254,
+   "pay_yagmur": 0.1345
+  },
+  "6": {
+   "ad": "Çok yüksek",
+   "ne": "Dört etken de uygun: derin toprak, yeterli su, uzun sezon, düz arazi.",
+   "ornek": "Po ovası, Kuzey Çin ovası, Ganj ovası",
+   "renk": [
+    38,
+    138,
+    82
+   ],
+   "alt": 92,
+   "pay": 0.2543,
+   "pay_yagmur": 0.2254
+  },
+  "7": {
+   "ad": "Buz",
+   "ne": "Kalıcı buz örtüsü.",
+   "ornek": "Antarktika, Grönland",
+   "renk": [
+    232,
+    236,
+    240
+   ],
+   "alt": null,
+   "pay": 0.0188,
+   "pay_yagmur": 0.0188
+  }
+ }
+}

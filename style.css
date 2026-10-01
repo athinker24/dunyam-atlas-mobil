@@ -39,8 +39,8 @@ svg{display:block}
 /* ---- harita ---- */
 #harita{position:fixed;inset:0;touch-action:none;user-select:none;-webkit-user-select:none}
 #gl{position:absolute;inset:0;width:100%;height:100%}
-#su,#tekt,#bitki,#toprak,#yasam,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#su,#tekt,#bitki,#toprak,#yasam{transform-origin:0 0;will-change:transform}
+#su,#tekt,#bitki,#toprak,#yasam,#tarim,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#su,#tekt,#bitki,#toprak,#yasam,#tarim{transform-origin:0 0;will-change:transform}
 #kaplama{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transform-origin:0 0;will-change:transform}
 #kaplama text{font:500 10px var(--sans);letter-spacing:.06em;fill:rgba(228,223,211,.5)}
 

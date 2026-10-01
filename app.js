@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik", yasamKiyi:"genis"},
+  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik", yasamKiyi:"genis", tarimSu:"sulamali"},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -797,6 +797,7 @@ function baslat(J, resimler){
       if(BI) bitkiCiz();
       if(TP) toprakCiz();
       if(YS) yasamCiz();
+      if(TR) tarimCiz();
       parcacik.gorunumDegisti();   // once: kaplama parcacik acikken akis cizgisi cizmesin
       kaplamaCiz();
     }
@@ -1117,6 +1118,67 @@ function baslat(J, resimler){
       + (iyi.length ? `<div class="k-bk"><b>İyi yönler</b> ${iyi.map(e => `${e.ad} ${yuz(e.v)}`).join(" · ")}${(p[0] >> 4) & 1 ? " · nehir ya da göl kıyısı: su erişimi var" : ""}</div>` : "");
   }
 
+  /* --- tarımsal verimlilik (Arazi > Tarım): tarim/tarim.py'nin dört etkenli puanı (ısı, su, toprak, arazi).
+     Yaşanabilirlikle aynı çizim yolu: data/tarim.png paletli, kabartma "multiply" ile çarpılır, kart
+     data/tarim_veri.png'den okunur (dikey 3 bölüm: 0 = R sınıf + 16 × sulanan, G puan × 2.5, B en zayıf etken;
+     1 = RGB ısı, su, toprak; 2 = R arazi). İki varyant: sulamalı (varsayılan) ve yalnız yağmur. */
+  const TRJ = resimler.tarimJ, TR = TRJ && resimler.tarim ? resimler.tarim : null, TRV = resimler.tarimVeri;
+  const trCv = $("#tarim"), trC = trCv.getContext("2d");
+  let TRK = null;     // {tuval, veri (okuma tuvali)}
+  const tarimRes = () => ayar.tarimSu === "yagmur" && resimler.tarimYagmur && resimler.tarimYagmurVeri ? [resimler.tarimYagmur, resimler.tarimYagmurVeri] : [TR, TRV];
+  function tarimKur(){
+    if(TRK || !TR) return TRK;
+    const [Y, V] = tarimRes();
+    const w = Y.naturalWidth, h = Y.naturalHeight, K = TRJ.kesit, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+    const c = cv.getContext("2d"); c.drawImage(Y, 0, 0);
+    const kab = ayar.kabartma ? (KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor) : null;
+    if(kab){
+      const kx = w/(K[2]-K[0]), ky = h/(K[3]-K[1]);
+      c.globalCompositeOperation = "multiply"; c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
+      c.drawImage(kab, (B[0]-K[0])*kx, (K[3]-B[3])*ky, (B[2]-B[0])*kx, (B[3]-B[1])*ky);
+      c.globalCompositeOperation = "lighter"; c.drawImage(cv, 0, 0);
+      c.globalCompositeOperation = "destination-in"; c.drawImage(Y, 0, 0);
+      c.globalCompositeOperation = "source-over"; }
+    let veri = null;
+    if(V){ const v = document.createElement("canvas"); v.width = V.naturalWidth; v.height = V.naturalHeight;
+      veri = v.getContext("2d", {willReadFrequently:true}); veri.drawImage(V, 0, 0); }
+    return TRK = {tuval: cv, veri};
+  }
+  const tarimModu = () => !!TR && katman === "arazi" && ayar.araziMod === "tarim";
+  let trCizilen = null;
+  function tarimCiz(){
+    const imza = `${tarimModu()}|${katman}`;
+    if(trCizilen && trCizilen.imza === imza && harekette()){
+      const k = olcek/trCizilen.olcek;
+      trCv.style.transform = `translate(${(ox - trCizilen.ox*k).toFixed(2)}px,${(oy - trCizilen.oy*k).toFixed(2)}px) scale(${k.toFixed(5)})`;
+      return; }
+    trCv.style.transform = ""; trCizilen = {ox, oy, olcek, imza};
+    if(!tarimModu()){ if(!trCv.hidden){ trCv.width = trCv.width; trCv.hidden = true; } return; }
+    trCv.hidden = false; tarimKur();
+    const r = trCv.getBoundingClientRect(), w = Math.round(r.width*dpr), h = Math.round(r.height*dpr);
+    if(trCv.width !== w || trCv.height !== h){ trCv.width = w; trCv.height = h; }
+    trC.setTransform(1,0,0,1,0,0); trC.clearRect(0, 0, w, h);
+    const sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H, kx = olcek/sx, ky = olcek/sy, K = TRJ.kesit;
+    trC.setTransform(dpr*kx, 0, 0, dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
+    trC.imageSmoothingEnabled = true; trC.imageSmoothingQuality = "high";
+    trC.drawImage(TRK.tuval, K[0], -K[3], K[2]-K[0], K[3]-K[1]);
+  }
+  function tarimSatiri(lon, lat){
+    if(!tarimModu() || !tarimKur() || !TRK.veri) return "";
+    const K = TRJ.kesit, V = tarimRes()[1], W2 = V.naturalWidth, H2 = TRJ.yukseklik;
+    const x = Math.floor((lon-K[0])/(K[2]-K[0])*W2), y = Math.floor((K[3]-lat)/(K[3]-K[1])*H2);
+    if(x < 0 || y < 0 || x >= W2 || y >= H2) return "";
+    const p = TRK.veri.getImageData(x, y, 1, 1).data, c = TRJ.siniflar[p[0] & 15]; if(!c) return "";
+    if((p[0] & 15) === 7) return `<div class="k-bk"><b>Tarım</b> ${c.ad} · ${c.ne}</div>`;
+    const a = TRK.veri.getImageData(x, y + H2, 1, 1).data, b = TRK.veri.getImageData(x, y + 2*H2, 1, 1).data;
+    const E = TRJ.etkenler, f = [a[0]/255, a[1]/255, a[2]/255, b[0]/255], puan = Math.round(p[1]/2.5), yuz = v => "%" + Math.round(v*100);
+    const sinir = E[Math.min(p[2], E.length-1)];
+    const sirali = E.map((e, i) => ({ad:e.ad, v:f[i]})).sort((u, v) => u.v - v.v);
+    return `<div class="k-bk"><b>Tarım</b> ${c.ad} · ${puan}/100 <small>${c.ne}</small></div>`
+      + `<div class="k-bk"><b>Etkenler</b> ${sirali.map(e => `${e.ad} ${yuz(e.v)}`).join(" · ")}</div>`
+      + (f[Math.min(p[2], 3)] < 0.9 ? `<div class="k-bk"><b>Sınırlayan</b> ${sinir.ad}: ${sinir.ne}${(p[0] >> 4) & 1 ? " · nehir ya da göl kıyısı: sulama mümkün" : ""}</div>` : "");
+  }
+
   /* --- tektonik katman (Arazi > Levhalar): levha renkleri, sınırlar,
      volkan kuşakları. Su katmanı gibi Canvas2D; kaydırırken CSS ile kayar.
      Sınır renkleri yaygın levha haritası geleneği: yakınsak kırmızı (dişler
@@ -1353,7 +1415,7 @@ function baslat(J, resimler){
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
     if(!G) yedekBoya();
-    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : BI && ayar.araziMod==="bitki" ? "Doğal bitki örtüsü, iklimden" : TP && ayar.araziMod==="toprak" ? "Toprak türleri, WRB" : YS && ayar.araziMod==="yasam" ? "Yaşanabilirlik, dokuz etkenli puan" : "Arazi, yükseklik",
+    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : BI && ayar.araziMod==="bitki" ? "Doğal bitki örtüsü, iklimden" : TP && ayar.araziMod==="toprak" ? "Toprak türleri, WRB" : YS && ayar.araziMod==="yasam" ? "Yaşanabilirlik, dokuz etkenli puan" : TR && ayar.araziMod==="tarim" ? "Tarımsal verimlilik, dört etkenli puan" : "Arazi, yükseklik",
       sicaklik: ayar.sicMod!=="ort" && gunlukAl(D) ? "Sıcaklık, "+SIC_MOD[ayar.sicMod]+", "+(donem<0 ? (ayar.sicMod==="tepe" ? "yılın en sıcak ayı" : ayar.sicMod==="dip" ? "yılın en soğuk ayı" : "yıllık ortalama") : AYLAR[donem])
         : "Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
@@ -1403,8 +1465,8 @@ function baslat(J, resimler){
     const sicNot = katman==="sicaklik" && gunlukAl(D) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Sıcaklık türü">`
       + [["ort","Ortalama"],["gunduz","Gündüz"],["gece","Gece"],["tepe","Tepe"],["dip","Dip"]].map(([k,t]) =>
         `<button role="radio" data-sicmod="${k}" aria-checked="${ayar.sicMod===k}">${t}</button>`).join("") + `</div></div>` : "";
-    const araziSec = katman==="arazi" && (TK || BI || TP || YS) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Arazi görünümü">`
-      + [["yukseklik","Yükseklik",true], ["levha","Levhalar",!!TK], ["bitki","Bitki örtüsü",!!BI], ["toprak","Toprak",!!TP], ["yasam","Yaşanabilirlik",!!YS]].filter(a => a[2]).map(([k, t]) =>
+    const araziSec = katman==="arazi" && (TK || BI || TP || YS || TR) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Arazi görünümü">`
+      + [["yukseklik","Yükseklik",true], ["levha","Levhalar",!!TK], ["bitki","Bitki örtüsü",!!BI], ["toprak","Toprak",!!TP], ["yasam","Yaşanabilirlik",!!YS], ["tarim","Tarım",!!TR]].filter(a => a[2]).map(([k, t]) =>
         `<button role="radio" data-arazimod="${k}" aria-checked="${(ayar.araziMod||"yukseklik")===k}">${t}</button>`).join("") + `</div></div>` : "";
     if(katman==="arazi" && BI && ayar.araziMod==="bitki"){
       const liste = Object.entries(BJ.biyomlar).filter(([, b]) => b.pay >= 0.005).sort((a, b) => b[1].pay - a[1].pay);
@@ -1417,6 +1479,14 @@ function baslat(J, resimler){
         + [["genis","Geniş, yumuşak"],["dar","Nehrin yanı"]].map(([k, t]) =>
           `<button role="radio" data-yasamkiyi="${k}" aria-checked="${dar ? k==="dar" : k==="genis"}">${t}</button>`).join("") + `</div></div>` : "";
       el.innerHTML = araziSec + kiyiSec + `<div class="bk-not">` + Object.entries(YJ.siniflar).filter(([, c]) => c[pk] >= 0.005).map(([, c]) =>
+        `<span><i style="background:rgb(${c.renk.join(",")})"></i>${c.ad} <b>%${Math.round(c[pk]*100)}</b></span>`).join("") + `</div>`;
+      return; }
+    if(katman==="arazi" && TR && ayar.araziMod==="tarim"){
+      const yag = ayar.tarimSu === "yagmur" && resimler.tarimYagmur, pk = yag ? "pay_yagmur" : "pay";
+      const suSec = resimler.tarimYagmur ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Su">`
+        + [["sulamali","Nehirle sulamalı"],["yagmur","Yalnız yağmur"]].map(([k, t]) =>
+          `<button role="radio" data-tarimsu="${k}" aria-checked="${yag ? k==="yagmur" : k==="sulamali"}">${t}</button>`).join("") + `</div></div>` : "";
+      el.innerHTML = araziSec + suSec + `<div class="bk-not">` + Object.entries(TRJ.siniflar).filter(([, c]) => c[pk] >= 0.005).map(([, c]) =>
         `<span><i style="background:rgb(${c.renk.join(",")})"></i>${c.ad} <b>%${Math.round(c[pk]*100)}</b></span>`).join("") + `</div>`;
       return; }
     if(katman==="arazi" && TP && ayar.araziMod==="toprak"){
@@ -1448,7 +1518,8 @@ function baslat(J, resimler){
   addEventListener("resize", () => etiketCakismasi());
 
   $("#aciklama").addEventListener("click", e => {
-    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]"), yk = e.target.closest("[data-yasamkiyi]");
+    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]"), yk = e.target.closest("[data-yasamkiyi]"), ts = e.target.closest("[data-tarimsu]");
+    if(ts){ ayar.tarimSu = ts.dataset.tarimsu; ayarYaz(); TRK = null; katmanSec("arazi"); ciz(); }
     if(yk){ ayar.yasamKiyi = yk.dataset.yasamkiyi; ayarYaz(); YK = null; katmanSec("arazi"); ciz(); }
     if(am){ ayar.araziMod = am.dataset.arazimod; ayarYaz(); katmanSec("arazi"); ciz(); }
     if(sm){ ayar.sicMod = sm.dataset.sicmod; ayarYaz(); katmanSec("sicaklik"); }
@@ -1512,7 +1583,7 @@ function baslat(J, resimler){
   for(const b of kaynakDugme) b.hidden = !KAB[b.dataset.kaynak];
   if(kaynakDugme.filter(b=>!b.hidden).length < 2) $("#kabartma-kaynak").hidden = true;
   for(const b of kaynakDugme) b.addEventListener("click", () => {
-    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); BK = null; TPK = null; YK = null; ciz(); });
+    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); BK = null; TPK = null; YK = null; TRK = null; ciz(); });
   kaynakYaz();
   const suKolDugme = [...document.querySelectorAll("#su-kollar button")];
   function suKolYaz(){ for(const b of suKolDugme){ b.setAttribute("aria-checked", String(b.dataset.sukol===ayar.suKol)); b.disabled = !ayar.su; }
@@ -1522,7 +1593,7 @@ function baslat(J, resimler){
   suKolYaz();
   for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-deniz","deniz"],["ay-bant","bant"],["ay-su","su"]]){
     const el = $("#"+id); el.checked = ayar[k];
-    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); if(k==="kabartma"){ BK = null; TPK = null; YK = null; } katmanSec(katman); });
+    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); if(k==="kabartma"){ BK = null; TPK = null; YK = null; TRK = null; } katmanSec(katman); });
   }
   $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${virgul(v)}</dd>`).join("")
     + `<dt>hücre</dt><dd>${virgul(((B[2]-B[0])/W).toFixed(2))}°</dd>`;
@@ -1554,6 +1625,7 @@ function baslat(J, resimler){
       + bitkiSatiri(lon, lat)
       + toprakSatiri(lon, lat)
       + yasamSatiri(lon, lat)
+      + tarimSatiri(lon, lat)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
   }
   // "Temmuz: gündüz 33°, gece 22° · her yıl ~41° / ~18° · 30 yılda bir ~46°"
@@ -1799,7 +1871,7 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri, tarimJ, tarim, tarimVeri, tarimYagmur, tarimYagmurVeri] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
@@ -1822,8 +1894,14 @@ async function acilis(){
       resimYukle("data/yasam.png").catch(() => null),
       resimYukle("data/yasam_veri.png").catch(() => null),
       resimYukle("data/yasam_dar.png").catch(() => null),
-      resimYukle("data/yasam_dar_veri.png").catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri};
+      resimYukle("data/yasam_dar_veri.png").catch(() => null),
+      // tarımsal verimlilik de isteğe bağlı (tarim/tarim.py)
+      fetch("data/tarim.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null),
+      resimYukle("data/tarim.png").catch(() => null),
+      resimYukle("data/tarim_veri.png").catch(() => null),
+      resimYukle("data/tarim_yagmur.png").catch(() => null),
+      resimYukle("data/tarim_yagmur_veri.png").catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri, tarimJ, tarim, tarimVeri, tarimYagmur, tarimYagmurVeri};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);
