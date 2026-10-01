@@ -197,7 +197,7 @@ def load_currents(world: World, path: str | None = None) -> list:
     return akintilar
 
 
-def _segment_distance_km(lon, lat, a, b, wrap=False):
+def _segment_distance_km(lon, lat, a, b, wrap=False, radius_km=6371.0):
     """Hucrelerin bir dogru parcasina uzakligi (km) ve parca uzerindeki konumu.
 
     wrap=True (kuresel grid) ise boylam farklari parcanin BASLANGICINA gore
@@ -207,15 +207,16 @@ def _segment_distance_km(lon, lat, a, b, wrap=False):
     +0.156 C'den 0'a duserek kesiliyordu.
     """
     latref = math.radians((a[1] + b[1]) / 2.0)
-    kx = 111.32 * math.cos(latref)
+    ky = radius_km * math.pi / 180.0  # km/derece, gezegenin kendi yaricapindan
+    kx = ky * math.cos(latref)
     if wrap:
         lon = (np.asarray(lon) - a[0] + 180.0) % 360.0 - 180.0
         bl = (b[0] - a[0] + 180.0) % 360.0 - 180.0
         al = 0.0
     else:
         al, bl = a[0], b[0]
-    px, py = lon * kx, lat * 110.57
-    ax, ay, bx, by = al * kx, a[1] * 110.57, bl * kx, b[1] * 110.57
+    px, py = lon * kx, lat * ky
+    ax, ay, bx, by = al * kx, a[1] * ky, bl * kx, b[1] * ky
     dx, dy = bx - ax, by - ay
     L2 = dx * dx + dy * dy
     t = np.clip(((px - ax) * dx + (py - ay) * dy) / max(L2, 1e-9), 0.0, 1.0)
@@ -249,14 +250,15 @@ def current_anomaly(grid: Grid, currents: list, months: int = 12) -> np.ndarray:
                             np.concatenate([amp, amp, amp]))
 
         sar = grid.wraps
-        lens = [_segment_distance_km(lon2[:1, :1], lat2[:1, :1], pts[i], pts[i + 1], sar)[2]
+        rkm = grid.world.radius_km
+        lens = [_segment_distance_km(lon2[:1, :1], lat2[:1, :1], pts[i], pts[i + 1], sar, rkm)[2]
                 for i in range(len(pts) - 1)]
         cum = np.concatenate([[0.0], np.cumsum(lens)])
         total_len = max(cum[-1], 1e-9)
 
         shape = np.zeros(grid.shape)  # birim genlikli mekansal desen
         for i in range(len(pts) - 1):
-            d, t, _ = _segment_distance_km(lon2, lat2, pts[i], pts[i + 1], sar)
+            d, t, _ = _segment_distance_km(lon2, lat2, pts[i], pts[i + 1], sar, rkm)
             pos = (cum[i] + t * lens[i]) / total_len
             scale = np.interp(pos, np.linspace(0, 1, taper.size), taper)
             shape = np.maximum(shape, scale * np.exp(-((d / width) ** 2)))

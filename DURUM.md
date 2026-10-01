@@ -95,8 +95,9 @@ mevcut sekmelere yerleştirilir, hepsi bitince gruplar hâlinde yeni iskelet
 kurulur. Merak Planet Advisor'dan eksikler sırası: **bitki örtüsü (yapıldı,
 `BITKI.md`) → toprak (yapıldı, `TOPRAK.md`) → yaşanabilirlik (1 Ekim'de dokuz etkenli puana baştan yazıldı, `YASAM.md`)**;
 toplumlar/zincir en sona, "olası okuma, tahmin değil" etiketiyle. Sahibi
-yaşanabilirliği insana özgü değil, genel koşullar olarak istedi (28 Eylül):
-ölçü net birincil üretim. Tarımsal verimlilik sorusu ("yalnız toprak türü
+yaşanabilirliği insana özgü değil, genel koşullar olarak istedi (28 Eylül);
+ilk sürüm yalnız net birincil üretimdi ve her yer "çok elverişli" çıktı, o yüzden
+dokuz etkenli puana yazıldı (`YASAM.md`). Tarımsal verimlilik sorusu ("yalnız toprak türü
 belirlemez") şimdilik bekletildi; toprak + eğim + su erişimi ile ayrı katman
 olabilir. Toprak ve yaşanabilirlik veri.yml ile üretilmez, elle koşulur.
 
@@ -177,9 +178,10 @@ değişmediyse "Güncellemeleri denetle" yalnız "Güncel" der, kodu yenilemez.
 
 ### Küçük, eskiden beri bekleyenler
 
-- Akıntı uzaklığında Dünya sabiti: `motor/temperature.py` 111.32 / 110.57
-  km/derece (Dünya elipsoidi). §2.1'e aykırı; düzeltmesi `radius_km × π/180`.
-  Dünyam'da etkisi karanın %0.05'i, ama sayı değiştirdiği için beklemede.
+- Akıntı uzaklığındaki Dünya sabiti (111.32 / 110.57 km/derece) giderildi:
+  `motor/temperature.py` artık `radius_km × π/180` kullanıyor. Dünyam yarıçapı
+  6371 km olduğundan fark çok küçük; veri.yml yeni veriyi üretir. Asıl projeye
+  de taşınmalı (§7.6).
 - Aylık sıcaklığı 2 baytla saklamak (kartta sınıf/klimagram çelişkisi
   karanın %2.1'inde, en çok 0.16 °C). Öncelik düşük.
 - Küresel ortalama 15.1 °C (girdi 14). Öneri: dokunma.
