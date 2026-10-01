@@ -6,8 +6,8 @@
 sıcak ve nemli olduğu için neredeyse her yer tavana yapışıyordu (sahibi 1 Ekim:
 "bütün dünya mükemmel ötesi yaşanabilir"). Şimdi dokuz etken, her biri 0-1:
 
-  0 sıcaklık      yıllık ortalama (insan nüfusu ~13 °C çevresinde yoğunlaşır,
-                  Xu vd. 2020, PNAS), en soğuk ay ve en sıcak ay uçları
+  0 sıcaklık      yıllık ortalama (insan nüfusu ~11-15 °C'de, daha az ~20-25 °C'de
+                  yoğunlaşır: Xu vd. 2020, PNAS), en soğuk ay ve en sıcak ay uçları
   1 su            AET/PE (nem oranı), nehir ve göl erişimi, aşırı yağış
   2 gıda          Miami NPP ve büyüme sezonu (GDD5), toprak verimliliğiyle çarpılır
   3 mevsimsellik  yıllık sıcaklık aralığı, kurak ay sayısı, yağışın en yağışlı 3 aya yığılması
@@ -80,9 +80,11 @@ def npp(Tyil, AET):
 
 def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f, kiyi_km, tehlike, w):
     """Sekiz etken (0-1), alan etkeni ayrı hesaplanır. w: nehir/göl erişimi 0-1."""
-    # nüfus yoğunluğunun yıllık ortalama sıcaklığa dağılımı (Xu vd. 2020): ana tepe ~13 °C,
-    # ikinci küçük tepe ~27 °C (musonlu Asya). Düz bir "uygun aralık" yerine kademeli.
-    konfor = np.maximum(np.exp(-((T - 13) / 12.0) ** 2), 0.7 * np.exp(-((T - 27) / 5.0) ** 2))
+    # nüfus yoğunluğunun yıllık ortalama sıcaklığa dağılımı (Xu vd. 2020, PNAS): ana tepe
+    # ~11-15 °C, daha küçük ikinci tepe ~20-25 °C (çoğunlukla Hint muson bölgesi).
+    # İlk sürümde ikinci tepe yanlışlıkla 27 °C'deydi (1 Ekim düzeltildi); bu Amazon gibi
+    # sıcak ve nemli ovaları fazla yüksek, Nil ve Mezopotamya'yı fazla düşük gösteriyordu.
+    konfor = np.maximum(np.exp(-((T - 13) / 12.0) ** 2), 0.8 * np.exp(-((T - 22.5) / 5.5) ** 2))
     # en sıcak ay: 33 °C'den 40 °C'ye söner. İlk sürüm 28-36 idi; Dünya sağlamasında Ganj
     # ovası (en sıcak ay ~32) ve Mezopotamya (~35) "zor / yaşanmaz" çıktı (1 Ekim)
     sic = np.minimum(np.minimum(konfor, ss(Tc, -40, -12)), 1 - ss(Tw, 33, 40))
@@ -204,7 +206,7 @@ def dunya_orneklari():
         "Paris havzası":                  (11.5, 4, 20, 2300, 0.85, 640, 520, 610, 0, 0.28, 30, 80, 0.80, 150, 1.0, 0.3, 1.0),
         "Ukrayna bozkırı (Harkov)":       (7.5, -6.5, 20.5, 2200, 0.55, 520, 450, 650, 0, 0.36, 25, 150, 1.00, 450, 1.0, 0.2, 1.0),
         "Etiyopya yaylası (Addis Ababa)": (16, 14.5, 18, 4000, 0.70, 1100, 800, 1100, 4, 0.60, 110, 2350, 0.80, 600, 0.70, 0.2, 0.9),
-        "Ganj ovası (Patna)":             (26, 16.5, 32, 7500, 0.60, 1100, 900, 1500, 6, 0.70, 15, 50, 0.95, 400, 0.95, 1.0, 1.0),
+        "Ganj ovası (Lucknow-Varanasi)":  (25.5, 16, 32.5, 7500, 0.60, 1100, 900, 1500, 6, 0.70, 15, 50, 0.95, 400, 0.95, 1.0, 1.0),
         "Yunnan yaylası (Kunming)":       (15.5, 9, 20.5, 3700, 0.70, 1000, 750, 1050, 4, 0.55, 120, 1890, 0.45, 600, 0.85, 0.2, 0.85),
         "Amazon ormanı (Manaus)":         (27.5, 26.5, 28.5, 8000, 0.95, 2300, 1400, 1450, 0, 0.42, 20, 50, 0.40, 1300, 1.0, 0.3, 1.0),
         "Nil vadisi (Kahire)":            (22, 14, 29, 6500, 0.08, 25, 25, 1500, 12, 0.55, 15, 20, 0.95, 150, 1.0, 1.0, 0.75),
