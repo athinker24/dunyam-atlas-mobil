@@ -308,8 +308,8 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-arazimod=yukseklik]").click());
       await p.waitForFunction(() => document.querySelector("#yasam").hidden, null, { timeout: 5000 }).catch(() => {});
       const kapali = await ysPiksel();
-      denetle("genel yasanabilirlik: harita ciziliyor, kartta yasanabilirlik satiri, yukseklikte bos",
-        acik > 50000 && kapali === 0 && /Yaşanabilirlik/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
+      denetle("genel yasanabilirlik: harita ciziliyor, kartta yasanabilirlik satiri (hastalik ve taskin dahil), yukseklikte bos",
+        acik > 50000 && kapali === 0 && /Yaşanabilirlik/.test(t) && /Hastalık/.test(t) && /Taşkın/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
       // nehir cevresi secenegi: dar secilince yeniden cizilir, genise donunce de
       await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=yasam]").click()); await bekle(400);

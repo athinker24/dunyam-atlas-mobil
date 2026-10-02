@@ -81,7 +81,7 @@ def orneklerden():
     hem sulamalı hem yalnız yağmur. Girdiler kaba normallerdir (ezbere)."""
     out = {}
     for ad, v in ys.DUNYA_ORNEKLERI.items():
-        T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan = [np.array([float(x)]) for x in v]
+        T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan = [np.array([float(x)]) for x in v[:17]]
         r = []
         for ww in (w, np.zeros(1)):
             r.append(float(birlestir(etkenler(T, Tw, g5, al, P, dm, eg, z, tf, ww))[0] * 100))

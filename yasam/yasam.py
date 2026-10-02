@@ -15,7 +15,11 @@ sıcak ve nemli olduğu için neredeyse her yer tavana yapışıyordu (sahibi 1 
   5 toprak        WRB türünün verimlilik sırası (toprak/toprak.py); ağırlığı 0, gıdanın içinde
   6 deniz         kıyıya uzaklık (balık, ticaret, ılımanlık)
   7 tehlike       çarpışma/dönüşüm levha sınırı (deprem) ve volkan kuşağı
-  8 alan          çevredeki ~50 km'de elverişli kara payı: dar bir şerit mi, geniş bir ova mı
+  8 hastalık      sıtma gibi sivrisinek kaynaklı hastalıkların iklim uygunluğu: aylık ortalama
+                  18-32 °C ve yağış >= 80 mm olan ay sayısı (MARA/ARMA, Craig, Snow ve le Sueur 1999)
+  9 taşkın        büyük nehrin taşkın ovası (nehirden yükseklik, debi, yağışın mevsimselliği) ve
+                  alçak kıyı (fırtına kabarması)
+ 10 alan          çevredeki ~50 km'de elverişli kara payı: dar bir şerit mi, geniş bir ova mı
 
 Birleşim: ağırlıklı geometrik ortalama (bir etken 0 ise sonuç 0: en zayıf halka
 belirleyicidir, ortalama gibi telafi edilemez), alan etkeni çarpan olarak.
@@ -59,6 +63,8 @@ ETKEN = [
     ("Toprak", "toprak türünün verimliliği (gıdanın içinde)", 0.0),
     ("Deniz", "kıyıya uzaklık", 0.5),
     ("Tehlike", "deprem ve volkan", 1.0),
+    ("Hastalık", "sivrisinek kaynaklı hastalık mevsimi", 2.0),
+    ("Taşkın", "nehir taşkın ovası ve alçak kıyı", 0.5),
 ]
 # toprak türü (toprak/toprak.py kodu) → verimlilik 0-1 (WRB türlerinin genel tarımsal sırası; yargı)
 TOPRAK_VERIM = {1: 0.40, 2: 0.55, 3: 0.45, 4: 0.80, 5: 0.70, 6: 0.35, 7: 1.00, 8: 0.85,
@@ -78,8 +84,9 @@ def npp(Tyil, AET):
     return np.minimum(nt, na)
 
 
-def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f, kiyi_km, tehlike, w):
-    """Sekiz etken (0-1), alan etkeni ayrı hesaplanır. w: nehir/göl erişimi 0-1."""
+def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f, kiyi_km, tehlike, w, hastalik_ay, taskin):
+    """On etken (0-1), alan etkeni ayrı hesaplanır. w: nehir/göl erişimi 0-1;
+    hastalik_ay: bulaşmaya uygun ay sayısı (0-12); taskin: taşkın riski 0-1."""
     # nüfus yoğunluğunun yıllık ortalama sıcaklığa dağılımı (Xu vd. 2020, PNAS): ana tepe
     # ~11-15 °C, daha küçük ikinci tepe ~20-25 °C (çoğunlukla Hint muson bölgesi).
     # İlk sürümde ikinci tepe yanlışlıkla 27 °C'deydi (1 Ekim düzeltildi); bu Amazon gibi
@@ -103,7 +110,13 @@ def etkenler(T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak_f
     arazi = (1 - ss(egim, 40, 300)) * (1 - ss(z, 2000, 5000))
     toprak_e = toprak_f
     deniz = 0.6 + 0.4 * np.exp(-kiyi_km / 400.0)
-    return [sic, su, gida, mev, arazi, toprak_e, deniz, tehlike]
+    # hastalık: kararlı bulaşma ~5 uygun ay ister (MARA); 1 ayda başlar, 7 ayda tam yük.
+    # Tam yükte etken 0.5, ağırlık 2: tropik ovalar yaşanmaz olmaz, ama Amazon ve Kongo
+    # havzası gibi sıcak ve yağışlı yerler ılıman ovaların gerisinde kalır. Ağırlık 1 ve
+    # 0.6 ile Amazon yalnız 42.0 → 41.7 iniyordu (geometrik ortalamada eriyordu).
+    hastalik = 1 - 0.5 * ss(hastalik_ay, 1, 7)
+    taskin_e = 1 - 0.35 * np.clip(taskin, 0, 1)
+    return [sic, su, gida, mev, arazi, toprak_e, deniz, tehlike, hastalik, taskin_e]
 
 
 def birlestir(f):
@@ -163,6 +176,35 @@ def su_agirligi(sinif, gol, genis):
     return np.maximum(w, _profil(dg, GOL_GENIS if genis else GOL_DAR, genis))
 
 
+def hastalik_aylari(Tay, Pay):
+    """Sıtma bulaşmasına iklimce uygun ay sayısı (bulanık, 0-12). MARA/ARMA (Craig, Snow
+    ve le Sueur 1999): aylık ortalama 18-32 °C (18-22 ve 32-40 arası geçiş) ve aylık yağış
+    en az 80 mm (0-80 arası geçiş). Kış minimumu ve ardışıklık koşulu sadeleştirildi."""
+    t = ss(Tay, 18, 22) * (1 - ss(Tay, 32, 40))
+    return (t * ss(Pay, 0, 80)).sum(0)
+
+
+def taskin_riski(z, egim, sinif, pay3, ocean):
+    """0-1 taşkın riski. Nehir: en yakın nehir hücresinin yüksekliğine göre yükseklik
+    (HAND benzeri) 3 m'de tam, 25 m'de sıfır; debi sınıfına göre genişleyen ova
+    (1: 3, 2: 6, 3: 12 hücre) ve sınıf ağırlığı (0.4, 0.7, 1); yağış birkaç aya yığılmışsa
+    (en yağışlı 3 ayın payı 0.35-0.70) daha sert. Kıyı: denize 2 hücre içinde ve 2-15 m
+    alçaklık (fırtına kabarması, delta)."""
+    r = np.zeros(z.shape, np.float32)
+    for c, (gen, agr) in {1: (3, 0.4), 2: (6, 0.7), 3: (12, 1.0)}.items():
+        nehir = sinif >= c
+        if not nehir.any():
+            continue
+        dist, (yi, xi) = ndimage.distance_transform_edt(~nehir, return_indices=True)
+        hand = np.maximum(z - z[yi, xi], 0)
+        ova = np.where(dist < gen, 0.5 * (1 + np.cos(np.pi * dist / gen)), 0)
+        r = np.maximum(r, agr * ova * (1 - ss(hand, 3, 25)) * (1 - ss(egim, 40, 150)))
+    r = r * (0.6 + 0.4 * ss(pay3, 0.35, 0.70))
+    kiyi = ndimage.distance_transform_edt(~ocean) <= 2
+    r = np.maximum(r, 0.6 * kiyi * (1 - ss(z, 2, 15)))
+    return np.clip(r, 0, 1)
+
+
 def tehlike_alani(lat, lon, shape):
     """Çarpışma, dalma ve dönüşüm sınırlarının ~40 km çevresi (deprem) ve volkan
     kuşakları (toprak/toprak.py maskesi). 1 = tehlikesiz, 0.6'ya kadar iner."""
@@ -196,33 +238,34 @@ def alan_etkeni(S0, kara):
     return 0.7 + 0.3 * ss(pay, 0.10, 0.60), pay
 
 
-# sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı
+# sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı,
+# hastalık ayı (MARA uygun ay sayısı, kaba), taşkın riski (0-1, yargı: Sarı Irmak, Ganj yüksek)
 DUNYA_ORNEKLERI = {
-        "Po ovası (Bologna)":             (14, 2.5, 25, 3000, 0.75, 800, 600, 800, 0, 0.32, 15, 50, 0.95, 80, 0.85, 0.5, 1.0),
-        "Kuzey Çin ovası (Zhengzhou)":    (15, 0.5, 27.5, 3500, 0.55, 640, 520, 950, 2, 0.55, 15, 100, 0.95, 500, 0.95, 0.5, 1.0),
-        "Paris havzası":                  (11.5, 4, 20, 2300, 0.85, 640, 520, 610, 0, 0.28, 30, 80, 0.80, 150, 1.0, 0.3, 1.0),
-        "Ukrayna bozkırı (Harkov)":       (7.5, -6.5, 20.5, 2200, 0.55, 520, 450, 650, 0, 0.36, 25, 150, 1.00, 450, 1.0, 0.2, 1.0),
-        "Etiyopya yaylası (Addis Ababa)": (16, 14.5, 18, 4000, 0.70, 1100, 800, 1100, 4, 0.60, 110, 2350, 0.80, 600, 0.70, 0.2, 0.9),
-        "Ganj ovası (Lucknow-Varanasi)":  (25.5, 16, 32.5, 7500, 0.60, 1100, 900, 1500, 6, 0.70, 15, 50, 0.95, 400, 0.95, 1.0, 1.0),
-        "Yunnan yaylası (Kunming)":       (15.5, 9, 20.5, 3700, 0.70, 1000, 750, 1050, 4, 0.55, 120, 1890, 0.45, 600, 0.85, 0.2, 0.85),
-        "Amazon ormanı (Manaus)":         (27.5, 26.5, 28.5, 8000, 0.95, 2300, 1400, 1450, 0, 0.42, 20, 50, 0.40, 1300, 1.0, 0.3, 1.0),
-        "Nil vadisi (Kahire)":            (22, 14, 29, 6500, 0.08, 25, 25, 1500, 12, 0.55, 15, 20, 0.95, 150, 1.0, 1.0, 0.75),
-        "Mezopotamya (Bağdat)":           (23, 10, 35, 6500, 0.10, 150, 150, 1800, 8, 0.50, 15, 40, 0.80, 450, 1.0, 1.0, 0.85),
-        "Kanada kalkanı (Thompson)":      (-3, -24, 16, 1100, 0.70, 540, 330, 380, 0, 0.40, 40, 230, 0.35, 600, 1.0, 0.3, 1.0),
-        "Sibirya taygası (Yakutsk)":      (-8.8, -38, 19, 1300, 0.60, 240, 150, 250, 3, 0.50, 30, 100, 0.35, 1000, 1.0, 0.3, 1.0),
-        "Sahra içi":                      (24, 13, 34, 6800, 0.02, 15, 15, 2200, 12, 0.60, 30, 400, 0.30, 900, 1.0, 0.0, 1.0),
-        "Tibet platosu (Nagqu)":          (-1, -13, 9, 300, 0.50, 430, 300, 450, 0, 0.80, 150, 4500, 0.15, 1500, 0.85, 0.2, 0.8),
+        "Po ovası (Bologna)":             (14, 2.5, 25, 3000, 0.75, 800, 600, 800, 0, 0.32, 15, 50, 0.95, 80, 0.85, 0.5, 1.0, 1, 0.5),
+        "Kuzey Çin ovası (Zhengzhou)":    (15, 0.5, 27.5, 3500, 0.55, 640, 520, 950, 2, 0.55, 15, 100, 0.95, 500, 0.95, 0.5, 1.0, 2, 0.7),
+        "Paris havzası":                  (11.5, 4, 20, 2300, 0.85, 640, 520, 610, 0, 0.28, 30, 80, 0.80, 150, 1.0, 0.3, 1.0, 0, 0.2),
+        "Ukrayna bozkırı (Harkov)":       (7.5, -6.5, 20.5, 2200, 0.55, 520, 450, 650, 0, 0.36, 25, 150, 1.00, 450, 1.0, 0.2, 1.0, 0, 0.1),
+        "Etiyopya yaylası (Addis Ababa)": (16, 14.5, 18, 4000, 0.70, 1100, 800, 1100, 4, 0.60, 110, 2350, 0.80, 600, 0.70, 0.2, 0.9, 0, 0.0),
+        "Ganj ovası (Lucknow-Varanasi)":  (25.5, 16, 32.5, 7500, 0.60, 1100, 900, 1500, 6, 0.70, 15, 50, 0.95, 400, 0.95, 1.0, 1.0, 4, 0.8),
+        "Yunnan yaylası (Kunming)":       (15.5, 9, 20.5, 3700, 0.70, 1000, 750, 1050, 4, 0.55, 120, 1890, 0.45, 600, 0.85, 0.2, 0.85, 0, 0.1),
+        "Amazon ormanı (Manaus)":         (27.5, 26.5, 28.5, 8000, 0.95, 2300, 1400, 1450, 0, 0.42, 20, 50, 0.40, 1300, 1.0, 0.3, 1.0, 11, 0.5),
+        "Nil vadisi (Kahire)":            (22, 14, 29, 6500, 0.08, 25, 25, 1500, 12, 0.55, 15, 20, 0.95, 150, 1.0, 1.0, 0.75, 0, 0.3),
+        "Mezopotamya (Bağdat)":           (23, 10, 35, 6500, 0.10, 150, 150, 1800, 8, 0.50, 15, 40, 0.80, 450, 1.0, 1.0, 0.85, 0, 0.5),
+        "Kanada kalkanı (Thompson)":      (-3, -24, 16, 1100, 0.70, 540, 330, 380, 0, 0.40, 40, 230, 0.35, 600, 1.0, 0.3, 1.0, 0, 0.1),
+        "Sibirya taygası (Yakutsk)":      (-8.8, -38, 19, 1300, 0.60, 240, 150, 250, 3, 0.50, 30, 100, 0.35, 1000, 1.0, 0.3, 1.0, 0, 0.3),
+        "Sahra içi":                      (24, 13, 34, 6800, 0.02, 15, 15, 2200, 12, 0.60, 30, 400, 0.30, 900, 1.0, 0.0, 1.0, 0, 0.0),
+        "Tibet platosu (Nagqu)":          (-1, -13, 9, 300, 0.50, 430, 300, 450, 0, 0.80, 150, 4500, 0.15, 1500, 0.85, 0.2, 0.8, 0, 0.0),
     }
 
 
 def dunya_orneklari():
     """Gerçek dünya bölgeleriyle sağlama: aynı etkenler, yaklaşık iklim normalleri ve
     arazi (ezbere, kaba), gerçek nüfus yoğunluğuyla karşılaştırma için. YASAM.md'de tablo.
-    sıra: T, Tc, Tw, gdd5, alfa, P, aet, pe, kuru_ay, pay3, egim, z, toprak, kiyi_km, tehlike, w, alan payı"""
+    sıra: DUNYA_ORNEKLERI'nin üstündeki not"""
     out = {}
     for ad, v in DUNYA_ORNEKLERI.items():
-        T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan = [np.array([float(x)]) for x in v]
-        f = etkenler(T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w)
+        T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, alan, ha, ta = [np.array([float(x)]) for x in v]
+        f = etkenler(T, Tc, Tw, g5, al, P, ae, pe, dm, p3, eg, z, tf, kk, th, w, ha, ta)
         out[ad] = (float(birlestir(f)[0] * (0.7 + 0.3 * ss(alan, 0.10, 0.60))[0] * 100), [float(x[0]) for x in f])
     return out
 
@@ -230,7 +273,7 @@ def dunya_orneklari():
 def varyant(ad, genis, G, kutu):
     w = su_agirligi(G["sinif"], G["gol"], genis) * G["kara"]
     f = etkenler(G["T"], G["Tc"], G["Tw"], G["gdd5"], G["alfa"], G["P"], G["aet"], G["pe"], G["kuru_ay"], G["pay3"], G["egim"],
-                 G["z"], G["toprak_f"], G["kiyi_km"], G["tehlike"], w)
+                 G["z"], G["toprak_f"], G["kiyi_km"], G["tehlike"], w, G["hastalik_ay"], G["taskin"])
     S0 = birlestir(f)
     alan, _ = alan_etkeni(S0, G["kara"])
     S = 100 * S0 * alan
@@ -267,12 +310,13 @@ def varyant(ad, genis, G, kutu):
         pal[3 * c:3 * c + 3] = list(r)
     im.putpalette(pal)
     im.save(os.path.join(KOK, "data", "yasam%s.png" % ad), optimize=True, transparency=0)
-    # kart verisi, dikey 4 bölüm (her biri kaynak çözünürlükte, h yüksekliğinde):
+    # kart verisi, dikey 5 bölüm (her biri kaynak çözünürlükte, h yüksekliğinde):
     #   0: R = sınıf + 16 * su erişimli, G = puan * 2.5, B = 0
-    #   1-3: dokuz etken (0-1 → 0-255), sırayla RGB, RGB, RGB
+    #   1-4: on bir etken (0-1 → 0-255), sırayla RGB; son bölümün B'si boş
     b0 = np.stack([kc + 16 * sulak[i0:i1, j0:j1], np.clip(np.round(S[i0:i1, j0:j1] * 2.5), 0, 250), np.zeros_like(kc)], -1)
     fb = [np.clip(np.round(x[i0:i1, j0:j1] * 255), 0, 255) for x in f]
-    bol = [b0] + [np.stack(fb[3 * m:3 * m + 3], -1) for m in range(3)]
+    fb = fb + [np.zeros_like(fb[0])] * (-len(fb) % 3)
+    bol = [b0] + [np.stack(fb[3 * m:3 * m + 3], -1) for m in range(len(fb) // 3)]
     Image.fromarray(np.concatenate(bol, 0).astype(np.uint8), "RGB").save(os.path.join(KOK, "data", "yasam%s_veri.png" % ad), optimize=True)
     return pay, ort, secim.shape, f
 
@@ -281,7 +325,7 @@ def main():
     ornek = dunya_orneklari()
     print("Dünya bölgeleri: puan; sıcaklık/su/gıda/mevsim/arazi")
     for ad, (S, f) in ornek.items():
-        print("  %-31s %5.1f   %s" % (ad, S, " ".join("%.2f" % x for x in f[:5])))
+        print("  %-31s %5.1f   %s   hast %.2f taşk %.2f" % (ad, S, " ".join("%.2f" % x for x in f[:5]), f[8], f[9]))
     d = akim.hesapla(os.path.join(KOK, "buzul", "_iklim_bugun025.npz"))
     z, lat, lon = d["z"], d["lat"], d["lon"]
     su = np.load(os.path.join(KOK, "su", "_su.npz"))
@@ -302,7 +346,9 @@ def main():
     G = dict(T=T, Tc=b["Tc"], Tw=b["Tw"], gdd5=b["gdd5"], alfa=b["alfa"], P=d["P"], aet=d["AET"], pe=d["PE"],
              kuru_ay=kuru_ay, pay3=pay3, egim=tp._egim(z), z=z, toprak_f=toprak_f, kiyi_km=kiyi_km,
              tehlike=tehlike_alani(lat, lon, kara.shape), gol=gol, kara=kara, buzul=d["buzul"],
-             sinif=nehir_sinifi(lat, lon, kara.shape), wgt=np.cos(np.radians(lat))[:, None] * kara)
+             sinif=nehir_sinifi(lat, lon, kara.shape), wgt=np.cos(np.radians(lat))[:, None] * kara,
+             hastalik_ay=hastalik_aylari(d["Tay"], d["Pay"]))
+    G["taskin"] = taskin_riski(z, G["egim"], G["sinif"], pay3, ocean) * kara
     ii, jj = np.where(kara)
     kutu = (ii.min(), ii.max() + 1, jj.min(), jj.max() + 1)
     i0, i1, j0, j1 = kutu
@@ -315,7 +361,7 @@ def main():
     kesit = [float(lon[j0] - dn / 2), float(lat[i1 - 1] + dl / 2), float(lon[j1 - 1] + dn / 2), float(lat[i0] - dl / 2)]
     veri = dict(ne="Dünyam yaşanabilirlik endeksi (yasam/yasam.py); yöntem YASAM.md",
                 kesit=kesit, ortalama=round(ort, 1), ortalama_dar=round(ort_d, 1), yukseklik=int(i1 - i0),
-                kodlar="yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin yanı); yasam*_veri.png dikey 4 bölüm: 0 = R sınıf + 16 * su erişimli, G puan * 2.5; 1-3 = dokuz etken 0-255 (RGB sırayla)",
+                kodlar="yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin yanı); yasam*_veri.png dikey 5 bölüm: 0 = R sınıf + 16 * su erişimli, G puan * 2.5; 1-4 = on bir etken 0-255 (RGB sırayla)",
                 etkenler=[dict(ad=a, ne=n, agirlik=wt) for a, n, wt in ETKEN] + [dict(ad="Alan", ne="çevredeki elverişli kara genişliği", agirlik=0)],
                 siniflar={str(c): dict(ad=a, ne=nn, ornek=o, renk=list(rr), alt=e, pay=round(pay[c], 4), pay_dar=round(pay_d[c], 4))
                           for c, (a, nn, o, rr, e) in SINIF.items()})

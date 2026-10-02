@@ -31,7 +31,9 @@ parçası.
 | 5 | Toprak | 0 (gıdanın içinde) | WRB türünün tarımsal verimlilik sırası (Chernozem 1.0, Fluvisol 0.95, Kastanozem 0.85, Luvisol ve Andosol 0.8, Cambisol 0.7, Lixisol 0.55, Acrisol 0.45, Ferralsol 0.4, Podzol 0.35, Calcisol 0.3, Leptosol 0.2, Cryosol 0.15, Solonchak 0.1); yargıdır, ölçüm değil |
 | 6 | Deniz | 0.5 | kıyıya uzaklık: 0.6 + 0.4 exp(−d/400 km) (balık, ticaret, ılımanlık; zorunlu değil, bonus) |
 | 7 | Tehlike | 1 | çarpışma, dalma ve dönüşüm levha sınırı çevresi ~40 km (deprem, −0.15) ve volkan kuşağı (−0.30); en çok 0.6'ya iner |
-| 8 | Alan | çarpan | çevredeki ~50 km'de elverişli (≥ 0.5) kara payı: dar bir şerit ya da vadi 0.7, geniş ova 1.0 ("insan yaşamı için yeterli alan var mı") |
+| 8 | Hastalık | 2 | sivrisinek kaynaklı hastalık (sıtma) mevsimi: aylık ortalama 18-32 °C (18-22 ve 32-40 °C arası geçiş) ve yağış ≥ 80 mm (0-80 arası geçiş) olan bulanık ay sayısı (MARA/ARMA, Craig, Snow ve le Sueur 1999, Parasitology Today); 1 ay → 1, 7 ay → 0.5. Kış minimumu ve ardışıklık koşulu sadeleştirildi |
+| 9 | Taşkın | 0.5 | büyük nehrin taşkın ovası: en yakın nehir hücresinden yükseklik (HAND benzeri; 3 m → tam, 25 m → yok), debi sınıfına göre ova genişliği (3, 6, 12 hücre) ve ağırlık (0.4, 0.7, 1), eğim, yağışın en yağışlı 3 aya yığılması; alçak kıyı (denize 2 hücre, 2-15 m: fırtına kabarması, delta). Etken = 1 − 0.35 × risk |
+| 10 | Alan | çarpan | çevredeki ~50 km'de elverişli (≥ 0.5) kara payı: dar bir şerit ya da vadi 0.7, geniş ova 1.0 ("insan yaşamı için yeterli alan var mı") |
 
 **Birleşim:** etkenlerin ağırlıklı geometrik ortalaması (bir etken 0 ise sonuç 0:
 telafi edilemez), çarpı kritik dört etkenin (sıcaklık, su, gıda, arazi) en
@@ -107,10 +109,24 @@ olmasın), kartta yine görünür. Gıda kritik dört etkenden biri olduğu içi
 belirgin. O yaylada medyan puan 90 → 76 ("orta"); içinden geçen nehir vadileri
 (Fluvisol) 96 ile öne çıkıyor.
 
-## Sonuç (kara alanına göre, 1 Ekim, son)
+## Hastalık ve taşkın (2 Ekim, sahibi: "bunları da ekle")
 
-Yaşanmaz %23.3, çok zor %4.3, zor %5.9, orta %37.8, elverişli %18.4, çok elverişli %8.4,
-buz %1.9. Kara ortalaması 56.5 puan. En iyi bölge ~13 °C ılıman ova kuşağı ile Duvar'ın
+İki etken eklendi (yukarıdaki tablo, 8 ve 9). Hastalık önce ağırlık 1 ve tam yükte 0.6
+ile denendi: geometrik ortalamada eriyordu, Amazon yalnız 42.0 → 41.7. Ağırlık 2 ve
+0.5 ile Amazon 40 (çok zor), Ganj 65 (4 uygun ay), Kuzey Çin 94.7; ılıman bölgeler değişmedi.
+Taşkın ağırlığı bilerek küçük (0.5): Dünya'da taşkın ovaları en yoğun yerleşilen yerlerdir,
+taşkın bir bedel ama yerleşimi engellemez.
+
+Haritada hastalık tropik güneyde ve Duvar'ın güneyindeki sıcak, nemli ovada (yaz aylarında
+4-6 uygun ay) çıkıyor; karanın %35'inde etken 0.9'un altında. Alüvyon ovasının (Fluvisol)
+hücre ortalaması 79.2 → 76.6. Taşkın büyük nehirler boyunca ve Duvar eteğinde şeritler hâlinde;
+karanın %14'ünde 0.9'un altında.
+
+## Sonuç (kara alanına göre, 2 Ekim, son)
+
+Yaşanmaz %22.7, çok zor %4.3, zor %6.0, orta %42.2, elverişli %15.9, çok elverişli %7.1,
+buz %1.9. Kara ortalaması 56.0 puan (1 Ekim'de, iki etken yokken: %23.3, 4.3, 5.9, 37.8,
+18.4, 8.4; 56.5). En iyi bölge ~13 °C ılıman ova kuşağı ile Duvar'ın
 güneyindeki alüvyon ovası (önülke, `TOPRAK.md`); sıcak güney ovaları "orta / elverişli",
 kurak plato "orta / zor", dağlar ve kuzey yaşanmaz.
 
@@ -120,10 +136,9 @@ kurak plato "orta / zor", dağlar ve kuzey yaşanmaz.
   cezaları bunu Dünya'dan fazla vurur.
 - Su etkeni neredeyse hiçbir yerde sınırlayıcı değil (0.97): motorun yağışı Dünya'dan
   fazla. Gerçek kurak kuşak az.
-- Eksik: hastalık yükü (tropik), sel (nehir ovasının tehlikesi), deniz ve kıyı
-  fırtınası, kış yağışının kar olarak düşmesi, rüzgâr ve yangın, mineral kaynaklar.
-  Sel ve tropik hastalık sonraki aday etkenler.
+- Eksik: kış yağışının kar olarak düşmesi, rüzgâr ve yangın, mineral kaynaklar,
+  sıtma dışı hastalıklar (uyku hastalığı, şistozomiyaz). Taşkın yıllık debi sınıfından;
+  aylık akış rejimi gelince taşkın mevsimi de ona bağlanabilir.
 - Kıyıya uzaklık ızgara hücresiyle (~9.8 km, boylam yönünde 0.8 çarpanı) hesaplanıyor,
   yüksek enlemde kaba.
-- Tarımsal verimlilik ayrı bir soru olarak bekliyor (yalnız toprak türü belirlemez);
-  bu endeks gıda ve toprağı zaten içeriyor ama tarım katmanı ayrı olabilir.
+- Tarımsal verimlilik ayrı katman: `TARIM.md`.

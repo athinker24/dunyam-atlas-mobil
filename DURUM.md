@@ -93,13 +93,14 @@ Uygulama bir ansiklopediye büyüyecek: iklim, dağlar, nehirler, toprak,
 bitki örtüsü, ileride hayvanlar ve canlılar. Karar: özellikler şimdilik
 mevcut sekmelere yerleştirilir, hepsi bitince gruplar hâlinde yeni iskelet
 kurulur. Merak Planet Advisor'dan eksikler sırası: **bitki örtüsü (yapıldı,
-`BITKI.md`) → toprak (yapıldı, `TOPRAK.md`) → yaşanabilirlik (1 Ekim'de dokuz etkenli puana baştan yazıldı, `YASAM.md`)**;
+`BITKI.md`) → toprak (yapıldı, `TOPRAK.md`) → yaşanabilirlik (1 Ekim'de dokuz etkenli puana baştan yazıldı, 2 Ekim'de hastalık ve taşkın eklendi, `YASAM.md`) → tarım (yapıldı, `TARIM.md`)**;
 toplumlar/zincir en sona, "olası okuma, tahmin değil" etiketiyle. Sahibi
 yaşanabilirliği insana özgü değil, genel koşullar olarak istedi (28 Eylül);
 ilk sürüm yalnız net birincil üretimdi ve her yer "çok elverişli" çıktı, o yüzden
-dokuz etkenli puana yazıldı (`YASAM.md`). Tarımsal verimlilik sorusu ("yalnız toprak türü
-belirlemez") şimdilik bekletildi; toprak + eğim + su erişimi ile ayrı katman
-olabilir. Toprak ve yaşanabilirlik veri.yml ile üretilmez, elle koşulur.
+dokuz etkenli puana yazıldı (`YASAM.md`). Tarımsal verimlilik ("yalnız toprak türü
+belirlemez") 1 Ekim'de ayrı katman oldu (`TARIM.md`). Toprak, yaşanabilirlik ve tarım
+veri.yml ile üretilmez, elle koşulur. Sahibinin sırası (2 Ekim): hastalık ve taşkın →
+nehir akış rejimi → arayüzün gruplanması → hayvanlar.
 
 ## Tektonik katman (27 Eylül)
 

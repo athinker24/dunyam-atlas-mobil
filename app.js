@@ -1103,14 +1103,14 @@ function baslat(J, resimler){
   }
   function yasamSatiri(lon, lat){
     if(!yasamModu() || !yasamKur() || !YK.veri) return "";
-    // veri PNG'si dikey 4 bölüm: 0 = sınıf + 16 × su erişimli, puan × 2.5; 1-3 = dokuz etken (RGB sırayla)
+    // veri PNG'si dikey bölümler: 0 = sınıf + 16 × su erişimli, puan × 2.5; sonrakiler = etkenler (RGB sırayla, bölüm başına 3)
     const K = YJ.kesit, V = yasamRes()[1], W2 = V.naturalWidth, H2 = YJ.yukseklik;
     const x = Math.floor((lon-K[0])/(K[2]-K[0])*W2), y = Math.floor((K[3]-lat)/(K[3]-K[1])*H2);
     if(x < 0 || y < 0 || x >= W2 || y >= H2) return "";
     const p = YK.veri.getImageData(x, y, 1, 1).data, c = YJ.siniflar[p[0] & 15]; if(!c) return "";
     if((p[0] & 15) === 7) return `<div class="k-bk"><b>Yaşanabilirlik</b> ${c.ad} · ${c.ne}</div>`;
-    const f = []; for(let m = 1; m <= 3; m++){ const q = YK.veri.getImageData(x, y + m*H2, 1, 1).data; f.push(q[0]/255, q[1]/255, q[2]/255); }
-    const E = YJ.etkenler, puan = Math.round(p[1]/2.5), yuz = v => "%" + Math.round(v*100);
+    const E = YJ.etkenler, f = []; for(let m = 1; m <= Math.ceil(E.length/3); m++){ const q = YK.veri.getImageData(x, y + m*H2, 1, 1).data; f.push(q[0]/255, q[1]/255, q[2]/255); }
+    const puan = Math.round(p[1]/2.5), yuz = v => "%" + Math.round(v*100);
     // 0.75 altındakiler sınırlayıcı: en zayıftan başlayarak; geri kalanı kısaca
     const sirali = E.map((e, i) => ({ad:e.ad, v:f[i]})).sort((a, b) => a.v - b.v), zayif = sirali.filter(e => e.v < 0.75), iyi = sirali.filter(e => e.v >= 0.75);
     return `<div class="k-bk"><b>Yaşanabilirlik</b> ${c.ad} · ${puan}/100 <small>${c.ne}</small></div>`
@@ -1415,7 +1415,7 @@ function baslat(J, resimler){
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
     if(!G) yedekBoya();
-    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : BI && ayar.araziMod==="bitki" ? "Doğal bitki örtüsü, iklimden" : TP && ayar.araziMod==="toprak" ? "Toprak türleri, WRB" : YS && ayar.araziMod==="yasam" ? "Yaşanabilirlik, dokuz etkenli puan" : TR && ayar.araziMod==="tarim" ? "Tarımsal verimlilik, dört etkenli puan" : "Arazi, yükseklik",
+    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : BI && ayar.araziMod==="bitki" ? "Doğal bitki örtüsü, iklimden" : TP && ayar.araziMod==="toprak" ? "Toprak türleri, WRB" : YS && ayar.araziMod==="yasam" ? "Yaşanabilirlik, on bir etkenli puan" : TR && ayar.araziMod==="tarim" ? "Tarımsal verimlilik, dört etkenli puan" : "Arazi, yükseklik",
       sicaklik: ayar.sicMod!=="ort" && gunlukAl(D) ? "Sıcaklık, "+SIC_MOD[ayar.sicMod]+", "+(donem<0 ? (ayar.sicMod==="tepe" ? "yılın en sıcak ayı" : ayar.sicMod==="dip" ? "yılın en soğuk ayı" : "yıllık ortalama") : AYLAR[donem])
         : "Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
