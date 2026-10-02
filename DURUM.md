@@ -99,8 +99,9 @@ yaşanabilirliği insana özgü değil, genel koşullar olarak istedi (28 Eylül
 ilk sürüm yalnız net birincil üretimdi ve her yer "çok elverişli" çıktı, o yüzden
 dokuz etkenli puana yazıldı (`YASAM.md`). Tarımsal verimlilik ("yalnız toprak türü
 belirlemez") 1 Ekim'de ayrı katman oldu (`TARIM.md`). Toprak, yaşanabilirlik ve tarım
-veri.yml ile üretilmez, elle koşulur. Sahibinin sırası (2 Ekim): hastalık ve taşkın →
-nehir akış rejimi → arayüzün gruplanması → hayvanlar.
+veri.yml ile üretilmez, elle koşulur. Sahibinin sırası (2 Ekim): hastalık ve taşkın (yapıldı) →
+nehir akış rejimi (yapıldı) → arayüzün gruplanması (yapıldı: A düzeni, dört bölüm ve
+çipler, keskin köşeler) → hayvanlar. Üçü `arayuz-gruplar` dalında, birleştirilmedi.
 
 ## Tektonik katman (27 Eylül)
 

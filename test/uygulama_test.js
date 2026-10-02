@@ -139,7 +139,7 @@ const OLC = () => {
     } else denetle("denize dokununca deniz karti", false, "ekranda uygun deniz hucresi yok");
 
     for (const k of ["sicaklik", "yagis", "kar", "arazi", "iklim"]) {
-      await p.evaluate(k => document.querySelector(`[data-k=${k}]`).click(), k); await bekle(250);
+      await p.evaluate(k => document.querySelector(k === "arazi" ? "[data-g=yeryuzu]" : `[data-k=${k}]`).click(), k); await bekle(250);
       if (k === "sicaklik" || k === "yagis" || k === "kar") { await p.evaluate(() => document.querySelectorAll("#donem button")[7].click()); await bekle(250); }
     }
     // ay seridinde parmakla tarama: touch-action yokken tarayici ikinci
@@ -173,7 +173,7 @@ const OLC = () => {
     denetle("kar katmani ciziliyor", kr.renk > 5 && /ay örtü/.test(kr.lejant), `${kr.renk} farkli renk`);
     await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     // Dolasim sekmesi (veride varsa): ruzgar oklari ve akinti yollari cizilmeli
-    const dol = await p.evaluate(() => !document.querySelector("[data-k=dolasim]").hidden);
+    const dol = await p.evaluate(() => !!document.querySelector("[data-k=dolasim]"));
     if (dol) {
       await p.evaluate(() => document.querySelector("[data-k=dolasim]").click()); await bekle(400);
       await p.evaluate(() => document.querySelectorAll("#donem button")[1].click()); await bekle(400);
@@ -237,7 +237,7 @@ const OLC = () => {
     if (await p.evaluate(() => !!window.__atlas.D.tk)) {
       const tkPiksel = () => p.evaluate(() => { const c = document.querySelector("#tekt"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
-      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-g=yeryuzu]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=levha]").click());
       await p.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))); await bekle(300);
       const acik = await tkPiksel();
@@ -260,7 +260,7 @@ const OLC = () => {
     if (await p.evaluate(() => !!document.querySelector("#bitki") && fetch("data/bitki.json").then(r => r.ok)).catch(() => false)) {
       const bkPiksel = () => p.evaluate(() => { const c = document.querySelector("#bitki"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
-      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-g=yeryuzu]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=bitki]").click());
       await p.waitForFunction(() => { const c = document.querySelector("#bitki"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
@@ -282,7 +282,7 @@ const OLC = () => {
     if (await p.evaluate(() => !!document.querySelector("#toprak") && fetch("data/toprak.json").then(r => r.ok)).catch(() => false)) {
       const tpPiksel = () => p.evaluate(() => { const c = document.querySelector("#toprak"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
-      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-g=yeryuzu]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=toprak]").click());
       await p.waitForFunction(() => { const c = document.querySelector("#toprak"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
@@ -304,7 +304,7 @@ const OLC = () => {
     if (await p.evaluate(() => !!document.querySelector("#yasam") && fetch("data/yasam.json").then(r => r.ok)).catch(() => false)) {
       const ysPiksel = () => p.evaluate(() => { const c = document.querySelector("#yasam"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
-      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-g=yeryuzu]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=yasam]").click());
       await p.waitForFunction(() => { const c = document.querySelector("#yasam"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
@@ -320,7 +320,7 @@ const OLC = () => {
       denetle("genel yasanabilirlik: harita ciziliyor, kartta yasanabilirlik satiri (hastalik ve taskin dahil), yukseklikte bos",
         acik > 50000 && kapali === 0 && /Yaşanabilirlik/.test(t) && /Hastalık/.test(t) && /Taşkın/.test(t), `acik ${acik}, kapali ${kapali} piksel; ${t.slice(0, 80)}`);
       // nehir cevresi secenegi: dar secilince yeniden cizilir, genise donunce de
-      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-g=yeryuzu]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=yasam]").click()); await bekle(400);
       const ysRenk = () => p.evaluate(() => { const c = document.querySelector("#yasam"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data; let t = 0; for (let i = 0; i < x.length; i += 4) if (x[i+3] > 30) t += x[i] + 2*x[i+1] + 3*x[i+2]; return t; });
       const gpx = await ysPiksel(), grenk = await ysRenk();
@@ -338,7 +338,7 @@ const OLC = () => {
       const trPiksel = () => p.evaluate(() => { const c = document.querySelector("#tarim"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30) n++; return n; });
       const trRenk = () => p.evaluate(() => { const c = document.querySelector("#tarim"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data; let t = 0; for (let i = 0; i < x.length; i += 4) if (x[i+3] > 30) t += x[i] + 2*x[i+1] + 3*x[i+2]; return t; });
-      await p.evaluate(() => document.querySelector("[data-k=arazi]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-g=yeryuzu]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=tarim]").click());
       await p.waitForFunction(() => { const c = document.querySelector("#tarim"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
@@ -361,6 +361,21 @@ const OLC = () => {
       denetle("tarim: sulamali / yalniz yagmur secenegi cizimi ve secimi degistirir", ypx > 50000 && yrenk !== srenk && ysec === "true" && ssec === "true", `sulamali ${srenk}, yagmur ${yrenk}, yagmur secili ${ysec}, sulamali secili ${ssec}`);
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
+    // bolumler ve cipler: Yasam'a gecince yalniz Yasam cipleri gorunur; Iklim'e donup Yasam'a
+    // yeniden dokununca en son acilan katman (Toprak) gelir; Toplum ileride, pasif
+    { await p.evaluate(() => document.querySelector("[data-arazimod=toprak]")?.click()); await bekle(300);
+      await p.evaluate(() => document.querySelector("[data-g=iklim]").click()); await bekle(300);
+      await p.evaluate(() => document.querySelector("[data-g=yasam]").click()); await bekle(400);
+      const d = await p.evaluate(() => ({ gorunen: [...document.querySelectorAll("#cipler button")].filter(b => !b.hidden).map(b => b.textContent),
+        secili: document.querySelector("#cipler button[aria-selected=true]")?.textContent, alt: document.querySelector("#altbaslik").textContent,
+        toplum: document.querySelector("[data-g=toplum]").getAttribute("aria-disabled") }));
+      await p.evaluate(() => document.querySelector("[data-g=toplum]").click()); await bekle(200);
+      const hala = await p.evaluate(() => document.querySelector("#cipler button[aria-selected=true]")?.textContent);
+      denetle("bolumler: Yasam ciplerini gosterir, son katmani hatirlar, Toplum pasif",
+        d.gorunen.includes("Tarım") && !d.gorunen.includes("Sıcaklık") && d.secili === "Toprak" && /Toprak/.test(d.alt) && d.toplum === "true" && hala === "Toprak",
+        JSON.stringify(d) + " toplumdan sonra " + hala);
+      await p.evaluate(() => document.querySelector("[data-g=iklim]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250); }
     const kaynak = await p.evaluate(() => document.querySelectorAll("#kabartma-kaynak button").length);
     if (kaynak) { await p.evaluate(() => document.querySelector("[data-kaynak=gri]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-kaynak=editor]").click()); await bekle(250);

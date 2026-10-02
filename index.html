@@ -49,15 +49,14 @@
 </section>
 
 <nav id="dok" aria-label="Katman">
+  <div id="cipler" role="tablist" aria-label="Katman"></div>
   <div id="aciklama"></div>
   <div id="donem" role="radiogroup" aria-label="Dönem" hidden></div>
-  <div id="sekmeler" role="tablist">
-    <button role="tab" data-k="iklim" aria-selected="true">İklim</button>
-    <button role="tab" data-k="sicaklik" aria-selected="false">Sıcaklık</button>
-    <button role="tab" data-k="yagis" aria-selected="false">Yağış</button>
-    <button role="tab" data-k="kar" aria-selected="false">Kar</button>
-    <button role="tab" data-k="arazi" aria-selected="false">Arazi</button>
-    <button role="tab" data-k="dolasim" aria-selected="false">Dolaşım</button>
+  <div id="sekmeler" role="tablist" aria-label="Bölüm">
+    <button role="tab" data-g="iklim" aria-selected="true">İklim</button>
+    <button role="tab" data-g="yeryuzu" aria-selected="false">Yeryüzü</button>
+    <button role="tab" data-g="yasam" aria-selected="false">Yaşam</button>
+    <button role="tab" data-g="toplum" aria-selected="false" aria-disabled="true" title="İleride">Toplum</button>
   </div>
 </nav>
 

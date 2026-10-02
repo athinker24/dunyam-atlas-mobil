@@ -664,7 +664,6 @@ function baslat(J, resimler){
   // kabartma kaynaklari (kabartmaKur GL kurulurken cagrilir, once tanimli olmali)
   const KAB = {bir: resimler.kabartmaBir, editor: resimler.kabartma, gri: resimler.kabartmaGri};
   if(!KAB[ayar.kabartmaKaynak]) ayar.kabartmaKaynak = KAB.bir ? "bir" : "editor";
-  if(!D.dol) $("[data-k=dolasim]").hidden = true;   // eski veride dolasim yok
   const canvas = $("#gl"), kaplama = $("#kaplama");
   let G = null;
   try { G = glKur(canvas); if(G && G.enBuyuk < Math.max(D.doku.w, D.doku.h)) G = null; }
@@ -1404,12 +1403,45 @@ function baslat(J, resimler){
     return out;
   }
 
+  /* --- bölümler ve katman çipleri (2 Ekim, sahibi: "A olsun") ---
+     Altta dört bölüm (İklim, Yeryüzü, Yaşam, Toplum), üstte o bölümün katmanları
+     kayan çip satırında. İç model değişmedi: katman (iklim/sicaklik/yagis/kar/
+     dolasim/arazi) ve arazi için ayar.araziMod. Bütün çipler DOM'da durur, yalnız
+     seçili bölümünkiler görünür (gizli çipe .click() da çalışır). Bölüme dokununca
+     o bölümde en son açılan katman gelir. Toplum şimdilik boş (ileride). */
+  const KATMANLAR = [
+    {g:"iklim", t:"Köppen", k:"iklim"}, {g:"iklim", t:"Sıcaklık", k:"sicaklik"}, {g:"iklim", t:"Yağış", k:"yagis"},
+    {g:"iklim", t:"Kar", k:"kar"}, {g:"iklim", t:"Rüzgâr, akıntı", k:"dolasim", var:!!D.dol},
+    {g:"yeryuzu", t:"Yükseklik", k:"arazi", am:"yukseklik"}, {g:"yeryuzu", t:"Levhalar", k:"arazi", am:"levha", var:!!D.tk},
+    {g:"yasam", t:"Bitki örtüsü", k:"arazi", am:"bitki", var:!!resimler.bitki}, {g:"yasam", t:"Toprak", k:"arazi", am:"toprak", var:!!resimler.toprak},
+    {g:"yasam", t:"Yaşanabilirlik", k:"arazi", am:"yasam", var:!!resimler.yasam}, {g:"yasam", t:"Tarım", k:"arazi", am:"tarim", var:!!resimler.tarim},
+  ].filter(c => c.var !== false);
+  const simdiki = () => KATMANLAR.find(c => c.k === katman && (!c.am || c.am === (ayar.araziMod || "yukseklik"))) || KATMANLAR[0];
+  const grupSon = {};
+  for(const g of ["yeryuzu", "yasam"]) if(!KATMANLAR.some(c => c.g === g)) $(`[data-g=${g}]`).hidden = true;
+  $("#cipler").innerHTML = KATMANLAR.map((c, i) => `<button role="tab" data-c="${i}" data-grup="${c.g}"${c.am ? ` data-arazimod="${c.am}"` : ` data-k="${c.k}"`} aria-selected="false" hidden>${c.t}</button>`).join("");
+  function ciplerYaz(){
+    const s = simdiki(); grupSon[s.g] = s;
+    for(const b of $("#sekmeler").children) b.setAttribute("aria-selected", String(b.dataset.g === s.g));
+    for(const b of $("#cipler").children){ const c = KATMANLAR[+b.dataset.c];
+      b.hidden = c.g !== s.g; b.setAttribute("aria-selected", String(c === s));
+      if(c === s && !b.hidden) b.scrollIntoView({block:"nearest", inline:"nearest"}); }
+  }
+  function katmanAc(c){
+    if(c.am){ ayar.araziMod = c.am; ayarYaz(); katmanSec("arazi"); ciz(); }
+    else katmanSec(c.k);
+  }
+  $("#cipler").addEventListener("click", e => { const b = e.target.closest("button[data-c]"); if(b) katmanAc(KATMANLAR[+b.dataset.c]); });
+  $("#sekmeler").addEventListener("click", e => { const b = e.target.closest("button[data-g]");
+    if(!b || b.getAttribute("aria-disabled") === "true") return;
+    const c = grupSon[b.dataset.g] || KATMANLAR.find(x => x.g === b.dataset.g); if(c) katmanAc(c); });
+
   /* --- katman ve donem --- */
   function katmanSec(k, d){
     katman = k; if(d !== undefined) donem = d;
     if(k==="iklim" || k==="arazi") donem = -1;
     if(k!=="iklim") izole = null;
-    for(const b of $("#sekmeler").children) b.setAttribute("aria-selected", String(b.dataset.k===k));
+    ciplerYaz();
     $("#donem").hidden = !(k==="sicaklik" || k==="yagis" || k==="kar" || k==="dolasim");
     for(const b of $("#donem").children) b.setAttribute("aria-checked", String(+b.dataset.d===donem));
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
@@ -1435,7 +1467,6 @@ function baslat(J, resimler){
   $("#donem").addEventListener("pointermove", e => { if(e.pointerType==="mouse" && e.buttons!==1) return;
     const b = document.elementFromPoint(e.clientX, e.clientY);
     if(b && b.parentNode===$("#donem") && +b.dataset.d!==donem) katmanSec(katman, +b.dataset.d); });
-  $("#sekmeler").addEventListener("click", e => { const b = e.target.closest("button"); if(b) katmanSec(b.dataset.k); });
 
   /* --- lejant / aciklama satiri --- */
   const paylar = (()=>{ const c={}; let t=0;
@@ -1465,9 +1496,7 @@ function baslat(J, resimler){
     const sicNot = katman==="sicaklik" && gunlukAl(D) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Sıcaklık türü">`
       + [["ort","Ortalama"],["gunduz","Gündüz"],["gece","Gece"],["tepe","Tepe"],["dip","Dip"]].map(([k,t]) =>
         `<button role="radio" data-sicmod="${k}" aria-checked="${ayar.sicMod===k}">${t}</button>`).join("") + `</div></div>` : "";
-    const araziSec = katman==="arazi" && (TK || BI || TP || YS || TR) ? `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Arazi görünümü">`
-      + [["yukseklik","Yükseklik",true], ["levha","Levhalar",!!TK], ["bitki","Bitki örtüsü",!!BI], ["toprak","Toprak",!!TP], ["yasam","Yaşanabilirlik",!!YS], ["tarim","Tarım",!!TR]].filter(a => a[2]).map(([k, t]) =>
-        `<button role="radio" data-arazimod="${k}" aria-checked="${(ayar.araziMod||"yukseklik")===k}">${t}</button>`).join("") + `</div></div>` : "";
+    const araziSec = "";      // arazi görünümleri artık bölüm çiplerinde (#cipler)
     if(katman==="arazi" && BI && ayar.araziMod==="bitki"){
       const liste = Object.entries(BJ.biyomlar).filter(([, b]) => b.pay >= 0.005).sort((a, b) => b[1].pay - a[1].pay);
       el.innerHTML = araziSec + `<div class="bk-not">` + liste.map(([, b]) =>
