@@ -221,6 +221,15 @@ const OLC = () => {
         denetle("gole dokununca kartta gol satiri", /Göl/.test(t) && /km²/.test(t), t.slice(0, 70));
         await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400); }
       else denetle("gole dokununca kartta gol satiri", false, "gol icinde nokta bulunamadi");
+      // en buyuk nehrin ortasina dokununca kartta Nehir ve aylik Akis rejimi satiri (su/rejim.py)
+      const nh = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B;
+        const n = [...D.su.nehirler].sort((a, b) => b.Q - a.Q)[0]; if (!n.r) return null; const i = Math.floor(n.p.length / 4), lo = n.p[2*i], la = n.p[2*i+1];
+        return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
+      if (nh) { await p.touchscreen.tap(nh.x, nh.y); await bekle(700);
+        const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-su")].map(e => e.textContent).join(" | "));
+        const cub = await p.evaluate(() => document.querySelectorAll("#kart-icerik .k-rejim .rejim i").length);
+        denetle("nehre dokununca kartta aylik akis rejimi", /Nehir/.test(t) && /Akış/.test(t) && cub === 12, `${cub} cubuk; ${t.slice(0, 110)}`);
+        await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400); }
     }
     // tektonik katman (veride tektonik.json varsa): Arazi > Levhalar #tekt
     // tuvaline levha, sinir ve volkan cizer; kartta Levha satiri; Yukseklik'e

@@ -190,7 +190,7 @@ def sik_ornekle(p, adim=0.25):
     return np.column_stack([np.interp(t, s, p[:, 0]), np.interp(t, s, p[:, 1])])
 
 
-def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
+def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None, rejim=None):
     ny, nx = q.shape
     qf, bf = q.ravel(), boy.ravel()
     kara_lab, _ = ndimage.label(~deniz, np.ones((3, 3)))
@@ -263,8 +263,11 @@ def nehirler(alici, q, boy, gm, deniz, lat, lon, Z=None):
         kod = [int(X[0]), int(Y[0])]
         for i in range(1, len(X)):
             kod += [int(X[i] - X[i - 1]), int(Y[i] - Y[i - 1])]
+        uc = int(h[-2] if len(h) > 1 else h[-1])
         cikis.append(dict(k=kol["k"], p=kod, q=[int(round(10 * np.log10(max(v, 1)))) for v in qs],
-                          L=int(bf[h[-2] if len(h) > 1 else h[-1]]), Q=int(qf[h[-2] if len(h) > 1 else h[-1]])))
+                          L=int(bf[uc]), Q=int(qf[uc])))
+        if rejim is not None:
+            cikis[-1]["r"] = rejim(uc)      # aşağı uçta 12 aylık debi, yıllık ortalamanın yüzdesi (su/rejim.py)
     return cikis
 
 
@@ -340,10 +343,10 @@ def goller_kiyi(goller, shape, lat, lon, S=3):
     return out
 
 
-def yaz(goller, alici, q, boy, gm, deniz, lat, lon):
+def yaz(goller, alici, q, boy, gm, deniz, lat, lon, rejim=None):
     zp = os.path.join(BURASI, "_akim.npz")
     Z = np.load(zp)["z"].astype(float).ravel() if os.path.exists(zp) else None
-    n = nehirler(alici, q, boy, gm, deniz, lat, lon, Z)
+    n = nehirler(alici, q, boy, gm, deniz, lat, lon, Z, rejim)
     l = goller_kiyi(goller, q.shape, lat, lon)
     veri = dict(ne="Dünyam gölleri ve nehirleri (su/uret_su.py, su/disa.py)", kademe_esikleri=dict(
         k1="Q>=2000 m3/s ya da boy>=1500 km", k2="Q>=600 ya da >=600 km", k3="Q>=200 ya da >=250 km", k4="Q>=50"),

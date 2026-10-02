@@ -49,6 +49,7 @@ def hesapla(iklim_npz, deniz=0.0):
     ny, nx = z.shape
     kar = np.zeros((ny, nx)); top = np.full((ny, nx), TOPRAK)
     R = np.zeros((ny, nx)); AET = np.zeros((ny, nx)); kalan_kar = np.zeros((ny, nx)); Egol = np.zeros((ny, nx))
+    Ray = np.zeros((12, ny, nx)); Egolay = np.zeros((12, ny, nx))     # aylık akış ve göl buharlaşması (nehir rejimi)
     for tur in range(4):
         if tur == 3:
             R[:] = 0; AET[:] = 0; Egol[:] = 0; kar0 = kar.copy()
@@ -64,13 +65,17 @@ def hesapla(iklim_npz, deniz=0.0):
             top = np.where(fazla >= 0, top + fazla, top * np.exp(fazla / TOPRAK))
             tas = np.maximum(top - TOPRAK, 0); top -= tas
             if tur == 3:
-                R += tas; AET += et
-                Egol += np.where(T[m] > 0, np.maximum(PE[m], 2 * PE[m] - et), 0)
+                R += tas; AET += et; Ray[m] = tas
+                Egolay[m] = np.where(T[m] > 0, np.maximum(PE[m], 2 * PE[m] - et), 0)
+                Egol += Egolay[m]
     kalan_kar = np.maximum(kar - kar0, 0)          # yıl boyunca biriken: buzul akışı
     R += kalan_kar
+    # buzul akışı aylara sıcaklıkla (0 °C üstü) dağıtılır; hiç ısınmayan hücrede eşit
+    isi = np.maximum(T, 0); top_isi = isi.sum(0)
+    Ray += kalan_kar[None] * np.where(top_isi > 0, isi / np.maximum(top_isi, 1e-9), 1 / 12)
     kar[:] = np.minimum(kar, kar0)
     return dict(z=z, lat=lat, lon=lon, P=P.sum(0), PE=PE.sum(0), AET=AET, R=R, Egol=Egol,
-                Pay=P, Tay=T, PEay=PE, buzul=kalan_kar > 0)
+                Pay=P, Tay=T, PEay=PE, Ray=Ray, Egolay=Egolay, buzul=kalan_kar > 0)
 
 
 if __name__ == "__main__":
@@ -80,4 +85,4 @@ if __name__ == "__main__":
     ort = lambda a: float((a * wgt).sum() / wgt.sum())
     print("kara ort. yağış %.0f  PE %.0f  gerçek buh. %.0f  akış %.0f  göl buh. %.0f mm/yıl; akış/yağış %.2f"
           % (ort(d["P"]), ort(d["PE"]), ort(d["AET"]), ort(d["R"]), ort(d["Egol"]), ort(d["R"]) / ort(d["P"])))
-    np.savez_compressed(os.path.join(BURASI, "_akim.npz"), **{k: np.asarray(v, dtype=np.float32) if np.asarray(v).dtype == np.float64 else v for k, v in d.items() if k not in ("Pay", "Tay", "PEay")})
+    np.savez_compressed(os.path.join(BURASI, "_akim.npz"), **{k: np.asarray(v, dtype=np.float32) if np.asarray(v).dtype == np.float64 else v for k, v in d.items() if k not in ("Pay", "Tay", "PEay", "Ray", "Egolay")})

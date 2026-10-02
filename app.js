@@ -225,7 +225,7 @@ function suHazirla(S){
       const i0 = Math.max(0, i-1), i3 = Math.min(m-1, i+2);
       yol.bezierCurveTo(x(i) + (x(i+1)-x(i0))/6, y(i) + (y(i+1)-y(i0))/6,
         x(i+1) - (x(i3)-x(i))/6, y(i+1) - (y(i3)-y(i))/6, x(i+1), y(i+1)); }
-    return {k:n.k, p, q, parcalar, kutu:kutu(p), Q:n.Q, L:n.L}; });
+    return {k:n.k, p, q, parcalar, kutu:kutu(p), Q:n.Q, L:n.L, r:n.r || null}; });
   // kalın kollar üstte kalsın: önce küçük kademeler çizilir
   nehirler.sort((a, b) => b.k - a.k || a.Q - b.Q);
   const golYolu = a => { const n = a.length/2, yol = new Path2D();
@@ -1667,7 +1667,17 @@ function baslat(J, resimler){
     const yuv = v => v >= 1000 ? Math.round(v/100)*100 : v >= 100 ? Math.round(v/10)*10 : Math.round(v);
     const parca = [`burada ~${bin(yuv(en.q))} m³/s`, `${KADEME_AD[en.n.k]}, ${bin(en.n.L)} km`];
     if(en.n.Q > en.q*1.05) parca.push(`aşağı ucunda ${bin(yuv(en.n.Q))} m³/s`);
-    return `<div class="k-su"><b>Nehir</b> ${parca.join(" · ")}</div>` + delta;
+    return `<div class="k-su"><b>Nehir</b> ${parca.join(" · ")}</div>` + rejimSatiri(en.n) + delta;
+  }
+  // aylık akış rejimi (su/rejim.py): kolun aşağı ucunda 12 ay, yıllık ortalamanın yüzdesi.
+  // Küçük çubuklar; seçili ay vurgulu. "Akış: en çok Eylül (×2.3), en az Nisan (×0.25)"
+  function rejimSatiri(n){
+    const r = n.r; if(!r || r.length !== 12) return "";
+    const enc = r.indexOf(Math.max(...r)), ena = r.indexOf(Math.min(...r)), ust = Math.max(...r, 1);
+    const kat = v => v >= 95 ? "×" + (v/100).toFixed(1).replace(".", ",") : "%" + v;
+    const cubuk = r.map((v, m) => `<i style="height:${Math.max(1, Math.round(v/ust*16))}px"${m === donem ? ' class="s"' : ""}></i>`).join("");
+    const tur = r[ena] < 5 ? " · kurak ayda kuruyor" : r[enc]/Math.max(r[ena], 1) < 2.5 ? " · düzenli" : "";
+    return `<div class="k-su k-rejim"><b>Akış</b> aşağı ucunda en çok ${AYLAR[enc]} (${kat(r[enc])}), en az ${AYLAR[ena]} (${kat(r[ena])})${tur} <span class="rejim">${cubuk}</span></div>`;
   }
   // "Kar: Kasım–Mart yağar · örtü 4 ay, en çok Şubat'ta 120 mm su"
   function karSatiri(j){

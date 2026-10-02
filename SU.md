@@ -132,6 +132,42 @@ tanımlı değil): Ganj türü gelgit deltası değerlendirilemez.
   Nehir baskın 1., yay biçimli 2., küçük 3. kademede görünür. Dokununca
   kartta Delta satırı. Yeniden üretmek: `python su/delta.py` (uret_su.py'den sonra).
 
+## Aylık akış rejimi (2 Ekim, `su/rejim.py`)
+
+Her kolun aşağı ucunda 12 aylık debi, yıllık ortalamanın yüzdesi (`su.json` → `nehirler[].r`).
+Nehre dokununca kartta "Akış" satırı: en çok ve en az akan ay, 12 küçük çubuk (seçili ay açık).
+
+    python su/rejim.py      # ağ _disa.pkl'den, yalnız aylık kaynak yeni; ~30 sn
+    python su/delta.py      # rejim.py su.json'u baştan yazar, deltalar yeniden eklenir
+
+Yöntem: `akim.py`'nin aylık yüzey akışı (kar erimesi; buzul akışı 0 °C üstü aylara sıcaklıkla
+dağıtılır; göl yüzeyinde o ayın yağışı eksi göl buharlaşması) her ay ağ boyunca ayrı biriktirilir.
+Aşağı uçta iki doğrusal hazne: akışın yarısı yolculuk haznesinden (τ = 0.5 + yol boyu / 2000 km ay;
+yukarıda göl varsa göl payına göre +4 aya kadar), yarısı ayrıca 4 aylık yeraltı haznesinden
+(taban akışı; küresel taban akışı payı ~%60, Beck vd. 2013, 3394 havza). Hazneler aylık adımla
+kararlı döngüye oturtulur, yıllık ortalama korunur (sağlama: bütün kollarda ortalama %99.8-100.2).
+
+| ağızda debi (m³/s) | boy (km) | en çok | en az | oran |
+|---|---|---|---|---|
+| 19.496 | 2.067 | Ağustos (×2.1) | Nisan (%32) | 6.5 |
+| 15.143 | 3.551 | Mayıs (×1.5) | Mart (%71) | 2.1 |
+| 14.785 | 3.056 | Eylül (×2.1) | Mayıs (%39) | 5.5 |
+| 13.958 | 1.469 | Ağustos (×2.2) | Nisan (%23) | 9.7 |
+| 11.976 | 4.341 | Eylül (×1.5) | Nisan (%58) | 2.5 |
+| 10.119 | 2.153 | Mayıs (×3.0) | Mart (%30) | 10.0 |
+
+Büyük ve orta kollarda (kademe 1-2) oran ortancası 12.4; Dünya'da Ren ~2, Mississippi ~3, Ganj
+ve muson nehirleri ~10-20. Yaz sonu tepeli rejimler muson yağışından, Mayıs-Haziran tepeli
+olanlar Duvar'ın kar erimesinden.
+
+Düzeltmeler: tek hazne ile büyük nehirler kurak ayda sıfıra iniyordu (oran 280); taban akışı
+eklendi. Hazne önce Fourier ile çözülüyordu; 12 aylık dizide Nyquist bileşeni bozulup tek tek
+ayları sıfıra kırpan bir salınım üretiyordu, aylık adıma geçildi.
+
+Sınırlar: taban akışı payı her yerde 0.5 (kireçtaşı, kurak havza ayrımı yok), bu yüzden hiçbir
+kol tamamen kurumuyor; gerçek kurak bölge dereleri (vadi) kurur. Göl depolaması ayrıntılı
+değil (yalnız τ'ya ekleme). Taşkın riski (`yasam.py`) henüz yıllık debi sınıfından.
+
 ## Yöntem ve sınırlar
 
 - **Akış** (`su/akim.py`): aylık kar kovası (uygulamayla aynı eşikler) ve

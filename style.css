@@ -134,6 +134,9 @@ svg{display:block}
 .k-kar,.k-gun,.k-su{font-size:12px;color:var(--soluk);margin:2px 0 2px}
 .k-kar b,.k-gun b,.k-su b{color:var(--yazi);font-weight:500;margin-right:2px}
 .k-su b{color:#9cc9e8}
+.k-rejim .rejim{display:inline-flex;align-items:flex-end;gap:1px;height:16px;margin-left:4px;vertical-align:-3px}
+.k-rejim .rejim i{display:block;width:4px;background:#5d89a8;border-radius:1px}
+.k-rejim .rejim i.s{background:#9cc9e8}
 .k-tk{font-size:12px;color:var(--soluk);margin:2px 0 2px}
 .k-tk b{color:#f0b48a;font-weight:500;margin-right:2px}
 .k-bk{font-size:12px;color:var(--soluk);margin:2px 0 2px}
