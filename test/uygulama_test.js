@@ -361,6 +361,27 @@ const OLC = () => {
       denetle("tarim: sulamali / yalniz yagmur secenegi cizimi ve secimi degistirir", ypx > 50000 && yrenk !== srenk && ysec === "true" && ssec === "true", `sulamali ${srenk}, yagmur ${yrenk}, yagmur secili ${ysec}, sulamali secili ${ssec}`);
       await p.evaluate(() => document.querySelector("[data-k=iklim]").click()); await bekle(250);
     }
+    // hayvanlar (veride hayvan.json varsa): Yasam > Hayvanlar #hayvan; kartta Hayvanlar ve tipik
+    // hayvanlar; Topluluklar / Tur zenginligi secenegi cizimi degistirir
+    if (await p.evaluate(() => !!document.querySelector("[data-arazimod=hayvan]"))) {
+      const hyRenk = () => p.evaluate(() => { const c = document.querySelector("#hayvan"), x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data; let t = 0, n = 0; for (let i = 0; i < x.length; i += 4) if (x[i+3] > 30) { t += x[i] + 2*x[i+1] + 3*x[i+2]; n++; } return [n, t]; });
+      await p.evaluate(() => document.querySelector("[data-g=yasam]").click()); await bekle(250);
+      await p.evaluate(() => document.querySelector("[data-arazimod=hayvan]").click()); await bekle(1200);
+      const [n1, r1] = await hyRenk();
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+        return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
+      await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
+      const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
+      await p.goBack({ waitUntil: "commit" }).catch(() => {}); await bekle(400);
+      await p.evaluate(() => document.querySelector("[data-arazimod=hayvan]").click()); await bekle(300);
+      await p.evaluate(() => document.querySelector("[data-hayvanmod=zengin]").click()); await bekle(800);
+      const [n2, r2] = await hyRenk(); const alt = await p.evaluate(() => document.querySelector("#altbaslik").textContent);
+      await p.evaluate(() => document.querySelector("[data-hayvanmod=topluluk]").click()); await bekle(300);
+      denetle("hayvanlar: topluluk haritasi, kartta tipik hayvanlar ve tur zenginligi, zenginlik secenegi",
+        n1 > 50000 && n2 > 50000 && r1 !== r2 && /Hayvanlar/.test(t) && /Dünya'da tipik/.test(t) && /Tür zenginliği/.test(t) && /zenginliği/i.test(alt),
+        `${n1}/${n2} piksel, ${alt}; ${t.slice(0, 120)}`);
+      await p.evaluate(() => document.querySelector("[data-g=iklim]").click()); await bekle(250);
+    }
     // bolumler ve cipler: Yasam'a gecince yalniz Yasam cipleri gorunur; Iklim'e donup Yasam'a
     // yeniden dokununca en son acilan katman (Toprak) gelir; Toplum ileride, pasif
     { await p.evaluate(() => document.querySelector("[data-arazimod=toprak]")?.click()); await bekle(300);

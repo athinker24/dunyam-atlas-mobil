@@ -101,7 +101,7 @@ function bildir(msg, ms=3200){ const t=$("#bildirim"); t.textContent=msg; t.hidd
 
 const AYAR_ANAHTAR = "dunyam-ayar";
 const ayar = Object.assign({kabartma:true, kabartmaKaynak:"bir", piksel:false, izgara:true, bant:false,
-  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik", yasamKiyi:"genis", tarimSu:"sulamali"},
+  dolZemin:"sst", parcacik:false, sicMod:"ort", deniz:true, su:true, suKol:"ana", araziMod:"yukseklik", yasamKiyi:"genis", tarimSu:"sulamali", hayvanMod:"topluluk"},
   (()=>{ try{ return JSON.parse(localStorage.getItem(AYAR_ANAHTAR)) || {}; }catch(_){ return {}; } })());
 // Eylul 2026: birlesik kabartma varsayilan oldu. Eski surumde "editor"
 // kaydedilmis telefonlar bir kez birlesige gecer; sonra secim kullanicinin.
@@ -797,6 +797,7 @@ function baslat(J, resimler){
       if(TP) toprakCiz();
       if(YS) yasamCiz();
       if(TR) tarimCiz();
+      if(HY) hayvanCiz();
       parcacik.gorunumDegisti();   // once: kaplama parcacik acikken akis cizgisi cizmesin
       kaplamaCiz();
     }
@@ -1178,6 +1179,60 @@ function baslat(J, resimler){
       + (f[Math.min(p[2], 3)] < 0.9 ? `<div class="k-bk"><b>Sınırlayan</b> ${sinir.ad}: ${sinir.ne}${(p[0] >> 4) & 1 ? " · nehir ya da göl kıyısı: sulama mümkün" : ""}</div>` : "");
   }
 
+  /* --- hayvanlar (Yaşam > Hayvanlar): hayvan/hayvan.py. İki okuma: topluluk (biyom + dağ +
+     sulak alan; Dünya'dan tipik hayvanlar) ve tür zenginliği (su-enerji, arazi çeşitliliği).
+     Tarımla aynı çizim yolu; kart data/hayvan_veri.png'den (R topluluk, G zenginlik sınıfı, B zenginlik × 250). */
+  const HYJ = resimler.hayvanJ, HY = HYJ && resimler.hayvan ? resimler.hayvan : null, HYV = resimler.hayvanVeri;
+  const hyCv = $("#hayvan"), hyC = hyCv.getContext("2d");
+  let HYK = null;
+  const hayvanRes = () => ayar.hayvanMod === "zengin" && resimler.hayvanZengin ? resimler.hayvanZengin : HY;
+  function hayvanKur(){
+    if(HYK || !HY) return HYK;
+    const Y = hayvanRes(), w = Y.naturalWidth, h = Y.naturalHeight, K = HYJ.kesit, cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+    const c = cv.getContext("2d"); c.drawImage(Y, 0, 0);
+    const kab = ayar.kabartma ? (KAB[ayar.kabartmaKaynak] || KAB.bir || KAB.editor) : null;
+    if(kab){
+      const kx = w/(K[2]-K[0]), ky = h/(K[3]-K[1]);
+      c.globalCompositeOperation = "multiply"; c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
+      c.drawImage(kab, (B[0]-K[0])*kx, (K[3]-B[3])*ky, (B[2]-B[0])*kx, (B[3]-B[1])*ky);
+      c.globalCompositeOperation = "lighter"; c.drawImage(cv, 0, 0);
+      c.globalCompositeOperation = "destination-in"; c.drawImage(Y, 0, 0);
+      c.globalCompositeOperation = "source-over"; }
+    let veri = null;
+    if(HYV){ const v = document.createElement("canvas"); v.width = HYV.naturalWidth; v.height = HYV.naturalHeight;
+      veri = v.getContext("2d", {willReadFrequently:true}); veri.drawImage(HYV, 0, 0); }
+    return HYK = {tuval: cv, veri};
+  }
+  const hayvanModu = () => !!HY && katman === "arazi" && ayar.araziMod === "hayvan";
+  let hyCizilen = null;
+  function hayvanCiz(){
+    const imza = `${hayvanModu()}|${katman}`;
+    if(hyCizilen && hyCizilen.imza === imza && harekette()){
+      const k = olcek/hyCizilen.olcek;
+      hyCv.style.transform = `translate(${(ox - hyCizilen.ox*k).toFixed(2)}px,${(oy - hyCizilen.oy*k).toFixed(2)}px) scale(${k.toFixed(5)})`;
+      return; }
+    hyCv.style.transform = ""; hyCizilen = {ox, oy, olcek, imza};
+    if(!hayvanModu()){ if(!hyCv.hidden){ hyCv.width = hyCv.width; hyCv.hidden = true; } return; }
+    hyCv.hidden = false; hayvanKur();
+    const r = hyCv.getBoundingClientRect(), w = Math.round(r.width*dpr), h = Math.round(r.height*dpr);
+    if(hyCv.width !== w || hyCv.height !== h){ hyCv.width = w; hyCv.height = h; }
+    hyC.setTransform(1,0,0,1,0,0); hyC.clearRect(0, 0, w, h);
+    const sx = (B[2]-B[0])/W, sy = (B[3]-B[1])/H, kx = olcek/sx, ky = olcek/sy, K = HYJ.kesit;
+    hyC.setTransform(dpr*kx, 0, 0, dpr*ky, dpr*(ox - B[0]*kx), dpr*(oy + B[3]*ky));
+    hyC.imageSmoothingEnabled = true; hyC.imageSmoothingQuality = "high";
+    hyC.drawImage(HYK.tuval, K[0], -K[3], K[2]-K[0], K[3]-K[1]);
+  }
+  function hayvanSatiri(lon, lat){
+    if(!hayvanModu() || !hayvanKur() || !HYK.veri) return "";
+    const K = HYJ.kesit, W2 = HYV.naturalWidth, H2 = HYV.naturalHeight;
+    const x = Math.floor((lon-K[0])/(K[2]-K[0])*W2), y = Math.floor((K[3]-lat)/(K[3]-K[1])*H2);
+    if(x < 0 || y < 0 || x >= W2 || y >= H2) return "";
+    const p = HYK.veri.getImageData(x, y, 1, 1).data, t = HYJ.topluluklar[p[0]], z = HYJ.zenginlik[p[1]]; if(!t) return "";
+    return `<div class="k-bk"><b>Hayvanlar</b> ${t.ad} <small>${t.ne}</small></div>`
+      + (p[0] !== 11 ? `<div class="k-bk"><b>Dünya'da tipik</b> ${t.hayvanlar} <small>(${t.ornek})</small></div>` : "")
+      + (z && p[1] !== 6 ? `<div class="k-bk"><b>Tür zenginliği</b> ${z.ad} · ${Math.round(p[2]/2.5)}/100</div>` : "");
+  }
+
   /* --- tektonik katman (Arazi > Levhalar): levha renkleri, sınırlar,
      volkan kuşakları. Su katmanı gibi Canvas2D; kaydırırken CSS ile kayar.
      Sınır renkleri yaygın levha haritası geleneği: yakınsak kırmızı (dişler
@@ -1415,6 +1470,7 @@ function baslat(J, resimler){
     {g:"yeryuzu", t:"Yükseklik", k:"arazi", am:"yukseklik"}, {g:"yeryuzu", t:"Levhalar", k:"arazi", am:"levha", var:!!D.tk},
     {g:"yasam", t:"Bitki örtüsü", k:"arazi", am:"bitki", var:!!resimler.bitki}, {g:"yasam", t:"Toprak", k:"arazi", am:"toprak", var:!!resimler.toprak},
     {g:"yasam", t:"Yaşanabilirlik", k:"arazi", am:"yasam", var:!!resimler.yasam}, {g:"yasam", t:"Tarım", k:"arazi", am:"tarim", var:!!resimler.tarim},
+    {g:"yasam", t:"Hayvanlar", k:"arazi", am:"hayvan", var:!!resimler.hayvan},
   ].filter(c => c.var !== false);
   const simdiki = () => KATMANLAR.find(c => c.k === katman && (!c.am || c.am === (ayar.araziMod || "yukseklik"))) || KATMANLAR[0];
   const grupSon = {};
@@ -1447,7 +1503,7 @@ function baslat(J, resimler){
     if(k!=="iklim"){ gor = gorunumKur(D, k, donem, ayar.bant);
       if(G){ G.kur("tAlan", gor.a, W, H, "L", true); G.kur("tLut", gor.lut, 256, 1, "RGB", true); } }
     if(!G) yedekBoya();
-    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : BI && ayar.araziMod==="bitki" ? "Doğal bitki örtüsü, iklimden" : TP && ayar.araziMod==="toprak" ? "Toprak türleri, WRB" : YS && ayar.araziMod==="yasam" ? "Yaşanabilirlik, on bir etkenli puan" : TR && ayar.araziMod==="tarim" ? "Tarımsal verimlilik, dört etkenli puan" : "Arazi, yükseklik",
+    $("#altbaslik").textContent = {iklim:"İklim sınıfları, Köppen-Geiger", arazi: TK && ayar.araziMod==="levha" ? "Levhalar, sınırlar ve volkan kuşakları" : BI && ayar.araziMod==="bitki" ? "Doğal bitki örtüsü, iklimden" : TP && ayar.araziMod==="toprak" ? "Toprak türleri, WRB" : YS && ayar.araziMod==="yasam" ? "Yaşanabilirlik, on bir etkenli puan" : TR && ayar.araziMod==="tarim" ? "Tarımsal verimlilik, dört etkenli puan" : HY && ayar.araziMod==="hayvan" ? (ayar.hayvanMod==="zengin" ? "Tür zenginliği" : "Hayvan toplulukları") : "Arazi, yükseklik",
       sicaklik: ayar.sicMod!=="ort" && gunlukAl(D) ? "Sıcaklık, "+SIC_MOD[ayar.sicMod]+", "+(donem<0 ? (ayar.sicMod==="tepe" ? "yılın en sıcak ayı" : ayar.sicMod==="dip" ? "yılın en soğuk ayı" : "yıllık ortalama") : AYLAR[donem])
         : "Sıcaklık, "+(donem<0 ? "yıllık ortalama" : AYLAR[donem]),
       yagis:"Yağış, "+(donem<0 ? "yıllık toplam" : AYLAR[donem]),
@@ -1518,6 +1574,17 @@ function baslat(J, resimler){
       el.innerHTML = araziSec + suSec + `<div class="bk-not">` + Object.entries(TRJ.siniflar).filter(([, c]) => c[pk] >= 0.005).map(([, c]) =>
         `<span><i style="background:rgb(${c.renk.join(",")})"></i>${c.ad} <b>%${Math.round(c[pk]*100)}</b></span>`).join("") + `</div>`;
       return; }
+    if(katman==="arazi" && HY && ayar.araziMod==="hayvan"){
+      const zen = ayar.hayvanMod === "zengin" && resimler.hayvanZengin;
+      const sec = `<div class="dol-ust"><div class="secim kucuk" role="radiogroup" aria-label="Hayvan okuması">`
+        + [["topluluk","Topluluklar"],["zengin","Tür zenginliği"]].map(([k, t]) =>
+          `<button role="radio" data-hayvanmod="${k}" aria-checked="${zen ? k==="zengin" : k==="topluluk"}">${t}</button>`).join("") + `</div></div>`;
+      const liste = Object.entries(zen ? HYJ.zenginlik : HYJ.topluluklar).filter(([, c]) => c.pay >= 0.005);
+      if(!zen) liste.sort((a, b) => b[1].pay - a[1].pay);
+      // 11 topluluk iki satırda yatay kayıyordu ve sondakiler görünmüyordu: üç sütunlu ızgara
+      el.innerHTML = araziSec + sec + `<div class="bk-not"${liste.length > 8 ? ' style="grid-auto-flow:row;grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr));overflow:hidden"' : ""}>` + liste.map(([, c]) =>
+        `<span><i style="background:rgb(${c.renk.join(",")})"></i>${c.kisa || c.ad} <b>%${Math.round(c.pay*100)}</b></span>`).join("") + `</div>`;
+      return; }
     if(katman==="arazi" && TP && ayar.araziMod==="toprak"){
       const liste = Object.entries(TPJ.topraklar).filter(([, t]) => t.pay >= 0.005).sort((a, b) => b[1].pay - a[1].pay);
       el.innerHTML = araziSec + `<div class="bk-not">` + liste.map(([, t]) =>
@@ -1547,7 +1614,8 @@ function baslat(J, resimler){
   addEventListener("resize", () => etiketCakismasi());
 
   $("#aciklama").addEventListener("click", e => {
-    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]"), yk = e.target.closest("[data-yasamkiyi]"), ts = e.target.closest("[data-tarimsu]");
+    const z = e.target.closest("[data-zemin]"), p = e.target.closest("#parcacik-ac"), sm = e.target.closest("[data-sicmod]"), am = e.target.closest("[data-arazimod]"), yk = e.target.closest("[data-yasamkiyi]"), ts = e.target.closest("[data-tarimsu]"), hm = e.target.closest("[data-hayvanmod]");
+    if(hm){ ayar.hayvanMod = hm.dataset.hayvanmod; ayarYaz(); HYK = null; katmanSec("arazi"); ciz(); }
     if(ts){ ayar.tarimSu = ts.dataset.tarimsu; ayarYaz(); TRK = null; katmanSec("arazi"); ciz(); }
     if(yk){ ayar.yasamKiyi = yk.dataset.yasamkiyi; ayarYaz(); YK = null; katmanSec("arazi"); ciz(); }
     if(am){ ayar.araziMod = am.dataset.arazimod; ayarYaz(); katmanSec("arazi"); ciz(); }
@@ -1612,7 +1680,7 @@ function baslat(J, resimler){
   for(const b of kaynakDugme) b.hidden = !KAB[b.dataset.kaynak];
   if(kaynakDugme.filter(b=>!b.hidden).length < 2) $("#kabartma-kaynak").hidden = true;
   for(const b of kaynakDugme) b.addEventListener("click", () => {
-    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); BK = null; TPK = null; YK = null; TRK = null; ciz(); });
+    ayar.kabartmaKaynak = b.dataset.kaynak; ayarYaz(); kaynakYaz(); kabartmaKur(); BK = null; TPK = null; YK = null; TRK = null; HYK = null; ciz(); });
   kaynakYaz();
   const suKolDugme = [...document.querySelectorAll("#su-kollar button")];
   function suKolYaz(){ for(const b of suKolDugme){ b.setAttribute("aria-checked", String(b.dataset.sukol===ayar.suKol)); b.disabled = !ayar.su; }
@@ -1622,7 +1690,7 @@ function baslat(J, resimler){
   suKolYaz();
   for(const [id, k] of [["ay-kabartma","kabartma"],["ay-piksel","piksel"],["ay-izgara","izgara"],["ay-deniz","deniz"],["ay-bant","bant"],["ay-su","su"]]){
     const el = $("#"+id); el.checked = ayar[k];
-    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); if(k==="kabartma"){ BK = null; TPK = null; YK = null; TRK = null; } katmanSec(katman); });
+    el.addEventListener("change", () => { ayar[k] = el.checked; ayarYaz(); kaynakYaz(); suKolYaz(); if(k==="kabartma"){ BK = null; TPK = null; YK = null; TRK = null; HYK = null; } katmanSec(katman); });
   }
   $("#kunye").innerHTML = D.J.facts.map(([b,v])=>`<dt>${b}</dt><dd>${virgul(v)}</dd>`).join("")
     + `<dt>hücre</dt><dd>${virgul(((B[2]-B[0])/W).toFixed(2))}°</dd>`;
@@ -1655,6 +1723,7 @@ function baslat(J, resimler){
       + toprakSatiri(lon, lat)
       + yasamSatiri(lon, lat)
       + tarimSatiri(lon, lat)
+      + hayvanSatiri(lon, lat)
       + `<div class="k-alt"><span>${konum} · ${eksi(Math.round(D.elev[i]).toLocaleString("tr-TR"))} m</span><span>sıcaklık °C · yağış mm</span></div>`;
   }
   // "Temmuz: gündüz 33°, gece 22° · her yıl ~41° / ~18° · 30 yılda bir ~46°"
@@ -1910,7 +1979,7 @@ async function acilis(){
   let J, resimler;
   try {
     J = await veriCek();
-    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri, tarimJ, tarim, tarimVeri, tarimYagmur, tarimYagmurVeri] = await Promise.all([
+    const [doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri, tarimJ, tarim, tarimVeri, tarimYagmur, tarimYagmurVeri, hayvanJ, hayvan, hayvanZengin, hayvanVeri] = await Promise.all([
       ...["data/doku.png","data/yukseklik.png","data/kabartma.jpg"].map(resimYukle),
       resimYukle("data/kabartma_gri.jpg").catch(() => null),     // eski veride yok
       resimYukle("data/kabartma_bir.jpg").catch(() => null),
@@ -1939,8 +2008,13 @@ async function acilis(){
       resimYukle("data/tarim.png").catch(() => null),
       resimYukle("data/tarim_veri.png").catch(() => null),
       resimYukle("data/tarim_yagmur.png").catch(() => null),
-      resimYukle("data/tarim_yagmur_veri.png").catch(() => null)]);
-    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri, tarimJ, tarim, tarimVeri, tarimYagmur, tarimYagmurVeri};
+      resimYukle("data/tarim_yagmur_veri.png").catch(() => null),
+      // hayvanlar da isteğe bağlı (hayvan/hayvan.py)
+      fetch("data/hayvan.json", {cache:"no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null),
+      resimYukle("data/hayvan.png").catch(() => null),
+      resimYukle("data/hayvan_zengin.png").catch(() => null),
+      resimYukle("data/hayvan_veri.png").catch(() => null)]);
+    resimler = {doku, yukseklik, kabartma, kabartmaGri, kabartmaBir, dolasim, su, tekt, levha, bitkiJ, bitki, bitkiVeri, toprakJ, toprak, toprakVeri, yasamJ, yasam, yasamVeri, yasamDar, yasamDarVeri, tarimJ, tarim, tarimVeri, tarimYagmur, tarimYagmurVeri, hayvanJ, hayvan, hayvanZengin, hayvanVeri};
   } catch(e){ $("#yukleniyor").innerHTML = `<span>Atlas yüklenemedi<br><small style="text-transform:none;letter-spacing:0">${e.message}. İlk açılış için internet bağlantısı gerekli; sonra çevrimdışı da açılır.</small></span>`; return; }
   try { const once = localStorage.getItem("veri-surum");
     if(once && once!==J.surum) setTimeout(()=>bildir("Yeni veri yüklendi · "+tarih(J.uretim)), 600);

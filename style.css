@@ -39,8 +39,8 @@ svg{display:block}
 /* ---- harita ---- */
 #harita{position:fixed;inset:0;touch-action:none;user-select:none;-webkit-user-select:none}
 #gl{position:absolute;inset:0;width:100%;height:100%}
-#su,#tekt,#bitki,#toprak,#yasam,#tarim,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#su,#tekt,#bitki,#toprak,#yasam,#tarim{transform-origin:0 0;will-change:transform}
+#su,#tekt,#bitki,#toprak,#yasam,#tarim,#hayvan,#parcacik{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#su,#tekt,#bitki,#toprak,#yasam,#tarim,#hayvan{transform-origin:0 0;will-change:transform}
 #kaplama{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transform-origin:0 0;will-change:transform}
 #kaplama text{font:500 10px var(--sans);letter-spacing:.06em;fill:rgba(228,223,211,.5)}
 
@@ -96,7 +96,7 @@ svg{display:block}
 .bk-not{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);gap:4px 14px;margin-bottom:4px;font-size:11px;color:var(--yazi-2);overflow-x:auto;scrollbar-width:none;white-space:nowrap}
 .bk-not::-webkit-scrollbar{display:none}
 .bk-not span{display:flex;align-items:center;gap:5px}
-.bk-not i{display:block;width:11px;height:11px;border-radius:2px}
+.bk-not i{display:block;flex:none;width:11px;height:11px;border-radius:2px}
 .bk-not b{font-weight:500;color:var(--soluk)}
 .gruplar{display:flex;align-items:center;gap:12px;width:100%;text-align:left}
 .gruplar .cubuk{flex:1;display:flex;height:7px;border-radius:1px;overflow:hidden}

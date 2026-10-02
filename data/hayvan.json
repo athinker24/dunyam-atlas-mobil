@@ -1,0 +1,211 @@
+{
+ "ne": "Dünyam hayvan toplulukları ve tür zenginliği (hayvan/hayvan.py); yöntem HAYVAN.md",
+ "kesit": [
+  -44.47265625,
+  -7.119140625,
+  43.154296875,
+  60.029296875
+ ],
+ "kodlar": "hayvan.png (topluluk), hayvan_zengin.png (zenginlik sınıfı); hayvan_veri.png R topluluk, G zenginlik sınıfı, B zenginlik × 250",
+ "topluluklar": {
+  "1": {
+   "ad": "Tropik orman",
+   "kisa": "Tropik orman",
+   "ne": "Katmanlı, sürekli yeşil orman: ağaçta yaşayan türler baskın, tür sayısı en yüksek.",
+   "hayvanlar": "primatlar, papağan ve tukanlar, ağaç kurbağaları, jaguar ya da leopar",
+   "ornek": "Amazon, Kongo havzası",
+   "renk": [
+    30,
+    110,
+    70
+   ],
+   "pay": 0.0305
+  },
+  "2": {
+   "ad": "Savan sürüleri",
+   "kisa": "Savan",
+   "ne": "Otlak ve seyrek ağaç: büyük otobur sürüleri ve onları izleyen yırtıcılar, yağmura göre göç.",
+   "hayvanlar": "zebra ve antiloplar, fil, zürafa, aslan, sırtlan, akbaba",
+   "ornek": "Serengeti, Sahel'in güneyi, Cerrado",
+   "renk": [
+    196,
+    170,
+    80
+   ],
+   "pay": 0.1033
+  },
+  "3": {
+   "ad": "Ilıman orman",
+   "kisa": "Ilıman orman",
+   "ne": "Mevsimli yaprak döken ya da karışık orman: orta boy memeliler ve ötücü kuşlar.",
+   "hayvanlar": "kızıl geyik, yaban domuzu, boz ayı, kurt, porsuk, ağaçkakan",
+   "ornek": "Orta Avrupa, Doğu ABD, Kuzeydoğu Çin",
+   "renk": [
+    92,
+    150,
+    90
+   ],
+   "pay": 0.3915
+  },
+  "4": {
+   "ad": "Maki",
+   "kisa": "Maki",
+   "ne": "Kurak yazlı sert yapraklı çalılık: kuraklığa dayanıklı küçük memeliler ve sürüngenler.",
+   "hayvanlar": "yaban keçisi, tavşan, kertenkele ve yılanlar, kartal",
+   "ornek": "Akdeniz kıyıları, Kaliforniya",
+   "renk": [
+    160,
+    150,
+    90
+   ],
+   "pay": 0.0803
+  },
+  "5": {
+   "ad": "Bozkır sürüleri",
+   "kisa": "Bozkır",
+   "ne": "Ağaçsız serin otlak: hızlı koşan otoburlar, yuvalı kemiriciler, açık alan yırtıcıları.",
+   "hayvanlar": "yaban atı, saiga antilobu, bizon, dağ sıçanı ve yer sincabı, step kartalı",
+   "ornek": "Kazak bozkırı, Moğolistan, Büyük Ovalar",
+   "renk": [
+    214,
+    196,
+    120
+   ],
+   "pay": 0.123
+  },
+  "6": {
+   "ad": "Kuzey ormanı",
+   "kisa": "Kuzey ormanı",
+   "ne": "İğne yapraklı tayga: uzun kış, az tür ama geniş alanlı büyük memeliler.",
+   "hayvanlar": "sığın, kurt, vaşak, samur, boz ayı, orman tavuğu",
+   "ornek": "Sibirya taygası, Kanada",
+   "renk": [
+    52,
+    96,
+    92
+   ],
+   "pay": 0.0538
+  },
+  "7": {
+   "ad": "Tundra göçmenleri",
+   "kisa": "Tundra",
+   "ne": "Ağaçsız soğuk ova: yazın göçmen kuşlar ve sürüler gelir, kışın çok azı kalır.",
+   "hayvanlar": "ren geyiği, kutup tilkisi, lemming, kar baykuşu, göçmen kazlar",
+   "ornek": "Kuzey Kanada, Yamal",
+   "renk": [
+    150,
+    170,
+    170
+   ],
+   "pay": 0.0285
+  },
+  "8": {
+   "ad": "Çöl",
+   "kisa": "Çöl",
+   "ne": "Kurak ve seyrek: gece etkin, susuzluğa dayanıklı küçük hayvanlar.",
+   "hayvanlar": "deve, çöl tilkisi, jerboa, akrep, kertenkele",
+   "ornek": "Sahra, Gobi",
+   "renk": [
+    222,
+    190,
+    140
+   ],
+   "pay": 0.0035
+  },
+  "9": {
+   "ad": "Dağ",
+   "kisa": "Dağ",
+   "ne": "Yüksek ve dik arazi: kayalık uzmanı otoburlar ve geniş alanlı yırtıcılar; yükseklikle kuşak kuşak değişir.",
+   "hayvanlar": "yaban keçisi, dağ koyunu, kar leoparı, yak, akbaba",
+   "ornek": "Himalaya, Alpler, And dağları",
+   "renk": [
+    130,
+    110,
+    120
+   ],
+   "pay": 0.0932
+  },
+  "10": {
+   "ad": "Sulak alan, nehir",
+   "kisa": "Sulak alan",
+   "ne": "Büyük nehir yatağı ve göl kıyısı: su kuşları, balık ve suya bağlı memeliler; göç yolları.",
+   "hayvanlar": "balıkçıl ve flamingolar, ördek ve kazlar, su samuru, sıcakta timsah ve su aygırı",
+   "ornek": "Okavango, Tuna deltası, Pantanal",
+   "renk": [
+    70,
+    140,
+    190
+   ],
+   "pay": 0.072
+  },
+  "11": {
+   "ad": "Buz",
+   "kisa": "Buz",
+   "ne": "Kalıcı buz örtüsü: kara hayvanı yok denecek kadar az.",
+   "hayvanlar": "kıyıda fok ve deniz kuşları",
+   "ornek": "Antarktika, Grönland'ın içi",
+   "renk": [
+    232,
+    236,
+    240
+   ],
+   "pay": 0.0203
+  }
+ },
+ "zenginlik": {
+  "1": {
+   "ad": "Çok düşük",
+   "renk": [
+    70,
+    60,
+    90
+   ],
+   "pay": 0.2294
+  },
+  "2": {
+   "ad": "Düşük",
+   "renk": [
+    70,
+    100,
+    150
+   ],
+   "pay": 0.1443
+  },
+  "3": {
+   "ad": "Orta",
+   "renk": [
+    60,
+    150,
+    140
+   ],
+   "pay": 0.1591
+  },
+  "4": {
+   "ad": "Yüksek",
+   "renk": [
+    120,
+    190,
+    90
+   ],
+   "pay": 0.3784
+  },
+  "5": {
+   "ad": "Çok yüksek",
+   "renk": [
+    230,
+    210,
+    80
+   ],
+   "pay": 0.0684
+  },
+  "6": {
+   "ad": "Buz",
+   "renk": [
+    232,
+    236,
+    240
+   ],
+   "pay": 0.0203
+  }
+ }
+}

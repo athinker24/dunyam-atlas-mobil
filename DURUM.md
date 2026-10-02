@@ -101,7 +101,9 @@ dokuz etkenli puana yazıldı (`YASAM.md`). Tarımsal verimlilik ("yalnız topra
 belirlemez") 1 Ekim'de ayrı katman oldu (`TARIM.md`). Toprak, yaşanabilirlik ve tarım
 veri.yml ile üretilmez, elle koşulur. Sahibinin sırası (2 Ekim): hastalık ve taşkın (yapıldı) →
 nehir akış rejimi (yapıldı) → arayüzün gruplanması (yapıldı: A düzeni, dört bölüm ve
-çipler, keskin köşeler) → hayvanlar. Üçü `arayuz-gruplar` dalında, birleştirilmedi.
+çipler, keskin köşeler) → hayvanlar (yapıldı: topluluklar ve tür zenginliği, `HAYVAN.md`). Dördü üst üste dallarda,
+en üstteki `hayvanlar` hepsini taşır; birleştirilmedi. Ansiklopedide kalan: toplumlar/zincir
+("olası okuma, tahmin değil" etiketiyle; Toplum bölümü şimdilik pasif).
 
 ## Tektonik katman (27 Eylül)
 
