@@ -6,8 +6,8 @@
   43.154296875,
   60.029296875
  ],
- "ortalama": 56.0,
- "ortalama_dar": 55.9,
+ "ortalama": 64.5,
+ "ortalama_dar": 64.4,
  "yukseklik": 764,
  "kodlar": "yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin yanı); yasam*_veri.png dikey 5 bölüm: 0 = R sınıf + 16 * su erişimli, G puan * 2.5; 1-4 = on bir etken 0-255 (RGB sırayla)",
  "etkenler": [
@@ -78,8 +78,8 @@
     62
    ],
    "alt": 0,
-   "pay": 0.2267,
-   "pay_dar": 0.2267
+   "pay": 0.1335,
+   "pay_dar": 0.1336
   },
   "2": {
    "ad": "Çok zor",
@@ -91,8 +91,8 @@
     64
    ],
    "alt": 25,
-   "pay": 0.0432,
-   "pay_dar": 0.0434
+   "pay": 0.0415,
+   "pay_dar": 0.0416
   },
   "3": {
    "ad": "Zor",
@@ -104,8 +104,8 @@
     78
    ],
    "alt": 45,
-   "pay": 0.0598,
-   "pay_dar": 0.0605
+   "pay": 0.0461,
+   "pay_dar": 0.0466
   },
   "4": {
    "ad": "Orta",
@@ -117,8 +117,8 @@
     104
    ],
    "alt": 62,
-   "pay": 0.4217,
-   "pay_dar": 0.423
+   "pay": 0.5149,
+   "pay_dar": 0.5168
   },
   "5": {
    "ad": "Elverişli",
@@ -130,8 +130,8 @@
     88
    ],
    "alt": 78,
-   "pay": 0.1589,
-   "pay_dar": 0.1582
+   "pay": 0.217,
+   "pay_dar": 0.2157
   },
   "6": {
    "ad": "Çok elverişli",
@@ -143,8 +143,8 @@
     84
    ],
    "alt": 90,
-   "pay": 0.071,
-   "pay_dar": 0.0693
+   "pay": 0.0469,
+   "pay_dar": 0.0458
   },
   "7": {
    "ad": "Buz",
@@ -156,8 +156,8 @@
     240
    ],
    "alt": null,
-   "pay": 0.0188,
-   "pay_dar": 0.0188
+   "pay": 0.0,
+   "pay_dar": 0.0
   }
  }
 }
