@@ -30,14 +30,14 @@ Dünyam kurgusal bir gezegen: yarıçap 6371 km, gün 15 saat, eksen eğikliği 
 
 | levha | tür | alan (milyon km²) | kara payı | hareket (Kuzey'e göre) | komşular |
 |---|---|---|---|---|---|
-| Kuzey | kıta + okyanus | 55.8 | %28 | sabit (çerçeve) | Alt Kıta, Batı Okyanusu, Doğu Okyanusu, Ege, Kuzey Kutup, Kuzeydoğu, Uzak Okyanus, İber |
-| Kuzeydoğu | kıta (küçük) | 3.4 | %77 | doğuya 1.5 cm/yıl | Doğu Okyanusu, Kuzey |
-| İber | kıta (küçük) | 6.7 | %75 | kuzeye 0.5 cm/yıl | Batı Okyanusu, Ege, Güneybatı, Kuzey |
+| Kuzey | kıta + okyanus | 57.1 | %30 | sabit (çerçeve) | Alt Kıta, Batı Okyanusu, Doğu Okyanusu, Ege, Kuzey Kutup, Kuzeydoğu, Uzak Okyanus, İber |
+| Kuzeydoğu | kıta (küçük) | 2.7 | %71 | doğuya 1.5 cm/yıl | Doğu Okyanusu, Kuzey |
+| İber | kıta (küçük) | 5.5 | %70 | kuzeye 0.5 cm/yıl | Batı Okyanusu, Ege, Güneybatı, Kuzey |
 | Ege | kıta parçaları + deniz (mikro) | 4.5 | %32 | güneye 2.1 cm/yıl | Alt Kıta, Güneybatı, Kuzey, İber |
-| Güneybatı | kıta + okyanus | 23.4 | %38 | kuzeye 1.0 cm/yıl | Alt Kıta, Batı Okyanusu, Ege, Güney Kutup, Yarımada, İber |
-| Yarımada | kıta (mikro) | 4.6 | %49 | kuzeybatıya 2.2 cm/yıl | Alt Kıta, Güneybatı |
-| Alt Kıta | kıta + okyanus | 20.6 | %41 | kuzeye 4.0 cm/yıl | Doğu Okyanusu, Ege, Güney Kutup, Güneybatı, Kuzey, Yarımada |
-| Batı Okyanusu | okyanus (üstünde küçük kıta) | 77.1 | %2 | doğuya 4.6 cm/yıl | Güney Kutup, Güneybatı, Kuzey, Uzak Okyanus, İber |
+| Güneybatı | kıta + okyanus | 23.1 | %38 | kuzeye 1.0 cm/yıl | Alt Kıta, Batı Okyanusu, Ege, Güney Kutup, Yarımada, İber |
+| Yarımada | kıta (mikro) | 4.5 | %47 | kuzeybatıya 2.2 cm/yıl | Alt Kıta, Güneybatı |
+| Alt Kıta | kıta + okyanus | 21.3 | %43 | kuzeye 4.0 cm/yıl | Doğu Okyanusu, Ege, Güney Kutup, Güneybatı, Kuzey, Yarımada |
+| Batı Okyanusu | okyanus (üstünde küçük kıta) | 77.5 | %2 | doğuya 4.6 cm/yıl | Güney Kutup, Güneybatı, Kuzey, Uzak Okyanus, İber |
 | Doğu Okyanusu | okyanus | 97.5 | %0 | batıya 5.2 cm/yıl | Alt Kıta, Büyük Okyanus, Güney Kutup, Kuzey, Kuzey Kutup, Kuzeydoğu |
 | Büyük Okyanus | okyanus | 110.1 | %0 | kuzeydoğuya 1.8 cm/yıl | Doğu Okyanusu, Güney Kutup, Kuzey Kutup, Uzak Okyanus |
 | Uzak Okyanus | okyanus | 131.3 | %0 | batıya 3.2 cm/yıl | Batı Okyanusu, Büyük Okyanus, Güney Kutup, Kuzey, Kuzey Kutup |
@@ -58,40 +58,40 @@ Uzunluğa göre sıralı; 150 km'den kısa parçalar tabloda yok (hepsi `ozet.js
 | Güney sırtı | Batı Okyanusu / Güney Kutup | okyanus dönüşüm fayı (%58) | 8137 | -1.1 | — | [tasarım] Batı Okyanusu ile Güney Kutup yan yana kayıyor. |
 | Güneydoğu sırtı | Büyük Okyanus / Güney Kutup | okyanus sırtı (%79) | 6965 | -0.8 | — | [tasarım] Büyük Okyanus ile Güney Kutup birbirinden ayrılıyor (0.8 cm/yıl). |
 | Batı sırtı | Kuzey / Uzak Okyanus | okyanus sırtı (%72) | 6754 | -0.8 | — | [tasarım] Kuzey ile Uzak Okyanus birbirinden ayrılıyor (0.8 cm/yıl). |
-| 6 çarpışması ve güney uzantısı | Batı Okyanusu / Güneybatı | dalma (%60) | 5903 | +2.8 | Güneybatı | Batı Okyanusu, Güneybatı levhasının altına dalıyor (2.8 cm/yıl). Batı Okyanusu'nun taşıdığı küçük kıta Güneybatı bloğuna çarpıyor (6, etkin); güneyinde okyanusal dalma. |
+| 6 çarpışması ve güney uzantısı | Batı Okyanusu / Güneybatı | dalma (%63) | 5568 | +3.0 | Güneybatı | Batı Okyanusu, Güneybatı levhasının altına dalıyor (3.0 cm/yıl). Batı Okyanusu'nun taşıdığı küçük kıta Güneybatı bloğuna çarpıyor (6, etkin); güneyinde okyanusal dalma. |
 | Güney sırtı | Doğu Okyanusu / Güney Kutup | okyanus dönüşüm fayı (%66) | 4928 | +0.5 | — | [tasarım] Doğu Okyanusu ile Güney Kutup yan yana kayıyor. |
 | 27°K dönüşüm fayı | Batı Okyanusu / Kuzey | okyanus dönüşüm fayı (%80) | 4686 | +0.8 | — | [tasarım] Batı Okyanusu ile Kuzey yan yana kayıyor. |
 | Batı dalması (And tipi) | Batı Okyanusu / Güneybatı | dalma (%63) | 4489 | +2.5 | Güneybatı | Batı Okyanusu, Güneybatı levhasının altına dalıyor (2.5 cm/yıl). Batı Okyanusu, Güneybatı bloğunun altına dalıyor (And tipi); kıyıda volkanlar. |
 | Uzak güney sırtı | Güney Kutup / Uzak Okyanus | okyanus sırtı (%88) | 4441 | -1.5 | — | [tasarım] Güney Kutup ile Uzak Okyanus birbirinden ayrılıyor (1.5 cm/yıl). |
 | Güney sırtı | Alt Kıta / Güney Kutup | okyanus sırtı (%89) | 3882 | -3.1 | — | [tasarım] Alt Kıta ile Güney Kutup birbirinden ayrılıyor (3.1 cm/yıl). |
-| 5 dikişi (Pireneler benzeri) | Kuzey / İber | kıta çarpışması (%70) | 3796 | +0.4 | Kuzey | İber, Kuzey levhasına çarpıyor, altına giriyor (0.4 cm/yıl). İber bloğu kuzeye, Kuzey levhasına çarpmış; 5 dağları (Pireneler benzeri). |
 | Güney sırtı | Güney Kutup / Güneybatı | okyanus sırtı (%96) | 3628 | -1.2 | — | [tasarım] Güney Kutup ile Güneybatı birbirinden ayrılıyor (1.2 cm/yıl). |
-| Ege çukuru | Ege / Güneybatı | dalma (%89) | 3238 | +2.1 | Ege | Güneybatı, Ege levhasının altına dalıyor (2.1 cm/yıl). İç deniz tabanı (Güneybatı levhası) kuzeye, Ege'nin altına dalıyor; adaların güneyinde volkan yayı. |
+| 5 dikişi (Pireneler benzeri) | Kuzey / İber | kıta çarpışması (%66) | 3238 | +0.5 | Kuzey | İber, Kuzey levhasına çarpıyor, altına giriyor (0.4 cm/yıl). İber bloğu kuzeye, Kuzey levhasına çarpmış; 5 dağları (Pireneler benzeri). |
+| Ege çukuru | Ege / Güneybatı | dalma (%89) | 3237 | +2.1 | Ege | Güneybatı, Ege levhasının altına dalıyor (2.1 cm/yıl). İç deniz tabanı (Güneybatı levhası) kuzeye, Ege'nin altına dalıyor; adaların güneyinde volkan yayı. |
 | Kuzey doğu kıyısı | Doğu Okyanusu / Kuzey | dalma (%100) | 3060 | +3.0 | Kuzey | Doğu Okyanusu, Kuzey levhasının altına dalıyor (3.0 cm/yıl). Doğu Okyanusu, Kuzey ve Kuzeydoğu levhalarının altına dalıyor. |
 | Kuzey kutup sınırı | Büyük Okyanus / Kuzey Kutup | dalma (%84) | 2999 | +1.6 | Kuzey Kutup | [tasarım] Büyük Okyanus, Kuzey Kutup levhasının altına dalıyor (1.6 cm/yıl). |
 | Güneybatı-Alt kıta güney | Alt Kıta / Güneybatı | okyanus dönüşüm fayı (%95) | 2650 | +0.3 | — | Alt Kıta ile Güneybatı yan yana kayıyor. Güneye uzanan yanal fay: iki levha aynı yönde farklı hızla kuzeye gidiyor. |
-| Yarımada güneyi | Güneybatı / Yarımada | okyanus dönüşüm fayı (%58) | 2632 | +0.7 | — | Güneybatı ile Yarımada yan yana kayıyor. Yarımadanın güneyi, çoğunlukla yanal. |
-| Duvar dikişi | Alt Kıta / Kuzey | kıta çarpışması (%90) | 2597 | +3.8 | Kuzey | Alt Kıta, Kuzey levhasına çarpıyor, altına giriyor (3.8 cm/yıl). Büyük çarpışma cephesi: Alt Kıta kuzeye, Kuzey levhasının altına giriyor (Himalaya benzeri). Duvar dağları (3) bunun ürünü. |
+| Yarımada güneyi | Güneybatı / Yarımada | okyanus dönüşüm fayı (%60) | 2576 | +0.7 | — | Güneybatı ile Yarımada yan yana kayıyor. Yarımadanın güneyi, çoğunlukla yanal. |
+| Duvar dikişi | Alt Kıta / Kuzey | kıta çarpışması (%91) | 2537 | +3.9 | Kuzey | Alt Kıta, Kuzey levhasına çarpıyor, altına giriyor (3.9 cm/yıl). Büyük çarpışma cephesi: Alt Kıta kuzeye, Kuzey levhasının altına giriyor (Himalaya benzeri). Duvar dağları (3) bunun ürünü. |
 | Kuzey kutup sınırı | Kuzey Kutup / Uzak Okyanus | dalma (%94) | 2456 | +0.7 | Kuzey Kutup | [tasarım] Uzak Okyanus, Kuzey Kutup levhasının altına dalıyor (0.7 cm/yıl). |
 | İber-Güneybatı boğazı | Güneybatı / İber | kıta çarpışması (%50) | 2381 | +0.5 | Güneybatı | İber, Güneybatı levhasına çarpıyor, altına giriyor (0.5 cm/yıl). İber ile Güneybatı arası boğaz; yavaş yakınlaşma (Cebelitarık benzeri). |
+| 9 (kaçış bloğu batısı) | Kuzey / Kuzeydoğu | kıta yarığı (%99) | 2308 | -1.1 | — | Kuzey ile Kuzeydoğu birbirinden ayrılıyor (1.1 cm/yıl). Kuzeydoğu kaçış bloğunun batı sınırı (9): blok doğuya giderken açılan Baykal tipi yarık. |
 | Ege doğu sınırı | Alt Kıta / Ege | okyanus dönüşüm fayı (%54) | 2051 | +0.9 | — | Alt Kıta ile Ege yan yana kayıyor. Ege ile Alt Kıta arası, çoğunlukla yanal (Alt Kıta kuzeye, Ege güneye). |
 | Yarımada boğazı | Alt Kıta / Yarımada | okyanus sırtı (%63) | 2044 | -2.8 | — | Alt Kıta ile Yarımada birbirinden ayrılıyor (2.8 cm/yıl). Yarımada ile Alt Kıta arası boğaz: açılan yarık (yarımada Alt Kıta'dan kopuyor). |
-| 9 (kaçış bloğu batısı) | Kuzey / Kuzeydoğu | kıta yarığı (%100) | 1943 | -1.3 | — | Kuzey ile Kuzeydoğu birbirinden ayrılıyor (1.3 cm/yıl). Kuzeydoğu kaçış bloğunun batı sınırı (9): blok doğuya giderken açılan Baykal tipi yarık. |
 | Ege yay ardı sınırı | Ege / Kuzey | kıta yarığı (%89) | 1879 | -2.0 | — | Ege ile Kuzey birbirinden ayrılıyor (2.0 cm/yıl). Ege güneye çekilirken arkasında açılan yay ardı yarığı (iç denizin kuzeyi). |
 | Kuzey doğu kıyısı | Doğu Okyanusu / Kuzeydoğu | dalma (%100) | 1660 | +5.1 | Kuzeydoğu | Doğu Okyanusu, Kuzeydoğu levhasının altına dalıyor (5.1 cm/yıl). Doğu Okyanusu, Kuzey ve Kuzeydoğu levhalarının altına dalıyor. |
-| kaçış bloğu güneyi | Kuzey / Kuzeydoğu | kıta dönüşüm fayı (%78) | 1616 | -0.2 | — | Kuzey ile Kuzeydoğu yan yana kayıyor. Kaçış bloğunun güney sınırı (Duvar'ın kuzey eteği), yanal. |
+| kaçış bloğu güneyi | Kuzey / Kuzeydoğu | kıta dönüşüm fayı (%80) | 1594 | -0.2 | — | Kuzey ile Kuzeydoğu yan yana kayıyor. Kaçış bloğunun güney sınırı (Duvar'ın kuzey eteği), yanal. |
 | Ege batı sınırı | Ege / İber | okyanus dönüşüm fayı (%53) | 1584 | -0.7 | — | Ege ile İber yan yana kayıyor. Ege ile İber arası, çoğunlukla yanal. |
-| 4 dikişi (Alpler) | Güneybatı / Yarımada | kıta çarpışması (%100) | 1542 | +1.5 | Yarımada | Güneybatı, Yarımada levhasına çarpıyor, altına giriyor (1.5 cm/yıl). Yarımada batıya, Güneybatı bloğuna çarpıyor; 4 dağları (Alpler benzeri). Yarımada üst levha. |
-| 2 (kaçış bloğu kuzeyi) | Kuzey / Kuzeydoğu | kıta dönüşüm fayı (%42) | 1524 | +0.3 | — | Kuzey ile Kuzeydoğu yan yana kayıyor. Kaçış bloğunun kuzey sınırı (2 dağları), çoğunlukla yanal. |
+| 2 (kaçış bloğu kuzeyi) | Kuzey / Kuzeydoğu | kıta dönüşüm fayı (%38) | 1437 | +0.3 | — | Kuzey ile Kuzeydoğu yan yana kayıyor. Kaçış bloğunun kuzey sınırı (2 dağları), çoğunlukla yanal. |
+| Yarımada kuzeyi (Tiren) | Güneybatı / Yarımada | kıta dönüşüm fayı (%48) | 1400 | -0.3 | — | Güneybatı ile Yarımada yan yana kayıyor. Yarımadanın kuzeyi, yanal; kuzeyindeki körfez Tiren benzeri gerilme havzası. |
+| 4 dikişi (Alpler) | Güneybatı / Yarımada | kıta çarpışması (%100) | 1312 | +2.0 | Yarımada | Güneybatı, Yarımada levhasına çarpıyor, altına giriyor (2.0 cm/yıl). Yarımada batıya, Güneybatı bloğuna çarpıyor; 4 dağları (Alpler benzeri). Yarımada üst levha. |
 | Kuzey kutup sınırı | Doğu Okyanusu / Kuzey Kutup | dalma (%90) | 1295 | +2.5 | Kuzey Kutup | [tasarım] Doğu Okyanusu, Kuzey Kutup levhasının altına dalıyor (2.5 cm/yıl). |
 | İber batı kıyısı | Kuzey / İber | okyanus dönüşüm fayı (%100) | 1169 | +0.1 | — | Kuzey ile İber yan yana kayıyor. İber bloğunun batı kıyısı, yanal. |
 | Duvar doğu ucu | Alt Kıta / Kuzey | dalma (%68) | 1166 | +3.2 | Kuzey | Alt Kıta, Kuzey levhasının altına dalıyor (3.2 cm/yıl). Duvar'ın doğu ucu, kıyıya kadar. |
-| Yarımada kuzeyi (Tiren) | Güneybatı / Yarımada | okyanus dönüşüm fayı (%51) | 1098 | -0.3 | — | Güneybatı ile Yarımada yan yana kayıyor. Yarımadanın kuzeyi, yanal; kuzeyindeki körfez Tiren benzeri gerilme havzası. |
 | Uzak güney sırtı | Güney Kutup / Uzak Okyanus | okyanus dönüşüm fayı (%88) | 879 | -0.1 | — | [tasarım] Güney Kutup ile Uzak Okyanus yan yana kayıyor. |
 | Güneybatı-Alt kıta | Alt Kıta / Güneybatı | kıta dönüşüm fayı (%54) | 732 | -0.8 | — | Alt Kıta ile Güneybatı yan yana kayıyor. Güneybatı ile Alt Kıta arası, yanal. |
 | İber-Güneybatı boğazı | Batı Okyanusu / İber | dalma (%71) | 378 | +1.6 | İber | Batı Okyanusu, İber levhasının altına dalıyor (1.6 cm/yıl). İber ile Güneybatı arası boğaz; yavaş yakınlaşma (Cebelitarık benzeri). |
 | Batı dalması (And tipi) | Batı Okyanusu / İber | okyanus dönüşüm fayı (%100) | 207 | +0.9 | — | Batı Okyanusu ile İber yan yana kayıyor. Batı Okyanusu, Güneybatı bloğunun altına dalıyor (And tipi); kıyıda volkanlar. |
-| Ege doğu sınırı | Alt Kıta / Kuzey | kıta çarpışması (%100) | 191 | +3.4 | Kuzey | Alt Kıta, Kuzey levhasına çarpıyor, altına giriyor (3.4 cm/yıl). Ege ile Alt Kıta arası, çoğunlukla yanal (Alt Kıta kuzeye, Ege güneye). |
+| Ege doğu sınırı | Alt Kıta / Kuzey | kıta çarpışması (%100) | 201 | +3.2 | Kuzey | Alt Kıta, Kuzey levhasına çarpıyor, altına giriyor (3.2 cm/yıl). Ege ile Alt Kıta arası, çoğunlukla yanal (Alt Kıta kuzeye, Ege güneye). |
 | Batı dalması (And tipi) | Güneybatı / İber | dalma (%67) | 169 | +0.5 | Güneybatı | İber, Güneybatı levhasının altına dalıyor (0.5 cm/yıl). Batı Okyanusu, Güneybatı bloğunun altına dalıyor (And tipi); kıyıda volkanlar. |
 | Doğu sırtı | Doğu Okyanusu / Güney Kutup | okyanus dönüşüm fayı (%100) | 155 | -0.1 | — | [tasarım] Doğu Okyanusu ile Güney Kutup yan yana kayıyor. |
 | Güneydoğu sırtı | Doğu Okyanusu / Güney Kutup | okyanus dönüşüm fayı (%100) | 150 | +1.0 | — | [tasarım] Doğu Okyanusu ile Güney Kutup yan yana kayıyor. |
