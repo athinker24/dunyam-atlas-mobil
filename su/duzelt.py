@@ -118,6 +118,16 @@ TATLI_GOL = dict(nehir="plato_kolu", alan_km2=10000.0, seviye_m=792.0, derinlik_
 SIRT = {}
 
 
+def bogaz_baslangici(yol, z):
+    """Boğazın başladığı yol indeksi: kaynağın kendisi dağdaysa (eşiğin üstünde)
+    o ilk yüksek kesim atlanır; ondan sonra eşiğin ilk aşıldığı yer. Yoksa None.
+    Kaynak eşiğin altındaysa eski kuralla ("ilk aşılan yer") birebir aynı."""
+    k = 0
+    while k < len(yol) and z[yol[k]] > BOGAZ_ESIK_M:
+        k += 1
+    return next((i for i in range(k, len(yol)) if z[yol[i]] > BOGAZ_ESIK_M), None)
+
+
 def _en_alcak_yol(z, a, b, maske):
     """a'dan b'ye, maske içinde; maliyet = mesafe × (1 + aşılan yükseklik/200 m)."""
     import heapq
@@ -166,7 +176,8 @@ def kurgu_nehirler(zr, z, lat, lon):
             yol += parca if not yol else parca[1:]
         seviye = np.inf; bogaz = False
         kara_yol = [n for n in yol if z[n] >= 0]
-        esikli = any(z[n] > BOGAZ_ESIK_M for n in kara_yol)
+        i_bogaz = bogaz_baslangici(kara_yol, z)
+        esikli = i_bogaz is not None
         if not esikli:
             SIRT[ad] = int(np.argmax([z[n] for n in kara_yol]))
             print("UYARI: %s yolunda arazi %d m'yi asmiyor; bogaz sirtta (%d m) baslar, plato tabani kisiti yok"
@@ -174,7 +185,7 @@ def kurgu_nehirler(zr, z, lat, lon):
         for k_, n in enumerate(yol):
             if z[n] < 0:
                 break
-            bogaz = bogaz or (z[n] > BOGAZ_ESIK_M if esikli else k_ >= SIRT[ad])
+            bogaz = bogaz or k_ >= (i_bogaz if esikli else SIRT[ad])
             seviye = min(seviye - 0.5, z2[n] - 10.0)
             if PLATO_TABAN_M is not None and esikli and not bogaz and seviye < PLATO_TABAN_M:
                 seviye = max(seviye, min(PLATO_TABAN_M, z2[n]))
@@ -204,7 +215,7 @@ def tatli_gol(z2, z, yol, lat, lon):
     """
     g = TATLI_GOL
     ny, nx = z.shape
-    i0 = next((k for k, n in enumerate(yol) if z[n] > BOGAZ_ESIK_M), None)
+    i0 = bogaz_baslangici(yol, z)
     if i0 is None:                                   # alçak arazi: boğaz sırtta (SIRT)
         i0 = max(SIRT.get(g["nehir"], len(yol) - 1), g["bogazdan_uzak_hucre"] + 1)
     esik = yol[i0 - g["bogazdan_uzak_hucre"]]
@@ -231,7 +242,13 @@ def tatli_gol(z2, z, yol, lat, lon):
             r_lo = r
     from scipy import ndimage as nd
     m = nd.binary_fill_holes((uz <= r) & (z >= 0))
-    lab, n = nd.label(m); m = lab == lab[esik]
+    lab, n = nd.label(m)
+    if not eksen or lab[esik] == 0:
+        # göl ekseni boş (boğaz yolun başında): göl kurulamaz. Önce etiket 0 (maske
+        # dışı) seçiliyor, bütün gezegen göl sayılıyordu (ikinci deneme, 14 Kasım).
+        print("UYARI: tatli gol kurulamadi (bogaz yolun basinda, eksen bos)")
+        return z2, np.zeros(z.shape, bool), 0.0
+    m = lab == lab[esik]
     oran = np.clip((r - uz) / r, 0, 1)
     z3 = z2.copy()
     z3[m] = g["seviye_m"] - g["derinlik_m"] * oran[m] ** 0.5 - 5.0
