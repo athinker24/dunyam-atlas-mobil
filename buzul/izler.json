@@ -6,500 +6,704 @@
   "not_": "Buzul çağı doruğu. Dünya'nın son buzul maksimumu küresel −6.1 °C (Tierney vd. 2020); eğiklik 28°→22° salınımı yazları serinletir (Milankoviç)."
  },
  "buz_payi_kara": {
-  "buzul_cagi": 6.74,
-  "bugun": 2.16
+  "buzul_cagi": 2.12,
+  "bugun": 0.01
  },
  "kar_cizgisi_m": {
   "buzul_cagi": {
-   "-5": 4050.0,
-   "0": 3900.0,
-   "5": 3930.0,
-   "10": 4170.0,
-   "15": 4330.0,
-   "20": 4200.0,
-   "25": 3970.0,
-   "30": 3470.0,
+   "-5": 4070.0,
+   "0": 3940.0,
+   "5": 3950.0,
+   "10": 4200.0,
+   "15": 4400.0,
+   "20": 4240.0,
+   "25": 3850.0,
+   "30": 3610.0,
    "35": 3420.0,
-   "40": 3350.0,
-   "45": 3280.0,
-   "50": 2790.0,
-   "55": 2080.0,
-   "60": 1150.0
+   "40": 3390.0,
+   "45": 3230.0,
+   "50": 2730.0,
+   "55": 2020.0,
+   "60": 1170.0
   },
   "bugun": {
-   "-5": 5100.0,
-   "0": 4870.0,
-   "5": 4820.0,
-   "10": 4950.0,
-   "15": 5060.0,
-   "20": 4970.0,
-   "25": 4900.0,
-   "30": 4620.0,
-   "35": 4710.0,
-   "40": 4810.0,
-   "45": 4850.0,
-   "50": 4140.0,
-   "55": 3340.0,
-   "60": 2110.0
+   "-5": 5110.0,
+   "0": 4910.0,
+   "5": 4860.0,
+   "10": 5020.0,
+   "15": 5130.0,
+   "20": 4990.0,
+   "25": 4790.0,
+   "30": 4780.0,
+   "35": 4720.0,
+   "40": 4840.0,
+   "45": 4820.0,
+   "50": 4120.0,
+   "55": 3130.0,
+   "60": 1930.0
   }
  },
- "buzul_sayisi_300km2_ustu": 684,
+ "buzul_sayisi_300km2_ustu": 229,
  "buzullar_en_buyuk_40": [
   {
    "enlem_boylam": [
-    29.22,
-    19.82
+    31.77,
+    34.15
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "dagdan_km": 1087,
-   "alan_km2": 47642,
-   "uzunluk_km": 472,
-   "en_kalin_m": 2803,
-   "aki_km3_yil": 0.58,
-   "dil_yukseklik_m": 523,
+   "dagdan_km": 1560,
+   "alan_km2": 34124,
+   "uzunluk_km": 257,
+   "en_kalin_m": 1937,
+   "aki_km3_yil": 0.488,
+   "dil_yukseklik_m": 2480,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.567
+   "kazi": 0.059
   },
   {
    "enlem_boylam": [
-    51.99,
-    29.22
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 363,
-   "alan_km2": 45725,
-   "uzunluk_km": 577,
-   "en_kalin_m": 1927,
-   "aki_km3_yil": 0.114,
-   "dil_yukseklik_m": 1303,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.007
-  },
-  {
-   "enlem_boylam": [
-    33.35,
-    27.91
+    31.86,
+    34.67
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "dagdan_km": 966,
-   "alan_km2": 27880,
-   "uzunluk_km": 472,
-   "en_kalin_m": 2617,
-   "aki_km3_yil": 0.554,
-   "dil_yukseklik_m": 1740,
+   "dagdan_km": 1597,
+   "alan_km2": 18216,
+   "uzunluk_km": 299,
+   "en_kalin_m": 1966,
+   "aki_km3_yil": 0.388,
+   "dil_yukseklik_m": 2187,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.073
+   "kazi": 0.063
   },
   {
    "enlem_boylam": [
-    29.58,
-    18.5
+    35.64,
+    20.7
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "dagdan_km": 1058,
-   "alan_km2": 23316,
-   "uzunluk_km": 337,
-   "en_kalin_m": 2540,
-   "aki_km3_yil": 1.913,
-   "dil_yukseklik_m": 577,
+   "dagdan_km": 379,
+   "alan_km2": 17808,
+   "uzunluk_km": 350,
+   "en_kalin_m": 1837,
+   "aki_km3_yil": 0.443,
+   "dil_yukseklik_m": 2226,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.235
+   "kazi": 0.04
   },
   {
    "enlem_boylam": [
-    35.38,
+    32.65,
+    39.95
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1996,
+   "alan_km2": 17305,
+   "uzunluk_km": 282,
+   "en_kalin_m": 2064,
+   "aki_km3_yil": 1.311,
+   "dil_yukseklik_m": 770,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.506
+  },
+  {
+   "enlem_boylam": [
+    38.28,
     16.3
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "dagdan_km": 524,
-   "alan_km2": 20292,
-   "uzunluk_km": 378,
-   "en_kalin_m": 2426,
-   "aki_km3_yil": 0.85,
-   "dil_yukseklik_m": 1420,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.07
-  },
-  {
-   "enlem_boylam": [
-    55.06,
-    25.18
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 320,
-   "alan_km2": 19361,
-   "uzunluk_km": 284,
-   "en_kalin_m": 1717,
-   "aki_km3_yil": 0.02,
-   "dil_yukseklik_m": 1046,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.011
-  },
-  {
-   "enlem_boylam": [
-    59.02,
-    20.96
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 678,
-   "alan_km2": 18197,
-   "uzunluk_km": 197,
-   "en_kalin_m": 1704,
-   "aki_km3_yil": 2.549,
-   "dil_yukseklik_m": 34,
-   "bitis": "deniz",
-   "fiyort": true,
-   "kazi": 0.009
-  },
-  {
-   "enlem_boylam": [
-    54.71,
-    -4.26
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "dagdan_km": 350,
-   "alan_km2": 17971,
-   "uzunluk_km": 242,
-   "en_kalin_m": 1289,
-   "aki_km3_yil": 0.089,
-   "dil_yukseklik_m": 530,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.001
-  },
-  {
-   "enlem_boylam": [
-    35.02,
-    5.23
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "dagdan_km": 1340,
-   "alan_km2": 17649,
-   "uzunluk_km": 249,
-   "en_kalin_m": 2273,
-   "aki_km3_yil": 0.863,
-   "dil_yukseklik_m": 571,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.089
-  },
-  {
-   "enlem_boylam": [
-    37.05,
-    11.12
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 818,
-   "alan_km2": 17128,
-   "uzunluk_km": 351,
-   "en_kalin_m": 2155,
-   "aki_km3_yil": 0.449,
-   "dil_yukseklik_m": 1341,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.017
-  },
-  {
-   "enlem_boylam": [
-    52.6,
-    32.04
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 314,
-   "alan_km2": 16422,
-   "uzunluk_km": 459,
-   "en_kalin_m": 1630,
-   "aki_km3_yil": 0.106,
-   "dil_yukseklik_m": 1317,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.012
-  },
-  {
-   "enlem_boylam": [
-    40.74,
-    2.5
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "dagdan_km": 898,
-   "alan_km2": 16240,
-   "uzunluk_km": 360,
-   "en_kalin_m": 2170,
-   "aki_km3_yil": 0.06,
-   "dil_yukseklik_m": 1458,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.046
-  },
-  {
-   "enlem_boylam": [
-    40.03,
-    4.09
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "dagdan_km": 874,
-   "alan_km2": 16159,
-   "uzunluk_km": 342,
-   "en_kalin_m": 2063,
-   "aki_km3_yil": 0.082,
-   "dil_yukseklik_m": 1421,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.01
-  },
-  {
-   "enlem_boylam": [
-    32.12,
-    12.08
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1068,
-   "alan_km2": 14841,
-   "uzunluk_km": 258,
-   "en_kalin_m": 2113,
-   "aki_km3_yil": 1.277,
-   "dil_yukseklik_m": 1003,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.142
-  },
-  {
-   "enlem_boylam": [
-    59.11,
-    15.86
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 927,
-   "alan_km2": 14769,
-   "uzunluk_km": 167,
-   "en_kalin_m": 1704,
-   "aki_km3_yil": 2.79,
-   "dil_yukseklik_m": 5,
-   "bitis": "deniz",
-   "fiyort": true,
-   "kazi": 0.011
-  },
-  {
-   "enlem_boylam": [
-    42.41,
-    -2.07
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "dagdan_km": 1045,
-   "alan_km2": 14209,
-   "uzunluk_km": 424,
-   "en_kalin_m": 2235,
-   "aki_km3_yil": 0.597,
-   "dil_yukseklik_m": 994,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.027
-  },
-  {
-   "enlem_boylam": [
-    57.61,
-    34.67
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 378,
-   "alan_km2": 14020,
-   "uzunluk_km": 277,
-   "en_kalin_m": 1834,
-   "aki_km3_yil": 1.396,
-   "dil_yukseklik_m": -85,
-   "bitis": "deniz",
-   "fiyort": true,
-   "kazi": 0.006
-  },
-  {
-   "enlem_boylam": [
-    29.66,
-    28.52
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1325,
-   "alan_km2": 13651,
-   "uzunluk_km": 322,
-   "en_kalin_m": 2290,
-   "aki_km3_yil": 0.983,
-   "dil_yukseklik_m": 1562,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.061
-  },
-  {
-   "enlem_boylam": [
-    30.45,
-    36.25
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1825,
-   "alan_km2": 13640,
-   "uzunluk_km": 184,
-   "en_kalin_m": 2002,
-   "aki_km3_yil": 2.478,
-   "dil_yukseklik_m": 520,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.057
-  },
-  {
-   "enlem_boylam": [
-    35.11,
-    14.02
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 695,
-   "alan_km2": 12772,
-   "uzunluk_km": 297,
-   "en_kalin_m": 2197,
-   "aki_km3_yil": 0.051,
-   "dil_yukseklik_m": 1489,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.023
-  },
-  {
-   "enlem_boylam": [
-    30.63,
-    16.48
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 990,
-   "alan_km2": 12641,
-   "uzunluk_km": 243,
-   "en_kalin_m": 2420,
-   "aki_km3_yil": 0.979,
-   "dil_yukseklik_m": 804,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.076
-  },
-  {
-   "enlem_boylam": [
-    31.42,
-    13.75
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1030,
-   "alan_km2": 12588,
-   "uzunluk_km": 189,
-   "en_kalin_m": 2174,
-   "aki_km3_yil": 0.615,
-   "dil_yukseklik_m": 883,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.189
-  },
-  {
-   "enlem_boylam": [
-    29.93,
-    29.14
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1339,
-   "alan_km2": 12231,
-   "uzunluk_km": 161,
-   "en_kalin_m": 2297,
-   "aki_km3_yil": 1.961,
-   "dil_yukseklik_m": 870,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.057
-  },
-  {
-   "enlem_boylam": [
-    40.65,
-    1.98
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "dagdan_km": 937,
-   "alan_km2": 11839,
-   "uzunluk_km": 328,
-   "en_kalin_m": 2053,
-   "aki_km3_yil": 0.478,
-   "dil_yukseklik_m": 1506,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.009
-  },
-  {
-   "enlem_boylam": [
-    30.37,
-    15.69
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1045,
-   "alan_km2": 11665,
-   "uzunluk_km": 265,
-   "en_kalin_m": 2564,
-   "aki_km3_yil": 0.507,
-   "dil_yukseklik_m": 601,
+   "dagdan_km": 333,
+   "alan_km2": 15241,
+   "uzunluk_km": 332,
+   "en_kalin_m": 2281,
+   "aki_km3_yil": 1.078,
+   "dil_yukseklik_m": 1051,
    "bitis": "kara",
    "fiyort": false,
    "kazi": 1.0
   },
   {
    "enlem_boylam": [
-    33.62,
-    8.22
+    31.68,
+    30.81
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "dagdan_km": 1244,
-   "alan_km2": 11639,
-   "uzunluk_km": 191,
-   "en_kalin_m": 2114,
-   "aki_km3_yil": 0.034,
-   "dil_yukseklik_m": 877,
+   "dagdan_km": 1307,
+   "alan_km2": 14179,
+   "uzunluk_km": 246,
+   "en_kalin_m": 1953,
+   "aki_km3_yil": 0.123,
+   "dil_yukseklik_m": 1670,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.082
+   "kazi": 0.227
   },
   {
    "enlem_boylam": [
-    35.55,
-    11.65
+    35.29,
+    28.34
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "dagdan_km": 848,
-   "alan_km2": 11384,
-   "uzunluk_km": 238,
-   "en_kalin_m": 1897,
-   "aki_km3_yil": 0.354,
-   "dil_yukseklik_m": 2041,
+   "dagdan_km": 863,
+   "alan_km2": 11307,
+   "uzunluk_km": 217,
+   "en_kalin_m": 1831,
+   "aki_km3_yil": 0.557,
+   "dil_yukseklik_m": 1642,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.072
+  },
+  {
+   "enlem_boylam": [
+    32.74,
+    29.22
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1109,
+   "alan_km2": 9689,
+   "uzunluk_km": 134,
+   "en_kalin_m": 1476,
+   "aki_km3_yil": 0.285,
+   "dil_yukseklik_m": 3005,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.007
+  },
+  {
+   "enlem_boylam": [
+    37.05,
+    12.35
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 713,
+   "alan_km2": 9626,
+   "uzunluk_km": 227,
+   "en_kalin_m": 2007,
+   "aki_km3_yil": 0.929,
+   "dil_yukseklik_m": 1551,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.099
+  },
+  {
+   "enlem_boylam": [
+    30.72,
+    32.12
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1480,
+   "alan_km2": 8414,
+   "uzunluk_km": 278,
+   "en_kalin_m": 1843,
+   "aki_km3_yil": 0.477,
+   "dil_yukseklik_m": 1000,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.377
+  },
+  {
+   "enlem_boylam": [
+    48.82,
+    16.3
+   ],
+   "dag": "plato",
+   "dag_ad": "Plato çanağı",
+   "dagdan_km": 528,
+   "alan_km2": 7272,
+   "uzunluk_km": 161,
+   "en_kalin_m": 1561,
+   "aki_km3_yil": 0.257,
+   "dil_yukseklik_m": 1392,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.016
+  },
+  {
+   "enlem_boylam": [
+    34.85,
+    32.74
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1251,
+   "alan_km2": 6727,
+   "uzunluk_km": 177,
+   "en_kalin_m": 1466,
+   "aki_km3_yil": 0.271,
+   "dil_yukseklik_m": 2953,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.008
+  },
+  {
+   "enlem_boylam": [
+    32.39,
+    35.38
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1620,
+   "alan_km2": 6159,
+   "uzunluk_km": 127,
+   "en_kalin_m": 1444,
+   "aki_km3_yil": 0.235,
+   "dil_yukseklik_m": 2573,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.007
+  },
+  {
+   "enlem_boylam": [
+    31.95,
+    27.47
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1054,
+   "alan_km2": 6016,
+   "uzunluk_km": 163,
+   "en_kalin_m": 1550,
+   "aki_km3_yil": 0.363,
+   "dil_yukseklik_m": 3023,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.023
+  },
+  {
+   "enlem_boylam": [
+    34.41,
+    27.29
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 841,
+   "alan_km2": 5720,
+   "uzunluk_km": 132,
+   "en_kalin_m": 1543,
+   "aki_km3_yil": 0.524,
+   "dil_yukseklik_m": 2616,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.018
+  },
+  {
+   "enlem_boylam": [
+    32.48,
+    30.1
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1194,
+   "alan_km2": 5440,
+   "uzunluk_km": 137,
+   "en_kalin_m": 1555,
+   "aki_km3_yil": 0.037,
+   "dil_yukseklik_m": 2537,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.057
+  },
+  {
+   "enlem_boylam": [
+    32.65,
+    29.93
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1167,
+   "alan_km2": 5335,
+   "uzunluk_km": 147,
+   "en_kalin_m": 1522,
+   "aki_km3_yil": 0.259,
+   "dil_yukseklik_m": 2693,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.015
+  },
+  {
+   "enlem_boylam": [
+    31.95,
+    26.41
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 990,
+   "alan_km2": 5317,
+   "uzunluk_km": 124,
+   "en_kalin_m": 1475,
+   "aki_km3_yil": 0.001,
+   "dil_yukseklik_m": 2191,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.031
+  },
+  {
+   "enlem_boylam": [
+    34.94,
+    31.51
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1142,
+   "alan_km2": 5140,
+   "uzunluk_km": 166,
+   "en_kalin_m": 1386,
+   "aki_km3_yil": 0.053,
+   "dil_yukseklik_m": 2777,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.005
+  },
+  {
+   "enlem_boylam": [
+    35.11,
+    13.32
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 746,
+   "alan_km2": 5122,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1624,
+   "aki_km3_yil": 0.428,
+   "dil_yukseklik_m": 1190,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.128
+  },
+  {
+   "enlem_boylam": [
+    34.76,
+    15.42
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 630,
+   "alan_km2": 4903,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1596,
+   "aki_km3_yil": 0.045,
+   "dil_yukseklik_m": 1342,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.126
+  },
+  {
+   "enlem_boylam": [
+    36.43,
+    16.92
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 397,
+   "alan_km2": 4868,
+   "uzunluk_km": 125,
+   "en_kalin_m": 1463,
+   "aki_km3_yil": 0.446,
+   "dil_yukseklik_m": 2559,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.006
+  },
+  {
+   "enlem_boylam": [
+    37.4,
+    37.75
+   ],
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "dagdan_km": 1483,
+   "alan_km2": 4867,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1458,
+   "aki_km3_yil": 0.06,
+   "dil_yukseklik_m": 2341,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.024
+  },
+  {
+   "enlem_boylam": [
+    38.1,
+    36.69
+   ],
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "dagdan_km": 1357,
+   "alan_km2": 4762,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1408,
+   "aki_km3_yil": 0.147,
+   "dil_yukseklik_m": 2513,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.006
+  },
+  {
+   "enlem_boylam": [
+    34.67,
+    14.19
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 717,
+   "alan_km2": 4674,
+   "uzunluk_km": 121,
+   "en_kalin_m": 1402,
+   "aki_km3_yil": 0.014,
+   "dil_yukseklik_m": 1178,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.173
+  },
+  {
+   "enlem_boylam": [
+    34.76,
+    16.13
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 589,
+   "alan_km2": 4672,
+   "uzunluk_km": 110,
+   "en_kalin_m": 1554,
+   "aki_km3_yil": 0.273,
+   "dil_yukseklik_m": 1470,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.176
+  },
+  {
+   "enlem_boylam": [
+    34.76,
+    17.62
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 519,
+   "alan_km2": 4611,
+   "uzunluk_km": 80,
+   "en_kalin_m": 1111,
+   "aki_km3_yil": 0.386,
+   "dil_yukseklik_m": 2236,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.008
+  },
+  {
+   "enlem_boylam": [
+    32.39,
+    25.36
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 891,
+   "alan_km2": 4171,
+   "uzunluk_km": 89,
+   "en_kalin_m": 1307,
+   "aki_km3_yil": 0.384,
+   "dil_yukseklik_m": 2006,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.025
+  },
+  {
+   "enlem_boylam": [
+    49.61,
+    19.64
+   ],
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "dagdan_km": 557,
+   "alan_km2": 4117,
+   "uzunluk_km": 170,
+   "en_kalin_m": 1383,
+   "aki_km3_yil": 0.056,
+   "dil_yukseklik_m": 2411,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.006
+  },
+  {
+   "enlem_boylam": [
+    34.76,
+    11.56
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 904,
+   "alan_km2": 3896,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1780,
+   "aki_km3_yil": 1.148,
+   "dil_yukseklik_m": 1108,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.15
+  },
+  {
+   "enlem_boylam": [
+    36.78,
+    16.13
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 424,
+   "alan_km2": 3785,
+   "uzunluk_km": 133,
+   "en_kalin_m": 1597,
+   "aki_km3_yil": 0.573,
+   "dil_yukseklik_m": 1957,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.047
+  },
+  {
+   "enlem_boylam": [
+    34.32,
+    31.77
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1200,
+   "alan_km2": 3577,
+   "uzunluk_km": 146,
+   "en_kalin_m": 1266,
+   "aki_km3_yil": 0.061,
+   "dil_yukseklik_m": 3250,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.002
+  },
+  {
+   "enlem_boylam": [
+    48.91,
+    17.27
+   ],
+   "dag": "plato",
+   "dag_ad": "Plato çanağı",
+   "dagdan_km": 594,
+   "alan_km2": 3471,
+   "uzunluk_km": 100,
+   "en_kalin_m": 1322,
+   "aki_km3_yil": 0.326,
+   "dil_yukseklik_m": 1413,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.03
+  },
+  {
+   "enlem_boylam": [
+    36.69,
+    35.55
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1410,
+   "alan_km2": 3427,
+   "uzunluk_km": 103,
+   "en_kalin_m": 1357,
+   "aki_km3_yil": 0.059,
+   "dil_yukseklik_m": 3030,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.003
+  },
+  {
+   "enlem_boylam": [
+    36.61,
+    16.74
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 394,
+   "alan_km2": 3170,
+   "uzunluk_km": 127,
+   "en_kalin_m": 1452,
+   "aki_km3_yil": 0.186,
+   "dil_yukseklik_m": 2376,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.012
+  },
+  {
+   "enlem_boylam": [
+    32.3,
+    37.92
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1842,
+   "alan_km2": 3138,
+   "uzunluk_km": 63,
+   "en_kalin_m": 1392,
+   "aki_km3_yil": 0.218,
+   "dil_yukseklik_m": 2246,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.006
+  },
+  {
+   "enlem_boylam": [
+    34.85,
+    12.61
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 817,
+   "alan_km2": 3036,
+   "uzunluk_km": 89,
+   "en_kalin_m": 1316,
+   "aki_km3_yil": 1.172,
+   "dil_yukseklik_m": 1066,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.181
+  },
+  {
+   "enlem_boylam": [
+    32.3,
+    38.8
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1918,
+   "alan_km2": 2973,
+   "uzunluk_km": 89,
+   "en_kalin_m": 1559,
+   "aki_km3_yil": 0.467,
+   "dil_yukseklik_m": 2054,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.011
+  },
+  {
+   "enlem_boylam": [
+    37.92,
+    31.51
+   ],
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "dagdan_km": 1017,
+   "alan_km2": 2941,
+   "uzunluk_km": 79,
+   "en_kalin_m": 1439,
+   "aki_km3_yil": 0.181,
+   "dil_yukseklik_m": 2717,
    "bitis": "kara",
    "fiyort": false,
    "kazi": 0.005
@@ -507,223 +711,19 @@
   {
    "enlem_boylam": [
     38.36,
-    7.25
+    34.76
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "dagdan_km": 927,
-   "alan_km2": 11251,
-   "uzunluk_km": 268,
-   "en_kalin_m": 2051,
-   "aki_km3_yil": 0.369,
-   "dil_yukseklik_m": 1052,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "dagdan_km": 1227,
+   "alan_km2": 2773,
+   "uzunluk_km": 93,
+   "en_kalin_m": 1220,
+   "aki_km3_yil": 0.147,
+   "dil_yukseklik_m": 2862,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.035
-  },
-  {
-   "enlem_boylam": [
-    29.05,
-    38.63
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 2122,
-   "alan_km2": 11180,
-   "uzunluk_km": 170,
-   "en_kalin_m": 1996,
-   "aki_km3_yil": 1.981,
-   "dil_yukseklik_m": 858,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.051
-  },
-  {
-   "enlem_boylam": [
-    32.92,
-    30.19
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1167,
-   "alan_km2": 11060,
-   "uzunluk_km": 320,
-   "en_kalin_m": 2347,
-   "aki_km3_yil": 0.59,
-   "dil_yukseklik_m": 2016,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.064
-  },
-  {
-   "enlem_boylam": [
-    28.61,
-    30.45
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1542,
-   "alan_km2": 10459,
-   "uzunluk_km": 215,
-   "en_kalin_m": 2084,
-   "aki_km3_yil": 1.234,
-   "dil_yukseklik_m": 606,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.106
-  },
-  {
-   "enlem_boylam": [
-    52.34,
-    -7.95
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "dagdan_km": 396,
-   "alan_km2": 9972,
-   "uzunluk_km": 136,
-   "en_kalin_m": 1292,
-   "aki_km3_yil": 0.751,
-   "dil_yukseklik_m": 892,
-   "bitis": "deniz",
-   "fiyort": true,
-   "kazi": 0.002
-  },
-  {
-   "enlem_boylam": [
-    29.84,
-    24.21
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1097,
-   "alan_km2": 9750,
-   "uzunluk_km": 179,
-   "en_kalin_m": 2219,
-   "aki_km3_yil": 1.678,
-   "dil_yukseklik_m": 981,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.045
-  },
-  {
-   "enlem_boylam": [
-    54.1,
-    -7.25
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "dagdan_km": 417,
-   "alan_km2": 9319,
-   "uzunluk_km": 118,
-   "en_kalin_m": 905,
-   "aki_km3_yil": 0.133,
-   "dil_yukseklik_m": 1246,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.0
-  },
-  {
-   "enlem_boylam": [
-    34.76,
-    15.51
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 625,
-   "alan_km2": 9275,
-   "uzunluk_km": 272,
-   "en_kalin_m": 2313,
-   "aki_km3_yil": 0.689,
-   "dil_yukseklik_m": 1084,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.114
-  },
-  {
-   "enlem_boylam": [
-    48.12,
-    -31.07
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "dagdan_km": 397,
-   "alan_km2": 9194,
-   "uzunluk_km": 156,
-   "en_kalin_m": 1387,
-   "aki_km3_yil": 0.28,
-   "dil_yukseklik_m": 1223,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.002
-  },
-  {
-   "enlem_boylam": [
-    47.15,
-    -27.91
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "dagdan_km": 141,
-   "alan_km2": 8813,
-   "uzunluk_km": 215,
-   "en_kalin_m": 1506,
-   "aki_km3_yil": 0.126,
-   "dil_yukseklik_m": 1463,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.001
-  },
-  {
-   "enlem_boylam": [
-    57.52,
-    23.51
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 476,
-   "alan_km2": 8764,
-   "uzunluk_km": 135,
-   "en_kalin_m": 1299,
-   "aki_km3_yil": 0.036,
-   "dil_yukseklik_m": 910,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.001
-  },
-  {
-   "enlem_boylam": [
-    55.42,
-    15.95
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "dagdan_km": 900,
-   "alan_km2": 8506,
-   "uzunluk_km": 214,
-   "en_kalin_m": 1392,
-   "aki_km3_yil": 0.144,
-   "dil_yukseklik_m": 1100,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.001
-  },
-  {
-   "enlem_boylam": [
-    32.92,
-    9.01
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "dagdan_km": 1229,
-   "alan_km2": 8324,
-   "uzunluk_km": 190,
-   "en_kalin_m": 1958,
-   "aki_km3_yil": 0.95,
-   "dil_yukseklik_m": 911,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.059
+   "kazi": 0.004
   }
  ],
  "goller": [
@@ -732,14 +732,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    29.22,
-    19.82
+    31.77,
+    34.15
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 47642,
-   "kazi": 0.567,
-   "yukseklik_m": 523,
+   "besleyen_buzul_km2": 34124,
+   "kazi": 0.059,
+   "yukseklik_m": 2480,
    "bugun": "açık su"
   },
   {
@@ -747,14 +747,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    51.99,
-    29.22
+    35.64,
+    20.7
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 45725,
-   "kazi": 0.007,
-   "yukseklik_m": 1303,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 17808,
+   "kazi": 0.04,
+   "yukseklik_m": 2226,
    "bugun": "açık su"
   },
   {
@@ -762,14 +762,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    33.35,
-    27.91
+    32.65,
+    39.95
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 27880,
-   "kazi": 0.073,
-   "yukseklik_m": 1740,
+   "besleyen_buzul_km2": 17305,
+   "kazi": 0.506,
+   "yukseklik_m": 770,
    "bugun": "açık su"
   },
   {
@@ -777,14 +777,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    29.58,
-    18.5
+    38.28,
+    16.3
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 23316,
-   "kazi": 0.235,
-   "yukseklik_m": 577,
+   "besleyen_buzul_km2": 15241,
+   "kazi": 1.0,
+   "yukseklik_m": 1051,
    "bugun": "açık su"
   },
   {
@@ -792,14 +792,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    35.38,
-    16.3
+    31.68,
+    30.81
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 20292,
-   "kazi": 0.07,
-   "yukseklik_m": 1420,
+   "besleyen_buzul_km2": 14179,
+   "kazi": 0.227,
+   "yukseklik_m": 1670,
    "bugun": "açık su"
   },
   {
@@ -807,314 +807,314 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    55.06,
-    25.18
+    35.29,
+    28.34
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 19361,
-   "kazi": 0.011,
-   "yukseklik_m": 1046,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 11307,
+   "kazi": 0.072,
+   "yukseklik_m": 1642,
    "bugun": "açık su"
   },
   {
    "no": 7,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    54.71,
-    -4.26
+    32.74,
+    29.22
    ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 17971,
-   "kazi": 0.001,
-   "yukseklik_m": 530,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 9689,
+   "kazi": 0.007,
+   "yukseklik_m": 3005,
    "bugun": "açık su"
   },
   {
    "no": 8,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    35.02,
-    5.23
+    37.05,
+    12.35
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 17649,
-   "kazi": 0.089,
-   "yukseklik_m": 571,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 9626,
+   "kazi": 0.099,
+   "yukseklik_m": 1551,
    "bugun": "açık su"
   },
   {
    "no": 9,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    37.05,
-    11.12
+    30.72,
+    32.12
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 17128,
-   "kazi": 0.017,
-   "yukseklik_m": 1341,
+   "besleyen_buzul_km2": 8414,
+   "kazi": 0.377,
+   "yukseklik_m": 1000,
    "bugun": "açık su"
   },
   {
    "no": 10,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    52.6,
-    32.04
+    48.82,
+    16.3
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 16422,
-   "kazi": 0.012,
-   "yukseklik_m": 1317,
+   "dag": "plato",
+   "dag_ad": "Plato çanağı",
+   "besleyen_buzul_km2": 7272,
+   "kazi": 0.016,
+   "yukseklik_m": 1392,
    "bugun": "açık su"
   },
   {
    "no": 11,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    40.74,
-    2.5
+    34.85,
+    32.74
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 16240,
-   "kazi": 0.046,
-   "yukseklik_m": 1458,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 6727,
+   "kazi": 0.008,
+   "yukseklik_m": 2953,
    "bugun": "açık su"
   },
   {
    "no": 12,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    40.03,
-    4.09
+    32.39,
+    35.38
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 16159,
-   "kazi": 0.01,
-   "yukseklik_m": 1421,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 6159,
+   "kazi": 0.007,
+   "yukseklik_m": 2573,
    "bugun": "açık su"
   },
   {
    "no": 13,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    32.12,
-    12.08
+    31.95,
+    27.47
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 14841,
-   "kazi": 0.142,
-   "yukseklik_m": 1003,
+   "besleyen_buzul_km2": 6016,
+   "kazi": 0.023,
+   "yukseklik_m": 3023,
    "bugun": "açık su"
   },
   {
    "no": 14,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    42.41,
-    -2.07
+    34.41,
+    27.29
    ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 14209,
-   "kazi": 0.027,
-   "yukseklik_m": 994,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 5720,
+   "kazi": 0.018,
+   "yukseklik_m": 2616,
    "bugun": "açık su"
   },
   {
    "no": 15,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    29.66,
-    28.52
+    32.48,
+    30.1
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 13651,
-   "kazi": 0.061,
-   "yukseklik_m": 1562,
+   "besleyen_buzul_km2": 5440,
+   "kazi": 0.057,
+   "yukseklik_m": 2537,
    "bugun": "açık su"
   },
   {
    "no": 16,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    30.45,
-    36.25
+    31.95,
+    26.41
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 13640,
-   "kazi": 0.057,
-   "yukseklik_m": 520,
+   "besleyen_buzul_km2": 5317,
+   "kazi": 0.031,
+   "yukseklik_m": 2191,
    "bugun": "açık su"
   },
   {
    "no": 17,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    35.11,
-    14.02
+    34.94,
+    31.51
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 12772,
-   "kazi": 0.023,
-   "yukseklik_m": 1489,
+   "besleyen_buzul_km2": 5140,
+   "kazi": 0.005,
+   "yukseklik_m": 2777,
    "bugun": "açık su"
   },
   {
    "no": 18,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    30.63,
-    16.48
+    35.11,
+    13.32
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 12641,
-   "kazi": 0.076,
-   "yukseklik_m": 804,
+   "besleyen_buzul_km2": 5122,
+   "kazi": 0.128,
+   "yukseklik_m": 1190,
    "bugun": "açık su"
   },
   {
    "no": 19,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    31.42,
-    13.75
+    34.76,
+    15.42
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 12588,
-   "kazi": 0.189,
-   "yukseklik_m": 883,
+   "besleyen_buzul_km2": 4903,
+   "kazi": 0.126,
+   "yukseklik_m": 1342,
    "bugun": "açık su"
   },
   {
    "no": 20,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    30.37,
-    15.69
+    36.43,
+    16.92
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 11665,
-   "kazi": 1.0,
-   "yukseklik_m": 601,
+   "besleyen_buzul_km2": 4868,
+   "kazi": 0.006,
+   "yukseklik_m": 2559,
    "bugun": "açık su"
   },
   {
    "no": 21,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    33.62,
-    8.22
+    37.4,
+    37.75
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 11639,
-   "kazi": 0.082,
-   "yukseklik_m": 877,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 4867,
+   "kazi": 0.024,
+   "yukseklik_m": 2341,
    "bugun": "açık su"
   },
   {
    "no": 22,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    35.55,
-    11.65
+    38.1,
+    36.69
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 11384,
-   "kazi": 0.005,
-   "yukseklik_m": 2041,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 4762,
+   "kazi": 0.006,
+   "yukseklik_m": 2513,
    "bugun": "açık su"
   },
   {
    "no": 23,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    38.36,
-    7.25
+    34.67,
+    14.19
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 11251,
-   "kazi": 0.035,
-   "yukseklik_m": 1052,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 4674,
+   "kazi": 0.173,
+   "yukseklik_m": 1178,
    "bugun": "açık su"
   },
   {
    "no": 24,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    29.05,
-    38.63
+    34.76,
+    17.62
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 11180,
-   "kazi": 0.051,
-   "yukseklik_m": 858,
+   "besleyen_buzul_km2": 4611,
+   "kazi": 0.008,
+   "yukseklik_m": 2236,
    "bugun": "açık su"
   },
   {
    "no": 25,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    32.92,
-    30.19
+    32.39,
+    25.36
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 11060,
-   "kazi": 0.064,
-   "yukseklik_m": 2016,
+   "besleyen_buzul_km2": 4171,
+   "kazi": 0.025,
+   "yukseklik_m": 2006,
    "bugun": "açık su"
   },
   {
    "no": 26,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    28.61,
-    30.45
+    49.61,
+    19.64
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 10459,
-   "kazi": 0.106,
-   "yukseklik_m": 606,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 4117,
+   "kazi": 0.006,
+   "yukseklik_m": 2411,
    "bugun": "açık su"
   },
   {
@@ -1122,14 +1122,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    29.84,
-    24.21
+    34.76,
+    11.56
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 9750,
-   "kazi": 0.045,
-   "yukseklik_m": 981,
+   "besleyen_buzul_km2": 3896,
+   "kazi": 0.15,
+   "yukseklik_m": 1108,
    "bugun": "açık su"
   },
   {
@@ -1137,14 +1137,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    54.1,
-    -7.25
+    36.78,
+    16.13
    ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 9319,
-   "kazi": 0.0,
-   "yukseklik_m": 1246,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 3785,
+   "kazi": 0.047,
+   "yukseklik_m": 1957,
    "bugun": "açık su"
   },
   {
@@ -1152,14 +1152,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    34.76,
-    15.51
+    36.69,
+    35.55
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 9275,
-   "kazi": 0.114,
-   "yukseklik_m": 1084,
+   "besleyen_buzul_km2": 3427,
+   "kazi": 0.003,
+   "yukseklik_m": 3030,
    "bugun": "açık su"
   },
   {
@@ -1167,2335 +1167,460 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    48.12,
-    -31.07
+    32.3,
+    37.92
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 9194,
-   "kazi": 0.002,
-   "yukseklik_m": 1223,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 3138,
+   "kazi": 0.006,
+   "yukseklik_m": 2246,
    "bugun": "açık su"
   },
   {
    "no": 31,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    47.15,
-    -27.91
+    32.3,
+    38.8
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 8813,
-   "kazi": 0.001,
-   "yukseklik_m": 1463,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 2973,
+   "kazi": 0.011,
+   "yukseklik_m": 2054,
    "bugun": "açık su"
   },
   {
    "no": 32,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    57.52,
-    23.51
+    37.92,
+    31.51
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 8764,
-   "kazi": 0.001,
-   "yukseklik_m": 910,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 2941,
+   "kazi": 0.005,
+   "yukseklik_m": 2717,
    "bugun": "açık su"
   },
   {
    "no": 33,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    55.42,
-    15.95
+    38.36,
+    34.76
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 8506,
-   "kazi": 0.001,
-   "yukseklik_m": 1100,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 2773,
+   "kazi": 0.004,
+   "yukseklik_m": 2862,
    "bugun": "açık su"
   },
   {
    "no": 34,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    32.92,
-    9.01
+    36.43,
+    18.76
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 8324,
-   "kazi": 0.059,
-   "yukseklik_m": 911,
+   "besleyen_buzul_km2": 2704,
+   "kazi": 0.004,
+   "yukseklik_m": 2645,
    "bugun": "açık su"
   },
   {
    "no": 35,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    34.23,
-    14.81
+    35.99,
+    -4.0
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 7678,
-   "kazi": 0.032,
-   "yukseklik_m": 1090,
+   "dag": "takımada",
+   "dag_ad": "İç deniz takımadası",
+   "besleyen_buzul_km2": 2324,
+   "kazi": 0.001,
+   "yukseklik_m": 2363,
    "bugun": "açık su"
   },
   {
    "no": 36,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    31.68,
-    39.16
+    34.5,
+    18.59
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 6785,
-   "kazi": 0.033,
-   "yukseklik_m": 1158,
+   "besleyen_buzul_km2": 2274,
+   "kazi": 0.007,
+   "yukseklik_m": 2502,
    "bugun": "açık su"
   },
   {
    "no": 37,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    30.45,
-    25.27
+    37.4,
+    32.92
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 6716,
-   "kazi": 0.022,
-   "yukseklik_m": 1065,
+   "besleyen_buzul_km2": 2215,
+   "kazi": 0.004,
+   "yukseklik_m": 2752,
    "bugun": "açık su"
   },
   {
    "no": 38,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    34.58,
-    16.57
+    37.4,
+    -4.09
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 6530,
-   "kazi": 0.023,
-   "yukseklik_m": 1122,
+   "dag": "takımada",
+   "dag_ad": "İç deniz takımadası",
+   "besleyen_buzul_km2": 2210,
+   "kazi": 0.015,
+   "yukseklik_m": 1691,
    "bugun": "açık su"
   },
   {
    "no": 39,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    37.22,
-    8.39
+    34.76,
+    36.08
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 6324,
-   "kazi": 0.003,
-   "yukseklik_m": 1735,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 2205,
+   "kazi": 0.0,
+   "yukseklik_m": 3194,
    "bugun": "açık su"
   },
   {
    "no": 40,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    53.83,
-    27.55
+    38.54,
+    32.21
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 6307,
-   "kazi": 0.0,
-   "yukseklik_m": 1336,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 2178,
+   "kazi": 0.009,
+   "yukseklik_m": 2202,
    "bugun": "açık su"
   },
   {
    "no": 41,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    43.9,
-    -34.67
+    32.56,
+    34.5
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 6307,
-   "kazi": 0.0,
-   "yukseklik_m": 1988,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 2006,
+   "kazi": 0.002,
+   "yukseklik_m": 2748,
    "bugun": "açık su"
   },
   {
    "no": 42,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    46.89,
-    -7.08
+    32.92,
+    32.74
    ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 6303,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1921,
    "kazi": 0.0,
-   "yukseklik_m": 2352,
+   "yukseklik_m": 3245,
    "bugun": "açık su"
   },
   {
    "no": 43,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    32.65,
-    23.95
+    39.86,
+    32.92
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 6173,
-   "kazi": 0.006,
-   "yukseklik_m": 2167,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 1916,
+   "kazi": 0.004,
+   "yukseklik_m": 2613,
    "bugun": "açık su"
   },
   {
    "no": 44,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    49.61,
-    -26.41
+    30.89,
+    39.07
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 6060,
-   "kazi": 0.001,
-   "yukseklik_m": 1236,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1798,
+   "kazi": 0.005,
+   "yukseklik_m": 2436,
    "bugun": "açık su"
   },
   {
    "no": 45,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    58.05,
-    30.81
+    35.2,
+    29.31
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 5569,
-   "kazi": 0.0,
-   "yukseklik_m": 625,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1727,
+   "kazi": 0.006,
+   "yukseklik_m": 2791,
    "bugun": "açık su"
   },
   {
    "no": 46,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    29.66,
-    31.25
+    50.32,
+    15.51
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 5532,
-   "kazi": 0.03,
-   "yukseklik_m": 932,
+   "dag": "plato",
+   "dag_ad": "Plato çanağı",
+   "besleyen_buzul_km2": 1716,
+   "kazi": 0.0,
+   "yukseklik_m": 2371,
    "bugun": "açık su"
   },
   {
    "no": 47,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    32.39,
-    28.08
+    39.07,
+    35.11
    ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 5525,
-   "kazi": 0.007,
-   "yukseklik_m": 1970,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 1714,
+   "kazi": 0.001,
+   "yukseklik_m": 2849,
    "bugun": "açık su"
   },
   {
    "no": 48,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    40.65,
-    -35.2
+    33.62,
+    25.36
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 5522,
-   "kazi": 0.002,
-   "yukseklik_m": 1247,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1596,
+   "kazi": 0.003,
+   "yukseklik_m": 2852,
    "bugun": "açık su"
   },
   {
    "no": 49,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    32.83,
-    36.69
+    33.27,
+    26.59
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 5262,
-   "kazi": 0.041,
-   "yukseklik_m": 1649,
+   "besleyen_buzul_km2": 1521,
+   "kazi": 0.0,
+   "yukseklik_m": 3360,
    "bugun": "açık su"
   },
   {
    "no": 50,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    53.39,
-    31.86
+    36.25,
+    31.77
    ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 5046,
-   "kazi": 0.0,
-   "yukseklik_m": 1560,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1462,
+   "kazi": 0.002,
+   "yukseklik_m": 2872,
    "bugun": "açık su"
   },
   {
    "no": 51,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    48.82,
-    -29.4
+    31.42,
+    31.68
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4959,
-   "kazi": 0.0,
-   "yukseklik_m": 1436,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1302,
+   "kazi": 0.001,
+   "yukseklik_m": 2910,
    "bugun": "açık su"
   },
   {
    "no": 52,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    38.8,
-    5.41
+    36.08,
+    32.65
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 4904,
-   "kazi": 0.007,
-   "yukseklik_m": 1772,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1232,
+   "kazi": 0.003,
+   "yukseklik_m": 2773,
    "bugun": "açık su"
   },
   {
    "no": 53,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    43.46,
-    -35.73
+    34.85,
+    -3.65
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4847,
-   "kazi": 0.002,
-   "yukseklik_m": 1181,
+   "dag": "takımada",
+   "dag_ad": "İç deniz takımadası",
+   "besleyen_buzul_km2": 1172,
+   "kazi": 0.004,
+   "yukseklik_m": 1929,
    "bugun": "açık su"
   },
   {
    "no": 54,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    37.49,
-    2.5
+    29.66,
+    33.35
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 4752,
-   "kazi": 0.004,
-   "yukseklik_m": 1601,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1164,
+   "kazi": 0.0,
+   "yukseklik_m": 3166,
    "bugun": "açık su"
   },
   {
    "no": 55,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    47.24,
-    -24.3
+    50.67,
+    17.01
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4623,
-   "kazi": 0.0,
-   "yukseklik_m": 2155,
+   "dag": "plato",
+   "dag_ad": "Plato çanağı",
+   "besleyen_buzul_km2": 1158,
+   "kazi": 0.001,
+   "yukseklik_m": 2301,
    "bugun": "açık su"
   },
   {
    "no": 56,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    35.99,
-    4.26
+    37.05,
+    14.9
    ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 4593,
-   "kazi": 0.017,
-   "yukseklik_m": 940,
+   "dag": "3",
+   "dag_ad": "Duvar",
+   "besleyen_buzul_km2": 1147,
+   "kazi": 0.005,
+   "yukseklik_m": 2246,
    "bugun": "açık su"
   },
   {
    "no": 57,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    46.01,
-    -34.15
+    49.53,
+    22.28
    ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4561,
+   "dag": "9",
+   "dag_ad": "Plato doğusu sırası",
+   "besleyen_buzul_km2": 1056,
    "kazi": 0.0,
-   "yukseklik_m": 1751,
+   "yukseklik_m": 2841,
    "bugun": "açık su"
   },
   {
    "no": 58,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    33.09,
-    25.71
+    34.94,
+    16.48
    ],
    "dag": "3",
    "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 4517,
-   "kazi": 0.013,
-   "yukseklik_m": 1751,
-   "bugun": "açık su"
-  },
-  {
-   "no": 59,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    44.52,
-    -31.86
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4513,
-   "kazi": 0.001,
-   "yukseklik_m": 1558,
-   "bugun": "açık su"
-  },
-  {
-   "no": 60,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    52.95,
-    -2.68
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 4489,
-   "kazi": 0.0,
-   "yukseklik_m": 2601,
-   "bugun": "açık su"
-  },
-  {
-   "no": 61,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    44.87,
-    -6.72
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 4442,
-   "kazi": 0.0,
-   "yukseklik_m": 2617,
-   "bugun": "açık su"
-  },
-  {
-   "no": 62,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    49.0,
-    -24.92
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4367,
-   "kazi": 0.0,
-   "yukseklik_m": 1782,
-   "bugun": "açık su"
-  },
-  {
-   "no": 63,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    45.31,
-    -31.25
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 4331,
-   "kazi": 0.0,
-   "yukseklik_m": 1947,
-   "bugun": "açık su"
-  },
-  {
-   "no": 64,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    33.88,
-    21.75
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 4306,
-   "kazi": 0.007,
-   "yukseklik_m": 2047,
-   "bugun": "açık su"
-  },
-  {
-   "no": 65,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    43.46,
-    23.07
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 4303,
-   "kazi": 0.0,
-   "yukseklik_m": 3218,
-   "bugun": "açık su"
-  },
-  {
-   "no": 66,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    38.36,
-    -3.03
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 4234,
-   "kazi": 0.024,
-   "yukseklik_m": 890,
-   "bugun": "açık su"
-  },
-  {
-   "no": 67,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    30.45,
-    34.41
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 4176,
-   "kazi": 0.022,
-   "yukseklik_m": 1020,
-   "bugun": "açık su"
-  },
-  {
-   "no": 68,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    29.93,
-    37.13
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 4054,
-   "kazi": 0.02,
-   "yukseklik_m": 943,
-   "bugun": "açık su"
-  },
-  {
-   "no": 69,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    32.83,
-    11.29
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3989,
-   "kazi": 0.006,
-   "yukseklik_m": 2071,
-   "bugun": "açık su"
-  },
-  {
-   "no": 70,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    53.75,
-    29.05
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 3778,
-   "kazi": 0.0,
-   "yukseklik_m": 1438,
-   "bugun": "açık su"
-  },
-  {
-   "no": 71,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    38.98,
-    -4.44
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 3765,
-   "kazi": 0.001,
-   "yukseklik_m": 2061,
-   "bugun": "açık su"
-  },
-  {
-   "no": 72,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    52.6,
-    34.94
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 3606,
-   "kazi": 0.001,
-   "yukseklik_m": 923,
-   "bugun": "açık su"
-  },
-  {
-   "no": 73,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    32.39,
-    38.63
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3570,
-   "kazi": 0.011,
-   "yukseklik_m": 1388,
-   "bugun": "açık su"
-  },
-  {
-   "no": 74,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    29.93,
-    39.42
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3552,
-   "kazi": 0.004,
-   "yukseklik_m": 1422,
-   "bugun": "açık su"
-  },
-  {
-   "no": 75,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    55.24,
-    4.26
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 3377,
-   "kazi": 0.001,
-   "yukseklik_m": 1454,
-   "bugun": "açık su"
-  },
-  {
-   "no": 76,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    30.89,
-    18.06
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3343,
-   "kazi": 0.049,
-   "yukseklik_m": 1129,
-   "bugun": "açık su"
-  },
-  {
-   "no": 77,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    36.61,
-    9.62
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3257,
-   "kazi": 0.004,
-   "yukseklik_m": 2114,
-   "bugun": "açık su"
-  },
-  {
-   "no": 78,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    32.3,
-    35.46
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3253,
-   "kazi": 0.012,
-   "yukseklik_m": 1664,
-   "bugun": "açık su"
-  },
-  {
-   "no": 79,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    6.28,
-    -15.78
-   ],
-   "dag": "4",
-   "dag_ad": "Yay biçimli sıra",
-   "besleyen_buzul_km2": 3230,
-   "kazi": 0.014,
-   "yukseklik_m": 2297,
-   "bugun": "açık su"
-  },
-  {
-   "no": 80,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    31.51,
-    23.16
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3180,
-   "kazi": 0.002,
-   "yukseklik_m": 2922,
-   "bugun": "açık su"
-  },
-  {
-   "no": 81,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    58.32,
-    14.46
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 3139,
-   "kazi": 0.0,
-   "yukseklik_m": 586,
-   "bugun": "açık su"
-  },
-  {
-   "no": 82,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    32.3,
-    34.06
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 3088,
-   "kazi": 0.005,
-   "yukseklik_m": 2032,
-   "bugun": "açık su"
-  },
-  {
-   "no": 83,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    38.89,
-    4.17
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 3076,
-   "kazi": 0.001,
-   "yukseklik_m": 2499,
-   "bugun": "açık su"
-  },
-  {
-   "no": 84,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    47.68,
-    22.81
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 3056,
-   "kazi": 0.0,
-   "yukseklik_m": 2862,
-   "bugun": "açık su"
-  },
-  {
-   "no": 85,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.59,
-    -21.67
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 2999,
-   "kazi": 0.0,
-   "yukseklik_m": 2193,
-   "bugun": "açık su"
-  },
-  {
-   "no": 86,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    49.44,
-    -4.88
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 2997,
-   "kazi": 0.0,
-   "yukseklik_m": 2352,
-   "bugun": "açık su"
-  },
-  {
-   "no": 87,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    46.27,
-    -30.1
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 2870,
-   "kazi": 0.0,
-   "yukseklik_m": 1628,
-   "bugun": "açık su"
-  },
-  {
-   "no": 88,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    45.57,
-    23.16
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 2815,
-   "kazi": 0.0,
-   "yukseklik_m": 2610,
-   "bugun": "açık su"
-  },
-  {
-   "no": 89,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    43.02,
-    25.62
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 2815,
-   "kazi": 0.0,
-   "yukseklik_m": 2812,
-   "bugun": "açık su"
-  },
-  {
-   "no": 90,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    4.88,
-    -15.16
-   ],
-   "dag": "6",
-   "dag_ad": "Güney çarpışma noktası",
-   "besleyen_buzul_km2": 2759,
-   "kazi": 0.003,
-   "yukseklik_m": 2916,
-   "bugun": "açık su"
-  },
-  {
-   "no": 91,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    40.03,
-    -5.05
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 2712,
-   "kazi": 0.003,
-   "yukseklik_m": 1883,
-   "bugun": "açık su"
-  },
-  {
-   "no": 92,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    32.65,
-    32.83
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2591,
-   "kazi": 0.002,
-   "yukseklik_m": 2366,
-   "bugun": "açık su"
-  },
-  {
-   "no": 93,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    30.54,
-    28.34
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2534,
-   "kazi": 0.01,
-   "yukseklik_m": 2248,
-   "bugun": "açık su"
-  },
-  {
-   "no": 94,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    56.91,
-    4.17
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 2529,
-   "kazi": 0.0,
-   "yukseklik_m": 282,
-   "bugun": "açık su"
-  },
-  {
-   "no": 95,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    51.72,
-    -3.38
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 2490,
-   "kazi": 0.0,
-   "yukseklik_m": 2523,
-   "bugun": "açık su"
-  },
-  {
-   "no": 96,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    54.71,
-    33.35
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 2466,
-   "kazi": 0.0,
-   "yukseklik_m": 1383,
-   "bugun": "açık su"
-  },
-  {
-   "no": 97,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    48.82,
-    21.31
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 2348,
-   "kazi": 0.0,
-   "yukseklik_m": 2314,
-   "bugun": "açık su"
-  },
-  {
-   "no": 98,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    30.98,
-    39.42
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2299,
-   "kazi": 0.001,
-   "yukseklik_m": 1994,
-   "bugun": "açık su"
-  },
-  {
-   "no": 99,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    34.58,
-    7.69
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2275,
-   "kazi": 0.002,
-   "yukseklik_m": 1568,
-   "bugun": "açık su"
-  },
-  {
-   "no": 100,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    42.41,
-    24.3
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2266,
-   "kazi": 0.001,
-   "yukseklik_m": 2808,
-   "bugun": "açık su"
-  },
-  {
-   "no": 101,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    38.63,
-    2.42
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 2251,
-   "kazi": 0.0,
-   "yukseklik_m": 2721,
-   "bugun": "açık su"
-  },
-  {
-   "no": 102,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    41.18,
-    24.3
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2213,
-   "kazi": 0.001,
-   "yukseklik_m": 2042,
-   "bugun": "açık su"
-  },
-  {
-   "no": 103,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    42.14,
-    -36.08
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 2126,
-   "kazi": 0.002,
-   "yukseklik_m": 1408,
-   "bugun": "açık su"
-  },
-  {
-   "no": 104,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    42.14,
-    -34.41
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 2118,
-   "kazi": 0.001,
-   "yukseklik_m": 1834,
-   "bugun": "açık su"
-  },
-  {
-   "no": 105,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    54.8,
-    -0.92
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 2047,
-   "kazi": 0.0,
-   "yukseklik_m": 2022,
-   "bugun": "açık su"
-  },
-  {
-   "no": 106,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    37.13,
-    30.98
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2046,
-   "kazi": 0.0,
-   "yukseklik_m": 2568,
-   "bugun": "açık su"
-  },
-  {
-   "no": 107,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    42.41,
-    22.28
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 2037,
-   "kazi": 0.0,
-   "yukseklik_m": 2698,
-   "bugun": "açık su"
-  },
-  {
-   "no": 108,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    50.58,
-    -4.35
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1988,
-   "kazi": 0.0,
-   "yukseklik_m": 2180,
-   "bugun": "açık su"
-  },
-  {
-   "no": 109,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    30.63,
-    19.73
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1965,
-   "kazi": 0.003,
-   "yukseklik_m": 1925,
-   "bugun": "açık su"
-  },
-  {
-   "no": 110,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    40.91,
-    -1.1
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1957,
-   "kazi": 0.0,
-   "yukseklik_m": 2720,
-   "bugun": "açık su"
-  },
-  {
-   "no": 111,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.07,
-    -4.61
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1939,
-   "kazi": 0.0,
-   "yukseklik_m": 2950,
-   "bugun": "açık su"
-  },
-  {
-   "no": 112,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    46.63,
-    22.28
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 1846,
-   "kazi": 0.0,
-   "yukseklik_m": 2770,
-   "bugun": "açık su"
-  },
-  {
-   "no": 113,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    30.19,
-    27.03
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1810,
-   "kazi": 0.011,
-   "yukseklik_m": 1931,
-   "bugun": "açık su"
-  },
-  {
-   "no": 114,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    38.1,
-    0.04
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1798,
-   "kazi": 0.003,
-   "yukseklik_m": 1332,
-   "bugun": "açık su"
-  },
-  {
-   "no": 115,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    57.61,
-    27.2
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1763,
-   "kazi": 0.0,
-   "yukseklik_m": 611,
-   "bugun": "açık su"
-  },
-  {
-   "no": 116,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    43.11,
-    0.57
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1752,
-   "kazi": 0.001,
-   "yukseklik_m": 3194,
-   "bugun": "açık su"
-  },
-  {
-   "no": 117,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    38.19,
-    31.07
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1734,
-   "kazi": 0.0,
-   "yukseklik_m": 2201,
-   "bugun": "açık su"
-  },
-  {
-   "no": 118,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    56.47,
-    20.08
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1730,
-   "kazi": 0.0,
-   "yukseklik_m": 2022,
-   "bugun": "açık su"
-  },
-  {
-   "no": 119,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    38.54,
-    -1.1
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1714,
-   "kazi": 0.004,
-   "yukseklik_m": 1399,
-   "bugun": "açık su"
-  },
-  {
-   "no": 120,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    5.41,
-    -14.28
-   ],
-   "dag": "4",
-   "dag_ad": "Yay biçimli sıra",
-   "besleyen_buzul_km2": 1712,
-   "kazi": 0.005,
-   "yukseklik_m": 2565,
-   "bugun": "açık su"
-  },
-  {
-   "no": 121,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    53.04,
-    -8.48
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1710,
-   "kazi": 0.0,
-   "yukseklik_m": 1585,
-   "bugun": "açık su"
-  },
-  {
-   "no": 122,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    54.45,
-    26.15
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1709,
-   "kazi": 0.0,
-   "yukseklik_m": 1729,
-   "bugun": "açık su"
-  },
-  {
-   "no": 123,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    45.75,
-    -6.11
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1667,
-   "kazi": 0.0,
-   "yukseklik_m": 2939,
-   "bugun": "açık su"
-  },
-  {
-   "no": 124,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    30.63,
-    22.98
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1639,
-   "kazi": 0.001,
-   "yukseklik_m": 2591,
-   "bugun": "açık su"
-  },
-  {
-   "no": 125,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    52.87,
-    -17.27
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 1624,
-   "kazi": 0.0,
-   "yukseklik_m": 724,
-   "bugun": "açık su"
-  },
-  {
-   "no": 126,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    31.51,
-    14.81
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1624,
-   "kazi": 0.009,
-   "yukseklik_m": 1218,
-   "bugun": "açık su"
-  },
-  {
-   "no": 127,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    56.29,
-    6.37
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1552,
-   "kazi": 0.0,
-   "yukseklik_m": 766,
-   "bugun": "açık su"
-  },
-  {
-   "no": 128,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.59,
-    21.31
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 1537,
-   "kazi": 0.0,
-   "yukseklik_m": 2481,
-   "bugun": "açık su"
-  },
-  {
-   "no": 129,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    55.85,
-    -10.42
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1513,
-   "kazi": 0.0,
-   "yukseklik_m": 208,
-   "bugun": "açık su"
-  },
-  {
-   "no": 130,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    53.92,
-    16.83
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1509,
-   "kazi": 0.0,
-   "yukseklik_m": 1709,
-   "bugun": "açık su"
-  },
-  {
-   "no": 131,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    50.84,
-    20.87
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 1500,
-   "kazi": 0.0,
-   "yukseklik_m": 2723,
-   "bugun": "açık su"
-  },
-  {
-   "no": 132,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    41.7,
-    25.71
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1491,
-   "kazi": 0.0,
-   "yukseklik_m": 2701,
-   "bugun": "açık su"
-  },
-  {
-   "no": 133,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    55.06,
-    -2.24
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1485,
-   "kazi": 0.0,
-   "yukseklik_m": 1280,
-   "bugun": "açık su"
-  },
-  {
-   "no": 134,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.15,
-    -29.14
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 1485,
-   "kazi": 0.0,
-   "yukseklik_m": 2021,
-   "bugun": "açık su"
-  },
-  {
-   "no": 135,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    31.95,
-    29.05
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1465,
-   "kazi": 0.006,
-   "yukseklik_m": 2009,
-   "bugun": "açık su"
-  },
-  {
-   "no": 136,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    32.04,
-    13.05
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1455,
-   "kazi": 0.003,
-   "yukseklik_m": 2104,
-   "bugun": "açık su"
-  },
-  {
-   "no": 137,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    36.69,
-    3.47
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1450,
-   "kazi": 0.01,
-   "yukseklik_m": 1417,
-   "bugun": "açık su"
-  },
-  {
-   "no": 138,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    33.18,
-    22.19
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1444,
-   "kazi": 0.0,
-   "yukseklik_m": 2684,
-   "bugun": "açık su"
-  },
-  {
-   "no": 139,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    48.21,
-    -6.28
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1395,
-   "kazi": 0.0,
-   "yukseklik_m": 2207,
-   "bugun": "açık su"
-  },
-  {
-   "no": 140,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    39.68,
-    0.22
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1390,
-   "kazi": 0.0,
-   "yukseklik_m": 2924,
-   "bugun": "açık su"
-  },
-  {
-   "no": 141,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    40.3,
-    -1.63
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1387,
-   "kazi": 0.0,
-   "yukseklik_m": 3096,
-   "bugun": "açık su"
-  },
-  {
-   "no": 142,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    57.26,
-    21.14
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1383,
-   "kazi": 0.0,
-   "yukseklik_m": 1322,
-   "bugun": "açık su"
-  },
-  {
-   "no": 143,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    55.94,
-    2.86
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1381,
-   "kazi": 0.0,
-   "yukseklik_m": 1757,
-   "bugun": "açık su"
-  },
-  {
-   "no": 144,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    40.91,
-    0.31
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1379,
-   "kazi": 0.001,
-   "yukseklik_m": 2419,
-   "bugun": "açık su"
-  },
-  {
-   "no": 145,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    55.42,
-    1.71
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1378,
-   "kazi": 0.0,
-   "yukseklik_m": 1948,
-   "bugun": "açık su"
-  },
-  {
-   "no": 146,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    51.9,
-    20.7
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 1363,
-   "kazi": 0.0,
-   "yukseklik_m": 2197,
-   "bugun": "açık su"
-  },
-  {
-   "no": 147,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    37.49,
-    1.19
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1360,
-   "kazi": 0.002,
-   "yukseklik_m": 1317,
-   "bugun": "açık su"
-  },
-  {
-   "no": 148,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    53.57,
-    5.84
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1350,
-   "kazi": 0.0,
-   "yukseklik_m": 2464,
-   "bugun": "açık su"
-  },
-  {
-   "no": 149,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    33.53,
-    12.0
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1348,
-   "kazi": 0.0,
-   "yukseklik_m": 2471,
-   "bugun": "açık su"
-  },
-  {
-   "no": 150,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    54.01,
-    4.35
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1282,
-   "kazi": 0.0,
-   "yukseklik_m": 2170,
-   "bugun": "açık su"
-  },
-  {
-   "no": 151,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.68,
-    -25.27
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 1278,
-   "kazi": 0.0,
-   "yukseklik_m": 2333,
-   "bugun": "açık su"
-  },
-  {
-   "no": 152,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    45.66,
-    -18.06
-   ],
-   "dag": "meseta",
-   "dag_ad": "İber yaylası",
-   "besleyen_buzul_km2": 1272,
-   "kazi": 0.0,
-   "yukseklik_m": 3303,
-   "bugun": "açık su"
-  },
-  {
-   "no": 153,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    49.0,
-    -23.07
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 1260,
-   "kazi": 0.0,
-   "yukseklik_m": 2243,
-   "bugun": "açık su"
-  },
-  {
-   "no": 154,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    57.52,
-    14.28
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1230,
-   "kazi": 0.0,
-   "yukseklik_m": 1025,
-   "bugun": "açık su"
-  },
-  {
-   "no": 155,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    52.08,
-    33.35
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1228,
-   "kazi": 0.0,
-   "yukseklik_m": 2151,
-   "bugun": "açık su"
-  },
-  {
-   "no": 156,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.94,
-    -4.53
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1215,
-   "kazi": 0.0,
-   "yukseklik_m": 3063,
-   "bugun": "açık su"
-  },
-  {
-   "no": 157,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    54.98,
-    -8.57
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 1213,
-   "kazi": 0.0,
-   "yukseklik_m": 808,
-   "bugun": "açık su"
-  },
-  {
-   "no": 158,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    33.62,
-    20.08
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1197,
-   "kazi": 0.001,
-   "yukseklik_m": 2451,
-   "bugun": "açık su"
-  },
-  {
-   "no": 159,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    42.93,
-    26.85
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 1185,
-   "kazi": 0.0,
-   "yukseklik_m": 3384,
-   "bugun": "açık su"
-  },
-  {
-   "no": 160,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    59.19,
-    17.62
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1183,
-   "kazi": 0.0,
-   "yukseklik_m": 192,
-   "bugun": "açık su"
-  },
-  {
-   "no": 161,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    43.55,
-    21.84
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1181,
-   "kazi": 0.0,
-   "yukseklik_m": 2801,
-   "bugun": "açık su"
-  },
-  {
-   "no": 162,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    43.99,
-    26.59
-   ],
-   "dag": "9",
-   "dag_ad": "Plato doğusu sırası",
-   "besleyen_buzul_km2": 1173,
-   "kazi": 0.0,
-   "yukseklik_m": 2699,
-   "bugun": "açık su"
-  },
-  {
-   "no": 163,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    41.88,
-    1.01
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1134,
-   "kazi": 0.0,
-   "yukseklik_m": 3009,
-   "bugun": "açık su"
-  },
-  {
-   "no": 164,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    56.12,
-    26.15
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1124,
-   "kazi": 0.0,
-   "yukseklik_m": 1329,
-   "bugun": "açık su"
-  },
-  {
-   "no": 165,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    39.86,
-    1.19
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1104,
-   "kazi": 0.0,
-   "yukseklik_m": 2689,
-   "bugun": "açık su"
-  },
-  {
-   "no": 166,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.86,
-    -15.07
-   ],
-   "dag": "meseta",
-   "dag_ad": "İber yaylası",
-   "besleyen_buzul_km2": 1094,
-   "kazi": 0.0,
-   "yukseklik_m": 2764,
-   "bugun": "açık su"
-  },
-  {
-   "no": 167,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.86,
-    -26.85
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
-   "besleyen_buzul_km2": 1086,
-   "kazi": 0.0,
-   "yukseklik_m": 2215,
-   "bugun": "açık su"
-  },
-  {
-   "no": 168,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    54.27,
-    18.59
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1054,
-   "kazi": 0.0,
-   "yukseklik_m": 2369,
-   "bugun": "açık su"
-  },
-  {
-   "no": 169,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    32.56,
-    22.9
-   ],
-   "dag": "3",
-   "dag_ad": "Duvar",
-   "besleyen_buzul_km2": 1049,
-   "kazi": 0.0,
-   "yukseklik_m": 2628,
-   "bugun": "açık su"
-  },
-  {
-   "no": 170,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.07,
-    -14.9
-   ],
-   "dag": "meseta",
-   "dag_ad": "İber yaylası",
-   "besleyen_buzul_km2": 1037,
-   "kazi": 0.0,
-   "yukseklik_m": 2951,
-   "bugun": "açık su"
-  },
-  {
-   "no": 171,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    40.3,
-    -36.25
-   ],
-   "dag": "5",
-   "dag_ad": "İber kuzey sırası",
    "besleyen_buzul_km2": 1016,
-   "kazi": 0.0,
-   "yukseklik_m": 1689,
-   "bugun": "açık su"
-  },
-  {
-   "no": 172,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    35.2,
-    6.46
-   ],
-   "dag": "plato",
-   "dag_ad": "Plato çanağı",
-   "besleyen_buzul_km2": 1012,
-   "kazi": 0.002,
-   "yukseklik_m": 1841,
+   "kazi": 0.007,
+   "yukseklik_m": 2479,
    "bugun": "açık su"
   }
  ],
- "fiyortlar": [
-  {
-   "no": 1,
-   "enlem_boylam": [
-    59.02,
-    20.96
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 18197
-  },
-  {
-   "no": 2,
-   "enlem_boylam": [
-    59.11,
-    15.86
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 14769
-  },
-  {
-   "no": 3,
-   "enlem_boylam": [
-    57.61,
-    34.67
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 14020
-  },
-  {
-   "no": 4,
-   "enlem_boylam": [
-    52.34,
-    -7.95
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 9972
-  },
-  {
-   "no": 5,
-   "enlem_boylam": [
-    59.63,
-    17.53
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 8089
-  },
-  {
-   "no": 6,
-   "enlem_boylam": [
-    59.72,
-    19.91
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 7167
-  },
-  {
-   "no": 7,
-   "enlem_boylam": [
-    59.19,
-    31.33
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 6284
-  },
-  {
-   "no": 8,
-   "enlem_boylam": [
-    57.96,
-    1.89
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 5315
-  },
-  {
-   "no": 9,
-   "enlem_boylam": [
-    57.52,
-    0.22
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 3237
-  },
-  {
-   "no": 10,
-   "enlem_boylam": [
-    58.58,
-    22.9
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 1249
-  },
-  {
-   "no": 11,
-   "enlem_boylam": [
-    58.23,
-    25.97
-   ],
-   "dag": "2",
-   "dag_ad": "Kuzeydoğu kıyı sırası",
-   "besleyen_buzul_km2": 659
-  },
-  {
-   "no": 12,
-   "enlem_boylam": [
-    55.94,
-    -5.76
-   ],
-   "dag": "1",
-   "dag_ad": "Kuzey batı kolu",
-   "besleyen_buzul_km2": 376
-  }
- ],
+ "fiyortlar": [],
  "sirk_dag_basina": {
-  "1": {
-   "sirk": 340,
-   "bugun_buzsuz_sirk_golu_adayi": 292
-  },
-  "10": {
-   "sirk": 41,
-   "bugun_buzsuz_sirk_golu_adayi": 36
-  },
-  "11": {
-   "sirk": 1,
-   "bugun_buzsuz_sirk_golu_adayi": 1
-  },
   "2": {
-   "sirk": 342,
-   "bugun_buzsuz_sirk_golu_adayi": 330
+   "sirk": 26,
+   "bugun_buzsuz_sirk_golu_adayi": 26
   },
   "3": {
-   "sirk": 849,
-   "bugun_buzsuz_sirk_golu_adayi": 844
-  },
-  "4": {
-   "sirk": 309,
-   "bugun_buzsuz_sirk_golu_adayi": 309
-  },
-  "5": {
-   "sirk": 532,
-   "bugun_buzsuz_sirk_golu_adayi": 501
-  },
-  "6": {
-   "sirk": 61,
-   "bugun_buzsuz_sirk_golu_adayi": 61
-  },
-  "7": {
-   "sirk": 61,
-   "bugun_buzsuz_sirk_golu_adayi": 53
-  },
-  "8": {
-   "sirk": 30,
-   "bugun_buzsuz_sirk_golu_adayi": 27
+   "sirk": 997,
+   "bugun_buzsuz_sirk_golu_adayi": 997
   },
   "9": {
-   "sirk": 108,
-   "bugun_buzsuz_sirk_golu_adayi": 108
-  },
-  "küçük kıta": {
-   "sirk": 1,
-   "bugun_buzsuz_sirk_golu_adayi": 1
-  },
-  "meseta": {
-   "sirk": 31,
-   "bugun_buzsuz_sirk_golu_adayi": 31
+   "sirk": 339,
+   "bugun_buzsuz_sirk_golu_adayi": 339
   },
   "plato": {
-   "sirk": 222,
-   "bugun_buzsuz_sirk_golu_adayi": 222
+   "sirk": 53,
+   "bugun_buzsuz_sirk_golu_adayi": 53
   },
   "takımada": {
-   "sirk": 47,
-   "bugun_buzsuz_sirk_golu_adayi": 40
-  },
-  "yarımada": {
-   "sirk": 7,
-   "bugun_buzsuz_sirk_golu_adayi": 7
+   "sirk": 93,
+   "bugun_buzsuz_sirk_golu_adayi": 93
   }
  },
- "sirk_sayisi": 2982,
- "tarn_sayisi": 2863
+ "sirk_sayisi": 1508,
+ "tarn_sayisi": 1508
 }
