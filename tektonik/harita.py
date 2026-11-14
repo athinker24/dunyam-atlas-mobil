@@ -217,7 +217,7 @@ def kita(cikti):
     # Kuzey Anadolu benzeri fay (levha ici)
     pts = []
     for lo in np.arange(1.5, 22, 0.5):
-        x = M.col(lo); r = np.where(land[M.row(30):M.row(8), x] & (es[M.row(30):M.row(8), x] > 1100))[0]
+        x = M.col(lo); r = np.where(land[M.row(30):M.row(8), x] & (es[M.row(30):M.row(8), x] > 1100 * M.OLC))[0]
         if len(r): pts.append(h.P(M.LA(M.row(30) + r.min()), lo))
     pf = M.yumusat([(y, x) for x, y in pts], 9); pf = [(x, y) for y, x in pf]
     d.line(pf, fill=(90, 230, 140), width=6)
@@ -226,7 +226,7 @@ def kita(cikti):
         d.line([(x - 28, y - 10), (x + 28, y - 10)], fill=(90, 230, 140), width=3); d.polygon([(x + 28, y - 16), (x + 38, y - 10), (x + 28, y - 4)], fill=(90, 230, 140))
         d.line([(x - 28, y + 10), (x + 28, y + 10)], fill=(90, 230, 140), width=3); d.polygon([(x - 28, y + 4), (x - 38, y + 10), (x - 28, y + 16)], fill=(90, 230, 140))
     # 11: eski kenet
-    m11 = land & (es > 1400) & (lat[:, None] > 3) & (lat[:, None] < 21) & (lon[None, :] > 6.5) & (lon[None, :] < 13)
+    m11 = land & (es > 1400 * M.OLC) & (lat[:, None] > 3) & (lat[:, None] < 21) & (lon[None, :] > 6.5) & (lon[None, :] < 13)
     yy, xx = np.where(m11); X = np.c_[lon[xx], lat[yy]]; mu = X.mean(0); ev, vec = np.linalg.eigh(np.cov((X - mu).T)); v = vec[:, 1] * 2 * np.sqrt(ev[1])
     a, b = h.P(mu[1] - v[1], mu[0] - v[0]), h.P(mu[1] + v[1], mu[0] + v[0]); d.line([a, b], fill=(175, 175, 175), width=5)
     # volkanlar
