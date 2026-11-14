@@ -16,8 +16,8 @@
    "sira": 10,
    "euler_kutbu": null,
    "euler_hizi_derece_My": 0.0,
-   "alan_milyon_km2": 55.84,
-   "kara_payi": 0.279
+   "alan_milyon_km2": 57.13,
+   "kara_payi": 0.295
   },
   "Kuzeydoğu": {
    "kimlik": 2,
@@ -35,8 +35,8 @@
     -146.0
    ],
    "euler_hizi_derece_My": 0.1349,
-   "alan_milyon_km2": 3.44,
-   "kara_payi": 0.772
+   "alan_milyon_km2": 2.71,
+   "kara_payi": 0.711
   },
   "İber": {
    "kimlik": 3,
@@ -54,8 +54,8 @@
     -118.0
    ],
    "euler_hizi_derece_My": 0.045,
-   "alan_milyon_km2": 6.68,
-   "kara_payi": 0.754
+   "alan_milyon_km2": 5.45,
+   "kara_payi": 0.701
   },
   "Ege": {
    "kimlik": 4,
@@ -92,8 +92,8 @@
     -115.0
    ],
    "euler_hizi_derece_My": 0.0899,
-   "alan_milyon_km2": 23.36,
-   "kara_payi": 0.384
+   "alan_milyon_km2": 23.12,
+   "kara_payi": 0.38
   },
   "Yarımada": {
    "kimlik": 6,
@@ -111,8 +111,8 @@
     -81.19
    ],
    "euler_hizi_derece_My": 0.2011,
-   "alan_milyon_km2": 4.62,
-   "kara_payi": 0.493
+   "alan_milyon_km2": 4.45,
+   "kara_payi": 0.474
   },
   "Alt Kıta": {
    "kimlik": 7,
@@ -130,8 +130,8 @@
     -78.89
    ],
    "euler_hizi_derece_My": 0.3607,
-   "alan_milyon_km2": 20.6,
-   "kara_payi": 0.41
+   "alan_milyon_km2": 21.27,
+   "kara_payi": 0.428
   },
   "Batı Okyanusu": {
    "kimlik": 8,
@@ -149,8 +149,8 @@
     -150.0
    ],
    "euler_hizi_derece_My": 0.4146,
-   "alan_milyon_km2": 77.13,
-   "kara_payi": 0.02
+   "alan_milyon_km2": 77.54,
+   "kara_payi": 0.025
   },
   "Doğu Okyanusu": {
    "kimlik": 9,
@@ -249,13 +249,13 @@
   }
  },
  "sinif_uzunluk_km": {
-  "CCB": 10617.0,
-  "SUB": 49498.0,
-  "CTF": 5118.0,
+  "CCB": 9875.0,
+  "SUB": 49344.0,
+  "CTF": 5319.0,
   "OTF": 38340.0,
-  "CRB": 5744.0,
+  "CRB": 5776.0,
   "OSR": 54002.0,
   "OCB": 554.0
  },
- "adim_sayisi": 6119
+ "adim_sayisi": 6105
 }
