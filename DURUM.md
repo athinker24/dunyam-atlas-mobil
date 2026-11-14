@@ -212,3 +212,17 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 ## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
+
+## Arazi denemesi 2 (14 Kasım, `arazi-tarih-2` dalı, YAYINDA DEĞİL)
+
+İkinci tektonik tarih denemesi: gerçek metre, düz eğri 0-5030 m, kara medyanı ~390 m, yeni kabartma.
+Önizleme `https://arazi-tarih-2-dunyam-atlas-mobil.qarb0natalha2434.workers.dev` (Access arkasında).
+Bütün katmanlar yeniden üretildi; 12/12 tutarlılık, 36/36 test. `main` → deneme 2 (deneme 1):
+A %11.5 → 17.6 (17.6), B 13.0 → 6.5 (7.5), C 41.4 → 39.5 (41.6), D 26.4 → 33.1 (31.3),
+E 7.8 → 3.3 (2.0); savan Aw 8.6 → 15.3, bozkır BS 12.9 → 6.5; kara yağışı 957 → 983 mm.
+Buzul çağı örtüsü %2.04, 52 buzul gölü adayı (`main` 172, 12 fiyort); su ağında 39 göl, 19'u
+buzul gölü; tatlı göl tasarımdaki gibi (10.061 km²). Kod düzeltmesi: plato kolunun kaynağı bu
+arazide 2843 m'lik dağda; boğaz artık kaynaktaki yüksek kesimden sonra ilk aşılan yerde başlar
+ve göl ekseni boşsa göl kurulmaz (önce bütün gezegen göl sayılıyordu). Levha: Pireneler eteği
+yine ölçülemedi, sınır düz.
+
