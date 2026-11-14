@@ -212,3 +212,19 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 ## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
+
+## Arazi denemesi (14 Kasım, `arazi-tarih` dalı, YAYINDA DEĞİL)
+
+Sahibinin tektonik tarih denemesi: kara yükseklikleri gerçek metre, eğri düz (0-3730 m),
+yeni kabartma görseli; kıyı ve deniz aynı. `main`'e birleştirilmedi; önizleme
+`https://arazi-tarih-dunyam-atlas-mobil.qarb0natalha2434.workers.dev` (Access arkasında).
+Bütün katmanlar bu araziyle yeniden üretildi (iklim, levha, buzul izleri, su, rejim, delta,
+bitki, toprak, yaşanabilirlik, tarım, hayvan); 12/12 tutarlılık, 36/36 test.
+Karşılaştırma (alan ağırlıklı, `main` → deneme): A %11.5 → 17.6, B 13.0 → 7.5, C 41.4 → 41.6,
+D 26.4 → 31.3, E 7.8 → 2.0; savan Aw 8.6 → 15.5, bozkır BS 12.9 → 7.5; kara yağışı 957 → 1048 mm.
+Uyum sorunları (kod yedekleri eklendi, eski arazide etkisiz): levha modelinde Pireneler eteği
+ölçülemiyor (bölgede en yüksek 712 m), sınır düz geçer; plato kolunun Duvar boğazı ve 792 m'lik
+tatlı göl tasarımı bu arazide yok (plato 15-100 m), göl 384 m'ye oturdu; buzul neredeyse yok
+(buzul çağında karanın %0.02'si), buzul gölleri kalmadı (göl 95 → 14). CLAUDE.md §6 (7000 m,
+plato 800-1000 m) bu dalda geçerli değil.
+
