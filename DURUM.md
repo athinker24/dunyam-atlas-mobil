@@ -212,3 +212,14 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 ## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
+
+## Arazi denemesi 3 (14 Kasım, `arazi-tarih-3` dalı, YAYINDA DEĞİL)
+
+İkinci denemenin arazisi + işaretli bozkır havzasının batısında sırt (42-49.5°K, 0-5°D,
+en yüksek ~2100 m). Önizleme `https://arazi-tarih-3-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar deneme 2 ile aynı (A 17.6, B 6.5, C 39.5, D 33.1, E 3.3).
+Bozkır amacı TUTMADI: bölge (37-49°K, 5°B-28°D) yağışı 900 → 851 mm, BSk %9 → %10 (0.25°);
+elips içinde BS %5 → %6. Sırt kısa ve alçak: 0.5° taramasında 36-51°K boyunca kesintisiz
+2500 m sırt %8, 3500 m sırt %29 bozkır vermişti. Tarama araçları: oturumun karalama
+dizinindeki tara.py (bölgesel geri dönüşüm ve sırt bellekte denenir).
+
