@@ -27,6 +27,10 @@ RES = 0.1
 w = uret.dunya_yukle(); g = uret.grid_kur(w, RES)
 land = g.land.astype(bool); lat = np.asarray(g.lat); lon = np.asarray(g.lon); H, W = land.shape
 e = np.where(land, np.maximum(g.elev, 0), 0).astype(float); es = ndimage.gaussian_filter(e, 3)
+# Etek eşikleri 7000 m'lik arazide ölçüldü (TEKTONIK.md). Arazi değişip en yüksek nokta
+# başka olunca eşikler aynı oranda ölçeklenir: 3730 m'lik denemede (14 Kasım) mutlak 2500 m
+# hiç aşılmıyor, Pireneler sınırı boş kalıyordu. Eski arazide OLC = 1, sonuç birebir aynı.
+OLC = float(json.load(open(os.path.join(KOK, "dunya", "dunyam.json"), encoding="utf-8"))["heightmap"]["max_elev_m"]) / 7000.0
 RKM = w.radius_km
 row = lambda la: int(round(np.interp(-la, -lat, np.arange(H))))
 col = lambda lo: int(round(np.interp(lo, lon, np.arange(W))))
@@ -72,25 +76,25 @@ def olculen(ad):
     p = []
     if ad == "duvar":             # Duvar'in guney etegi, boylam 7.6..33
         for lo in np.arange(7.6, 33.2, 0.5):
-            x = col(lo); r = np.where(land[row(45):row(25), x] & (es[row(45):row(25), x] > 2500))[0]
+            x = col(lo); r = np.where(land[row(45):row(25), x] & (es[row(45):row(25), x] > 2500 * OLC))[0]
             if not len(r): continue
             y = row(45) + r.max()
-            while y < row(20) and land[y, x] and es[y, x] > 1200: y += 1
+            while y < row(20) and land[y, x] and es[y, x] > 1200 * OLC: y += 1
             p.append((LA(y), lo))
     elif ad == "pireneler":       # 5'in guney etegi
         for lo in np.arange(-41, -16, 0.5):
-            x = col(lo); r = np.where(land[row(53):row(38), x] & (es[row(53):row(38), x] > 2500))[0]
+            x = col(lo); r = np.where(land[row(53):row(38), x] & (es[row(53):row(38), x] > 2500 * OLC))[0]
             if not len(r): continue
             y = row(53) + r.max()
-            while y < row(33) and land[y, x] and es[y, x] > 1200: y += 1
+            while y < row(33) and land[y, x] and es[y, x] > 1200 * OLC: y += 1
             p.append((LA(y), lo))
     elif ad == "alpler":          # 4'un ic (dogu) etegi
         for la in np.arange(19.5, 3.0, -0.5):
             y = row(la); c0, c1 = col(-21), col(-6)
-            r = np.where(land[y, c0:c1] & (es[y, c0:c1] > 2500))[0]
+            r = np.where(land[y, c0:c1] & (es[y, c0:c1] > 2500 * OLC))[0]
             if not len(r): continue
             x = c0 + r.max()
-            while x < col(0) and land[y, x] and es[y, x] > 1300: x += 1
+            while x < col(0) and land[y, x] and es[y, x] > 1300 * OLC: x += 1
             p.append((la, LO(x)))
     elif ad == "bati_cukur":      # guneybati blogunun bati kiyisi acigi
         for la in np.arange(27.5, 5.0, -0.5):
@@ -99,10 +103,10 @@ def olculen(ad):
     elif ad == "alti":            # 6: kucuk kita carpismasi
         for la in np.arange(6.5, -3.0, -0.5):
             y = row(la); c0, c1 = col(-27), col(-12)
-            r = np.where(land[y, c0:c1] & (es[y, c0:c1] > 2200))[0]
+            r = np.where(land[y, c0:c1] & (es[y, c0:c1] > 2200 * OLC))[0]
             if not len(r): continue
             x = c0 + r.min()
-            while x > col(-32) and land[y, x] and es[y, x] > 1000: x -= 1
+            while x > col(-32) and land[y, x] and es[y, x] > 1000 * OLC: x -= 1
             p.append((la, LO(x)))
     elif ad == "ege_cukur":       # takimadanin guney acigi
         lab, n = ndimage.label(land, np.ones((3, 3))); ana = np.argmax(np.bincount(lab.ravel())[1:]) + 1
@@ -114,8 +118,15 @@ def olculen(ad):
         for la in np.arange(21.5, -1.0, -0.5):
             y = row(la); c0, c1 = col(14), col(45); r = np.where(land[y, c0:c1])[0]
             if len(r): p.append((la, LO(c0 + r.max() + 14)))
+    if not p:
+        OLCULEMEYEN.append(ad); print("UYARI: %s etegi bu arazide olculemedi, sinir uc noktalar arasinda duz" % ad)
     return yumusat(p)
+OLCULEMEYEN = []
 def yumusat(p, k=5):
+    # ölçülecek dağ yoksa (yeni arazide o kuşak alçak) boş döner: sınır uç noktaları
+    # arasında düz geçer; olculen() kaç noktanın düştüğünü OLCULEMEYEN'e yazar
+    if not p:
+        return []
     a = np.array(p, float); o = a.copy()
     for i in range(len(a)): o[i] = a[max(0, i - k // 2): i + k // 2 + 1].mean(0)
     o[0], o[-1] = a[0], a[-1]; return [tuple(x) for x in o]
