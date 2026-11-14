@@ -212,3 +212,33 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 ## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
+
+## Arazi denemesi 3 (14 Kasım, `arazi-tarih-3` dalı, YAYINDA DEĞİL)
+
+İkinci denemenin arazisi + işaretli bozkır havzasının batısında sırt (42-49.5°K, 0-5°D,
+en yüksek ~2100 m). Önizleme `https://arazi-tarih-3-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar deneme 2 ile aynı (A 17.6, B 6.5, C 39.5, D 33.1, E 3.3).
+Bozkır amacı TUTMADI: bölge (37-49°K, 5°B-28°D) yağışı 900 → 851 mm, BSk %9 → %10 (0.25°);
+elips içinde BS %5 → %6. Sırt kısa ve alçak: 0.5° taramasında 36-51°K boyunca kesintisiz
+2500 m sırt %8, 3500 m sırt %29 bozkır vermişti. Tarama araçları: oturumun karalama
+dizinindeki tara.py (bölgesel geri dönüşüm ve sırt bellekte denenir).
+
+## Arazi denemesi 4 (14 Kasım, `arazi-tarih-4` dalı, YAYINDA DEĞİL)
+
+Üçüncü denemenin arazisi; batı sırtı kuzeydoğu-güneybatı uzanıyor: 52-44°K arası 3000-3300 m
+(6°D'den 3°B'ye), 42-38°K arasında 1100-1350 m'lik GEDİK, 36°K'de 2500 m. Kara piksellerinin
+%4.7'si değişti. Önizleme `https://arazi-tarih-4-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 17.6, B 6.7, C 39.5, D 32.9, E 3.3.
+Bozkır amacı YİNE TUTMADI: bölge yağışı 851 → 848 mm, BS %10 → %12. Sırt çalışıyor ama yalnız
+arkasında: 5-20°D bandında yağış 48°K 355, 46°K 438, 44°K 756, 42°K 1223, 40°K 1306 mm.
+Havzanın güney yarısı nemi 38-42°K gediğinden alıyor; gedik kapanmadan bölge bozkır olmaz.
+
+## Arazi denemesi 5 (14 Kasım, `arazi-tarih-5` dalı, YAYINDA DEĞİL)
+
+Dördüncü denemenin arazisi; batı sırtındaki 38-42°K gediği kapatıldı: 44-36°K arası tepe
+3400-3670 m, tepe hattı 2.5-3.8°B, 2000 m üstü genişlik ~1°. 44.5°K kuzeyi aynı (en çok 3 m).
+Önizleme `https://arazi-tarih-5-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 17.6, B 9.8, C 39.4, D 29.8, E 3.4.
+Bozkır amacı TUTTU: bölge yağışı 848 → 485 mm, BSk %12 → %41 (atlas), 0.25°'de %41.
+5-20°D bandında yağış 350-480 mm (44°K 404, 40°K 482). Bölgenin geri kalanı Dwa %31, Dfa %12:
+doğu ve kuzey kenar. Bölge dışında sınıfı değişen kara %2.9. Bölgesel geri dönüşüm denenmedi.
