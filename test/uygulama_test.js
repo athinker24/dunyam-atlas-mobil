@@ -214,7 +214,9 @@ const OLC = () => {
       const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B;
         const L = [...D.su.goller].sort((a, b) => b.alan - a.alan)[0], k = L.kutu, c = document.createElement("canvas").getContext("2d");
         for (let i = 1; i < 20; i++) for (let j = 1; j < 20; j++) { const lo = k[0] + (k[2] - k[0]) * i / 20, la = k[1] + (k[3] - k[1]) * j / 20;
-          if (c.isPointInPath(L.yol, lo, la, "evenodd")) return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; }
+          // kıyıdan en az bir hücre içeride: dokunuş hücre merkezine oturur, kıyıdaki nokta gölün dışına düşebilir
+          const dx = (B[2] - B[0]) / D.W, dy = (B[3] - B[1]) / D.H, ic = (x, y) => c.isPointInPath(L.yol, x, y, "evenodd");
+          if (ic(lo, la) && ic(lo - dx, la) && ic(lo + dx, la) && ic(lo, la - dy) && ic(lo, la + dy)) return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; }
         return null; });
       if (hedef) { await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
         const t = await p.evaluate(() => document.querySelector("#kart-icerik .k-su")?.textContent || "");
