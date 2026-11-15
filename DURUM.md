@@ -212,3 +212,95 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 ## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
+
+## Arazi denemesi 3 (14 Kasım, `arazi-tarih-3` dalı, YAYINDA DEĞİL)
+
+İkinci denemenin arazisi + işaretli bozkır havzasının batısında sırt (42-49.5°K, 0-5°D,
+en yüksek ~2100 m). Önizleme `https://arazi-tarih-3-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar deneme 2 ile aynı (A 17.6, B 6.5, C 39.5, D 33.1, E 3.3).
+Bozkır amacı TUTMADI: bölge (37-49°K, 5°B-28°D) yağışı 900 → 851 mm, BSk %9 → %10 (0.25°);
+elips içinde BS %5 → %6. Sırt kısa ve alçak: 0.5° taramasında 36-51°K boyunca kesintisiz
+2500 m sırt %8, 3500 m sırt %29 bozkır vermişti. Tarama araçları: oturumun karalama
+dizinindeki tara.py (bölgesel geri dönüşüm ve sırt bellekte denenir).
+
+## Arazi denemesi 4 (14 Kasım, `arazi-tarih-4` dalı, YAYINDA DEĞİL)
+
+Üçüncü denemenin arazisi; batı sırtı kuzeydoğu-güneybatı uzanıyor: 52-44°K arası 3000-3300 m
+(6°D'den 3°B'ye), 42-38°K arasında 1100-1350 m'lik GEDİK, 36°K'de 2500 m. Kara piksellerinin
+%4.7'si değişti. Önizleme `https://arazi-tarih-4-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 17.6, B 6.7, C 39.5, D 32.9, E 3.3.
+Bozkır amacı YİNE TUTMADI: bölge yağışı 851 → 848 mm, BS %10 → %12. Sırt çalışıyor ama yalnız
+arkasında: 5-20°D bandında yağış 48°K 355, 46°K 438, 44°K 756, 42°K 1223, 40°K 1306 mm.
+Havzanın güney yarısı nemi 38-42°K gediğinden alıyor; gedik kapanmadan bölge bozkır olmaz.
+
+## Arazi denemesi 5 (14 Kasım, `arazi-tarih-5` dalı, YAYINDA DEĞİL)
+
+Dördüncü denemenin arazisi; batı sırtındaki 38-42°K gediği kapatıldı: 44-36°K arası tepe
+3400-3670 m, tepe hattı 2.5-3.8°B, 2000 m üstü genişlik ~1°. 44.5°K kuzeyi aynı (en çok 3 m).
+Önizleme `https://arazi-tarih-5-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 17.6, B 9.8, C 39.4, D 29.8, E 3.4.
+Bozkır amacı TUTTU: bölge yağışı 848 → 485 mm, BSk %12 → %41 (atlas), 0.25°'de %41.
+5-20°D bandında yağış 350-480 mm (44°K 404, 40°K 482). Bölgenin geri kalanı Dwa %31, Dfa %12:
+doğu ve kuzey kenar. Bölge dışında sınıfı değişen kara %2.9. Bölgesel geri dönüşüm denenmedi.
+
+## Arazi denemesi 6 (14 Kasım, `arazi-tarih-6` dalı, YAYINDA DEĞİL)
+
+Beşinci denemenin arazisi + savanı azaltmak için ekvator kuşağında kıyıdan içeri yükselen
+kalkan kubbesi (tam genlik 2.5°G-12.5°K, 10°G ve 20°K'ye sönümlü; bantta kara ortancası
+236 → 645 m). 20°K kuzeyi aynı. Önizleme
+`https://arazi-tarih-6-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 12.3, B 9.8, C 44.8, D 29.8, E 3.4.
+Savan Aw %15.3 → %10.5 (main %8.6), Cwb %5.5 → %11.1 (main %11.2); bozkır bölgesi %41 aynı.
+Karada sınıfı değişen %11.1 (0.25°). Yan etki: deneme 3-5'teki 17°K 24.5°B'deki 428 bin km²'lik
+tuz gölü (main'de yok) kubbenin kuzey eteğiyle kayboldu; yerine 1229 m'de 80 bin km² tatlı göl.
+Göllerin kara payı %2.90 → %1.86.
+
+## Arazi denemesi 7 (14 Kasım, `arazi-tarih-7` dalı, YAYINDA DEĞİL)
+
+Sahibin yeni tektonik değişiklikleri (açıklamasız geldi, ölçüldü): karanın %33'ü değişti.
+Batı sırtı doğuya kaydı ve alçaldı (44°K 3029 m 2.1°D'de, 42°K 2464 m), 38-40°K gediği
+yeniden açıldı (1350-1370 m); 36-54°K, 8-17°B'de 1670 m'ye kadar yeni yükselti; Büyük Duvar'ın
+güneydoğusu (28-43°K, 23-43°D) ortalama 970 m alçaldı; ekvator kubbesi duruyor.
+Önizleme `https://arazi-tarih-7-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 12.0, B 6.4, C 46.6, D 32.4, E 2.6; Aw %10.1.
+Bozkır GERİ GİTTİ: bölge yağışı 484 → 743 mm, BSk %41 → %12 (dördüncü denemedeki gedik etkisi;
+5-20°D'de 42°K 847, 40°K 1069 mm). Karada sınıfı değişen %18.4 (deneme 6'ya göre).
+
+## Arazi denemesi 8 (14 Kasım, `arazi-tarih-8` dalı, YAYINDA DEĞİL)
+
+Yedinci denemenin arazisi; yalnız batı sırtı yükseltildi (karanın %2.7'si): 0.25° ızgarada
+39.5-44°K sırt 2560-3200 m. Gedik daraldı ama kapanmadı: ızgarada 36.75-39°K arası sırt
+1040-1420 m. Önizleme `https://arazi-tarih-8-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar deneme 7 ile aynı (A 12.0, B 6.4, C 46.6, D 32.4, E 2.6).
+Bozkır TUTMADI: bölge yağışı 743 → 681 mm, BSk %12. Nem gedikten girip sırtın arkasında kuzeye
+yayılıyor: 39.5°K'de sırtın doğusunda (1-6°D) 1000-1480 mm, 37.5°K'de 280-370 mm.
+Bozkır havzasında 761 m'de 434 bin km²'lik tuz gölü (en büyük göl).
+Test düzeltmesi: `gole dokununca kartta gol satiri` en büyük gölün kutusunda ilk iç noktayı
+seçiyordu; bu gölde nokta kıyıdaydı, dokunuş hücre merkezine oturup gölün dışına düştü.
+Artık nokta kıyıdan en az bir hücre içeride seçiliyor. Bu düzeltme main'e de gitmeli.
+
+## Arazi denemesi 9 (15 Kasım, `arazi-tarih-9` dalı, YAYINDA DEĞİL)
+
+Sekizinci denemenin arazisi; batı sırtının 36-41°K kesimi yükseltildi (karanın %1.4'ü), gedik
+kapandı: 0.25° ölçeğinde sırt 36.5-41°K boyunca 2370-3200 m.
+Önizleme `https://arazi-tarih-9-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 12.0, B 7.3, C 46.6, D 31.5, E 2.6.
+Bozkır KISMEN: bölge yağışı 681 → 591 mm, BSk %12 → %19 (deneme 6: %41). Sırtın arkası (0-10°D)
+deneme 6 kadar kuru; havzanın doğu yarısı ıslak. Sebep: yedinci denemede Büyük Duvar'ın
+güneydoğu ucu alçaldı, tepe 34-42°D'de 3770-3850 → 3460-720 m (36°D 3091, 38°D 2727,
+40°D 1704, 42°D 721). Güney nemi bu yarıktan girip havzanın doğusunu ıslatıyor
+(41°K 12-16°D: 410-440 → 700-770 mm).
+
+DÜZELTME (15 Kasım): duvar yarığı açıklaması YANLIŞTI. 0.25° kutu değiştirme denemeleri
+(dokuzuncu denemenin arazisinde bir kutuyu altıncı denemeden alarak): Büyük Duvar güneydoğusu
+637 mm %19, 43°K kuzeyi 576 mm %20, 8-17°B yükseltisi 590 mm %19, bütün havza 468 mm %40,
+yalnız batı sırtı 34-44°K 6.5°B-4°D 470 mm %37. Sebep sırtın 41-43°K'de 4-5° doğuya kayması
+ve ~500 m alçalması.
+
+## Arazi denemesi 10 (15 Kasım, `arazi-tarih-10` dalı, YAYINDA DEĞİL)
+
+Dokuzuncu denemenin arazisi; batı sırtının 34-44°K, 6.5°B-4°D kutusu altıncı denemeden geri
+alındı (sırt 36-44°K, 2.7-3.5°B, 3330-3660 m), kuzey sırtla 44-46°K'de kavisle birleşir.
+Önizleme `https://arazi-tarih-10-dunyam-atlas-mobil.qarb0natalha2434.workers.dev`.
+12/12 tutarlılık, 36/36 test; ana gruplar A 12.0, B 8.9, C 46.5, D 30.0, E 2.6, Aw 10.1.
+Bozkır: bölge yağışı 591 → 474 mm, BSk %19 → %33 (deneme 6 %41). Göllerin kara payı %0.87.
