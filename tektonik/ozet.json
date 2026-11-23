@@ -29,7 +29,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "1, 2 (şerit dahil), 4; Köprü Kıstağı; iç denizin batısı; kuzey, batı ve güney sahanlıkları",
    "alan_milyon_km2": 123.62,
-   "kara_payi": 0.2,
+   "kara_payi": 0.199,
    "tohum_enlem_boylam": [
     39.44,
     -21.36
@@ -56,7 +56,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar",
    "alan_milyon_km2": 13.95,
-   "kara_payi": 0.483,
+   "kara_payi": 0.481,
    "tohum_enlem_boylam": [
     14.14,
     14.99
@@ -83,7 +83,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "5 (Sarı Sıradağları'nın doğu şeridi, Sarı Ön Havzası)",
    "alan_milyon_km2": 4.97,
-   "kara_payi": 0.282,
+   "kara_payi": 0.281,
    "tohum_enlem_boylam": [
     -0.58,
     -5.93
@@ -111,7 +111,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "7 (Uzun Yarımada)",
    "alan_milyon_km2": 1.99,
-   "kara_payi": 0.21,
+   "kara_payi": 0.208,
    "tohum_enlem_boylam": [
     2.03,
     2.83
@@ -135,7 +135,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "6 (iç denizdeki ada)",
    "alan_milyon_km2": 2.12,
-   "kara_payi": 0.368,
+   "kara_payi": 0.365,
    "tohum_enlem_boylam": [
     26.02,
     -11.3
@@ -3201,9 +3201,9 @@
    "ad": "Mor Sıradağları",
    "enlem_boylam": [
     32.2,
-    26.8
+    25.3
    ],
-   "yukseklik_m": 5390,
+   "yukseklik_m": 5490,
    "gercek_benzeri": "Kafkas ölçeğinde Himalaya benzeri",
    "koken": "3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası."
   },
@@ -3212,9 +3212,9 @@
    "ad": "Sarı Sıradağları",
    "enlem_boylam": [
     8.1,
-    -13.1
+    -13.0
    ],
-   "yukseklik_m": 3040,
+   "yukseklik_m": 3057,
    "gercek_benzeri": "Zagros / Tayvan benzeri",
    "koken": "5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim."
   },
@@ -3222,10 +3222,10 @@
    "no": "3",
    "ad": "Doğu Yay Dağları",
    "enlem_boylam": [
-    8.3,
-    22.2
+    7.4,
+    22.1
    ],
-   "yukseklik_m": 959,
+   "yukseklik_m": 1021,
    "gercek_benzeri": "And benzeri yay",
    "koken": "Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor."
   },
@@ -3233,10 +3233,10 @@
    "no": "4",
    "ad": "Uzun Yarımada sırtı",
    "enlem_boylam": [
-    8.4,
-    -3.9
+    8.7,
+    -4.8
    ],
-   "yukseklik_m": 1527,
+   "yukseklik_m": 1539,
    "gercek_benzeri": "Ölü Deniz fayı kıyısı",
    "koken": "7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt."
   },
@@ -3247,7 +3247,7 @@
     28.6,
     -11.5
    ],
-   "yukseklik_m": 1710,
+   "yukseklik_m": 1708,
    "gercek_benzeri": "Ege / Tiren benzeri",
    "koken": "Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde."
   },

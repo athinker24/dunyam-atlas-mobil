@@ -17,7 +17,7 @@
    "euler_kutbu": null,
    "euler_hizi_derece_My": 0.0,
    "alan_milyon_km2": 123.62,
-   "kara_payi": 0.2
+   "kara_payi": 0.199
   },
   "Doğu Dil Levhası": {
    "kimlik": 2,
@@ -36,7 +36,7 @@
    ],
    "euler_hizi_derece_My": 0.3409,
    "alan_milyon_km2": 13.95,
-   "kara_payi": 0.483
+   "kara_payi": 0.481
   },
   "Orta Blok": {
    "kimlik": 3,
@@ -55,7 +55,7 @@
    ],
    "euler_hizi_derece_My": 0.2518,
    "alan_milyon_km2": 4.97,
-   "kara_payi": 0.282
+   "kara_payi": 0.281
   },
   "Uzun Yarımada Bloğu": {
    "kimlik": 4,
@@ -74,7 +74,7 @@
    ],
    "euler_hizi_derece_My": 0.4133,
    "alan_milyon_km2": 1.99,
-   "kara_payi": 0.21
+   "kara_payi": 0.208
   },
   "Ada Bloğu": {
    "kimlik": 5,
@@ -93,7 +93,7 @@
    ],
    "euler_hizi_derece_My": 0.063,
    "alan_milyon_km2": 2.12,
-   "kara_payi": 0.368
+   "kara_payi": 0.365
   },
   "Doğu Havza Levhası": {
    "kimlik": 6,

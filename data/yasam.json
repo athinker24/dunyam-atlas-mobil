@@ -2,13 +2,13 @@
  "ne": "Dünyam yaşanabilirlik endeksi (yasam/yasam.py); yöntem YASAM.md",
  "kesit": [
   -44.47265625,
-  -7.119140625,
+  -7.03125,
   43.154296875,
   60.029296875
  ],
- "ortalama": 64.6,
- "ortalama_dar": 64.5,
- "yukseklik": 764,
+ "ortalama": 64.2,
+ "ortalama_dar": 64.1,
+ "yukseklik": 763,
  "kodlar": "yasam.png (geniş, yumuşak nehir çevresi, varsayılan) ve yasam_dar.png (nehrin yanı); yasam*_veri.png dikey 5 bölüm: 0 = R sınıf + 16 * su erişimli, G puan * 2.5; 1-4 = on bir etken 0-255 (RGB sırayla)",
  "etkenler": [
   {
@@ -78,8 +78,8 @@
     62
    ],
    "alt": 0,
-   "pay": 0.1436,
-   "pay_dar": 0.1437
+   "pay": 0.1476,
+   "pay_dar": 0.1477
   },
   "2": {
    "ad": "Çok zor",
@@ -91,8 +91,8 @@
     64
    ],
    "alt": 25,
-   "pay": 0.0332,
-   "pay_dar": 0.0332
+   "pay": 0.034,
+   "pay_dar": 0.034
   },
   "3": {
    "ad": "Zor",
@@ -104,8 +104,8 @@
     78
    ],
    "alt": 45,
-   "pay": 0.0427,
-   "pay_dar": 0.0441
+   "pay": 0.0447,
+   "pay_dar": 0.0452
   },
   "4": {
    "ad": "Orta",
@@ -117,8 +117,8 @@
     104
    ],
    "alt": 62,
-   "pay": 0.4949,
-   "pay_dar": 0.496
+   "pay": 0.4933,
+   "pay_dar": 0.494
   },
   "5": {
    "ad": "Elverişli",
@@ -130,7 +130,7 @@
     88
    ],
    "alt": 78,
-   "pay": 0.2182,
+   "pay": 0.2175,
    "pay_dar": 0.2181
   },
   "6": {
@@ -143,8 +143,8 @@
     84
    ],
    "alt": 90,
-   "pay": 0.0669,
-   "pay_dar": 0.0643
+   "pay": 0.0623,
+   "pay_dar": 0.0604
   },
   "7": {
    "ad": "Buz",
@@ -156,8 +156,8 @@
     240
    ],
    "alt": null,
-   "pay": 0.0005,
-   "pay_dar": 0.0005
+   "pay": 0.0006,
+   "pay_dar": 0.0006
   }
  }
 }

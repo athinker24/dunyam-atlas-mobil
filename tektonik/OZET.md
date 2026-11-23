@@ -35,7 +35,7 @@ Dünyam kurgusal bir gezegen: yarıçap 6371 km, gün 15 saat, eksen eğikliği 
 | 2 | Doğu Dil Levhası | kıta + okyanus | 3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar | 13.9 | %48 | kuzeye (dönerek) 1.8 cm/yıl | Doğu Havza Levhası, Doğu Okyanusu Levhası, Kuzey Levhası, Orta Blok, Uzun Yarımada Bloğu |
 | 3 | Orta Blok | kıta + okyanus | 5 (Sarı Sıradağları'nın doğu şeridi, Sarı Ön Havzası) | 5.0 | %28 | batıya 2.8 cm/yıl | Doğu Dil Levhası, Doğu Havza Levhası, Doğu Okyanusu Levhası, Güney Okyanusu Levhası, Kuzey Levhası, Uzun Yarımada Bloğu |
 | 4 | Uzun Yarımada Bloğu | kıta + okyanus | 7 (Uzun Yarımada) | 2.0 | %21 | kuzeybatıya 4.6 cm/yıl | Doğu Dil Levhası, Orta Blok |
-| 5 | Ada Bloğu | kıta + okyanus | 6 (iç denizdeki ada) | 2.1 | %37 | güneye 0.7 cm/yıl | Doğu Havza Levhası, Kuzey Levhası |
+| 5 | Ada Bloğu | kıta + okyanus | 6 (iç denizdeki ada) | 2.1 | %36 | güneye 0.7 cm/yıl | Doğu Havza Levhası, Kuzey Levhası |
 | 6 | Doğu Havza Levhası | okyanus | iç denizin doğusu ve güneyi (eski Mor Okyanusu kalıntısı) | 1.9 | %0 | kuzeybatıya 0.8 cm/yıl | Ada Bloğu, Doğu Dil Levhası, Kuzey Levhası, Orta Blok |
 | 7 | Doğu Okyanusu Levhası | okyanus | Doğu Hendeği'nin dışındaki okyanus | 78.2 | %0 | batıya 6.5 cm/yıl | Büyük Okyanus Levhası, Doğu Dil Levhası, Güney Okyanusu Levhası, Kutup Levhası, Kuzey Levhası, Orta Blok |
 | 8 | Batı Okyanusu Levhası (yer tutucu) | okyanus | batıda, uzak sırtın ötesi | 101.4 | %0 | batıya 2.4 cm/yıl | Büyük Okyanus Levhası, Güney Okyanusu Levhası, Kutup Levhası, Kuzey Levhası |
@@ -116,11 +116,11 @@ En yüksek noktalar araziden ölçüldü (sınırın 300-450 km'si içinde ya da
 
 | ad | yer (enlem, boylam) | yükseklik (m) | gerçek benzeri | kökeni |
 |---|---|---|---|---|
-| Mor Sıradağları | 32.2, 26.8 | 5390 | Kafkas ölçeğinde Himalaya benzeri | 3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası. |
-| Sarı Sıradağları | 8.1, -13.1 | 3040 | Zagros / Tayvan benzeri | 5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim. |
-| Doğu Yay Dağları | 8.3, 22.2 | 959 | And benzeri yay | Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor. |
-| Uzun Yarımada sırtı | 8.4, -3.9 | 1527 | Ölü Deniz fayı kıyısı | 7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt. |
-| İç denizdeki ada (6) | 28.6, -11.5 | 1710 | Ege / Tiren benzeri | Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde. |
+| Mor Sıradağları | 32.2, 25.3 | 5490 | Kafkas ölçeğinde Himalaya benzeri | 3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası. |
+| Sarı Sıradağları | 8.1, -13.0 | 3057 | Zagros / Tayvan benzeri | 5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim. |
+| Doğu Yay Dağları | 7.4, 22.1 | 1021 | And benzeri yay | Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor. |
+| Uzun Yarımada sırtı | 8.7, -4.8 | 1539 | Ölü Deniz fayı kıyısı | 7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt. |
+| İç denizdeki ada (6) | 28.6, -11.5 | 1708 | Ege / Tiren benzeri | Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde. |
 | Köprü Kıstağı | 25.2, -27.7 | 400 | Panama benzeri | 3 MYÖ'de 1 ile 4 arasındaki boğazı kapattı; 80-400 m. |
 
 ## 7. Tarih (eskiden yeniye)
