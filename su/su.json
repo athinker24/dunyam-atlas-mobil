@@ -8,1793 +8,967 @@
   "arazi": "fırça ölçeği yumuşatılmış (su/duzelt.py)"
  },
  "kara_su_butcesi_mm": {
-  "yagis": 958,
-  "buharlasma": 652,
-  "akis": 307
+  "yagis": 966,
+  "buharlasma": 703,
+  "akis": 263
  },
- "gol_payi_kara_yuzde": 1.68,
- "gol_sayisi": 95,
+ "gol_payi_kara_yuzde": 0.9,
+ "gol_sayisi": 36,
  "goller": [
   {
    "enlem_boylam": [
-    35.68,
-    27.37
+    53.82,
+    23.35
    ],
-   "yakin": "3 (Duvar)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 81892,
-   "derin_m": 404,
-   "hacim_km3": 14899.1,
-   "seviye_m": 1822,
+   "alan_km2": 84233,
+   "derin_m": 104,
+   "hacim_km3": 5504.4,
+   "seviye_m": 482,
    "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 36.4
+   "giren_km3_yil": 28.42
   },
   {
    "enlem_boylam": [
-    14.48,
-    11.96
+    52.06,
+    28.81
    ],
-   "yakin": "11 (Alt Kıta orta kuşağı)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 78403,
-   "derin_m": 224,
-   "hacim_km3": 6546.1,
-   "seviye_m": 1370,
+   "alan_km2": 69588,
+   "derin_m": 675,
+   "hacim_km3": 30637.5,
+   "seviye_m": 1379,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 56.67
+   "giren_km3_yil": 13.7
   },
   {
    "enlem_boylam": [
-    44.79,
-    28.86
+    50.29,
+    24.52
    ],
-   "yakin": "9 (Plato doğusu sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 73802,
-   "derin_m": 227,
-   "hacim_km3": 9255.8,
-   "seviye_m": 1129,
+   "alan_km2": 45765,
+   "derin_m": 137,
+   "hacim_km3": 4309.4,
+   "seviye_m": 1467,
    "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 25.24
+   "giren_km3_yil": 8.63
   },
   {
    "enlem_boylam": [
-    40.25,
-    26.73
+    5.31,
+    -20.91
    ],
-   "yakin": "3 (Duvar)",
-   "koken": "yarık (tektonik)",
-   "alan_km2": 56785,
-   "derin_m": 557,
-   "hacim_km3": 13942.3,
-   "seviye_m": 1865,
+   "yakin": "2 (Sarı Sıradağları)",
+   "koken": "havza",
+   "alan_km2": 36990,
+   "derin_m": 276,
+   "hacim_km3": 4470.1,
+   "seviye_m": 809,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 9.83
+   "giren_km3_yil": 53.52
   },
   {
    "enlem_boylam": [
-    52.54,
-    22.9
+    15.79,
+    -27.97
    ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "yarık (tektonik)",
-   "alan_km2": 42220,
-   "derin_m": 189,
-   "hacim_km3": 1322.4,
-   "seviye_m": 979,
+   "yakin": "6 (Köprü Kıstağı)",
+   "koken": "havza",
+   "alan_km2": 27571,
+   "derin_m": 234,
+   "hacim_km3": 1997.6,
+   "seviye_m": 924,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 13.34
+  },
+  {
+   "enlem_boylam": [
+    4.74,
+    -18.89
+   ],
+   "yakin": "2 (Sarı Sıradağları)",
+   "koken": "havza",
+   "alan_km2": 15800,
+   "derin_m": 390,
+   "hacim_km3": 2960.1,
+   "seviye_m": 995,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 15.51
+  },
+  {
+   "enlem_boylam": [
+    49.69,
+    28.32
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "havza",
+   "alan_km2": 8403,
+   "derin_m": 386,
+   "hacim_km3": 1846.2,
+   "seviye_m": 1987,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 1.84
+  },
+  {
+   "enlem_boylam": [
+    36.92,
+    32.78
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "havza",
+   "alan_km2": 5879,
+   "derin_m": 250,
+   "hacim_km3": 177.4,
+   "seviye_m": 1131,
    "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 10.45
+   "giren_km3_yil": 3.61
   },
   {
    "enlem_boylam": [
-    51.23,
-    28.23
+    46.19,
+    24.33
    ],
-   "yakin": "9 (Plato doğusu sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 19255,
-   "derin_m": 291,
-   "hacim_km3": 1084.7,
-   "seviye_m": 1345,
+   "alan_km2": 3371,
+   "derin_m": 293,
+   "hacim_km3": 411.9,
+   "seviye_m": 2307,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 13.64
+   "giren_km3_yil": 2.06
   },
   {
    "enlem_boylam": [
-    55.35,
-    30.55
+    57.07,
+    14.18
    ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 18569,
-   "derin_m": 814,
-   "hacim_km3": 7934.6,
-   "seviye_m": 2516,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.05
-  },
-  {
-   "enlem_boylam": [
-    8.47,
-    9.45
-   ],
-   "yakin": "11 (Alt Kıta orta kuşağı)",
-   "koken": "havza",
-   "alan_km2": 17382,
-   "derin_m": 227,
-   "hacim_km3": 1922.5,
-   "seviye_m": 1200,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 23.2
-  },
-  {
-   "enlem_boylam": [
-    17.44,
-    12.15
-   ],
-   "yakin": "7 (Alt Kıta doğu kıyısı sırası)",
-   "koken": "havza",
-   "alan_km2": 16037,
-   "derin_m": 220,
-   "hacim_km3": 1763.3,
-   "seviye_m": 1274,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 39.02
-  },
-  {
-   "enlem_boylam": [
-    38.83,
-    19.21
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "havza",
-   "alan_km2": 14210,
-   "derin_m": 71,
-   "hacim_km3": 414.6,
-   "seviye_m": 1375,
+   "alan_km2": 934,
+   "derin_m": 90,
+   "hacim_km3": 42.8,
+   "seviye_m": 1431,
    "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 7.59
+   "giren_km3_yil": 0.14
   },
   {
    "enlem_boylam": [
-    40.68,
-    23.79
+    48.3,
+    14.46
    ],
-   "yakin": "3 (Duvar)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 11298,
-   "derin_m": 154,
-   "hacim_km3": 1013.2,
-   "seviye_m": 1835,
+   "alan_km2": 698,
+   "derin_m": 33,
+   "hacim_km3": 8.6,
+   "seviye_m": 918,
    "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 2.95
+   "giren_km3_yil": 0.31
   },
   {
    "enlem_boylam": [
-    9.92,
-    -35.51
+    33.79,
+    28.87
    ],
-   "yakin": "10 (Güneybatı platosu)",
-   "koken": "havza",
-   "alan_km2": 11007,
-   "derin_m": 398,
-   "hacim_km3": 1963.5,
-   "seviye_m": 1426,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 24.11
-  },
-  {
-   "enlem_boylam": [
-    55.87,
-    1.54
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "havza",
-   "alan_km2": 10932,
-   "derin_m": 701,
-   "hacim_km3": 3014.4,
-   "seviye_m": 1985,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.92
-  },
-  {
-   "enlem_boylam": [
-    34.77,
-    15.52
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "havza",
-   "alan_km2": 10434,
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 555,
    "derin_m": 282,
-   "hacim_km3": 292.2,
-   "seviye_m": 1112,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 9.98
-  },
-  {
-   "enlem_boylam": [
-    33.37,
-    24.29
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "havza",
-   "alan_km2": 10130,
-   "derin_m": 159,
-   "hacim_km3": 337.2,
-   "seviye_m": 1855,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 6.84
-  },
-  {
-   "enlem_boylam": [
-    47.5,
-    1.93
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "havza",
-   "alan_km2": 10066,
-   "derin_m": 248,
-   "hacim_km3": 1509.5,
-   "seviye_m": 792,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 14.53
-  },
-  {
-   "enlem_boylam": [
-    33.45,
-    30.25
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "havza",
-   "alan_km2": 9642,
-   "derin_m": 321,
-   "hacim_km3": 852.7,
-   "seviye_m": 2095,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 18.03
-  },
-  {
-   "enlem_boylam": [
-    46.48,
-    24.84
-   ],
-   "yakin": "9 (Plato doğusu sırası)",
-   "koken": "yarık (tektonik)",
-   "alan_km2": 8221,
-   "derin_m": 198,
-   "hacim_km3": 513.5,
-   "seviye_m": 1567,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 2.85
-  },
-  {
-   "enlem_boylam": [
-    49.73,
-    21.08
-   ],
-   "yakin": "9 (Plato doğusu sırası)",
-   "koken": "yarık (tektonik)",
-   "alan_km2": 7345,
-   "derin_m": 511,
-   "hacim_km3": 1667.9,
-   "seviye_m": 2473,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 1.39
-  },
-  {
-   "enlem_boylam": [
-    7.76,
-    -2.67
-   ],
-   "yakin": "yarımada (Yarımada omurgası)",
-   "koken": "havza",
-   "alan_km2": 7286,
-   "derin_m": 363,
-   "hacim_km3": 1233.9,
-   "seviye_m": 1333,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 6.81
-  },
-  {
-   "enlem_boylam": [
-    52.37,
-    -3.16
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "havza",
-   "alan_km2": 7172,
-   "derin_m": 318,
-   "hacim_km3": 1043.9,
-   "seviye_m": 2651,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.01
-  },
-  {
-   "enlem_boylam": [
-    53.57,
-    18.22
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 5842,
-   "derin_m": 230,
-   "hacim_km3": 690.4,
-   "seviye_m": 2203,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.84
-  },
-  {
-   "enlem_boylam": [
-    50.86,
-    -5.53
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "havza",
-   "alan_km2": 5184,
-   "derin_m": 677,
-   "hacim_km3": 1704.6,
-   "seviye_m": 1784,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.69
-  },
-  {
-   "enlem_boylam": [
-    42.57,
-    24.53
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "yarık (tektonik)",
-   "alan_km2": 4642,
-   "derin_m": 328,
-   "hacim_km3": 666.2,
-   "seviye_m": 3207,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.24
-  },
-  {
-   "enlem_boylam": [
-    48.45,
-    14.45
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "havza",
-   "alan_km2": 4054,
-   "derin_m": 102,
-   "hacim_km3": 171.2,
-   "seviye_m": 667,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 2.62
-  },
-  {
-   "enlem_boylam": [
-    58.14,
-    20.15
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 3377,
-   "derin_m": 598,
-   "hacim_km3": 860.1,
-   "seviye_m": 2015,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.04
-  },
-  {
-   "enlem_boylam": [
-    50.01,
-    -4.33
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "havza",
-   "alan_km2": 3375,
-   "derin_m": 143,
-   "hacim_km3": 219.0,
-   "seviye_m": 2503,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.52
-  },
-  {
-   "enlem_boylam": [
-    57.1,
-    20.94
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 3267,
-   "derin_m": 279,
-   "hacim_km3": 385.7,
-   "seviye_m": 1700,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.38
-  },
-  {
-   "enlem_boylam": [
-    31.75,
-    25.16
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "havza",
-   "alan_km2": 3005,
-   "derin_m": 338,
-   "hacim_km3": 450.6,
-   "seviye_m": 4065,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.6
-  },
-  {
-   "enlem_boylam": [
-    54.09,
-    33.34
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 2800,
-   "derin_m": 236,
-   "hacim_km3": 364.4,
-   "seviye_m": 1293,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.92
-  },
-  {
-   "enlem_boylam": [
-    55.86,
-    31.97
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 2197,
-   "derin_m": 402,
-   "hacim_km3": 403.5,
-   "seviye_m": 3403,
+   "hacim_km3": 125.1,
+   "seviye_m": 1497,
    "cikis": "var (tatlı)",
    "giren_km3_yil": 0.46
   },
   {
    "enlem_boylam": [
-    43.58,
-    23.04
+    48.75,
+    25.65
    ],
-   "yakin": "9 (Plato doğusu sırası)",
-   "koken": "havza",
-   "alan_km2": 2144,
-   "derin_m": 350,
-   "hacim_km3": 175.0,
-   "seviye_m": 3468,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.62
-  },
-  {
-   "enlem_boylam": [
-    57.75,
-    22.04
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 1987,
-   "derin_m": 606,
-   "hacim_km3": 563.1,
-   "seviye_m": 2046,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.37
-  },
-  {
-   "enlem_boylam": [
-    9.73,
-    -14.85
-   ],
-   "yakin": "4 (Yay biçimli sıra)",
-   "koken": "havza",
-   "alan_km2": 1976,
-   "derin_m": 151,
-   "hacim_km3": 162.1,
-   "seviye_m": 2569,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 1.12
-  },
-  {
-   "enlem_boylam": [
-    11.81,
-    -13.89
-   ],
-   "yakin": "4 (Yay biçimli sıra)",
-   "koken": "havza",
-   "alan_km2": 1589,
-   "derin_m": 115,
-   "hacim_km3": 95.7,
-   "seviye_m": 2647,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.69
-  },
-  {
-   "enlem_boylam": [
-    31.58,
-    23.2
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "havza",
-   "alan_km2": 1545,
-   "derin_m": 325,
-   "hacim_km3": 164.4,
-   "seviye_m": 3202,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.71
-  },
-  {
-   "enlem_boylam": [
-    39.48,
-    -1.53
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "havza",
-   "alan_km2": 1474,
-   "derin_m": 66,
-   "hacim_km3": 49.7,
-   "seviye_m": 3210,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.43
-  },
-  {
-   "enlem_boylam": [
-    53.53,
-    -3.52
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "havza",
-   "alan_km2": 1362,
-   "derin_m": 267,
-   "hacim_km3": 170.8,
-   "seviye_m": 2799,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.78
-  },
-  {
-   "enlem_boylam": [
-    41.79,
-    -0.09
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "havza",
-   "alan_km2": 1353,
-   "derin_m": 191,
-   "hacim_km3": 124.5,
-   "seviye_m": 2173,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.84
-  },
-  {
-   "enlem_boylam": [
-    52.73,
-    32.13
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 1156,
-   "derin_m": 270,
-   "hacim_km3": 96.0,
-   "seviye_m": 1414,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.3
-  },
-  {
-   "enlem_boylam": [
-    57.82,
-    18.84
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 1118,
-   "derin_m": 265,
-   "hacim_km3": 144.6,
-   "seviye_m": 3089,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.43
-  },
-  {
-   "enlem_boylam": [
-    56.75,
-    28.44
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 680,
-   "derin_m": 252,
-   "hacim_km3": 86.1,
-   "seviye_m": 3007,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.31
-  },
-  {
-   "enlem_boylam": [
-    28.96,
-    30.29
-   ],
-   "yakin": "3 (Duvar)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 584,
-   "derin_m": 290,
-   "hacim_km3": 136.5,
-   "seviye_m": 1743,
+   "alan_km2": 440,
+   "derin_m": 245,
+   "hacim_km3": 83.0,
+   "seviye_m": 1777,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.49
+   "giren_km3_yil": 1.27
   },
   {
    "enlem_boylam": [
-    29.4,
-    38.5
+    50.42,
+    7.74
    ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 582,
-   "derin_m": 221,
-   "hacim_km3": 96.1,
-   "seviye_m": 1667,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.94
-  },
-  {
-   "enlem_boylam": [
-    29.58,
-    20.0
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 581,
-   "derin_m": 244,
-   "hacim_km3": 109.0,
-   "seviye_m": 531,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 12.98
-  },
-  {
-   "enlem_boylam": [
-    29.93,
-    18.61
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 579,
-   "derin_m": 242,
-   "hacim_km3": 107.6,
-   "seviye_m": 592,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 4.87
-  },
-  {
-   "enlem_boylam": [
-    30.01,
-    28.26
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 578,
-   "derin_m": 290,
-   "hacim_km3": 135.1,
-   "seviye_m": 1879,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.82
-  },
-  {
-   "enlem_boylam": [
-    30.72,
-    15.88
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 574,
-   "derin_m": 267,
-   "hacim_km3": 121.1,
-   "seviye_m": 625,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 5.77
-  },
-  {
-   "enlem_boylam": [
-    30.98,
-    16.61
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 573,
-   "derin_m": 231,
-   "hacim_km3": 100.0,
-   "seviye_m": 829,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 4.0
-  },
-  {
-   "enlem_boylam": [
-    32.48,
-    11.98
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 564,
-   "derin_m": 265,
-   "hacim_km3": 117.5,
-   "seviye_m": 1313,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 4.28
-  },
-  {
-   "enlem_boylam": [
-    33.97,
-    8.41
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 554,
-   "derin_m": 258,
-   "hacim_km3": 111.8,
-   "seviye_m": 970,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.45
-  },
-  {
-   "enlem_boylam": [
-    35.2,
-    11.6
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 546,
-   "derin_m": 229,
-   "hacim_km3": 94.3,
-   "seviye_m": 2192,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.5
-  },
-  {
-   "enlem_boylam": [
-    35.33,
-    5.39
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 545,
-   "derin_m": 231,
-   "hacim_km3": 95.6,
-   "seviye_m": 571,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.25
-  },
-  {
-   "enlem_boylam": [
-    55.56,
-    7.96
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "havza",
-   "alan_km2": 486,
-   "derin_m": 65,
-   "hacim_km3": 16.2,
-   "seviye_m": 1157,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.28
-  },
-  {
-   "enlem_boylam": [
-    57.47,
-    23.33
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "havza",
-   "alan_km2": 410,
-   "derin_m": 179,
-   "hacim_km3": 31.7,
-   "seviye_m": 1047,
+   "alan_km2": 426,
+   "derin_m": 27,
+   "hacim_km3": 5.7,
+   "seviye_m": 1563,
    "cikis": "yok (kapalı, tuzlu)",
    "giren_km3_yil": 0.12
   },
   {
    "enlem_boylam": [
-    54.36,
-    -4.61
+    31.29,
+    27.38
    ],
-   "yakin": "1 (Kuzey batı kolu)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 389,
-   "derin_m": 290,
-   "hacim_km3": 90.8,
-   "seviye_m": 701,
+   "alan_km2": 326,
+   "derin_m": 231,
+   "hacim_km3": 61.4,
+   "seviye_m": 2257,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.85
+   "giren_km3_yil": 0.41
   },
   {
    "enlem_boylam": [
-    6.06,
-    -15.56
+    31.64,
+    25.03
    ],
-   "yakin": "4 (Yay biçimli sıra)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 379,
+   "alan_km2": 325,
    "derin_m": 290,
-   "hacim_km3": 93.6,
-   "seviye_m": 2957,
+   "hacim_km3": 80.1,
+   "seviye_m": 2569,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.46
+  },
+  {
+   "enlem_boylam": [
+    31.73,
+    29.07
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 324,
+   "derin_m": 290,
+   "hacim_km3": 80.1,
+   "seviye_m": 2036,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.4
+  },
+  {
+   "enlem_boylam": [
+    31.82,
+    23.95
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 324,
+   "derin_m": 222,
+   "hacim_km3": 57.9,
+   "seviye_m": 2317,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.4
+  },
+  {
+   "enlem_boylam": [
+    32.17,
+    23.09
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 323,
+   "derin_m": 234,
+   "hacim_km3": 61.9,
+   "seviye_m": 2798,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.49
+  },
+  {
+   "enlem_boylam": [
+    32.85,
+    25.66
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 320,
+   "derin_m": 290,
+   "hacim_km3": 79.1,
+   "seviye_m": 2846,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.72
+  },
+  {
+   "enlem_boylam": [
+    32.87,
+    24.13
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 320,
+   "derin_m": 217,
+   "hacim_km3": 55.7,
+   "seviye_m": 2537,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.66
+  },
+  {
+   "enlem_boylam": [
+    33.18,
+    22.68
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 319,
+   "derin_m": 290,
+   "hacim_km3": 78.8,
+   "seviye_m": 2827,
    "cikis": "var (tatlı)",
    "giren_km3_yil": 0.32
   },
   {
    "enlem_boylam": [
-    40.47,
-    2.35
+    33.22,
+    31.42
    ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 363,
-   "derin_m": 85,
-   "hacim_km3": 18.2,
-   "seviye_m": 1328,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.25
-  },
-  {
-   "enlem_boylam": [
-    30.06,
-    24.28
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 330,
-   "derin_m": 217,
-   "hacim_km3": 57.5,
-   "seviye_m": 1244,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.77
-  },
-  {
-   "enlem_boylam": [
-    30.08,
-    39.2
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 330,
-   "derin_m": 290,
-   "hacim_km3": 81.4,
-   "seviye_m": 2284,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.18
-  },
-  {
-   "enlem_boylam": [
-    30.67,
-    34.39
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 328,
-   "derin_m": 245,
-   "hacim_km3": 66.4,
-   "seviye_m": 1392,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.56
-  },
-  {
-   "enlem_boylam": [
-    31.11,
-    18.17
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 327,
-   "derin_m": 290,
-   "hacim_km3": 80.6,
-   "seviye_m": 1640,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.29
-  },
-  {
-   "enlem_boylam": [
-    32.08,
-    35.66
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 323,
-   "derin_m": 250,
-   "hacim_km3": 67.0,
-   "seviye_m": 1838,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.2
-  },
-  {
-   "enlem_boylam": [
-    32.08,
-    33.86
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 323,
-   "derin_m": 290,
-   "hacim_km3": 79.7,
-   "seviye_m": 2145,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.51
-  },
-  {
-   "enlem_boylam": [
-    32.21,
-    28.02
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 323,
-   "derin_m": 215,
-   "hacim_km3": 55.7,
-   "seviye_m": 2036,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.25
-  },
-  {
-   "enlem_boylam": [
-    32.23,
-    38.43
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 323,
-   "derin_m": 290,
-   "hacim_km3": 79.6,
-   "seviye_m": 1597,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.84
-  },
-  {
-   "enlem_boylam": [
-    32.43,
-    23.97
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 322,
-   "derin_m": 229,
-   "hacim_km3": 60.1,
-   "seviye_m": 2339,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.9
-  },
-  {
-   "enlem_boylam": [
-    32.98,
-    11.16
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 320,
-   "derin_m": 220,
-   "hacim_km3": 56.7,
-   "seviye_m": 2220,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.64
-  },
-  {
-   "enlem_boylam": [
-    33.13,
-    9.05
-   ],
-   "yakin": "3 (Duvar)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
    "alan_km2": 319,
-   "derin_m": 251,
-   "hacim_km3": 66.6,
-   "seviye_m": 962,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 3.69
-  },
-  {
-   "enlem_boylam": [
-    36.39,
-    9.67
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 307,
-   "derin_m": 269,
-   "hacim_km3": 69.4,
-   "seviye_m": 2233,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.37
-  },
-  {
-   "enlem_boylam": [
-    38.3,
-    7.03
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 299,
-   "derin_m": 62,
-   "hacim_km3": 11.2,
-   "seviye_m": 925,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.3
-  },
-  {
-   "enlem_boylam": [
-    38.58,
-    -2.94
-   ],
-   "yakin": "plato (Plato çanağı)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 298,
    "derin_m": 290,
-   "hacim_km3": 73.6,
-   "seviye_m": 1066,
+   "hacim_km3": 78.7,
+   "seviye_m": 2381,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.7
+   "giren_km3_yil": 0.87
   },
   {
    "enlem_boylam": [
-    40.87,
-    -35.31
+    34.28,
+    16.55
    ],
-   "yakin": "5 (İber kuzey sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 288,
-   "derin_m": 217,
-   "hacim_km3": 50.3,
-   "seviye_m": 1570,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.03
-  },
-  {
-   "enlem_boylam": [
-    44.12,
-    -34.58
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 274,
-   "derin_m": 281,
-   "hacim_km3": 65.3,
-   "seviye_m": 2161,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.94
-  },
-  {
-   "enlem_boylam": [
-    44.74,
-    -32.06
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 271,
+   "alan_km2": 315,
    "derin_m": 290,
-   "hacim_km3": 66.9,
-   "seviye_m": 1976,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.41
-  },
-  {
-   "enlem_boylam": [
-    45.09,
-    -6.9
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 269,
-   "derin_m": 290,
-   "hacim_km3": 66.5,
-   "seviye_m": 3008,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.14
-  },
-  {
-   "enlem_boylam": [
-    45.51,
-    -31.46
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 267,
-   "derin_m": 290,
-   "hacim_km3": 66.0,
-   "seviye_m": 1977,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.69
-  },
-  {
-   "enlem_boylam": [
-    45.79,
-    -34.08
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 266,
-   "derin_m": 262,
-   "hacim_km3": 58.2,
-   "seviye_m": 2128,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.15
-  },
-  {
-   "enlem_boylam": [
-    46.67,
-    -7.23
-   ],
-   "yakin": "1 (Kuzey batı kolu)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 262,
-   "derin_m": 290,
-   "hacim_km3": 64.6,
-   "seviye_m": 2815,
+   "hacim_km3": 77.8,
+   "seviye_m": 1785,
    "cikis": "var (tatlı)",
    "giren_km3_yil": 0.44
   },
   {
    "enlem_boylam": [
-    47.37,
-    -27.91
+    34.28,
+    32.98
    ],
-   "yakin": "5 (İber kuzey sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 258,
-   "derin_m": 251,
-   "hacim_km3": 53.7,
-   "seviye_m": 1531,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 4.9
-  },
-  {
-   "enlem_boylam": [
-    47.46,
-    -24.32
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 258,
+   "alan_km2": 315,
    "derin_m": 290,
-   "hacim_km3": 63.6,
-   "seviye_m": 2493,
+   "hacim_km3": 77.8,
+   "seviye_m": 2417,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.9
+   "giren_km3_yil": 1.38
   },
   {
    "enlem_boylam": [
-    47.86,
-    22.65
+    34.37,
+    15.4
    ],
-   "yakin": "9 (Plato doğusu sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 256,
-   "derin_m": 288,
-   "hacim_km3": 62.8,
-   "seviye_m": 2917,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.43
-  },
-  {
-   "enlem_boylam": [
-    47.9,
-    -31.05
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 256,
-   "derin_m": 209,
-   "hacim_km3": 42.4,
-   "seviye_m": 1384,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.74
-  },
-  {
-   "enlem_boylam": [
-    48.6,
-    -29.2
-   ],
-   "yakin": "5 (İber kuzey sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 252,
+   "alan_km2": 315,
    "derin_m": 290,
-   "hacim_km3": 62.2,
-   "seviye_m": 1673,
+   "hacim_km3": 77.7,
+   "seviye_m": 1745,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.67
+   "giren_km3_yil": 0.22
   },
   {
    "enlem_boylam": [
-    49.39,
-    -26.3
+    34.96,
+    19.95
    ],
-   "yakin": "5 (İber kuzey sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 248,
+   "alan_km2": 313,
    "derin_m": 290,
-   "hacim_km3": 61.2,
-   "seviye_m": 1502,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 2.82
-  },
-  {
-   "enlem_boylam": [
-    52.47,
-    34.72
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 232,
-   "derin_m": 269,
-   "hacim_km3": 52.7,
-   "seviye_m": 994,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.1
-  },
-  {
-   "enlem_boylam": [
-    53.94,
-    29.14
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 224,
-   "derin_m": 232,
-   "hacim_km3": 42.5,
-   "seviye_m": 1610,
+   "hacim_km3": 77.1,
+   "seviye_m": 2466,
    "cikis": "var (tatlı)",
    "giren_km3_yil": 0.29
   },
   {
    "enlem_boylam": [
-    54.03,
-    -7.47
+    35.07,
+    13.23
    ],
-   "yakin": "1 (Kuzey batı kolu)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 224,
+   "alan_km2": 312,
+   "derin_m": 247,
+   "hacim_km3": 63.7,
+   "seviye_m": 2035,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.17
+  },
+  {
+   "enlem_boylam": [
+    35.11,
+    35.95
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 312,
+   "derin_m": 281,
+   "hacim_km3": 74.3,
+   "seviye_m": 1407,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 1.09
+  },
+  {
+   "enlem_boylam": [
+    35.33,
+    16.61
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 311,
+   "derin_m": 219,
+   "hacim_km3": 54.9,
+   "seviye_m": 2546,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.14
+  },
+  {
+   "enlem_boylam": [
+    35.6,
+    18.17
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 310,
+   "derin_m": 251,
+   "hacim_km3": 64.6,
+   "seviye_m": 1615,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.83
+  },
+  {
+   "enlem_boylam": [
+    37.18,
+    35.24
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 304,
+   "derin_m": 213,
+   "hacim_km3": 51.6,
+   "seviye_m": 1705,
+   "cikis": "var (tatlı)",
+   "giren_km3_yil": 0.37
+  },
+  {
+   "enlem_boylam": [
+    37.44,
+    37.97
+   ],
+   "yakin": "1 (Mor Sıradağları)",
+   "koken": "buzul (moren seti)",
+   "alan_km2": 303,
    "derin_m": 290,
-   "hacim_km3": 55.3,
-   "seviye_m": 1953,
+   "hacim_km3": 74.7,
+   "seviye_m": 2286,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.64
+   "giren_km3_yil": 0.14
   },
   {
    "enlem_boylam": [
-    54.05,
-    27.53
+    47.81,
+    28.17
    ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 224,
-   "derin_m": 243,
-   "hacim_km3": 44.7,
-   "seviye_m": 1429,
+   "alan_km2": 256,
+   "derin_m": 255,
+   "hacim_km3": 54.4,
+   "seviye_m": 2380,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 1.0
+   "giren_km3_yil": 0.54
   },
   {
    "enlem_boylam": [
-    55.04,
-    4.39
+    48.34,
+    21.09
    ],
-   "yakin": "1 (Kuzey batı kolu)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 218,
-   "derin_m": 214,
-   "hacim_km3": 37.3,
-   "seviye_m": 1490,
+   "alan_km2": 253,
+   "derin_m": 290,
+   "hacim_km3": 62.6,
+   "seviye_m": 1927,
    "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.09
+   "giren_km3_yil": 0.32
   },
   {
    "enlem_boylam": [
-    55.59,
-    15.91
+    35.86,
+    13.49
    ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
+   "yakin": "1 (Mor Sıradağları)",
    "koken": "buzul (moren seti)",
-   "alan_km2": 215,
-   "derin_m": 202,
-   "hacim_km3": 34.3,
-   "seviye_m": 1450,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.56
-  },
-  {
-   "enlem_boylam": [
-    57.83,
-    30.81
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 203,
-   "derin_m": 232,
-   "hacim_km3": 38.5,
-   "seviye_m": 690,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.35
-  },
-  {
-   "enlem_boylam": [
-    58.14,
-    14.68
-   ],
-   "yakin": "2 (Kuzeydoğu kıyı sırası)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 201,
-   "derin_m": 246,
-   "hacim_km3": 41.0,
-   "seviye_m": 1083,
-   "cikis": "var (tatlı)",
-   "giren_km3_yil": 0.23
-  },
-  {
-   "enlem_boylam": [
-    34.1,
-    14.81
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 158,
+   "alan_km2": 154,
    "derin_m": 41,
-   "hacim_km3": 4.5,
-   "seviye_m": 1026,
+   "hacim_km3": 4.4,
+   "seviye_m": 1383,
    "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.17
-  },
-  {
-   "enlem_boylam": [
-    36.91,
-    10.99
-   ],
-   "yakin": "3 (Duvar)",
-   "koken": "buzul (moren seti)",
-   "alan_km2": 152,
-   "derin_m": 24,
-   "hacim_km3": 2.6,
-   "seviye_m": 1155,
-   "cikis": "yok (kapalı, tuzlu)",
-   "giren_km3_yil": 0.17
+   "giren_km3_yil": 0.16
   }
  ],
  "en_buyuk_30_nehir": [
   {
-   "debi_m3s": 19496,
-   "boy_km": 2067,
-   "havza_km2": 560379,
+   "debi_m3s": 22928,
+   "boy_km": 3835,
+   "havza_km2": 2080998,
    "agiz": [
-    3.12,
-    18.33
+    20.17,
+    -24.3
    ],
    "kaynak": [
-    12.08,
-    10.68
+    18.15,
+    -36.43
    ],
-   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
+   "kaynak_yakini": "6 (Köprü Kıstağı)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 15143,
-   "boy_km": 3551,
-   "havza_km2": 2627530,
+   "debi_m3s": 19819,
+   "boy_km": 5437,
+   "havza_km2": 4363751,
    "agiz": [
-    26.32,
-    4.09
+    35.99,
+    -5.05
    ],
    "kaynak": [
-    10.85,
-    14.9
+    44.34,
+    28.87
    ],
-   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "kaynak_yakini": "1 (Mor Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 14785,
-   "boy_km": 3056,
-   "havza_km2": 2820628,
+   "debi_m3s": 14421,
+   "boy_km": 2275,
+   "havza_km2": 957320,
    "agiz": [
-    18.24,
-    -20.61
+    1.71,
+    -8.83
    ],
    "kaynak": [
-    13.23,
-    -33.62
+    8.48,
+    -13.05
    ],
-   "kaynak_yakini": "10 (Güneybatı platosu)",
+   "kaynak_yakini": "2 (Sarı Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 13958,
-   "boy_km": 1469,
-   "havza_km2": 465920,
+   "debi_m3s": 11254,
+   "boy_km": 763,
+   "havza_km2": 260210,
    "agiz": [
-    2.07,
-    -28.61
+    3.03,
+    11.47
    ],
    "kaynak": [
-    8.57,
-    -33.79
+    6.81,
+    13.14
    ],
-   "kaynak_yakini": "10 (Güneybatı platosu)",
+   "kaynak_yakini": "3 (Doğu Yay Dağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 11976,
-   "boy_km": 4341,
-   "havza_km2": 2462146,
+   "debi_m3s": 10408,
+   "boy_km": 1455,
+   "havza_km2": 816948,
    "agiz": [
-    26.59,
-    -32.21
+    36.08,
+    -18.41
    ],
    "kaynak": [
-    48.65,
-    -28.17
+    39.24,
+    -24.57
    ],
-   "kaynak_yakini": "5 (İber kuzey sırası)",
+   "kaynak_yakini": "6 (Köprü Kıstağı)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 11456,
-   "boy_km": 1628,
-   "havza_km2": 583624,
+   "debi_m3s": 9665,
+   "boy_km": 2750,
+   "havza_km2": 1543357,
    "agiz": [
-    37.05,
-    -11.65
+    30.28,
+    6.11
    ],
    "kaynak": [
-    47.59,
-    -13.93
+    20.96,
+    5.58
    ],
-   "kaynak_yakini": "meseta (İber yaylası)",
+   "kaynak_yakini": "4 (Uzun Yarımada sırtı)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 10866,
-   "boy_km": 1118,
-   "havza_km2": 285618,
+   "debi_m3s": 8778,
+   "boy_km": 1625,
+   "havza_km2": 781009,
    "agiz": [
-    1.63,
-    -9.71
+    25.71,
+    25.36
    ],
    "kaynak": [
-    7.51,
-    -6.81
+    34.32,
+    20.17
    ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
+   "kaynak_yakini": "1 (Mor Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 8985,
-   "boy_km": 4282,
-   "havza_km2": 3763153,
+   "debi_m3s": 7466,
+   "boy_km": 912,
+   "havza_km2": 264937,
    "agiz": [
-    36.43,
+    6.9,
+    7.08
+   ],
+   "kaynak": [
+    10.24,
+    11.73
+   ],
+   "kaynak_yakini": "3 (Doğu Yay Dağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 7283,
+   "boy_km": 4765,
+   "havza_km2": 3282258,
+   "agiz": [
+    32.3,
+    -39.77
+   ],
+   "kaynak": [
+    28.52,
+    -27.11
+   ],
+   "kaynak_yakini": "6 (Köprü Kıstağı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 6479,
+   "boy_km": 2273,
+   "havza_km2": 1026944,
+   "agiz": [
+    17.8,
+    -19.82
+   ],
+   "kaynak": [
+    14.63,
+    -13.23
+   ],
+   "kaynak_yakini": "2 (Sarı Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 5557,
+   "boy_km": 2614,
+   "havza_km2": 777112,
+   "agiz": [
+    36.78,
     -8.04
    ],
    "kaynak": [
-    37.31,
-    15.51
+    52.69,
+    6.9
    ],
-   "kaynak_yakini": "3 (Duvar)",
+   "kaynak_yakini": "1 (Mor Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 8907,
-   "boy_km": 780,
-   "havza_km2": 185490,
+   "debi_m3s": 4866,
+   "boy_km": 781,
+   "havza_km2": 115144,
    "agiz": [
-    4.44,
-    -2.59
+    7.95,
+    -0.31
    ],
    "kaynak": [
-    8.57,
-    -7.16
-   ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 7745,
-   "boy_km": 1086,
-   "havza_km2": 366520,
-   "agiz": [
-    31.07,
-    4.53
-   ],
-   "kaynak": [
-    32.74,
-    11.65
-   ],
-   "kaynak_yakini": "3 (Duvar)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 5675,
-   "boy_km": 2038,
-   "havza_km2": 430392,
-   "agiz": [
-    26.76,
-    -30.63
-   ],
-   "kaynak": [
-    32.48,
-    -23.07
-   ],
-   "kaynak_yakini": "meseta (İber yaylası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 5290,
-   "boy_km": 735,
-   "havza_km2": 122845,
-   "agiz": [
-    4.79,
-    8.31
-   ],
-   "kaynak": [
-    9.8,
-    9.89
-   ],
-   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 5216,
-   "boy_km": 1509,
-   "havza_km2": 385013,
-   "agiz": [
-    46.8,
-    40.74
-   ],
-   "kaynak": [
-    42.14,
-    30.37
-   ],
-   "kaynak_yakini": "9 (Plato doğusu sırası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 4072,
-   "boy_km": 563,
-   "havza_km2": 72566,
-   "agiz": [
-    4.0,
-    -3.3
-   ],
-   "kaynak": [
-    6.02,
-    -6.37
-   ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 3413,
-   "boy_km": 1039,
-   "havza_km2": 205764,
-   "agiz": [
-    8.75,
-    4.44
-   ],
-   "kaynak": [
-    14.02,
-    9.36
-   ],
-   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 3339,
-   "boy_km": 1185,
-   "havza_km2": 138611,
-   "agiz": [
-    37.4,
-    -12.26
-   ],
-   "kaynak": [
-    45.57,
-    -17.18
-   ],
-   "kaynak_yakini": "meseta (İber yaylası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 3156,
-   "boy_km": 541,
-   "havza_km2": 75160,
-   "agiz": [
-    1.89,
-    -7.51
-   ],
-   "kaynak": [
-    6.11,
-    -6.55
-   ],
-   "kaynak_yakini": "yarımada (Yarımada omurgası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 2949,
-   "boy_km": 560,
-   "havza_km2": 75436,
-   "agiz": [
-    37.66,
-    -15.16
-   ],
-   "kaynak": [
-    40.47,
-    -18.41
-   ],
-   "kaynak_yakini": "meseta (İber yaylası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 2949,
-   "boy_km": 516,
-   "havza_km2": 89630,
-   "agiz": [
-    -2.24,
-    -17.45
-   ],
-   "kaynak": [
-    -3.21,
-    -20.52
-   ],
-   "kaynak_yakini": "6 (Güney çarpışma noktası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 2516,
-   "boy_km": 1561,
-   "havza_km2": 738187,
-   "agiz": [
-    11.12,
+    5.84,
     -4.97
    ],
-   "kaynak": [
-    5.67,
-    -15.51
-   ],
-   "kaynak_yakini": "4 (Yay biçimli sıra)",
+   "kaynak_yakini": "4 (Uzun Yarımada sırtı)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2381,
-   "boy_km": 1331,
-   "havza_km2": 267994,
+   "debi_m3s": 4823,
+   "boy_km": 779,
+   "havza_km2": 138169,
    "agiz": [
-    13.05,
-    -39.51
+    37.92,
+    -12.0
    ],
    "kaynak": [
-    13.49,
-    -33.27
+    42.5,
+    -12.88
    ],
-   "kaynak_yakini": "10 (Güneybatı platosu)",
+   "kaynak_yakini": "5 (İç denizdeki ada (6))",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2356,
-   "boy_km": 524,
-   "havza_km2": 97589,
+   "debi_m3s": 4199,
+   "boy_km": 1354,
+   "havza_km2": 410725,
    "agiz": [
-    3.82,
-    21.4
+    50.32,
+    -9.62
+   ],
+   "kaynak": [
+    40.39,
+    -7.95
+   ],
+   "kaynak_yakini": "5 (İç denizdeki ada (6))",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 4173,
+   "boy_km": 812,
+   "havza_km2": 152512,
+   "agiz": [
+    30.19,
+    36.69
+   ],
+   "kaynak": [
+    35.9,
+    34.94
+   ],
+   "kaynak_yakini": "1 (Mor Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 3786,
+   "boy_km": 428,
+   "havza_km2": 60176,
+   "agiz": [
+    3.91,
+    1.27
+   ],
+   "kaynak": [
+    4.09,
+    3.74
+   ],
+   "kaynak_yakini": "4 (Uzun Yarımada sırtı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 3653,
+   "boy_km": 1063,
+   "havza_km2": 319024,
+   "agiz": [
+    20.43,
+    -40.56
+   ],
+   "kaynak": [
+    17.97,
+    -37.05
+   ],
+   "kaynak_yakini": "6 (Köprü Kıstağı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 3537,
+   "boy_km": 1562,
+   "havza_km2": 541963,
+   "agiz": [
+    51.28,
+    37.57
+   ],
+   "kaynak": [
+    44.34,
+    29.05
+   ],
+   "kaynak_yakini": "1 (Mor Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 3253,
+   "boy_km": 566,
+   "havza_km2": 78495,
+   "agiz": [
+    3.47,
+    -35.38
+   ],
+   "kaynak": [
+    4.35,
+    -33.0
+   ],
+   "kaynak_yakini": "2 (Sarı Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 3253,
+   "boy_km": 743,
+   "havza_km2": 122315,
+   "agiz": [
+    29.75,
+    35.64
+   ],
+   "kaynak": [
+    35.2,
+    33.88
+   ],
+   "kaynak_yakini": "1 (Mor Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 3223,
+   "boy_km": 681,
+   "havza_km2": 200270,
+   "agiz": [
+    9.18,
+    4.26
+   ],
+   "kaynak": [
+    13.75,
+    4.35
+   ],
+   "kaynak_yakini": "4 (Uzun Yarımada sırtı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2499,
+   "boy_km": 604,
+   "havza_km2": 125143,
+   "agiz": [
+    29.49,
+    30.89
+   ],
+   "kaynak": [
+    34.23,
+    31.95
+   ],
+   "kaynak_yakini": "1 (Mor Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2402,
+   "boy_km": 1100,
+   "havza_km2": 294334,
+   "agiz": [
+    21.67,
+    -33.18
+   ],
+   "kaynak": [
+    20.17,
+    -29.93
+   ],
+   "kaynak_yakini": "6 (Köprü Kıstağı)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 2380,
+   "boy_km": 1130,
+   "havza_km2": 193892,
+   "agiz": [
+    -1.71,
+    -19.03
    ],
    "kaynak": [
     6.11,
-    18.5
+    -19.47
    ],
-   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "kaynak_yakini": "2 (Sarı Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2303,
-   "boy_km": 547,
-   "havza_km2": 76808,
+   "debi_m3s": 2358,
+   "boy_km": 738,
+   "havza_km2": 126269,
    "agiz": [
-    49.79,
-    38.63
+    16.3,
+    -39.68
    ],
    "kaynak": [
-    51.28,
-    34.15
+    13.4,
+    -36.25
    ],
-   "kaynak_yakini": "2 (Kuzeydoğu kıyı sırası)",
+   "kaynak_yakini": "6 (Köprü Kıstağı)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2218,
-   "boy_km": 514,
-   "havza_km2": 75746,
+   "debi_m3s": 2302,
+   "boy_km": 602,
+   "havza_km2": 158245,
    "agiz": [
+    2.15,
+    -28.78
+   ],
+   "kaynak": [
+    3.65,
+    -31.33
+   ],
+   "kaynak_yakini": "2 (Sarı Sıradağları)",
+   "doker": "deniz"
+  },
+  {
+   "debi_m3s": 1804,
+   "boy_km": 966,
+   "havza_km2": 160177,
+   "agiz": [
+    30.81,
+    6.46
+   ],
+   "kaynak": [
     34.76,
-    -0.13
+    9.45
    ],
-   "kaynak": [
-    38.1,
-    0.66
-   ],
-   "kaynak_yakini": "plato (Plato çanağı)",
+   "kaynak_yakini": "1 (Mor Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2168,
-   "boy_km": 268,
-   "havza_km2": 35514,
+   "debi_m3s": 1626,
+   "boy_km": 433,
+   "havza_km2": 74201,
    "agiz": [
-    6.64,
-    16.83
+    48.65,
+    38.45
    ],
    "kaynak": [
-    5.67,
-    15.42
+    46.27,
+    35.29
    ],
-   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
+   "kaynak_yakini": "1 (Mor Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2159,
-   "boy_km": 309,
-   "havza_km2": 27574,
+   "debi_m3s": 1553,
+   "boy_km": 909,
+   "havza_km2": 125300,
    "agiz": [
-    7.08,
-    23.42
+    -1.19,
+    -16.22
    ],
    "kaynak": [
-    7.08,
-    21.05
+    4.88,
+    -13.67
    ],
-   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
+   "kaynak_yakini": "2 (Sarı Sıradağları)",
    "doker": "deniz"
   },
   {
-   "debi_m3s": 2088,
-   "boy_km": 299,
-   "havza_km2": 32406,
+   "debi_m3s": 1515,
+   "boy_km": 460,
+   "havza_km2": 48121,
    "agiz": [
-    9.01,
-    20.52
+    37.84,
+    -10.85
    ],
    "kaynak": [
-    7.08,
-    20.79
+    39.51,
+    -8.31
    ],
-   "kaynak_yakini": "7 (Alt Kıta doğu kıyısı sırası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 2081,
-   "boy_km": 362,
-   "havza_km2": 34683,
-   "agiz": [
-    2.59,
-    11.73
-   ],
-   "kaynak": [
-    4.7,
-    12.17
-   ],
-   "kaynak_yakini": "11 (Alt Kıta orta kuşağı)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1993,
-   "boy_km": 496,
-   "havza_km2": 51222,
-   "agiz": [
-    36.78,
-    -17.09
-   ],
-   "kaynak": [
-    39.68,
-    -18.33
-   ],
-   "kaynak_yakini": "meseta (İber yaylası)",
-   "doker": "deniz"
-  },
-  {
-   "debi_m3s": 1964,
-   "boy_km": 476,
-   "havza_km2": 59290,
-   "agiz": [
-    35.2,
-    -1.98
-   ],
-   "kaynak": [
-    38.54,
-    -0.57
-   ],
-   "kaynak_yakini": "plato (Plato çanağı)",
+   "kaynak_yakini": "5 (İç denizdeki ada (6))",
    "doker": "deniz"
   }
  ]

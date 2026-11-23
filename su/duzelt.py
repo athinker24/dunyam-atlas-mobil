@@ -112,6 +112,20 @@ BOGAZ_ESIK_M = 1200.0    # yol boyunca özgün arazi bunu ilk aşınca boğaz ba
 # (eşik aşınması kuralı 200 m'den sığ çukuru boşaltırdı).
 TATLI_GOL = dict(nehir="plato_kolu", alan_km2=10000.0, seviye_m=792.0, derinlik_m=250.0,
                  bogazdan_uzak_hucre=4, boy_hucre=9)
+# Yedek (14 Kasım, alçak arazi denemesi): yol boyunca özgün arazi BOGAZ_ESIK_M'yi hiç
+# aşmıyorsa boğaz yolun en yüksek noktasında (sırt) başlar ve plato tabanı kısıtı
+# uygulanmaz; bkz. kurgu_nehirler, tatli_gol. Eski arazide eşik aşıldığı için etkisiz.
+SIRT = {}
+
+
+def bogaz_baslangici(yol, z):
+    """Boğazın başladığı yol indeksi: kaynağın kendisi dağdaysa (eşiğin üstünde)
+    o ilk yüksek kesim atlanır; ondan sonra eşiğin ilk aşıldığı yer. Yoksa None.
+    Kaynak eşiğin altındaysa eski kuralla ("ilk aşılan yer") birebir aynı."""
+    k = 0
+    while k < len(yol) and z[yol[k]] > BOGAZ_ESIK_M:
+        k += 1
+    return next((i for i in range(k, len(yol)) if z[yol[i]] > BOGAZ_ESIK_M), None)
 
 
 def _en_alcak_yol(z, a, b, maske):
@@ -161,12 +175,19 @@ def kurgu_nehirler(zr, z, lat, lon):
             parca = _en_alcak_yol(z2, a, b, maske)
             yol += parca if not yol else parca[1:]
         seviye = np.inf; bogaz = False
-        for n in yol:
+        kara_yol = [n for n in yol if z[n] >= 0]
+        i_bogaz = bogaz_baslangici(kara_yol, z)
+        esikli = i_bogaz is not None
+        if not esikli:
+            SIRT[ad] = int(np.argmax([z[n] for n in kara_yol]))
+            print("UYARI: %s yolunda arazi %d m'yi asmiyor; bogaz sirtta (%d m) baslar, plato tabani kisiti yok"
+                  % (ad, BOGAZ_ESIK_M, max(z[n] for n in kara_yol)))
+        for k_, n in enumerate(yol):
             if z[n] < 0:
                 break
-            bogaz = bogaz or z[n] > BOGAZ_ESIK_M
+            bogaz = bogaz or k_ >= (i_bogaz if esikli else SIRT[ad])
             seviye = min(seviye - 0.5, z2[n] - 10.0)
-            if PLATO_TABAN_M is not None and not bogaz and seviye < PLATO_TABAN_M:
+            if PLATO_TABAN_M is not None and esikli and not bogaz and seviye < PLATO_TABAN_M:
                 seviye = max(seviye, min(PLATO_TABAN_M, z2[n]))
             z2[n] = min(z2[n], seviye); yatak[n] = True
         yollar[ad] = [n for n in yol if z[n] >= 0]
@@ -194,8 +215,14 @@ def tatli_gol(z2, z, yol, lat, lon):
     """
     g = TATLI_GOL
     ny, nx = z.shape
-    i0 = next(k for k, n in enumerate(yol) if z[n] > BOGAZ_ESIK_M)
+    i0 = bogaz_baslangici(yol, z)
+    if i0 is None:                                   # alçak arazi: boğaz sırtta (SIRT)
+        i0 = max(SIRT.get(g["nehir"], len(yol) - 1), g["bogazdan_uzak_hucre"] + 1)
     esik = yol[i0 - g["bogazdan_uzak_hucre"]]
+    if z2[esik] < g["seviye_m"] - 50:
+        # arazi göl seviyesinin altında: göl çıkış eşiğindeki yatak seviyesine oturur
+        g = dict(g, seviye_m=float(z2[esik]))
+        print("UYARI: tatli gol seviyesi %.0f m (yatak esigi), tasarim 792 m" % g["seviye_m"])
     eksen = yol[max(0, i0 - g["bogazdan_uzak_hucre"] - g["boy_hucre"]):i0 - g["bogazdan_uzak_hucre"]]
     dyk = 6371 * np.radians(abs(lat[1] - lat[0]))
     dxk = (6371 * np.radians(lon[1] - lon[0]) * np.cos(np.radians(lat)))[:, None] * np.ones((1, nx))
@@ -215,7 +242,13 @@ def tatli_gol(z2, z, yol, lat, lon):
             r_lo = r
     from scipy import ndimage as nd
     m = nd.binary_fill_holes((uz <= r) & (z >= 0))
-    lab, n = nd.label(m); m = lab == lab[esik]
+    lab, n = nd.label(m)
+    if not eksen or lab[esik] == 0:
+        # göl ekseni boş (boğaz yolun başında): göl kurulamaz. Önce etiket 0 (maske
+        # dışı) seçiliyor, bütün gezegen göl sayılıyordu (ikinci deneme, 14 Kasım).
+        print("UYARI: tatli gol kurulamadi (bogaz yolun basinda, eksen bos)")
+        return z2, np.zeros(z.shape, bool), 0.0
+    m = lab == lab[esik]
     oran = np.clip((r - uz) / r, 0, 1)
     z3 = z2.copy()
     z3[m] = g["seviye_m"] - g["derinlik_m"] * oran[m] ** 0.5 - 5.0

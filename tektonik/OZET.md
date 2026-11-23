@@ -31,12 +31,12 @@ Dünyam kurgusal bir gezegen: yarıçap 6371 km, gün 15 saat, eksen eğikliği 
 
 | no | levha | tür | kapsam | alan (milyon km²) | kara payı | hareket (Kuzey'e göre) | komşular |
 |---|---|---|---|---|---|---|---|
-| 1 | Kuzey Levhası | kıta + okyanus | 1, 2 (şerit dahil), 4; Köprü Kıstağı; iç denizin batısı; kuzey, batı ve güney sahanlıkları | 123.6 | %21 | sabit (çerçeve) | Ada Bloğu, Batı Okyanusu Levhası, Doğu Dil Levhası, Doğu Havza Levhası, Doğu Okyanusu Levhası, Güney Okyanusu Levhası, Kutup Levhası, Orta Blok |
-| 2 | Doğu Dil Levhası | kıta + okyanus | 3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar | 13.9 | %50 | kuzeye (dönerek) 1.8 cm/yıl | Doğu Havza Levhası, Doğu Okyanusu Levhası, Kuzey Levhası, Orta Blok, Uzun Yarımada Bloğu |
+| 1 | Kuzey Levhası | kıta + okyanus | 1, 2 (şerit dahil), 4; Köprü Kıstağı; iç denizin batısı; kuzey, batı ve güney sahanlıkları | 123.6 | %20 | sabit (çerçeve) | Ada Bloğu, Batı Okyanusu Levhası, Doğu Dil Levhası, Doğu Havza Levhası, Doğu Okyanusu Levhası, Güney Okyanusu Levhası, Kutup Levhası, Orta Blok |
+| 2 | Doğu Dil Levhası | kıta + okyanus | 3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar | 13.9 | %48 | kuzeye (dönerek) 1.8 cm/yıl | Doğu Havza Levhası, Doğu Okyanusu Levhası, Kuzey Levhası, Orta Blok, Uzun Yarımada Bloğu |
 | 3 | Orta Blok | kıta + okyanus | 5 (Sarı Sıradağları'nın doğu şeridi, Sarı Ön Havzası) | 5.0 | %28 | batıya 2.8 cm/yıl | Doğu Dil Levhası, Doğu Havza Levhası, Doğu Okyanusu Levhası, Güney Okyanusu Levhası, Kuzey Levhası, Uzun Yarımada Bloğu |
-| 4 | Uzun Yarımada Bloğu | kıta + okyanus | 7 (Uzun Yarımada) | 2.0 | %25 | kuzeybatıya 4.6 cm/yıl | Doğu Dil Levhası, Orta Blok |
-| 5 | Ada Bloğu | kıta + okyanus | 6 (iç denizdeki ada) | 2.1 | %42 | güneye 0.7 cm/yıl | Doğu Havza Levhası, Kuzey Levhası |
-| 6 | Doğu Havza Levhası | kıta + okyanus | iç denizin doğusu ve güneyi (eski Mor Okyanusu kalıntısı) | 1.9 | %7 | kuzeybatıya 0.8 cm/yıl | Ada Bloğu, Doğu Dil Levhası, Kuzey Levhası, Orta Blok |
+| 4 | Uzun Yarımada Bloğu | kıta + okyanus | 7 (Uzun Yarımada) | 2.0 | %21 | kuzeybatıya 4.6 cm/yıl | Doğu Dil Levhası, Orta Blok |
+| 5 | Ada Bloğu | kıta + okyanus | 6 (iç denizdeki ada) | 2.1 | %37 | güneye 0.7 cm/yıl | Doğu Havza Levhası, Kuzey Levhası |
+| 6 | Doğu Havza Levhası | okyanus | iç denizin doğusu ve güneyi (eski Mor Okyanusu kalıntısı) | 1.9 | %0 | kuzeybatıya 0.8 cm/yıl | Ada Bloğu, Doğu Dil Levhası, Kuzey Levhası, Orta Blok |
 | 7 | Doğu Okyanusu Levhası | okyanus | Doğu Hendeği'nin dışındaki okyanus | 78.2 | %0 | batıya 6.5 cm/yıl | Büyük Okyanus Levhası, Doğu Dil Levhası, Güney Okyanusu Levhası, Kutup Levhası, Kuzey Levhası, Orta Blok |
 | 8 | Batı Okyanusu Levhası (yer tutucu) | okyanus | batıda, uzak sırtın ötesi | 101.4 | %0 | batıya 2.4 cm/yıl | Büyük Okyanus Levhası, Güney Okyanusu Levhası, Kutup Levhası, Kuzey Levhası |
 | 9 | Kutup Levhası (yer tutucu) | okyanus | kuzeyde, uzak sırtın ötesi | 11.6 | %0 | kuzeye 0.6 cm/yıl | Batı Okyanusu Levhası, Büyük Okyanus Levhası, Doğu Okyanusu Levhası, Kuzey Levhası |
@@ -57,26 +57,26 @@ Uzunluğa göre sıralı; 150 km'den kısa parçalar tabloda yok (hepsi `ozet.js
 | kuzey okyanus sırtı (uzak) | Kutup Levhası / Kuzey Levhası | okyanus sırtı (%57) | 7916 | -0.2 | — | [tasarım] Kutup Levhası ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl). |
 | Büyük Okyanus Levhası / Güney Okyanusu Levhası | Büyük Okyanus Levhası / Güney Okyanusu Levhası | okyanus sırtı (%62) | 6911 | -0.7 | — | [tasarım] Büyük Okyanus Levhası ile Güney Okyanusu Levhası birbirinden ayrılıyor (0.7 cm/yıl). |
 | Doğu Hendeği | Doğu Dil Levhası / Doğu Okyanusu Levhası | dalma (%82) | 6756 | +4.7 | Doğu Dil Levhası | Doğu Okyanusu Levhası, Doğu Dil Levhası altına dalıyor (4.7 cm/yıl). Hikâyede: dalma (Subduction), Doğu Hendeği: Doğu Okyanusu 3'ün altına dalıyor; Doğu Yay Dağları. |
-| 2'nin doğu açığı | Doğu Okyanusu Levhası / Kuzey Levhası | dalma (%80) | 6459 | +3.9 | Kuzey Levhası | Doğu Okyanusu Levhası, Kuzey Levhası altına dalıyor (3.9 cm/yıl). Hikâyede: yanal (Transform), 2'nin doğu açığı. |
-| Sarı Sıradağları | Kuzey Levhası / Orta Blok | dalma (%63) | 5191 | +2.6 | Kuzey Levhası | Orta Blok, Kuzey Levhası altına dalıyor (2.6 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Sarı Sıradağları: 5, 4'ün altına giriyor (Zagros benzeri, 8 MYÖ'den beri). |
+| 2'nin doğu açığı | Doğu Okyanusu Levhası / Kuzey Levhası | dalma (%90) | 6459 | +3.9 | Kuzey Levhası | Doğu Okyanusu Levhası, Kuzey Levhası altına dalıyor (3.9 cm/yıl). Hikâyede: yanal (Transform), 2'nin doğu açığı. |
+| Sarı Sıradağları | Kuzey Levhası / Orta Blok | dalma (%62) | 5191 | +2.6 | Kuzey Levhası | Orta Blok, Kuzey Levhası altına dalıyor (2.6 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Sarı Sıradağları: 5, 4'ün altına giriyor (Zagros benzeri, 8 MYÖ'den beri). |
 | Batı Okyanusu Levhası / Güney Okyanusu Levhası | Batı Okyanusu Levhası / Güney Okyanusu Levhası | okyanus sırtı (%74) | 4418 | -0.5 | — | [tasarım] Batı Okyanusu Levhası ile Güney Okyanusu Levhası birbirinden ayrılıyor (0.5 cm/yıl). |
 | Güneydoğu Kanalı | Doğu Dil Levhası / Uzun Yarımada Bloğu | okyanus sırtı (%66) | 3730 | -2.7 | — | Doğu Dil Levhası ile Uzun Yarımada Bloğu birbirinden ayrılıyor (2.7 cm/yıl). Hikâyede: ayrılma (Divergent), Güneydoğu Kanalı: 22 MYÖ'den beri açılan yarık, kuzeyinde okyanus kabuğu (Kızıldeniz benzeri). |
 | Kanal fayı | Orta Blok / Uzun Yarımada Bloğu | okyanus dönüşüm fayı (%52) | 3474 | -0.1 | — | Orta Blok ile Uzun Yarımada Bloğu yan yana kayıyor. Hikâyede: yanal (Transform), Kanal fayı: 7, 5'e göre kuzeybatıya kayıyor (Ölü Deniz fayı benzeri). |
-| Mor Sıradağları | Doğu Dil Levhası / Kuzey Levhası | kıta çarpışması (%79) | 3445 | +1.4 | Kuzey Levhası | Doğu Dil Levhası, Kuzey Levhası levhasına çarpıyor, altına giriyor (1.4 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri). |
-| adanın kuzey ve batısı | Ada Bloğu / Kuzey Levhası | okyanus sırtı (%51) | 3117 | -0.2 | — | Ada Bloğu ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor. |
+| Mor Sıradağları | Doğu Dil Levhası / Kuzey Levhası | kıta çarpışması (%77) | 3445 | +1.4 | Kuzey Levhası | Doğu Dil Levhası, Kuzey Levhası levhasına çarpıyor, altına giriyor (1.4 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri). |
+| adanın kuzey ve batısı | Ada Bloğu / Kuzey Levhası | okyanus sırtı (%53) | 3117 | -0.2 | — | Ada Bloğu ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor. |
 | Büyük Okyanus Levhası / Kutup Levhası | Büyük Okyanus Levhası / Kutup Levhası | okyanusal yakınlaşma (%80) | 3024 | +1.3 | Büyük Okyanus Levhası | [tasarım] Kutup Levhası, Büyük Okyanus Levhası altına dalıyor (1.3 cm/yıl). |
-| Doğu Dil Levhası / Doğu Havza Levhası | Doğu Dil Levhası / Doğu Havza Levhası | dalma (%49) | 3009 | +0.2 | Doğu Dil Levhası | Doğu Havza Levhası, Doğu Dil Levhası altına dalıyor (0.2 cm/yıl). Hikâyede: yanal (Transform). |
+| Doğu Dil Levhası / Doğu Havza Levhası | Doğu Dil Levhası / Doğu Havza Levhası | dalma (%60) | 3009 | +0.2 | Doğu Dil Levhası | Doğu Havza Levhası, Doğu Dil Levhası altına dalıyor (0.2 cm/yıl). Hikâyede: yanal (Transform). |
 | Ada Hendeği | Ada Bloğu / Doğu Havza Levhası | dalma (%74) | 1900 | +0.7 | Ada Bloğu | Doğu Havza Levhası, Ada Bloğu altına dalıyor (0.7 cm/yıl). Hikâyede: dalma (Subduction), Ada Hendeği: doğu iç deniz tabanı 6'nın altına dalıyor. |
 | Doğu Okyanusu Levhası / Kutup Levhası | Doğu Okyanusu Levhası / Kutup Levhası | okyanusal yakınlaşma (%94) | 1511 | +2.0 | Doğu Okyanusu Levhası | [tasarım] Kutup Levhası, Doğu Okyanusu Levhası altına dalıyor (2.0 cm/yıl). |
 | Güneydoğu Kanalı'nın kuzey ucu | Doğu Dil Levhası / Orta Blok | okyanus sırtı (%100) | 1427 | -4.6 | — | [tasarım] Doğu Dil Levhası ile Orta Blok birbirinden ayrılıyor (4.6 cm/yıl). |
 | Batı Okyanusu Levhası / Kutup Levhası | Batı Okyanusu Levhası / Kutup Levhası | okyanusal yakınlaşma (%46) | 1319 | -0.1 | Kutup Levhası | [tasarım] Batı Okyanusu Levhası, Kutup Levhası altına dalıyor (0.1 cm/yıl). |
 | Doğu Havza Levhası / Orta Blok | Doğu Havza Levhası / Orta Blok | kıta yarığı (%74) | 1284 | -1.3 | — | Doğu Havza Levhası ile Orta Blok birbirinden ayrılıyor (1.3 cm/yıl). Hikâyede: yanal (Transform). |
-| Doğu Havza Levhası / Kuzey Levhası | Doğu Havza Levhası / Kuzey Levhası | dalma (%61) | 1196 | +0.5 | Kuzey Levhası | Doğu Havza Levhası, Kuzey Levhası altına dalıyor (0.5 cm/yıl). Hikâyede: yanal (Transform). |
+| Doğu Havza Levhası / Kuzey Levhası | Doğu Havza Levhası / Kuzey Levhası | dalma (%73) | 1196 | +0.5 | Kuzey Levhası | Doğu Havza Levhası, Kuzey Levhası altına dalıyor (0.5 cm/yıl). Hikâyede: yanal (Transform). |
 | Batı Okyanusu Levhası / Kutup Levhası | Batı Okyanusu Levhası / Kutup Levhası | okyanus dönüşüm fayı (%67) | 1137 | -0.3 | — | [tasarım] Batı Okyanusu Levhası ile Kutup Levhası yan yana kayıyor. |
 | Doğu Havza Levhası / Kuzey Levhası | Doğu Havza Levhası / Kuzey Levhası | kıta yarığı (%47) | 1050 | -0.2 | — | Doğu Havza Levhası ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl). Hikâyede: yanal (Transform). |
 | Batı Okyanusu Levhası / Güney Okyanusu Levhası | Batı Okyanusu Levhası / Güney Okyanusu Levhası | okyanus dönüşüm fayı (%75) | 869 | +0.1 | — | [tasarım] Batı Okyanusu Levhası ile Güney Okyanusu Levhası yan yana kayıyor. |
 | Güney Okyanusu Levhası / Orta Blok | Güney Okyanusu Levhası / Orta Blok | okyanus dönüşüm fayı (%100) | 689 | +0.7 | — | [tasarım] Güney Okyanusu Levhası ile Orta Blok yan yana kayıyor. |
-| adanın kuzey ve batısı | Ada Bloğu / Kuzey Levhası | dalma (%82) | 617 | +0.7 | Kuzey Levhası | Ada Bloğu, Kuzey Levhası altına dalıyor (0.7 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor. |
+| adanın kuzey ve batısı | Ada Bloğu / Kuzey Levhası | dalma (%91) | 617 | +0.7 | Kuzey Levhası | Ada Bloğu, Kuzey Levhası altına dalıyor (0.7 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor. |
 | Doğu Havza Levhası / Kuzey Levhası | Doğu Havza Levhası / Kuzey Levhası | dalma (%91) | 594 | +0.5 | Kuzey Levhası | Doğu Havza Levhası, Kuzey Levhası altına dalıyor (0.5 cm/yıl). Hikâyede: yanal (Transform). |
 | Doğu Okyanusu Levhası / Orta Blok | Doğu Okyanusu Levhası / Orta Blok | dalma (%100) | 228 | +1.5 | Orta Blok | [tasarım] Doğu Okyanusu Levhası, Orta Blok altına dalıyor (1.5 cm/yıl). |
 
@@ -91,19 +91,19 @@ Sahibin `sinirlar_hikaye.json`'undaki tür ile yeni hızlardan hesaplanan Bird s
 | Kuzey Levhası / Kutup Levhası | ayrılma | — (yer tutucu, çizilmedi) | — | 0 | 7916 | — |
 | Doğu Okyanusu Levhası / Güney Okyanusu Levhası | yanal | — (yer tutucu, çizilmedi) | — | 0 | 8678 | — |
 | Kuzey Levhası / Batı Okyanusu Levhası | ayrılma | — (yer tutucu, çizilmedi) | — | 0 | 17349 | — |
-| Kuzey Levhası / Doğu Okyanusu Levhası | yanal | dalma | %4 | 5734 | 725 | SUB %78, CCB %12, CRB %6, CTF %4 |
+| Kuzey Levhası / Doğu Okyanusu Levhası | yanal | dalma | %4 | 5734 | 725 | SUB %89, CRB %6, CTF %4, OTF %1 |
 | Doğu Dil Levhası / Doğu Okyanusu Levhası | dalma | dalma | %100 | 4484 | 2271 | SUB %100 |
-| Kuzey Levhası / Ada Bloğu | ayrılma | okyanus sırtı | %49 | 3565 | 169 | OSR %45, SUB %29, OTF %19, CRB %5, CCB %3 |
+| Kuzey Levhası / Ada Bloğu | ayrılma | okyanus sırtı | %49 | 3565 | 169 | OSR %46, SUB %31, OTF %19, CRB %3, CCB %2 |
 | Kuzey Levhası / Güney Okyanusu Levhası | ayrılma | — (yer tutucu, çizilmedi) | — | 0 | 11135 | — |
 | Doğu Dil Levhası / Uzun Yarımada Bloğu | ayrılma | okyanus sırtı | %71 | 3620 | 110 | OSR %68, OTF %24, SUB %3, CRB %3, CTF %2 |
 | Doğu Okyanusu Levhası / Kutup Levhası | yanal | okyanusal yakınlaşma | %0 | 109 | 1401 | OCB %100 |
-| Kuzey Levhası / Doğu Dil Levhası | kıta çarpışması | kıta çarpışması | %81 | 3445 | 0 | CCB %79, OTF %18, SUB %2, CTF %2 |
-| Kuzey Levhası / Orta Blok | kıta çarpışması | kıta çarpışması | %100 | 3738 | 1453 | CCB %51, SUB %49 |
-| Kuzey Levhası / Doğu Havza Levhası | yanal | dalma | %21 | 2570 | 270 | SUB %49, CRB %22, CTF %15, OTF %7, CCB %6, OSR %2 |
-| Doğu Dil Levhası / Doğu Havza Levhası | yanal | dalma | %25 | 3009 | 0 | SUB %49, CTF %22, OSR %11, CCB %11, CRB %4, OTF %4 |
-| Orta Blok / Uzun Yarımada Bloğu | yanal | okyanus dönüşüm fayı | %63 | 3419 | 55 | OTF %52, SUB %13, CTF %11, OSR %10, CRB %10, CCB %5 |
+| Kuzey Levhası / Doğu Dil Levhası | kıta çarpışması | kıta çarpışması | %81 | 3445 | 0 | CCB %77, OTF %19, SUB %3 |
+| Kuzey Levhası / Orta Blok | kıta çarpışması | kıta çarpışması | %100 | 3738 | 1453 | CCB %52, SUB %48 |
+| Kuzey Levhası / Doğu Havza Levhası | yanal | dalma | %21 | 2570 | 270 | SUB %55, CRB %19, OTF %13, CTF %8, OSR %4 |
+| Doğu Dil Levhası / Doğu Havza Levhası | yanal | dalma | %25 | 3009 | 0 | SUB %60, CTF %22, OSR %11, CRB %4, OTF %4 |
+| Orta Blok / Uzun Yarımada Bloğu | yanal | okyanus dönüşüm fayı | %63 | 3419 | 55 | OTF %52, SUB %14, CTF %11, OSR %11, CRB %8, CCB %3 |
 | Ada Bloğu / Doğu Havza Levhası | dalma | dalma | %74 | 1900 | 0 | SUB %74, OTF %26 |
-| Orta Blok / Doğu Havza Levhası | yanal | kıta yarığı | %18 | 1284 | 137 | CRB %74, OTF %13, CCB %8, CTF %4 |
+| Orta Blok / Doğu Havza Levhası | yanal | kıta yarığı | %18 | 1284 | 137 | CRB %74, OTF %13, SUB %8, CTF %4 |
 | Doğu Dil Levhası / Güney Okyanusu Levhası | ayrılma | — (yer tutucu, çizilmedi) | — | 0 | 0 | — |
 | Orta Blok / Güney Okyanusu Levhası | ayrılma | — (yer tutucu, çizilmedi) | — | 0 | 689 | — |
 | Doğu Dil Levhası / Orta Blok | ayrılma | okyanus sırtı | %100 | 55 | 1521 | OSR %100 |
@@ -116,11 +116,11 @@ En yüksek noktalar araziden ölçüldü (sınırın 300-450 km'si içinde ya da
 
 | ad | yer (enlem, boylam) | yükseklik (m) | gerçek benzeri | kökeni |
 |---|---|---|---|---|
-| Mor Sıradağları | 37.0, 3.8 | 6530 | Kafkas ölçeğinde Himalaya benzeri | 3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası. |
-| Sarı Sıradağları | 13.0, -13.0 | 6481 | Zagros / Tayvan benzeri | 5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim. |
-| Doğu Yay Dağları | -0.3, 20.5 | 896 | And benzeri yay | Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor. |
-| Uzun Yarımada sırtı | 7.1, -3.0 | 5143 | Ölü Deniz fayı kıyısı | 7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt. |
-| İç denizdeki ada (6) | 27.0, -6.9 | 4811 | Ege / Tiren benzeri | Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde. |
+| Mor Sıradağları | 32.2, 26.8 | 5390 | Kafkas ölçeğinde Himalaya benzeri | 3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası. |
+| Sarı Sıradağları | 8.1, -13.1 | 3040 | Zagros / Tayvan benzeri | 5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim. |
+| Doğu Yay Dağları | 8.3, 22.2 | 959 | And benzeri yay | Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor. |
+| Uzun Yarımada sırtı | 8.4, -3.9 | 1527 | Ölü Deniz fayı kıyısı | 7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt. |
+| İç denizdeki ada (6) | 28.6, -11.5 | 1710 | Ege / Tiren benzeri | Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde. |
 | Köprü Kıstağı | 25.2, -27.7 | 400 | Panama benzeri | 3 MYÖ'de 1 ile 4 arasındaki boğazı kapattı; 80-400 m. |
 
 ## 7. Tarih (eskiden yeniye)

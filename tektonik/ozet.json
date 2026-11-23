@@ -29,7 +29,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "1, 2 (şerit dahil), 4; Köprü Kıstağı; iç denizin batısı; kuzey, batı ve güney sahanlıkları",
    "alan_milyon_km2": 123.62,
-   "kara_payi": 0.206,
+   "kara_payi": 0.2,
    "tohum_enlem_boylam": [
     39.44,
     -21.36
@@ -56,7 +56,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar",
    "alan_milyon_km2": 13.95,
-   "kara_payi": 0.504,
+   "kara_payi": 0.483,
    "tohum_enlem_boylam": [
     14.14,
     14.99
@@ -111,7 +111,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "7 (Uzun Yarımada)",
    "alan_milyon_km2": 1.99,
-   "kara_payi": 0.247,
+   "kara_payi": 0.21,
    "tohum_enlem_boylam": [
     2.03,
     2.83
@@ -135,7 +135,7 @@
    "tur": "kıta + okyanus",
    "kapsam": "6 (iç denizdeki ada)",
    "alan_milyon_km2": 2.12,
-   "kara_payi": 0.417,
+   "kara_payi": 0.368,
    "tohum_enlem_boylam": [
     26.02,
     -11.3
@@ -156,10 +156,10 @@
   {
    "kimlik": 6,
    "ad": "Doğu Havza Levhası",
-   "tur": "kıta + okyanus",
+   "tur": "okyanus",
    "kapsam": "iç denizin doğusu ve güneyi (eski Mor Okyanusu kalıntısı)",
    "alan_milyon_km2": 1.92,
-   "kara_payi": 0.069,
+   "kara_payi": 0.001,
    "tohum_enlem_boylam": [
     22.95,
     -1.86
@@ -185,7 +185,7 @@
    "tur": "okyanus",
    "kapsam": "Doğu Hendeği'nin dışındaki okyanus",
    "alan_milyon_km2": 78.21,
-   "kara_payi": 0.002,
+   "kara_payi": 0.0,
    "tohum_enlem_boylam": [
     7.78,
     65.26
@@ -942,10 +942,10 @@
    "hikayede_cizili_km": 5734,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.8,
-    "CCB": 0.1,
+    "SUB": 0.9,
     "CRB": 0.06,
-    "CTF": 0.04
+    "CTF": 0.03,
+    "OTF": 0.01
    },
    "ort_yaklasma_cm_yil": 3.91,
    "ust_levha": "Kuzey Levhası",
@@ -1025,8 +1025,8 @@
    "hikayede_cizili_km": 3738,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.63,
-    "CCB": 0.37
+    "SUB": 0.62,
+    "CCB": 0.38
    },
    "ort_yaklasma_cm_yil": 2.6,
    "ust_levha": "Kuzey Levhası",
@@ -1273,11 +1273,11 @@
    "baskin_sinif": "OTF",
    "sinif_paylari": {
     "OTF": 0.52,
-    "SUB": 0.13,
+    "SUB": 0.14,
     "CTF": 0.11,
-    "OSR": 0.1,
-    "CRB": 0.1,
-    "CCB": 0.05
+    "OSR": 0.11,
+    "CRB": 0.08,
+    "CCB": 0.03
    },
    "ort_yaklasma_cm_yil": -0.11,
    "ust_levha": null,
@@ -1353,10 +1353,9 @@
    "hikayede_cizili_km": 3445,
    "baskin_sinif": "CCB",
    "sinif_paylari": {
-    "CCB": 0.79,
-    "OTF": 0.18,
-    "SUB": 0.02,
-    "CTF": 0.02
+    "CCB": 0.77,
+    "OTF": 0.19,
+    "SUB": 0.03
    },
    "ort_yaklasma_cm_yil": 1.36,
    "ust_levha": "Kuzey Levhası",
@@ -1432,10 +1431,10 @@
    "hikayede_cizili_km": 3117,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
-    "OSR": 0.51,
+    "OSR": 0.53,
     "SUB": 0.23,
     "OTF": 0.21,
-    "CRB": 0.05
+    "CRB": 0.03
    },
    "ort_yaklasma_cm_yil": -0.25,
    "ust_levha": null,
@@ -1600,10 +1599,9 @@
    "hikayede_cizili_km": 3009,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.49,
+    "SUB": 0.6,
     "CTF": 0.22,
     "OSR": 0.11,
-    "CCB": 0.11,
     "CRB": 0.04,
     "OTF": 0.04
    },
@@ -2027,7 +2025,7 @@
    "sinif_paylari": {
     "CRB": 0.74,
     "OTF": 0.13,
-    "CCB": 0.08,
+    "SUB": 0.08,
     "CTF": 0.04
    },
    "ort_yaklasma_cm_yil": -1.28,
@@ -2100,11 +2098,11 @@
    "hikayede_cizili_km": 1139,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.61,
-    "CTF": 0.13,
-    "CCB": 0.12,
-    "CRB": 0.09,
-    "OSR": 0.05
+    "SUB": 0.73,
+    "OSR": 0.09,
+    "OTF": 0.09,
+    "CTF": 0.04,
+    "CRB": 0.04
    },
    "ort_yaklasma_cm_yil": 0.46,
    "ust_levha": "Kuzey Levhası",
@@ -2334,8 +2332,8 @@
    "baskin_sinif": "CRB",
    "sinif_paylari": {
     "CRB": 0.47,
-    "CTF": 0.21,
-    "OTF": 0.16,
+    "OTF": 0.22,
+    "CTF": 0.15,
     "SUB": 0.15
    },
    "ort_yaklasma_cm_yil": -0.21,
@@ -2609,8 +2607,8 @@
    "hikayede_cizili_km": 448,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.82,
-    "CCB": 0.18
+    "SUB": 0.91,
+    "CCB": 0.09
    },
    "ort_yaklasma_cm_yil": 0.65,
    "ust_levha": "Kuzey Levhası",
@@ -2942,10 +2940,10 @@
    "km": 5734,
    "disarida_km": 725,
    "paylar": {
-    "SUB": 0.78,
-    "CCB": 0.12,
+    "SUB": 0.89,
     "CRB": 0.06,
-    "CTF": 0.04
+    "CTF": 0.04,
+    "OTF": 0.01
    },
    "aciklama": "2'nin doğu açığı"
   },
@@ -2975,11 +2973,11 @@
    "km": 3565,
    "disarida_km": 169,
    "paylar": {
-    "OSR": 0.45,
-    "SUB": 0.29,
+    "OSR": 0.46,
+    "SUB": 0.31,
     "OTF": 0.19,
-    "CRB": 0.05,
-    "CCB": 0.03
+    "CRB": 0.03,
+    "CCB": 0.02
    },
    "aciklama": "adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor"
   },
@@ -3041,10 +3039,9 @@
    "km": 3445,
    "disarida_km": 0,
    "paylar": {
-    "CCB": 0.79,
-    "OTF": 0.18,
-    "SUB": 0.02,
-    "CTF": 0.02
+    "CCB": 0.77,
+    "OTF": 0.19,
+    "SUB": 0.03
    },
    "aciklama": "Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri)"
   },
@@ -3059,8 +3056,8 @@
    "km": 3738,
    "disarida_km": 1453,
    "paylar": {
-    "CCB": 0.51,
-    "SUB": 0.49
+    "CCB": 0.52,
+    "SUB": 0.48
    },
    "aciklama": "Sarı Sıradağları: 5, 4'ün altına giriyor (Zagros benzeri, 8 MYÖ'den beri)"
   },
@@ -3075,12 +3072,11 @@
    "km": 2570,
    "disarida_km": 270,
    "paylar": {
-    "SUB": 0.49,
-    "CRB": 0.22,
-    "CTF": 0.15,
-    "OTF": 0.07,
-    "CCB": 0.06,
-    "OSR": 0.02
+    "SUB": 0.55,
+    "CRB": 0.19,
+    "OTF": 0.13,
+    "CTF": 0.08,
+    "OSR": 0.04
    },
    "aciklama": ""
   },
@@ -3095,10 +3091,9 @@
    "km": 3009,
    "disarida_km": 0,
    "paylar": {
-    "SUB": 0.49,
+    "SUB": 0.6,
     "CTF": 0.22,
     "OSR": 0.11,
-    "CCB": 0.11,
     "CRB": 0.04,
     "OTF": 0.04
    },
@@ -3116,11 +3111,11 @@
    "disarida_km": 55,
    "paylar": {
     "OTF": 0.52,
-    "SUB": 0.13,
+    "SUB": 0.14,
     "CTF": 0.11,
-    "OSR": 0.1,
-    "CRB": 0.1,
-    "CCB": 0.05
+    "OSR": 0.11,
+    "CRB": 0.08,
+    "CCB": 0.03
    },
    "aciklama": "Kanal fayı: 7, 5'e göre kuzeybatıya kayıyor (Ölü Deniz fayı benzeri)"
   },
@@ -3153,7 +3148,7 @@
    "paylar": {
     "CRB": 0.74,
     "OTF": 0.13,
-    "CCB": 0.08,
+    "SUB": 0.08,
     "CTF": 0.04
    },
    "aciklama": ""
@@ -3202,56 +3197,62 @@
  ],
  "dag_ve_yer_sekilleri": [
   {
+   "no": "1",
    "ad": "Mor Sıradağları",
    "enlem_boylam": [
-    37.0,
-    3.8
+    32.2,
+    26.8
    ],
-   "yukseklik_m": 6530,
+   "yukseklik_m": 5390,
    "gercek_benzeri": "Kafkas ölçeğinde Himalaya benzeri",
    "koken": "3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası."
   },
   {
+   "no": "2",
    "ad": "Sarı Sıradağları",
    "enlem_boylam": [
-    13.0,
-    -13.0
+    8.1,
+    -13.1
    ],
-   "yukseklik_m": 6481,
+   "yukseklik_m": 3040,
    "gercek_benzeri": "Zagros / Tayvan benzeri",
    "koken": "5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim."
   },
   {
+   "no": "3",
    "ad": "Doğu Yay Dağları",
    "enlem_boylam": [
-    -0.3,
-    20.5
+    8.3,
+    22.2
    ],
-   "yukseklik_m": 896,
+   "yukseklik_m": 959,
    "gercek_benzeri": "And benzeri yay",
    "koken": "Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor."
   },
   {
+   "no": "4",
    "ad": "Uzun Yarımada sırtı",
    "enlem_boylam": [
-    7.1,
-    -3.0
+    8.4,
+    -3.9
    ],
-   "yukseklik_m": 5143,
+   "yukseklik_m": 1527,
    "gercek_benzeri": "Ölü Deniz fayı kıyısı",
    "koken": "7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt."
   },
   {
+   "no": "5",
    "ad": "İç denizdeki ada (6)",
    "enlem_boylam": [
-    27.0,
-    -6.9
+    28.6,
+    -11.5
    ],
-   "yukseklik_m": 4811,
+   "yukseklik_m": 1710,
    "gercek_benzeri": "Ege / Tiren benzeri",
    "koken": "Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde."
   },
   {
+   "no": "6",
    "ad": "Köprü Kıstağı",
    "enlem_boylam": [
     25.2,

@@ -126,7 +126,8 @@ def uret():
                       "sinif_olcutu": "Bird (2003) PB2002: göreli hız sınıra 20°'den yakınsa yanal, değilse yaklaşma/ayrılma; iki yanı denizse okyanusal",
                       "ust_levha": "dalma/çarpışmada: kıta tarafı; ikisi de aynıysa levha sırası"},
          "siniflar": M.SINIF_AD, "levhalar": lev, "sinirlar": sin, "amaclanan_tur_karsilastirma": o["amaclanan_tur_karsilastirma"],
-         "dag_ve_yer_sekilleri": [{"ad": a, "enlem_boylam": p, "yukseklik_m": h, "gercek_benzeri": g, "koken": k} for a, p, h, g, k in DG],
+         "dag_ve_yer_sekilleri": [{"no": str(i + 1), "ad": a, "enlem_boylam": p, "yukseklik_m": h, "gercek_benzeri": g, "koken": k}
+                                  for i, (a, p, h, g, k) in enumerate(DG)],   # "no": buzul/ ve su/ etiket olarak okur
          "tarih_eskiden_yeniye": [{"donem": d, "olay": t} for d, t in OLAYLAR],
          "dosyalar": {"HIKAYE.md": "hikâyenin tamamı: dönemler, olaylar (sahibin)",
                       "levha_dunya.png": "tüm gezegen, Equal Earth", "levha_kure.png": "iki küre görünümü",

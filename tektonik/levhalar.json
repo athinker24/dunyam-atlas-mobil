@@ -17,7 +17,7 @@
    "euler_kutbu": null,
    "euler_hizi_derece_My": 0.0,
    "alan_milyon_km2": 123.62,
-   "kara_payi": 0.206
+   "kara_payi": 0.2
   },
   "Doğu Dil Levhası": {
    "kimlik": 2,
@@ -36,7 +36,7 @@
    ],
    "euler_hizi_derece_My": 0.3409,
    "alan_milyon_km2": 13.95,
-   "kara_payi": 0.504
+   "kara_payi": 0.483
   },
   "Orta Blok": {
    "kimlik": 3,
@@ -74,7 +74,7 @@
    ],
    "euler_hizi_derece_My": 0.4133,
    "alan_milyon_km2": 1.99,
-   "kara_payi": 0.247
+   "kara_payi": 0.21
   },
   "Ada Bloğu": {
    "kimlik": 5,
@@ -93,7 +93,7 @@
    ],
    "euler_hizi_derece_My": 0.063,
    "alan_milyon_km2": 2.12,
-   "kara_payi": 0.417
+   "kara_payi": 0.368
   },
   "Doğu Havza Levhası": {
    "kimlik": 6,
@@ -112,7 +112,7 @@
    ],
    "euler_hizi_derece_My": 0.0725,
    "alan_milyon_km2": 1.92,
-   "kara_payi": 0.069
+   "kara_payi": 0.001
   },
   "Doğu Okyanusu Levhası": {
    "kimlik": 7,
@@ -131,7 +131,7 @@
    ],
    "euler_hizi_derece_My": 0.5846,
    "alan_milyon_km2": 78.21,
-   "kara_payi": 0.002
+   "kara_payi": 0.0
   },
   "Batı Okyanusu Levhası": {
    "kimlik": 8,
@@ -211,12 +211,12 @@
   }
  },
  "sinif_uzunluk_km": {
-  "OTF": 23462.0,
-  "CTF": 1886.0,
-  "CCB": 6159.0,
-  "SUB": 22288.0,
-  "OSR": 59756.0,
-  "CRB": 2636.0,
+  "OTF": 23712.0,
+  "CCB": 4807.0,
+  "SUB": 23640.0,
+  "OSR": 59922.0,
+  "CRB": 2470.0,
+  "CTF": 1634.0,
   "OCB": 23822.0
  },
  "adim_sayisi": 2531,
@@ -297,10 +297,10 @@
    "km": 5734,
    "disarida_km": 725,
    "paylar": {
-    "SUB": 0.78,
-    "CCB": 0.12,
+    "SUB": 0.89,
     "CRB": 0.06,
-    "CTF": 0.04
+    "CTF": 0.04,
+    "OTF": 0.01
    },
    "aciklama": "2'nin doğu açığı"
   },
@@ -330,11 +330,11 @@
    "km": 3565,
    "disarida_km": 169,
    "paylar": {
-    "OSR": 0.45,
-    "SUB": 0.29,
+    "OSR": 0.46,
+    "SUB": 0.31,
     "OTF": 0.19,
-    "CRB": 0.05,
-    "CCB": 0.03
+    "CRB": 0.03,
+    "CCB": 0.02
    },
    "aciklama": "adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor"
   },
@@ -396,10 +396,9 @@
    "km": 3445,
    "disarida_km": 0,
    "paylar": {
-    "CCB": 0.79,
-    "OTF": 0.18,
-    "SUB": 0.02,
-    "CTF": 0.02
+    "CCB": 0.77,
+    "OTF": 0.19,
+    "SUB": 0.03
    },
    "aciklama": "Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri)"
   },
@@ -414,8 +413,8 @@
    "km": 3738,
    "disarida_km": 1453,
    "paylar": {
-    "CCB": 0.51,
-    "SUB": 0.49
+    "CCB": 0.52,
+    "SUB": 0.48
    },
    "aciklama": "Sarı Sıradağları: 5, 4'ün altına giriyor (Zagros benzeri, 8 MYÖ'den beri)"
   },
@@ -430,12 +429,11 @@
    "km": 2570,
    "disarida_km": 270,
    "paylar": {
-    "SUB": 0.49,
-    "CRB": 0.22,
-    "CTF": 0.15,
-    "OTF": 0.07,
-    "CCB": 0.06,
-    "OSR": 0.02
+    "SUB": 0.55,
+    "CRB": 0.19,
+    "OTF": 0.13,
+    "CTF": 0.08,
+    "OSR": 0.04
    },
    "aciklama": ""
   },
@@ -450,10 +448,9 @@
    "km": 3009,
    "disarida_km": 0,
    "paylar": {
-    "SUB": 0.49,
+    "SUB": 0.6,
     "CTF": 0.22,
     "OSR": 0.11,
-    "CCB": 0.11,
     "CRB": 0.04,
     "OTF": 0.04
    },
@@ -471,11 +468,11 @@
    "disarida_km": 55,
    "paylar": {
     "OTF": 0.52,
-    "SUB": 0.13,
+    "SUB": 0.14,
     "CTF": 0.11,
-    "OSR": 0.1,
-    "CRB": 0.1,
-    "CCB": 0.05
+    "OSR": 0.11,
+    "CRB": 0.08,
+    "CCB": 0.03
    },
    "aciklama": "Kanal fayı: 7, 5'e göre kuzeybatıya kayıyor (Ölü Deniz fayı benzeri)"
   },
@@ -508,7 +505,7 @@
    "paylar": {
     "CRB": 0.74,
     "OTF": 0.13,
-    "CCB": 0.08,
+    "SUB": 0.08,
     "CTF": 0.04
    },
    "aciklama": ""
