@@ -6,8 +6,8 @@
   "not_": "Buzul çağı doruğu. Dünya'nın son buzul maksimumu küresel −6.1 °C (Tierney vd. 2020); eğiklik 28°→22° salınımı yazları serinletir (Milankoviç)."
  },
  "buz_payi_kara": {
-  "buzul_cagi": 2.0,
-  "bugun": 0.13
+  "buzul_cagi": 1.69,
+  "bugun": 0.04
  },
  "kar_cizgisi_m": {
   "buzul_cagi": {
@@ -16,15 +16,15 @@
    "5": 3960.0,
    "10": 4210.0,
    "15": 4400.0,
-   "20": 4270.0,
+   "20": 4280.0,
    "25": 3890.0,
    "30": 3550.0,
-   "35": 3450.0,
-   "40": 3460.0,
-   "45": 3240.0,
-   "50": 2780.0,
-   "55": 2090.0,
-   "60": 1250.0
+   "35": 3480.0,
+   "40": 3480.0,
+   "45": 3250.0,
+   "50": 2790.0,
+   "55": 2110.0,
+   "60": 1260.0
   },
   "bugun": {
    "-5": 5100.0,
@@ -35,491 +35,304 @@
    "20": 4950.0,
    "25": 4760.0,
    "30": 4640.0,
-   "35": 4610.0,
-   "40": 4850.0,
-   "45": 4830.0,
-   "50": 4060.0,
-   "55": 3080.0,
-   "60": 2000.0
+   "35": 4650.0,
+   "40": 4870.0,
+   "45": 4840.0,
+   "50": 4070.0,
+   "55": 3100.0,
+   "60": 2020.0
   }
  },
- "buzul_sayisi_300km2_ustu": 290,
+ "buzul_sayisi_300km2_ustu": 269,
  "buzullar_en_buyuk_40": [
   {
    "enlem_boylam": [
-    33.79,
-    27.38
+    33.62,
+    27.11
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 261,
-   "alan_km2": 15152,
-   "uzunluk_km": 219,
-   "en_kalin_m": 2036,
-   "aki_km3_yil": 1.199,
-   "dil_yukseklik_m": 1128,
+   "dagdan_km": 230,
+   "alan_km2": 11206,
+   "uzunluk_km": 217,
+   "en_kalin_m": 1797,
+   "aki_km3_yil": 0.198,
+   "dil_yukseklik_m": 2237,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.616
+   "kazi": 0.423
   },
   {
    "enlem_boylam": [
-    36.96,
+    36.61,
     33.09
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 871,
-   "alan_km2": 11076,
-   "uzunluk_km": 220,
-   "en_kalin_m": 2235,
-   "aki_km3_yil": 0.239,
-   "dil_yukseklik_m": 1137,
+   "dagdan_km": 851,
+   "alan_km2": 10616,
+   "uzunluk_km": 191,
+   "en_kalin_m": 2063,
+   "aki_km3_yil": 1.038,
+   "dil_yukseklik_m": 1098,
    "bitis": "kara",
    "fiyort": false,
    "kazi": 1.0
   },
   {
    "enlem_boylam": [
-    35.64,
-    36.87
+    35.82,
+    36.61
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1113,
-   "alan_km2": 10089,
-   "uzunluk_km": 162,
-   "en_kalin_m": 2067,
-   "aki_km3_yil": 0.414,
-   "dil_yukseklik_m": 1327,
+   "dagdan_km": 1096,
+   "alan_km2": 9702,
+   "uzunluk_km": 135,
+   "en_kalin_m": 1830,
+   "aki_km3_yil": 0.749,
+   "dil_yukseklik_m": 1550,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.995
+   "kazi": 0.602
   },
   {
    "enlem_boylam": [
-    35.99,
+    48.21,
+    20.87
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 1810,
+   "alan_km2": 9363,
+   "uzunluk_km": 222,
+   "en_kalin_m": 1477,
+   "aki_km3_yil": 0.365,
+   "dil_yukseklik_m": 2168,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.016
+  },
+  {
+   "enlem_boylam": [
+    35.73,
     13.58
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1136,
-   "alan_km2": 8280,
-   "uzunluk_km": 169,
-   "en_kalin_m": 1831,
-   "aki_km3_yil": 0.472,
-   "dil_yukseklik_m": 1601,
+   "dagdan_km": 1128,
+   "alan_km2": 8048,
+   "uzunluk_km": 148,
+   "en_kalin_m": 1539,
+   "aki_km3_yil": 0.364,
+   "dil_yukseklik_m": 1707,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.366
+   "kazi": 0.289
   },
   {
    "enlem_boylam": [
-    35.64,
-    18.15
+    36.17,
+    37.31
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 751,
-   "alan_km2": 7912,
-   "uzunluk_km": 131,
-   "en_kalin_m": 1652,
-   "aki_km3_yil": 1.059,
-   "dil_yukseklik_m": 1685,
+   "dagdan_km": 1165,
+   "alan_km2": 4894,
+   "uzunluk_km": 123,
+   "en_kalin_m": 1479,
+   "aki_km3_yil": 1.174,
+   "dil_yukseklik_m": 1463,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.106
+   "kazi": 0.211
   },
   {
    "enlem_boylam": [
-    49.0,
-    25.71
+    49.26,
+    24.13
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1868,
-   "alan_km2": 6793,
-   "uzunluk_km": 146,
-   "en_kalin_m": 1263,
-   "aki_km3_yil": 0.002,
-   "dil_yukseklik_m": 1680,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.004
-  },
-  {
-   "enlem_boylam": [
-    31.33,
-    26.06
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 120,
-   "alan_km2": 6084,
-   "uzunluk_km": 120,
-   "en_kalin_m": 1468,
-   "aki_km3_yil": 0.457,
-   "dil_yukseklik_m": 1792,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.053
-  },
-  {
-   "enlem_boylam": [
-    32.04,
-    23.16
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 203,
-   "alan_km2": 6044,
-   "uzunluk_km": 91,
-   "en_kalin_m": 1330,
-   "aki_km3_yil": 0.63,
-   "dil_yukseklik_m": 2731,
+   "dagdan_km": 1899,
+   "alan_km2": 4729,
+   "uzunluk_km": 109,
+   "en_kalin_m": 1254,
+   "aki_km3_yil": 0.268,
+   "dil_yukseklik_m": 1962,
    "bitis": "kara",
    "fiyort": false,
    "kazi": 0.015
   },
   {
    "enlem_boylam": [
-    35.99,
-    37.4
+    34.32,
+    16.83
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1167,
-   "alan_km2": 5663,
-   "uzunluk_km": 144,
-   "en_kalin_m": 1661,
-   "aki_km3_yil": 1.097,
-   "dil_yukseklik_m": 1117,
+   "dagdan_km": 813,
+   "alan_km2": 4393,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1329,
+   "aki_km3_yil": 0.383,
+   "dil_yukseklik_m": 2788,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.292
+   "kazi": 0.011
   },
   {
    "enlem_boylam": [
-    31.07,
+    31.25,
     27.47
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 242,
-   "alan_km2": 5528,
-   "uzunluk_km": 136,
-   "en_kalin_m": 1204,
-   "aki_km3_yil": 0.97,
-   "dil_yukseklik_m": 1842,
+   "dagdan_km": 232,
+   "alan_km2": 4224,
+   "uzunluk_km": 118,
+   "en_kalin_m": 1079,
+   "aki_km3_yil": 0.497,
+   "dil_yukseklik_m": 2343,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.088
+   "kazi": 0.057
   },
   {
    "enlem_boylam": [
-    37.22,
-    35.2
+    37.13,
+    35.38
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1039,
-   "alan_km2": 5522,
-   "uzunluk_km": 130,
-   "en_kalin_m": 1788,
-   "aki_km3_yil": 0.755,
-   "dil_yukseklik_m": 1806,
+   "dagdan_km": 1048,
+   "alan_km2": 4150,
+   "uzunluk_km": 126,
+   "en_kalin_m": 1660,
+   "aki_km3_yil": 0.457,
+   "dil_yukseklik_m": 1964,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.201
+   "kazi": 0.215
   },
   {
    "enlem_boylam": [
-    34.5,
-    34.67
+    33.09,
+    29.4
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 896,
-   "alan_km2": 5161,
+   "dagdan_km": 395,
+   "alan_km2": 4020,
    "uzunluk_km": 105,
-   "en_kalin_m": 1564,
-   "aki_km3_yil": 0.731,
-   "dil_yukseklik_m": 1975,
+   "en_kalin_m": 1457,
+   "aki_km3_yil": 0.152,
+   "dil_yukseklik_m": 3127,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.104
+   "kazi": 0.038
   },
   {
    "enlem_boylam": [
-    35.11,
-    36.17
+    34.23,
+    33.09
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1040,
-   "alan_km2": 4973,
-   "uzunluk_km": 153,
-   "en_kalin_m": 1871,
-   "aki_km3_yil": 0.902,
-   "dil_yukseklik_m": 1350,
+   "dagdan_km": 751,
+   "alan_km2": 3918,
+   "uzunluk_km": 108,
+   "en_kalin_m": 1507,
+   "aki_km3_yil": 0.838,
+   "dil_yukseklik_m": 2010,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.499
+   "kazi": 0.345
   },
   {
    "enlem_boylam": [
-    33.27,
-    22.9
+    31.42,
+    25.0
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 253,
-   "alan_km2": 4967,
-   "uzunluk_km": 84,
-   "en_kalin_m": 1284,
-   "aki_km3_yil": 0.422,
-   "dil_yukseklik_m": 2545,
+   "dagdan_km": 91,
+   "alan_km2": 3891,
+   "uzunluk_km": 91,
+   "en_kalin_m": 805,
+   "aki_km3_yil": 0.311,
+   "dil_yukseklik_m": 2650,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.017
+   "kazi": 0.019
   },
   {
    "enlem_boylam": [
-    35.11,
-    20.08
+    34.76,
+    19.64
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 575,
-   "alan_km2": 4791,
-   "uzunluk_km": 156,
-   "en_kalin_m": 1487,
-   "aki_km3_yil": 0.319,
-   "dil_yukseklik_m": 2682,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.025
-  },
-  {
-   "enlem_boylam": [
-    47.59,
-    28.17
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1725,
-   "alan_km2": 4264,
-   "uzunluk_km": 109,
-   "en_kalin_m": 1100,
-   "aki_km3_yil": 0.048,
-   "dil_yukseklik_m": 2189,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.002
-  },
-  {
-   "enlem_boylam": [
-    37.66,
-    37.84
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1260,
-   "alan_km2": 4257,
-   "uzunluk_km": 92,
-   "en_kalin_m": 1074,
-   "aki_km3_yil": 0.996,
-   "dil_yukseklik_m": 1664,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.027
-  },
-  {
-   "enlem_boylam": [
-    34.15,
-    33.18
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 757,
-   "alan_km2": 4154,
-   "uzunluk_km": 117,
-   "en_kalin_m": 1591,
-   "aki_km3_yil": 0.674,
-   "dil_yukseklik_m": 1880,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.363
-  },
-  {
-   "enlem_boylam": [
-    33.09,
-    25.53
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 101,
-   "alan_km2": 4116,
-   "uzunluk_km": 128,
-   "en_kalin_m": 1491,
-   "aki_km3_yil": 0.484,
-   "dil_yukseklik_m": 2604,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.02
-  },
-  {
-   "enlem_boylam": [
-    34.41,
-    34.23
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 856,
-   "alan_km2": 4002,
-   "uzunluk_km": 79,
-   "en_kalin_m": 1227,
-   "aki_km3_yil": 0.229,
-   "dil_yukseklik_m": 1652,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.059
-  },
-  {
-   "enlem_boylam": [
-    31.33,
-    24.92
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 103,
-   "alan_km2": 3973,
-   "uzunluk_km": 103,
-   "en_kalin_m": 946,
-   "aki_km3_yil": 0.91,
-   "dil_yukseklik_m": 2018,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.058
-  },
-  {
-   "enlem_boylam": [
-    47.07,
-    23.51
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1659,
-   "alan_km2": 3745,
-   "uzunluk_km": 88,
-   "en_kalin_m": 1084,
-   "aki_km3_yil": 0.101,
-   "dil_yukseklik_m": 2369,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.004
-  },
-  {
-   "enlem_boylam": [
-    35.99,
-    32.74
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 791,
-   "alan_km2": 3584,
-   "uzunluk_km": 149,
-   "en_kalin_m": 1848,
-   "aki_km3_yil": 0.869,
-   "dil_yukseklik_m": 1148,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.385
-  },
-  {
-   "enlem_boylam": [
-    31.51,
-    29.22
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 380,
-   "alan_km2": 3567,
-   "uzunluk_km": 88,
-   "en_kalin_m": 1135,
-   "aki_km3_yil": 0.166,
-   "dil_yukseklik_m": 1763,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.083
-  },
-  {
-   "enlem_boylam": [
-    33.09,
-    24.21
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 142,
-   "alan_km2": 3546,
+   "dagdan_km": 590,
+   "alan_km2": 3534,
    "uzunluk_km": 106,
-   "en_kalin_m": 1333,
-   "aki_km3_yil": 0.219,
-   "dil_yukseklik_m": 2269,
+   "en_kalin_m": 1179,
+   "aki_km3_yil": 0.028,
+   "dil_yukseklik_m": 3418,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.031
+   "kazi": 0.005
   },
   {
    "enlem_boylam": [
-    31.16,
+    35.2,
+    13.14
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 1154,
+   "alan_km2": 3531,
+   "uzunluk_km": 87,
+   "en_kalin_m": 1139,
+   "aki_km3_yil": 0.695,
+   "dil_yukseklik_m": 1900,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.038
+  },
+  {
+   "enlem_boylam": [
+    35.38,
+    18.06
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 745,
+   "alan_km2": 3452,
+   "uzunluk_km": 100,
+   "en_kalin_m": 1248,
+   "aki_km3_yil": 0.248,
+   "dil_yukseklik_m": 3191,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.003
+  },
+  {
+   "enlem_boylam": [
+    31.25,
     27.99
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 281,
-   "alan_km2": 3493,
-   "uzunluk_km": 108,
-   "en_kalin_m": 1085,
-   "aki_km3_yil": 0.984,
-   "dil_yukseklik_m": 2042,
+   "dagdan_km": 277,
+   "alan_km2": 3411,
+   "uzunluk_km": 99,
+   "en_kalin_m": 983,
+   "aki_km3_yil": 0.286,
+   "dil_yukseklik_m": 2366,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.052
-  },
-  {
-   "enlem_boylam": [
-    34.32,
-    30.98
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 573,
-   "alan_km2": 3487,
-   "uzunluk_km": 70,
-   "en_kalin_m": 1285,
-   "aki_km3_yil": 0.175,
-   "dil_yukseklik_m": 2199,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.03
-  },
-  {
-   "enlem_boylam": [
-    36.34,
-    37.75
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1206,
-   "alan_km2": 3440,
-   "uzunluk_km": 96,
-   "en_kalin_m": 1433,
-   "aki_km3_yil": 1.191,
-   "dil_yukseklik_m": 1440,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.166
+   "kazi": 0.035
   },
   {
    "enlem_boylam": [
@@ -531,29 +344,233 @@
    "dagdan_km": 983,
    "alan_km2": 3376,
    "uzunluk_km": 99,
-   "en_kalin_m": 1295,
-   "aki_km3_yil": 1.329,
+   "en_kalin_m": 1185,
+   "aki_km3_yil": 0.043,
    "dil_yukseklik_m": 1419,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.128
+   "kazi": 0.118
   },
   {
    "enlem_boylam": [
-    35.46,
-    15.86
+    36.43,
+    37.75
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 928,
+   "dagdan_km": 1209,
    "alan_km2": 3363,
-   "uzunluk_km": 89,
-   "en_kalin_m": 1337,
-   "aki_km3_yil": 0.531,
-   "dil_yukseklik_m": 2080,
+   "uzunluk_km": 87,
+   "en_kalin_m": 1275,
+   "aki_km3_yil": 0.696,
+   "dil_yukseklik_m": 1989,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.02
+   "kazi": 0.089
+  },
+  {
+   "enlem_boylam": [
+    34.23,
+    16.57
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 834,
+   "alan_km2": 3220,
+   "uzunluk_km": 81,
+   "en_kalin_m": 1304,
+   "aki_km3_yil": 0.118,
+   "dil_yukseklik_m": 2061,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.033
+  },
+  {
+   "enlem_boylam": [
+    35.29,
+    15.95
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 915,
+   "alan_km2": 3208,
+   "uzunluk_km": 68,
+   "en_kalin_m": 1114,
+   "aki_km3_yil": 0.417,
+   "dil_yukseklik_m": 2609,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.011
+  },
+  {
+   "enlem_boylam": [
+    48.82,
+    25.71
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 1849,
+   "alan_km2": 3172,
+   "uzunluk_km": 90,
+   "en_kalin_m": 1046,
+   "aki_km3_yil": 0.023,
+   "dil_yukseklik_m": 2389,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.001
+  },
+  {
+   "enlem_boylam": [
+    32.92,
+    24.21
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 129,
+   "alan_km2": 3144,
+   "uzunluk_km": 88,
+   "en_kalin_m": 1183,
+   "aki_km3_yil": 0.239,
+   "dil_yukseklik_m": 3021,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.017
+  },
+  {
+   "enlem_boylam": [
+    32.92,
+    25.71
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 88,
+   "alan_km2": 3069,
+   "uzunluk_km": 107,
+   "en_kalin_m": 1250,
+   "aki_km3_yil": 0.208,
+   "dil_yukseklik_m": 3289,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.013
+  },
+  {
+   "enlem_boylam": [
+    31.6,
+    26.06
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 98,
+   "alan_km2": 3001,
+   "uzunluk_km": 67,
+   "en_kalin_m": 639,
+   "aki_km3_yil": 0.221,
+   "dil_yukseklik_m": 2510,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.013
+  },
+  {
+   "enlem_boylam": [
+    52.08,
+    6.81
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 2546,
+   "alan_km2": 2731,
+   "uzunluk_km": 102,
+   "en_kalin_m": 902,
+   "aki_km3_yil": 0.037,
+   "dil_yukseklik_m": 2514,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.0
+  },
+  {
+   "enlem_boylam": [
+    31.68,
+    23.77
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 155,
+   "alan_km2": 2669,
+   "uzunluk_km": 88,
+   "en_kalin_m": 1147,
+   "aki_km3_yil": 0.866,
+   "dil_yukseklik_m": 2730,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.046
+  },
+  {
+   "enlem_boylam": [
+    36.87,
+    34.85
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 996,
+   "alan_km2": 2609,
+   "uzunluk_km": 68,
+   "en_kalin_m": 980,
+   "aki_km3_yil": 0.42,
+   "dil_yukseklik_m": 1919,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.057
+  },
+  {
+   "enlem_boylam": [
+    31.6,
+    26.15
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 105,
+   "alan_km2": 2594,
+   "uzunluk_km": 94,
+   "en_kalin_m": 1280,
+   "aki_km3_yil": 0.552,
+   "dil_yukseklik_m": 2608,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.038
+  },
+  {
+   "enlem_boylam": [
+    37.66,
+    36.17
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 1133,
+   "alan_km2": 2581,
+   "uzunluk_km": 75,
+   "en_kalin_m": 1059,
+   "aki_km3_yil": 0.339,
+   "dil_yukseklik_m": 1877,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.044
+  },
+  {
+   "enlem_boylam": [
+    32.74,
+    27.03
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "dagdan_km": 172,
+   "alan_km2": 2580,
+   "uzunluk_km": 71,
+   "en_kalin_m": 1158,
+   "aki_km3_yil": 0.049,
+   "dil_yukseklik_m": 2948,
+   "bitis": "kara",
+   "fiyort": false,
+   "kazi": 0.009
   },
   {
    "enlem_boylam": [
@@ -563,10 +580,10 @@
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
    "dagdan_km": 2206,
-   "alan_km2": 3266,
+   "alan_km2": 2539,
    "uzunluk_km": 132,
-   "en_kalin_m": 1095,
-   "aki_km3_yil": 0.103,
+   "en_kalin_m": 1067,
+   "aki_km3_yil": 0.03,
    "dil_yukseklik_m": 2329,
    "bitis": "kara",
    "fiyort": false,
@@ -574,156 +591,139 @@
   },
   {
    "enlem_boylam": [
-    32.56,
-    30.45
+    34.15,
+    30.98
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 485,
-   "alan_km2": 3139,
-   "uzunluk_km": 79,
-   "en_kalin_m": 1403,
-   "aki_km3_yil": 0.435,
-   "dil_yukseklik_m": 2691,
+   "dagdan_km": 566,
+   "alan_km2": 2537,
+   "uzunluk_km": 51,
+   "en_kalin_m": 743,
+   "aki_km3_yil": 0.071,
+   "dil_yukseklik_m": 2689,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.006
+   "kazi": 0.005
   },
   {
    "enlem_boylam": [
-    51.99,
-    6.81
+    34.32,
+    15.34
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 2539,
-   "alan_km2": 3024,
-   "uzunluk_km": 111,
-   "en_kalin_m": 991,
-   "aki_km3_yil": 0.055,
-   "dil_yukseklik_m": 2381,
+   "dagdan_km": 945,
+   "alan_km2": 2433,
+   "uzunluk_km": 78,
+   "en_kalin_m": 818,
+   "aki_km3_yil": 1.054,
+   "dil_yukseklik_m": 1971,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.0
+   "kazi": 0.089
   },
   {
    "enlem_boylam": [
-    49.44,
-    21.05
+    31.68,
+    29.22
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1941,
-   "alan_km2": 2926,
-   "uzunluk_km": 91,
-   "en_kalin_m": 1012,
-   "aki_km3_yil": 0.004,
-   "dil_yukseklik_m": 2954,
+   "dagdan_km": 376,
+   "alan_km2": 2432,
+   "uzunluk_km": 76,
+   "en_kalin_m": 1046,
+   "aki_km3_yil": 0.808,
+   "dil_yukseklik_m": 2302,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.0
+   "kazi": 0.056
   },
   {
    "enlem_boylam": [
-    35.55,
-    16.57
+    34.58,
+    31.42
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 874,
-   "alan_km2": 2811,
-   "uzunluk_km": 81,
-   "en_kalin_m": 1276,
-   "aki_km3_yil": 0.013,
-   "dil_yukseklik_m": 2565,
+   "dagdan_km": 620,
+   "alan_km2": 2363,
+   "uzunluk_km": 59,
+   "en_kalin_m": 764,
+   "aki_km3_yil": 0.117,
+   "dil_yukseklik_m": 2275,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.004
+   "kazi": 0.022
   },
   {
    "enlem_boylam": [
     31.6,
-    23.86
+    24.21
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 152,
-   "alan_km2": 2750,
-   "uzunluk_km": 99,
-   "en_kalin_m": 1293,
-   "aki_km3_yil": 0.759,
-   "dil_yukseklik_m": 1962,
+   "dagdan_km": 123,
+   "alan_km2": 2269,
+   "uzunluk_km": 76,
+   "en_kalin_m": 854,
+   "aki_km3_yil": 0.183,
+   "dil_yukseklik_m": 2806,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.065
+   "kazi": 0.011
   },
   {
    "enlem_boylam": [
-    36.96,
-    34.85
+    52.51,
+    7.51
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1000,
-   "alan_km2": 2685,
-   "uzunluk_km": 78,
-   "en_kalin_m": 1224,
-   "aki_km3_yil": 0.701,
-   "dil_yukseklik_m": 1766,
+   "dagdan_km": 2560,
+   "alan_km2": 2194,
+   "uzunluk_km": 57,
+   "en_kalin_m": 668,
+   "aki_km3_yil": 0.004,
+   "dil_yukseklik_m": 2461,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.05
+   "kazi": 0.0
   },
   {
    "enlem_boylam": [
-    37.75,
-    36.08
+    33.18,
+    22.72
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 1131,
-   "alan_km2": 2657,
-   "uzunluk_km": 87,
-   "en_kalin_m": 1437,
-   "aki_km3_yil": 0.77,
-   "dil_yukseklik_m": 1768,
+   "dagdan_km": 264,
+   "alan_km2": 2168,
+   "uzunluk_km": 70,
+   "en_kalin_m": 994,
+   "aki_km3_yil": 0.022,
+   "dil_yukseklik_m": 3597,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.049
-  },
-  {
-   "enlem_boylam": [
-    34.23,
-    15.25
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 951,
-   "alan_km2": 2512,
-   "uzunluk_km": 89,
-   "en_kalin_m": 873,
-   "aki_km3_yil": 0.761,
-   "dil_yukseklik_m": 1368,
-   "bitis": "kara",
-   "fiyort": false,
-   "kazi": 0.088
+   "kazi": 0.001
   },
   {
    "enlem_boylam": [
     33.27,
-    30.89
+    29.49
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "dagdan_km": 533,
-   "alan_km2": 2469,
-   "uzunluk_km": 69,
-   "en_kalin_m": 1255,
-   "aki_km3_yil": 0.059,
-   "dil_yukseklik_m": 2916,
+   "dagdan_km": 407,
+   "alan_km2": 2010,
+   "uzunluk_km": 98,
+   "en_kalin_m": 1310,
+   "aki_km3_yil": 0.111,
+   "dil_yukseklik_m": 3153,
    "bitis": "kara",
    "fiyort": false,
-   "kazi": 0.002
+   "kazi": 0.024
   }
  ],
  "goller": [
@@ -732,14 +732,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    33.79,
-    27.38
+    33.62,
+    27.11
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 15152,
-   "kazi": 0.616,
-   "yukseklik_m": 1128,
+   "besleyen_buzul_km2": 11206,
+   "kazi": 0.423,
+   "yukseklik_m": 2237,
    "bugun": "açık su"
   },
   {
@@ -747,29 +747,29 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "büyük",
    "enlem_boylam": [
-    36.96,
+    36.61,
     33.09
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 11076,
+   "besleyen_buzul_km2": 10616,
    "kazi": 1.0,
-   "yukseklik_m": 1137,
+   "yukseklik_m": 1098,
    "bugun": "açık su"
   },
   {
    "no": 3,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "büyük",
+   "boy": "orta",
    "enlem_boylam": [
-    35.64,
-    36.87
+    35.82,
+    36.61
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 10089,
-   "kazi": 0.995,
-   "yukseklik_m": 1327,
+   "besleyen_buzul_km2": 9702,
+   "kazi": 0.602,
+   "yukseklik_m": 1550,
    "bugun": "açık su"
   },
   {
@@ -777,14 +777,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    35.99,
-    13.58
+    48.21,
+    20.87
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 8280,
-   "kazi": 0.366,
-   "yukseklik_m": 1601,
+   "besleyen_buzul_km2": 9363,
+   "kazi": 0.016,
+   "yukseklik_m": 2168,
    "bugun": "açık su"
   },
   {
@@ -792,14 +792,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    35.64,
-    18.15
+    35.73,
+    13.58
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 7912,
-   "kazi": 0.106,
-   "yukseklik_m": 1685,
+   "besleyen_buzul_km2": 8048,
+   "kazi": 0.289,
+   "yukseklik_m": 1707,
    "bugun": "açık su"
   },
   {
@@ -807,14 +807,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    49.0,
-    25.71
+    49.26,
+    24.13
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 6793,
-   "kazi": 0.004,
-   "yukseklik_m": 1680,
+   "besleyen_buzul_km2": 4729,
+   "kazi": 0.015,
+   "yukseklik_m": 1962,
    "bugun": "açık su"
   },
   {
@@ -822,14 +822,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    31.33,
-    26.06
+    34.32,
+    16.83
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 6084,
-   "kazi": 0.053,
-   "yukseklik_m": 1792,
+   "besleyen_buzul_km2": 4393,
+   "kazi": 0.011,
+   "yukseklik_m": 2788,
    "bugun": "açık su"
   },
   {
@@ -837,14 +837,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    32.04,
-    23.16
+    31.25,
+    27.47
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 6044,
-   "kazi": 0.015,
-   "yukseklik_m": 2731,
+   "besleyen_buzul_km2": 4224,
+   "kazi": 0.057,
+   "yukseklik_m": 2343,
    "bugun": "açık su"
   },
   {
@@ -852,14 +852,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    31.07,
-    27.47
+    37.13,
+    35.38
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 5528,
-   "kazi": 0.088,
-   "yukseklik_m": 1842,
+   "besleyen_buzul_km2": 4150,
+   "kazi": 0.215,
+   "yukseklik_m": 1964,
    "bugun": "açık su"
   },
   {
@@ -867,14 +867,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    37.22,
-    35.2
+    33.09,
+    29.4
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 5522,
-   "kazi": 0.201,
-   "yukseklik_m": 1806,
+   "besleyen_buzul_km2": 4020,
+   "kazi": 0.038,
+   "yukseklik_m": 3127,
    "bugun": "açık su"
   },
   {
@@ -882,14 +882,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    34.5,
-    34.67
+    34.23,
+    33.09
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 5161,
-   "kazi": 0.104,
-   "yukseklik_m": 1975,
+   "besleyen_buzul_km2": 3918,
+   "kazi": 0.345,
+   "yukseklik_m": 2010,
    "bugun": "açık su"
   },
   {
@@ -897,14 +897,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    35.11,
-    36.17
+    31.42,
+    25.0
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4973,
-   "kazi": 0.499,
-   "yukseklik_m": 1350,
+   "besleyen_buzul_km2": 3891,
+   "kazi": 0.019,
+   "yukseklik_m": 2650,
    "bugun": "açık su"
   },
   {
@@ -912,14 +912,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    33.27,
-    22.9
+    34.76,
+    19.64
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4967,
-   "kazi": 0.017,
-   "yukseklik_m": 2545,
+   "besleyen_buzul_km2": 3534,
+   "kazi": 0.005,
+   "yukseklik_m": 3418,
    "bugun": "açık su"
   },
   {
@@ -927,183 +927,18 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    35.11,
-    20.08
+    35.38,
+    18.06
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4791,
-   "kazi": 0.025,
-   "yukseklik_m": 2682,
+   "besleyen_buzul_km2": 3452,
+   "kazi": 0.003,
+   "yukseklik_m": 3191,
    "bugun": "açık su"
   },
   {
    "no": 15,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    47.59,
-    28.17
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4264,
-   "kazi": 0.002,
-   "yukseklik_m": 2189,
-   "bugun": "açık su"
-  },
-  {
-   "no": 16,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    37.66,
-    37.84
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4257,
-   "kazi": 0.027,
-   "yukseklik_m": 1664,
-   "bugun": "açık su"
-  },
-  {
-   "no": 17,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    34.15,
-    33.18
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4154,
-   "kazi": 0.363,
-   "yukseklik_m": 1880,
-   "bugun": "açık su"
-  },
-  {
-   "no": 18,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    33.09,
-    25.53
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 4116,
-   "kazi": 0.02,
-   "yukseklik_m": 2604,
-   "bugun": "açık su"
-  },
-  {
-   "no": 19,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    31.33,
-    24.92
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3973,
-   "kazi": 0.058,
-   "yukseklik_m": 2018,
-   "bugun": "açık su"
-  },
-  {
-   "no": 20,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    47.07,
-    23.51
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3745,
-   "kazi": 0.004,
-   "yukseklik_m": 2369,
-   "bugun": "açık su"
-  },
-  {
-   "no": 21,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    35.99,
-    32.74
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3584,
-   "kazi": 0.385,
-   "yukseklik_m": 1148,
-   "bugun": "açık su"
-  },
-  {
-   "no": 22,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    31.51,
-    29.22
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3567,
-   "kazi": 0.083,
-   "yukseklik_m": 1763,
-   "bugun": "açık su"
-  },
-  {
-   "no": 23,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    33.09,
-    24.21
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3546,
-   "kazi": 0.031,
-   "yukseklik_m": 2269,
-   "bugun": "açık su"
-  },
-  {
-   "no": 24,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    34.32,
-    30.98
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3487,
-   "kazi": 0.03,
-   "yukseklik_m": 2199,
-   "bugun": "açık su"
-  },
-  {
-   "no": 25,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
-   "enlem_boylam": [
-    36.34,
-    37.75
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3440,
-   "kazi": 0.166,
-   "yukseklik_m": 1440,
-   "bugun": "açık su"
-  },
-  {
-   "no": 26,
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
@@ -1113,68 +948,233 @@
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
    "besleyen_buzul_km2": 3376,
-   "kazi": 0.128,
+   "kazi": 0.118,
    "yukseklik_m": 1419,
    "bugun": "açık su"
   },
   {
-   "no": 27,
+   "no": 16,
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
    "enlem_boylam": [
-    35.46,
-    15.86
+    36.43,
+    37.75
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
    "besleyen_buzul_km2": 3363,
-   "kazi": 0.02,
-   "yukseklik_m": 2080,
+   "kazi": 0.089,
+   "yukseklik_m": 1989,
    "bugun": "açık su"
   },
   {
-   "no": 28,
+   "no": 17,
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "orta",
+   "enlem_boylam": [
+    35.29,
+    15.95
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 3208,
+   "kazi": 0.011,
+   "yukseklik_m": 2609,
+   "bugun": "açık su"
+  },
+  {
+   "no": 18,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "orta",
+   "enlem_boylam": [
+    48.82,
+    25.71
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 3172,
+   "kazi": 0.001,
+   "yukseklik_m": 2389,
+   "bugun": "açık su"
+  },
+  {
+   "no": 19,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "orta",
+   "enlem_boylam": [
+    32.92,
+    24.21
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 3144,
+   "kazi": 0.017,
+   "yukseklik_m": 3021,
+   "bugun": "açık su"
+  },
+  {
+   "no": 20,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "orta",
+   "enlem_boylam": [
+    32.92,
+    25.71
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 3069,
+   "kazi": 0.013,
+   "yukseklik_m": 3289,
+   "bugun": "açık su"
+  },
+  {
+   "no": 21,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "orta",
+   "enlem_boylam": [
+    31.6,
+    26.06
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 3001,
+   "kazi": 0.013,
+   "yukseklik_m": 2510,
+   "bugun": "açık su"
+  },
+  {
+   "no": 22,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    52.08,
+    6.81
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 2731,
+   "kazi": 0.0,
+   "yukseklik_m": 2514,
+   "bugun": "açık su"
+  },
+  {
+   "no": 23,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    31.68,
+    23.77
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 2669,
+   "kazi": 0.046,
+   "yukseklik_m": 2730,
+   "bugun": "açık su"
+  },
+  {
+   "no": 24,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    37.66,
+    36.17
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 2581,
+   "kazi": 0.044,
+   "yukseklik_m": 1877,
+   "bugun": "açık su"
+  },
+  {
+   "no": 25,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    32.74,
+    27.03
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 2580,
+   "kazi": 0.009,
+   "yukseklik_m": 2948,
+   "bugun": "açık su"
+  },
+  {
+   "no": 26,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
    "enlem_boylam": [
     50.05,
     11.82
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3266,
+   "besleyen_buzul_km2": 2539,
    "kazi": 0.002,
    "yukseklik_m": 2329,
    "bugun": "açık su"
   },
   {
-   "no": 29,
+   "no": 27,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    32.56,
-    30.45
+    34.15,
+    30.98
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3139,
-   "kazi": 0.006,
-   "yukseklik_m": 2691,
+   "besleyen_buzul_km2": 2537,
+   "kazi": 0.005,
+   "yukseklik_m": 2689,
+   "bugun": "açık su"
+  },
+  {
+   "no": 28,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    31.68,
+    29.22
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 2432,
+   "kazi": 0.056,
+   "yukseklik_m": 2302,
+   "bugun": "açık su"
+  },
+  {
+   "no": 29,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    33.18,
+    22.72
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 2168,
+   "kazi": 0.001,
+   "yukseklik_m": 3597,
    "bugun": "açık su"
   },
   {
    "no": 30,
    "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "orta",
+   "boy": "küçük",
    "enlem_boylam": [
-    51.99,
-    6.81
+    47.77,
+    28.17
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 3024,
+   "besleyen_buzul_km2": 1912,
    "kazi": 0.0,
-   "yukseklik_m": 2381,
+   "yukseklik_m": 2946,
    "bugun": "açık su"
   },
   {
@@ -1182,14 +1182,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    49.44,
-    21.05
+    47.15,
+    23.42
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2926,
-   "kazi": 0.0,
-   "yukseklik_m": 2954,
+   "besleyen_buzul_km2": 1868,
+   "kazi": 0.003,
+   "yukseklik_m": 2382,
    "bugun": "açık su"
   },
   {
@@ -1197,14 +1197,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    31.6,
-    23.86
+    32.65,
+    30.28
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2750,
-   "kazi": 0.065,
-   "yukseklik_m": 1962,
+   "besleyen_buzul_km2": 1853,
+   "kazi": 0.005,
+   "yukseklik_m": 2946,
    "bugun": "açık su"
   },
   {
@@ -1212,14 +1212,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    37.75,
-    36.08
+    32.39,
+    23.07
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2657,
-   "kazi": 0.049,
-   "yukseklik_m": 1768,
+   "besleyen_buzul_km2": 1850,
+   "kazi": 0.001,
+   "yukseklik_m": 3521,
    "bugun": "açık su"
   },
   {
@@ -1227,14 +1227,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    33.27,
-    30.89
+    51.55,
+    4.44
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2469,
-   "kazi": 0.002,
-   "yukseklik_m": 2916,
+   "besleyen_buzul_km2": 1825,
+   "kazi": 0.001,
+   "yukseklik_m": 2572,
    "bugun": "açık su"
   },
   {
@@ -1242,153 +1242,18 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    34.06,
-    17.62
+    34.5,
+    34.23
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2368,
-   "kazi": 0.004,
-   "yukseklik_m": 3039,
+   "besleyen_buzul_km2": 1802,
+   "kazi": 0.059,
+   "yukseklik_m": 1803,
    "bugun": "açık su"
   },
   {
    "no": 36,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    48.74,
-    29.22
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2343,
-   "kazi": 0.0,
-   "yukseklik_m": 2855,
-   "bugun": "açık su"
-  },
-  {
-   "no": 37,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    51.02,
-    3.21
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 2027,
-   "kazi": 0.0,
-   "yukseklik_m": 2658,
-   "bugun": "açık su"
-  },
-  {
-   "no": 38,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    52.43,
-    5.58
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1988,
-   "kazi": 0.002,
-   "yukseklik_m": 1932,
-   "bugun": "açık su"
-  },
-  {
-   "no": 39,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    32.74,
-    21.31
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1925,
-   "kazi": 0.003,
-   "yukseklik_m": 3277,
-   "bugun": "açık su"
-  },
-  {
-   "no": 40,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    56.65,
-    16.22
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1914,
-   "kazi": 0.0,
-   "yukseklik_m": 1795,
-   "bugun": "açık su"
-  },
-  {
-   "no": 41,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    51.46,
-    4.44
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1885,
-   "kazi": 0.0,
-   "yukseklik_m": 2382,
-   "bugun": "açık su"
-  },
-  {
-   "no": 42,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    49.44,
-    23.42
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1812,
-   "kazi": 0.001,
-   "yukseklik_m": 2693,
-   "bugun": "açık su"
-  },
-  {
-   "no": 43,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    34.94,
-    31.77
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1805,
-   "kazi": 0.024,
-   "yukseklik_m": 2046,
-   "bugun": "açık su"
-  },
-  {
-   "no": 44,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    35.82,
-    15.07
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1790,
-   "kazi": 0.035,
-   "yukseklik_m": 2044,
-   "bugun": "açık su"
-  },
-  {
-   "no": 45,
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
@@ -1398,8 +1263,143 @@
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
    "besleyen_buzul_km2": 1737,
-   "kazi": 0.002,
+   "kazi": 0.003,
    "yukseklik_m": 2054,
+   "bugun": "açık su"
+  },
+  {
+   "no": 37,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    51.2,
+    3.12
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1668,
+   "kazi": 0.0,
+   "yukseklik_m": 2791,
+   "bugun": "açık su"
+  },
+  {
+   "no": 38,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    56.38,
+    16.04
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1597,
+   "kazi": 0.0,
+   "yukseklik_m": 2161,
+   "bugun": "açık su"
+  },
+  {
+   "no": 39,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    34.06,
+    18.68
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1577,
+   "kazi": 0.002,
+   "yukseklik_m": 3462,
+   "bugun": "açık su"
+  },
+  {
+   "no": 40,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    37.49,
+    38.01
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1523,
+   "kazi": 0.005,
+   "yukseklik_m": 2670,
+   "bugun": "açık su"
+  },
+  {
+   "no": 41,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    35.73,
+    15.07
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1480,
+   "kazi": 0.023,
+   "yukseklik_m": 2389,
+   "bugun": "açık su"
+  },
+  {
+   "no": 42,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    50.93,
+    14.72
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1394,
+   "kazi": 0.0,
+   "yukseklik_m": 2991,
+   "bugun": "açık su"
+  },
+  {
+   "no": 43,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    35.73,
+    17.27
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1245,
+   "kazi": 0.005,
+   "yukseklik_m": 2947,
+   "bugun": "açık su"
+  },
+  {
+   "no": 44,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    37.05,
+    -6.72
+   ],
+   "dag": "5",
+   "dag_ad": "İç denizdeki ada (6)",
+   "besleyen_buzul_km2": 1217,
+   "kazi": 0.004,
+   "yukseklik_m": 2176,
+   "bugun": "açık su"
+  },
+  {
+   "no": 45,
+   "tur": "moren seti gölü (Garda/Como türü)",
+   "boy": "küçük",
+   "enlem_boylam": [
+    51.72,
+    5.67
+   ],
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1179,
+   "kazi": 0.0,
+   "yukseklik_m": 2511,
    "bugun": "açık su"
   },
   {
@@ -1407,14 +1407,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    56.03,
-    14.72
+    33.44,
+    21.31
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1663,
-   "kazi": 0.004,
-   "yukseklik_m": 1182,
+   "besleyen_buzul_km2": 1118,
+   "kazi": 0.001,
+   "yukseklik_m": 3645,
    "bugun": "açık su"
   },
   {
@@ -1422,14 +1422,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    33.97,
-    18.76
+    34.94,
+    10.68
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1657,
-   "kazi": 0.006,
-   "yukseklik_m": 3039,
+   "besleyen_buzul_km2": 1099,
+   "kazi": 0.044,
+   "yukseklik_m": 2165,
    "bugun": "açık su"
   },
   {
@@ -1437,14 +1437,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    36.96,
-    -6.64
+    35.38,
+    32.56
    ],
-   "dag": "5",
-   "dag_ad": "İç denizdeki ada (6)",
-   "besleyen_buzul_km2": 1598,
-   "kazi": 0.008,
-   "yukseklik_m": 2157,
+   "dag": "1",
+   "dag_ad": "Mor Sıradağları",
+   "besleyen_buzul_km2": 1093,
+   "kazi": 0.015,
+   "yukseklik_m": 2563,
    "bugun": "açık su"
   },
   {
@@ -1452,14 +1452,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    51.64,
-    5.76
+    51.28,
+    11.82
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1592,
+   "besleyen_buzul_km2": 1081,
    "kazi": 0.0,
-   "yukseklik_m": 2400,
+   "yukseklik_m": 2636,
    "bugun": "açık su"
   },
   {
@@ -1467,14 +1467,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    45.31,
-    26.76
+    55.94,
+    14.72
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1476,
-   "kazi": 0.001,
-   "yukseklik_m": 2855,
+   "besleyen_buzul_km2": 1075,
+   "kazi": 0.004,
+   "yukseklik_m": 1701,
    "bugun": "açık su"
   },
   {
@@ -1482,14 +1482,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    51.02,
-    14.72
+    33.53,
+    30.37
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1454,
-   "kazi": 0.0,
-   "yukseklik_m": 2863,
+   "besleyen_buzul_km2": 1034,
+   "kazi": 0.002,
+   "yukseklik_m": 3207,
    "bugun": "açık su"
   },
   {
@@ -1497,14 +1497,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    46.01,
-    26.5
+    34.76,
+    20.52
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1332,
-   "kazi": 0.0,
-   "yukseklik_m": 3031,
+   "besleyen_buzul_km2": 1023,
+   "kazi": 0.003,
+   "yukseklik_m": 3292,
    "bugun": "açık su"
   },
   {
@@ -1512,149 +1512,14 @@
    "tur": "moren seti gölü (Garda/Como türü)",
    "boy": "küçük",
    "enlem_boylam": [
-    35.64,
-    -1.19
-   ],
-   "dag": "5",
-   "dag_ad": "İç denizdeki ada (6)",
-   "besleyen_buzul_km2": 1325,
-   "kazi": 0.002,
-   "yukseklik_m": 2241,
-   "bugun": "açık su"
-  },
-  {
-   "no": 54,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    35.82,
-    17.27
+    45.22,
+    25.8
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1323,
-   "kazi": 0.016,
-   "yukseklik_m": 2255,
-   "bugun": "açık su"
-  },
-  {
-   "no": 55,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    50.05,
-    18.33
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1222,
-   "kazi": 0.0,
-   "yukseklik_m": 2988,
-   "bugun": "açık su"
-  },
-  {
-   "no": 56,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    32.39,
-    22.1
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1206,
-   "kazi": 0.002,
-   "yukseklik_m": 2898,
-   "bugun": "açık su"
-  },
-  {
-   "no": 57,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    35.02,
-    10.68
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1178,
-   "kazi": 0.038,
-   "yukseklik_m": 1850,
-   "bugun": "açık su"
-  },
-  {
-   "no": 58,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    51.37,
-    11.82
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1141,
-   "kazi": 0.0,
-   "yukseklik_m": 2556,
-   "bugun": "açık su"
-  },
-  {
-   "no": 59,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    47.5,
-    26.76
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1093,
-   "kazi": 0.0,
-   "yukseklik_m": 2821,
-   "bugun": "açık su"
-  },
-  {
-   "no": 60,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    57.26,
-    13.67
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1078,
-   "kazi": 0.0,
-   "yukseklik_m": 1509,
-   "bugun": "açık su"
-  },
-  {
-   "no": 61,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    58.14,
-    13.67
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1016,
-   "kazi": 0.0,
-   "yukseklik_m": 561,
-   "bugun": "açık su"
-  },
-  {
-   "no": 62,
-   "tur": "moren seti gölü (Garda/Como türü)",
-   "boy": "küçük",
-   "enlem_boylam": [
-    48.74,
-    27.47
-   ],
-   "dag": "1",
-   "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1013,
-   "kazi": 0.0,
-   "yukseklik_m": 2909,
+   "besleyen_buzul_km2": 1006,
+   "kazi": 0.004,
+   "yukseklik_m": 2528,
    "bugun": "açık su"
   }
  ],
@@ -1677,19 +1542,19 @@
    ],
    "dag": "1",
    "dag_ad": "Mor Sıradağları",
-   "besleyen_buzul_km2": 1412
+   "besleyen_buzul_km2": 1097
   }
  ],
  "sirk_dag_basina": {
   "1": {
-   "sirk": 426,
-   "bugun_buzsuz_sirk_golu_adayi": 418
+   "sirk": 319,
+   "bugun_buzsuz_sirk_golu_adayi": 311
   },
   "5": {
-   "sirk": 246,
-   "bugun_buzsuz_sirk_golu_adayi": 238
+   "sirk": 134,
+   "bugun_buzsuz_sirk_golu_adayi": 127
   }
  },
- "sirk_sayisi": 672,
- "tarn_sayisi": 656
+ "sirk_sayisi": 453,
+ "tarn_sayisi": 438
 }
