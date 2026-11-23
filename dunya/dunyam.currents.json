@@ -133,12 +133,12 @@
           37.0
         ],
         [
-          45.7,
-          34.5
+          45.2,
+          34.8
         ],
         [
-          44.4,
-          32.0
+          42.5,
+          31.5
         ],
         [
           43.1,
@@ -228,8 +228,8 @@
           49.8
         ],
         [
-          41.0,
-          51.1
+          40.6,
+          50.9
         ],
         [
           39.9,
@@ -408,6 +408,6 @@
   "_olcek_notu": "Yollarin boylamlari kita genisligi 71.8 -> 94.8 derece degistiginde 1.3200 ile olceklendi. Enlemler degismedi.",
   "_tasima_notu": "Kara kusagi 70N..3N iken 60N..-7N'e tasindi (dunya cok sertti). Jir ENLEMLERI degismedi: onlari ruzgar kusaklari belirler, kita degil. Yalniz Jir 3'un kiyi yollari kirpildi — kita artik 60N'in kuzeyine uzanmiyor, orada tutunacak kiyi yok.",
   "_hizalama_notu": "Enlemler olculen ruzgar kusaklarina hizalandi (gun 15 saat, sinirlar 17N/37N/57N). Jir kapsamlari kusak ortalari arasi: Jir1 8-27N, Jir2 27-47N, Jir3 47-59N. Boylamlar degismedi — onlar kiyiya bagli. Donus periyodu her degistiginde bu yeniden yapilmali: _kusak.py kusaklari olcer.",
-  "_turetme_notu": "Yollar _akinti_kur.py ile GERCEK kiyi cizgisinden turetildi, elle yazilmadi. Kiyi, ANA KITANIN bagli bileseninden okunur — satir bazli min/max adalari kiyi saniyor ve yolu 40 derece kaydirabiliyor (olculdu). Kara ya da donus her degistiginde bu betik yeniden kosulmali; _denetim.py karada nokta kalmadigini dogrular.",
+  "_turetme_notu": "KIYI v2 (23 Kasim, sahibin ana haritasi): _akinti_kur.py bu repoda yok; yollar elle denetlendi. Hicbir nokta karaya dusmuyor; kiyiya uzakligi eskisinden 50 km'den fazla artan noktalar en yakin kiyi yonunde eski uzakliga cekildi: Jir 2 bati kenari - Kuzeydogu  nokta 5 (45.7,34.5)->(45.2,34.8), 323->381 km; Jir 2 bati kenari - Kuzeydogu  nokta 6 (44.4,32.0)->(42.5,31.5), 250->477 km; Jir 3 bati kenari - Kuzeydogu  nokta 3 (41.0,51.1)->(40.6,50.9), 260->310 km. Diger noktalarda fark 50 km'nin altinda (kiyi cogunlukla bir piksellik seritte degisti). Yollar _akinti_kur.py ile GERCEK kiyi cizgisinden turetildi, elle yazilmadi. Kiyi, ANA KITANIN bagli bileseninden okunur — satir bazli min/max adalari kiyi saniyor ve yolu 40 derece kaydirabiliyor (olculdu). Kara ya da donus her degistiginde bu betik yeniden kosulmali; _denetim.py karada nokta kalmadigini dogrular.",
   "_taper_notu": "Taper UCLARDA SIFIRA inmeli. Onceden hepsi 0.3-0.6 ile baslayip 0.8-0.9 ile bitiyordu: anomali denizin ortasinda birden basliyor ve tam gucunde kesiliyordu. Olculdu — akinti uclarinda tek hucrede 3.17 C'ye varan SST sicramasi, oysa okyanus genelinde tipik degisim 0.15 C/hucre (p99). Haritada bunlar cizgi/kanca olarak gorunuyordu. Gercek akintilar uclarda dagilir. Duzeltme: her aktif akintinin taper dizisinin basina ve sonuna 0.0 eklendi, ic sekil korundu. Sinamasi: _kusur.py akinti uclarindaki gradyani olcer."
 }
