@@ -213,7 +213,7 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
 
-## Yeni tektonik hikâye (23 Kasım, `tektonik-yeni-hikaye` dalı, YAYINDA DEĞİL)
+## Yeni tektonik hikâye (23 Kasım, `tektonik-yeni-hikaye` dalı; main'e birleşti, YAYINDA)
 
 Sahibin paketi (`atlas_tektonik_paket.zip`): `tektonik/HIKAYE.md`, `tektonik/kaynak/` (levha kimliği 8k,
 hızlar, amaçlanan sınır türleri), yeni ana arazi `worldinfo/dunyam_ana_16k.png`. Tektonik katman yeni hikâyeye
