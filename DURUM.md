@@ -247,3 +247,10 @@ Sahibin bozkır düzeltmeli son sürümü: Kaynak Sırası'nın güney ucunda i�
 Main'e göre: kara payı %6.9 → %6.6; A 11.5 → 11.7, B 13.0 → 10.1 (BS 12.9 → 10.0), C 41.4 → 44.8,
 D 26.4 → 29.5, E 7.8 → 3.9; ortak karada sınıf değişen %60. Bozkır bölgesi: BS %43 (main) → %20 (ilk ana
 arazi) → %32; yağış ~460 → ~700 → ~495 mm (0.25° koşuda 474 mm). Göller 34, karanın %1.1'i.
+
+## İklim denemesi: engellenme 700 (23 Kasım, `deney-iklim` dalı, YAYINDA DEĞİL)
+
+`arazi-ana-2`'nin arazisi değişmeden; sahibi "engellenme 700 güzel" dedi: `blocking_dz_m` 900 → 700
+(gerekçe `_yagis_ayari`, tarama `deney/DENEY.md`). Bütün katmanlar yeniden üretildi; 12/12, 36/36.
+Bozkır bölgesi %32 → %36.8 (main %43), yağış 474 → 462 mm; dünyada B 10.1 → 11.3, bölge dışında sınıfı
+değişen kara %3.4. Akıntılar ve muson denendi, seçilmedi.
