@@ -223,3 +223,18 @@ pikseli) elle girildi; `_mk_heightmap.py`, `_egri_kur.py`, `_akinti_kur.py` repo
 eğri ve akıntılar değişmedi (gerekçe `_heightmap_kaynak`). Diğer katmanlar (su, bitki, toprak, yaşam, tarım,
 hayvan) kıstak için yeniden üretilmedi. Bird ile amaçlanan türün ayrıldığı yerler TEKTONIK.md'de: en belirgini
 Kuzey / Doğu Okyanusu (hikâyede yanal, hızlarla dalma).
+
+## Yeni ana arazi (23 Kasım, `arazi-ana` dalı, YAYINDA DEĞİL)
+
+Sahibin paketi (`atlas_ana_paket.zip`): Merak ana haritasından (16k, Köprü Kıstağı dahil, kıyı v2) sahibin
+kendi kaydıyla üretilmiş tuval, doğrusal eğri (en yüksek 5390 m), yeni kabartma görseli. Akıntılar elle
+denetlendi (`_akinti_kur.py` yok): karaya düşen nokta yok, kıyıdan 50 km'den çok uzaklaşan 3 nokta geri
+çekildi. Bütün katmanlar yeniden üretildi; 12/12 tutarlılık, 36/36 test.
+Main'e göre (alan ağırlıklı): kara payı %6.9 → %6.7; A 11.5 → 11.9 (Aw 8.6 → 10.2), B 13.0 → 8.4
+(BS 12.9 → 8.3), C 41.4 → 44.9, D 26.4 → 31.2, E 7.8 → 3.8. Her iki arazide de kara olan hücrelerin
+%61'i sınıf değiştirdi. Bozkır bölgesi (37-49°K, 5°B-28°D): BS %43 → %20, yağış ~460 → ~700 mm
+(0.25° koşuda 681 mm). Sebep: arazi alçaldı (main'in çapalı eğrisinde batı sırtı ~5000 m, yeni haritada
+3000-3600 m) ve sırt 36°K'de 1400 m'ye iniyor.
+Düzeltmeler: `tektonik/ozet.py` dağ listesine `no` geri eklendi (`su/uret_su.py` ve `buzul/izler_ciz.py`
+okuyor; yeni tektonik özette düşmüştü, main'de de bozuk); `su/duzelt.py` deneme dallarındaki tatlı göl
+düzeltmeleriyle (yoksa 95 milyon km²'lik sahte göl).
