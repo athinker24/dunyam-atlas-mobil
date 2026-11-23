@@ -238,3 +238,12 @@ Main'e göre (alan ağırlıklı): kara payı %6.9 → %6.7; A 11.5 → 11.9 (Aw
 Düzeltmeler: `tektonik/ozet.py` dağ listesine `no` geri eklendi (`su/uret_su.py` ve `buzul/izler_ciz.py`
 okuyor; yeni tektonik özette düşmüştü, main'de de bozuk); `su/duzelt.py` deneme dallarındaki tatlı göl
 düzeltmeleriyle (yoksa 95 milyon km²'lik sahte göl).
+
+## Ana arazi son sürüm (23 Kasım, `arazi-ana-2` dalı, YAYINDA DEĞİL)
+
+Sahibin bozkır düzeltmeli son sürümü: Kaynak Sırası'nın güney ucunda iç deniz kıyısı yükseltildi (34.4-38.3°K,
+8.9°B-1.2°D ortalama +700 m, 36°K gediği kapandı); doğrusal eğri, en yüksek 5490 m. `arazi-ana`nın düzeltmeleri
+(ozet `no`, `su/duzelt.py`) ve göl dokunma testi düzeltmesi bu dalda. 12/12 tutarlılık, 36/36 test.
+Main'e göre: kara payı %6.9 → %6.6; A 11.5 → 11.7, B 13.0 → 10.1 (BS 12.9 → 10.0), C 41.4 → 44.8,
+D 26.4 → 29.5, E 7.8 → 3.9; ortak karada sınıf değişen %60. Bozkır bölgesi: BS %43 (main) → %20 (ilk ana
+arazi) → %32; yağış ~460 → ~700 → ~495 mm (0.25° koşuda 474 mm). Göller 34, karanın %1.1'i.
