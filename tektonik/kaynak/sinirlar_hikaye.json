@@ -1,0 +1,191 @@
+[
+ {
+  "levhalar": [
+   "Batı Okyanusu Levhası",
+   "Kutup Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 12166,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Batı Okyanusu Levhası",
+   "Güney Okyanusu Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 12166,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Kutup Levhası"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 6797,
+  "aciklama": "kuzey okyanus sırtı (uzak)"
+ },
+ {
+  "levhalar": [
+   "Doğu Okyanusu Levhası",
+   "Güney Okyanusu Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 6742,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Batı Okyanusu Levhası"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 5533,
+  "aciklama": "batı okyanus sırtı (uzak)"
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Doğu Okyanusu Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 5190,
+  "aciklama": "2'nin doğu açığı"
+ },
+ {
+  "levhalar": [
+   "Doğu Dil Levhası",
+   "Doğu Okyanusu Levhası"
+  ],
+  "tur": "dalma (Subduction)",
+  "uzunluk_km_yaklasik": 3389,
+  "aciklama": "Doğu Hendeği: Doğu Okyanusu 3'ün altına dalıyor; Doğu Yay Dağları"
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Ada Bloğu"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 3314,
+  "aciklama": "adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor"
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Güney Okyanusu Levhası"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 3306,
+  "aciklama": "güney okyanus sırtı (uzak)"
+ },
+ {
+  "levhalar": [
+   "Doğu Dil Levhası",
+   "Uzun Yarımada Bloğu"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 3167,
+  "aciklama": "Güneydoğu Kanalı: 22 MYÖ'den beri açılan yarık, kuzeyinde okyanus kabuğu (Kızıldeniz benzeri)"
+ },
+ {
+  "levhalar": [
+   "Doğu Okyanusu Levhası",
+   "Kutup Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 3002,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Doğu Dil Levhası"
+  ],
+  "tur": "kıta çarpışması (Continental collision)",
+  "uzunluk_km_yaklasik": 2978,
+  "aciklama": "Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri)"
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Orta Blok"
+  ],
+  "tur": "kıta çarpışması (Continental collision)",
+  "uzunluk_km_yaklasik": 2950,
+  "aciklama": "Sarı Sıradağları: 5, 4'ün altına giriyor (Zagros benzeri, 8 MYÖ'den beri)"
+ },
+ {
+  "levhalar": [
+   "Kuzey Levhası",
+   "Doğu Havza Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 2871,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Doğu Dil Levhası",
+   "Doğu Havza Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 2768,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Orta Blok",
+   "Uzun Yarımada Bloğu"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 2753,
+  "aciklama": "Kanal fayı: 7, 5'e göre kuzeybatıya kayıyor (Ölü Deniz fayı benzeri)"
+ },
+ {
+  "levhalar": [
+   "Ada Bloğu",
+   "Doğu Havza Levhası"
+  ],
+  "tur": "dalma (Subduction)",
+  "uzunluk_km_yaklasik": 1548,
+  "aciklama": "Ada Hendeği: doğu iç deniz tabanı 6'nın altına dalıyor"
+ },
+ {
+  "levhalar": [
+   "Orta Blok",
+   "Doğu Havza Levhası"
+  ],
+  "tur": "yanal (Transform)",
+  "uzunluk_km_yaklasik": 1275,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Doğu Dil Levhası",
+   "Güney Okyanusu Levhası"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 1264,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Orta Blok",
+   "Güney Okyanusu Levhası"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 604,
+  "aciklama": ""
+ },
+ {
+  "levhalar": [
+   "Doğu Dil Levhası",
+   "Orta Blok"
+  ],
+  "tur": "ayrılma (Divergent)",
+  "uzunluk_km_yaklasik": 154,
+  "aciklama": "Güneydoğu Kanalı'nın kuzey ucu"
+ }
+]

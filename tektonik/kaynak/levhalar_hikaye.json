@@ -1,0 +1,216 @@
+{
+ "cerceve": "Kuzey Levhası sabit; hız cm/yıl; yön pusula açısı (0 kuzey, 90 doğu)",
+ "koordinat": "piksel, sahibin 16k Merak haritası (16000 × 7719); levha_kimlik_8k.png ×2",
+ "levhalar": {
+  "Kuzey Levhası": {
+   "kimlik": 1,
+   "kapsam": "1, 2 (şerit dahil), 4; Köprü Kıstağı; iç denizin batısı; kuzey, batı ve güney sahanlıkları",
+   "yon_pusula_derece": null,
+   "hiz_cm_yil": 0.0,
+   "hiz_dogu_kuzey_cm_yil": [
+    0.0,
+    0.0
+   ],
+   "sira": 10,
+   "tohum_16k_px": [
+    7270,
+    2438
+   ],
+   "renk": [
+    214,
+    170,
+    110
+   ],
+   "kara_payi_cercevede": 0.512
+  },
+  "Doğu Dil Levhası": {
+   "kimlik": 2,
+   "kapsam": "3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar",
+   "yon_pusula_derece": 0,
+   "hiz_cm_yil": 1.8,
+   "hiz_dogu_kuzey_cm_yil": [
+    0.0,
+    1.8
+   ],
+   "sira": 6,
+   "tohum_16k_px": [
+    8556,
+    3328
+   ],
+   "renk": [
+    120,
+    190,
+    110
+   ],
+   "kara_payi_cercevede": 0.543
+  },
+  "Orta Blok": {
+   "kimlik": 3,
+   "kapsam": "5 (Sarı Sıradağları'nın doğu şeridi, Sarı Ön Havzası)",
+   "yon_pusula_derece": 270,
+   "hiz_cm_yil": 2.8,
+   "hiz_dogu_kuzey_cm_yil": [
+    -2.8,
+    -0.0
+   ],
+   "sira": 5,
+   "tohum_16k_px": [
+    7816,
+    3846
+   ],
+   "renk": [
+    200,
+    120,
+    200
+   ],
+   "kara_payi_cercevede": 0.388
+  },
+  "Uzun Yarımada Bloğu": {
+   "kimlik": 4,
+   "kapsam": "7 (Uzun Yarımada)",
+   "yon_pusula_derece": 315,
+   "hiz_cm_yil": 4.6,
+   "hiz_dogu_kuzey_cm_yil": [
+    -3.25,
+    3.25
+   ],
+   "sira": 4,
+   "tohum_16k_px": [
+    8126,
+    3754
+   ],
+   "renk": [
+    240,
+    230,
+    120
+   ],
+   "kara_payi_cercevede": 0.212
+  },
+  "Ada Bloğu": {
+   "kimlik": 5,
+   "kapsam": "6 (iç denizdeki ada)",
+   "yon_pusula_derece": 180,
+   "hiz_cm_yil": 0.7,
+   "hiz_dogu_kuzey_cm_yil": [
+    0.0,
+    -0.7
+   ],
+   "sira": 7,
+   "tohum_16k_px": [
+    7626,
+    2910
+   ],
+   "renk": [
+    240,
+    150,
+    70
+   ],
+   "kara_payi_cercevede": 0.369
+  },
+  "Doğu Havza Levhası": {
+   "kimlik": 6,
+   "kapsam": "iç denizin doğusu ve güneyi (eski Mor Okyanusu kalıntısı)",
+   "yon_pusula_derece": 315,
+   "hiz_cm_yil": 0.8,
+   "hiz_dogu_kuzey_cm_yil": [
+    -0.57,
+    0.57
+   ],
+   "sira": 3,
+   "tohum_16k_px": [
+    7960,
+    3018
+   ],
+   "renk": [
+    90,
+    160,
+    210
+   ],
+   "kara_payi_cercevede": 0.0
+  },
+  "Doğu Okyanusu Levhası": {
+   "kimlik": 7,
+   "kapsam": "Doğu Hendeği'nin dışındaki okyanus",
+   "yon_pusula_derece": 270,
+   "hiz_cm_yil": 6.5,
+   "hiz_dogu_kuzey_cm_yil": [
+    -6.5,
+    -0.0
+   ],
+   "sira": 2,
+   "tohum_16k_px": [
+    12548,
+    4034
+   ],
+   "renk": [
+    70,
+    90,
+    190
+   ],
+   "kara_payi_cercevede": 0.0
+  },
+  "Batı Okyanusu Levhası": {
+   "kimlik": 8,
+   "kapsam": "batıda, uzak sırtın ötesi",
+   "yon_pusula_derece": 270,
+   "hiz_cm_yil": 2.4,
+   "hiz_dogu_kuzey_cm_yil": [
+    -2.4,
+    -0.0
+   ],
+   "sira": 2,
+   "tohum_16k_px": [
+    3078,
+    2920
+   ],
+   "renk": [
+    60,
+    120,
+    150
+   ],
+   "kara_payi_cercevede": 0.0
+  },
+  "Kutup Levhası": {
+   "kimlik": 9,
+   "kapsam": "kuzeyde, uzak sırtın ötesi",
+   "yon_pusula_derece": 0,
+   "hiz_cm_yil": 0.6,
+   "hiz_dogu_kuzey_cm_yil": [
+    0.0,
+    0.6
+   ],
+   "sira": 2,
+   "tohum_16k_px": [
+    4800,
+    758
+   ],
+   "renk": [
+    120,
+    120,
+    190
+   ],
+   "kara_payi_cercevede": 0.0
+  },
+  "Güney Okyanusu Levhası": {
+   "kimlik": 10,
+   "kapsam": "güneyde, uzak sırtın ötesi",
+   "yon_pusula_derece": 180,
+   "hiz_cm_yil": 1.5,
+   "hiz_dogu_kuzey_cm_yil": [
+    0.0,
+    -1.5
+   ],
+   "sira": 2,
+   "tohum_16k_px": [
+    4380,
+    6018
+   ],
+   "renk": [
+    90,
+    140,
+    120
+   ],
+   "kara_payi_cercevede": 0.0
+  }
+ }
+}

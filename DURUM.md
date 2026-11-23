@@ -212,3 +212,14 @@ Git'te izlenen ama `.gitignore`'da olan `su/_goller*.pkl` önbellekleri (3 MB; y
 ## Tarımsal verimlilik (1 Ekim, `tarim-verimlilik` dalında)
 
 Arazi → Tarım: ısı, su, toprak, arazi dört etkeni; iki varyant (nehirle sulamalı varsayılan, yalnız yağmur). `tarim/tarim.py`, `TARIM.md`. `veri.yml` üretmez. Çok yüksek payı %23.4, 14.8 puanı Duvar'ın güneyindeki alüvyon ovası (bilerek verimli). Kalıcı donmuş toprak ve toprak eşlemesi düzeltildi (Yakutsk 14, Amazon 54). Birleştirilmedi.
+
+## Yeni tektonik hikâye (23 Kasım, `tektonik-yeni-hikaye` dalı, YAYINDA DEĞİL)
+
+Sahibin paketi (`atlas_tektonik_paket.zip`): `tektonik/HIKAYE.md`, `tektonik/kaynak/` (levha kimliği 8k,
+hızlar, amaçlanan sınır türleri), yeni ana arazi `worldinfo/dunyam_ana_16k.png`. Tektonik katman yeni hikâyeye
+geçti (`levhalar.py` yeniden yazıldı, `ozet.py`/`harita.py` yeni adlarla, OZET.md yeniden üretildi);
+TEKTONIK.md'de "YENİ HİKÂYE" bölümü, eski bölümler GEÇERSİZ işaretli. Arazi: yalnız Köprü Kıstağı (164 tuval
+pikseli) elle girildi; `_mk_heightmap.py`, `_egri_kur.py`, `_akinti_kur.py` repoda olmadığı için koşulmadı,
+eğri ve akıntılar değişmedi (gerekçe `_heightmap_kaynak`). Diğer katmanlar (su, bitki, toprak, yaşam, tarım,
+hayvan) kıstak için yeniden üretilmedi. Bird ile amaçlanan türün ayrıldığı yerler TEKTONIK.md'de: en belirgini
+Kuzey / Doğu Okyanusu (hikâyede yanal, hızlarla dalma).

@@ -181,10 +181,7 @@ def dunya(cikti):
     def yazi(xy, s_, font):
         bb = dk.textbbox((0, 0), s_, font=font)
         dk.text((xy[0] - (bb[2] - bb[0]) / 2, xy[1] - (bb[3] - bb[1]) / 2), s_, font=font, fill=(255, 255, 255), stroke_width=3, stroke_fill=(0, 0, 0))
-    for ad, (la_, lo_) in {"Kuzey": (60, -25), "Kuzeydoğu": (47, 33), "İber": (37, -30), "Ege": (26, -12),
-                           "Güneybatı": (-18, -25), "Yarımada": (6, -3), "Alt Kıta": (-18, 18), "Batı Okyanusu": (5, -65),
-                           "Doğu Okyanusu": (5, 60), "Büyük Okyanus": (10, 138), "Uzak Okyanus": (5, -145),
-                           "Kuzey Kutup": (82, 0), "Güney Kutup": (-68, 0)}.items():
+    for ad, (la_, lo_) in etiketler().items():
         yazi(P(la_, lo_), ad.upper(), F(26, True))
     im = Image.alpha_composite(im, kat)
     satir = [("OSR", AD["OSR"]), ("OTF", AD["OTF"].replace("okyanus ", "")), ("SUB", AD["SUB"]),
@@ -195,83 +192,47 @@ def dunya(cikti):
              "%d levha, %d sınır adımı, toplam %.0f bin km sınır" % (len(M.ADLAR), o["adim_sayisi"], sum(uz.values()) / 1e3)]
     for s_ in ("OSR", "OTF", "SUB", "CCB", "CTF", "CRB"):
         if s_ in uz: zaman.append("%s  %-28s %6.0f bin km" % (s_, M.SINIF_AD[s_], uz[s_] / 1e3))
-    zaman.append("Equal Earth izdüşümü. Okyanustaki sınırlar tasarım; karadakiler araziden ölçüldü.")
+    zaman.append("Equal Earth izdüşümü. Kıta levhaları sahibin görüntüsünden; uzak okyanus sınırları tasarım.")
     aciklama(im, "Dünyam levhaları — tüm gezegen", satir, zaman, genislik=1400).convert("RGB").save(cikti)
     kureler(duz, cikti.replace("levha_dunya", "levha_kure"))
 
 # ============================================================== 2. kita
+def etiketler():
+    """levha adlarinin yeri: tohum (levhanin icinde); kutup tohumu cok kuzeyde, haritada gorunmez"""
+    e_ = {ad: M.LEVHALAR[ad]["tohum"] for ad in M.ADLAR}
+    e_["Kutup Levhası"] = (80, 0)
+    return e_
+
 def kita(cikti):
-    h = Harita(-9, 62, -50, 46, 21.5, dolgu=0.16)
+    import ozet
+    h = Harita(-16, 64, -55, 48, 21.5, dolgu=0.16)
     h.adimlar(kal=5, dis=15, dis_her=2)
-    d = h.d
-    # Ege, Tiren, Karadeniz benzeri ve takimada-Duvar arasi gerilme havzalari (tarama)
-    deniz = ~land
-    kutu = lambda a, b, c, e_: (lat[:, None] > a) & (lat[:, None] < b) & (lon[None, :] > c) & (lon[None, :] < e_)
-    for m, alfa in ((deniz & kutu(14, 29, -4.8, -1.0), 200), (deniz & kutu(29.5, 37, -17, 5), 110),
-                    (deniz & kutu(8, 14.5, -9, 1), 200), (deniz & kutu(6.5, 15, 13, 20.5), 200)):
-        r0, r1, c0, c1 = M.row(62), M.row(-9), M.col(-50), M.col(46)
-        mm = Image.fromarray((m[r0:r1, c0:c1] * 255).astype(np.uint8)).resize(h.im.size, Image.NEAREST)
-        t = Image.new("RGBA", h.im.size, (0, 0, 0, 0)); td = ImageDraw.Draw(t)
-        for k in range(-h.im.size[1], h.im.size[0], 11): td.line([(k, 0), (k + h.im.size[1], h.im.size[1])], fill=(80, 160, 255, alfa), width=2)
-        h.kat.paste(t, (0, 0), mm)
-    # Kuzey Anadolu benzeri fay (levha ici)
-    pts = []
-    for lo in np.arange(1.5, 22, 0.5):
-        x = M.col(lo); r = np.where(land[M.row(30):M.row(8), x] & (es[M.row(30):M.row(8), x] > 1100))[0]
-        if len(r): pts.append(h.P(M.LA(M.row(30) + r.min()), lo))
-    pf = M.yumusat([(y, x) for x, y in pts], 9); pf = [(x, y) for y, x in pf]
-    d.line(pf, fill=(90, 230, 140), width=6)
-    for k in (len(pf) // 3, 2 * len(pf) // 3):
-        x, y = pf[k]
-        d.line([(x - 28, y - 10), (x + 28, y - 10)], fill=(90, 230, 140), width=3); d.polygon([(x + 28, y - 16), (x + 38, y - 10), (x + 28, y - 4)], fill=(90, 230, 140))
-        d.line([(x - 28, y + 10), (x + 28, y + 10)], fill=(90, 230, 140), width=3); d.polygon([(x - 28, y + 4), (x - 38, y + 10), (x - 28, y + 16)], fill=(90, 230, 140))
-    # 11: eski kenet
-    m11 = land & (es > 1400) & (lat[:, None] > 3) & (lat[:, None] < 21) & (lon[None, :] > 6.5) & (lon[None, :] < 13)
-    yy, xx = np.where(m11); X = np.c_[lon[xx], lat[yy]]; mu = X.mean(0); ev, vec = np.linalg.eigh(np.cov((X - mu).T)); v = vec[:, 1] * 2 * np.sqrt(ev[1])
-    a, b = h.P(mu[1] - v[1], mu[0] - v[0]), h.P(mu[1] + v[1], mu[0] + v[0]); d.line([a, b], fill=(175, 175, 175), width=5)
-    # volkanlar
-    def volkan(la, lo, sonuk=False, boy=12):
-        x, y = h.P(la, lo); c = (150, 150, 150) if sonuk else (255, 110, 40)
-        d.polygon([(x - boy, y + boy * 0.8), (x + boy, y + boy * 0.8), (x, y - boy)], fill=c, outline=(0, 0, 0))
-    lab, n = ndimage.label(land, np.ones((3, 3))); ana = np.argmax(np.bincount(lab.ravel())[1:]) + 1
-    ada = land & (lab != ana) & (lat[:, None] > 17) & (lat[:, None] < 32) & (lon[None, :] > -22) & (lon[None, :] < -3)
-    for lo in np.arange(-19, -4, 2.5):
-        r = np.where(ada[:, M.col(lo)])[0]
-        if len(r): volkan(M.LA(r.max() - 6), lo)
-    yy, xx = np.where(ada); k = np.argmax(e[yy, xx]); volkan(lat[yy[k]], lon[xx[k]], boy=18)
-    h.yazi(np.array(h.P(lat[yy[k]], lon[xx[k]])) + [0, 32], "6.443 m", F(17))
-    for la in np.arange(2, 13, 3):
-        r = np.where(land[M.row(la), M.col(14):M.col(45)])[0]
-        if len(r): volkan(la, lon[M.col(14) + r.max() - 12])
-    for la in np.arange(26, 5, -3.5):
-        r = np.where(land[M.row(la), M.col(-50):M.col(-22)])[0]
-        if len(r): volkan(la, lon[M.col(-50) + r.min() + 20], sonuk=la < 12)
-    # hiz oklari (levha tohumlarinda)
-    h.hizlar(0, 14, noktalar=[(47, 30), (38, -26), (24, -14), (15, -28), (6, -6), (10, 12), (18, -40), (-5, -36), (8, 36), (52, -8)])
-    for ad, (la, lo) in {"KUZEY LEVHASI": (57.5, 2), "KUZEYDOĞU": (48.5, 36), "KAÇIŞ BLOĞU": (46.7, 36),
-                         "İBER": (38.5, -34), "EGE": (27, -12), "GÜNEYBATI": (19.5, -30), "YARIMADA": (3.6, -2.5),
-                         "ALT KITA": (3, 15), "BATI OKYANUSU": (-6, -44), "DOĞU OKYANUSU": (14, 40.5), "KÜÇÜK KITA": (-4.5, -30)}.items():
-        h.yazi(h.P(la, lo), ad, F(28, True))
-    for (la, lo), s_ in [((47.5, 12), "sert eski blok (Tarım benzeri)"), ((51, -2), "1: köşe düğümü (Pamir benzeri)"),
-                         ((31.2, 21), "Duvar: büyük çarpışma"), ((41.8, -28), "5: Pireneler benzeri"),
-                         ((9, -16.5), "4: Alpler"), ((17.5, -2.5), "Ege"), ((11.5, -4), "Tiren benzeri"),
-                         ((11.2, 16.8), "Karadeniz benzeri"), ((23.3, 14.5), "Kuzey Anadolu benzeri fay"),
-                         ((1.5, -25), "6: çarpışma sürüyor"), ((25.5, -41), "And tipi dalma"), ((34.8, 5), "yay ardı gerilmesi"),
-                         ((50.5, 25.5), "9: Baykal tipi yarık"), ((57, 30), "2"), ((-1, 26), "doğu dalması"), ((13.5, 9.5), "11 eski kenet")]:
-        h.yazi(h.P(la, lo), s_, F(19))
+    # hiz oklari: kita levhalarinin tohumlarinda ve okyanusta birkac noktada
+    noktalar = [M.LEVHALAR[ad]["tohum"] for ad in M.ADLAR if M.LEVHALAR[ad]["kimlik"] <= 7]
+    noktalar += [(55, -45), (10, -48), (-12, -30), (40, 44), (-10, 40)]
+    h.hizlar(0, 14, noktalar=noktalar)
+    for ad, (la, lo) in etiketler().items():
+        if -16 < la < 64 and -55 < lo < 48: h.yazi(np.array(h.P(la, lo)) + [0, -30], ad.upper(), F(26, True))
+    # hikayedeki sinir adlari: sahibin goruntusunde cizili kesimin ortasina
+    amac = {frozenset(s["levhalar"]): s["aciklama"].split(":")[0] for s in ozet.AMAC.values() if s["aciklama"]}
+    yazilan = set()
+    for ad_, s_ in sorted(M.S.items(), key=lambda x: -sum(a["goruntude"] for a in M.ADIMLAR if a["sinir"] == x[0])):
+        cift = frozenset(M.CIFT[ad_]); ad = amac.get(cift)
+        if not ad or ad.endswith("(uzak)") or cift in yazilan: continue
+        ic = [a for a in M.ADIMLAR if a["sinir"] == ad_ and a["goruntude"]]
+        if len(ic) < 3: continue
+        m = ic[len(ic) // 2]["p"]
+        if -16 < m[0] < 64 and -55 < m[1] < 48: h.yazi(np.array(h.P(*m)) + [0, 26], ad, F(19)); yazilan.add(cift)
+    # adlandirilmis dag ve yer sekilleri (ozet.daglar: en yuksek noktalar araziden)
+    for ad, (la, lo), z, _, _ in ozet.daglar():
+        x, y = h.P(la, lo); h.d.polygon([(x - 10, y + 8), (x + 10, y + 8), (x, y - 10)], fill=(255, 235, 120), outline=(0, 0, 0))
+        h.yazi((x, y + 24), "%s %s m" % (ad, format(z, ",").replace(",", ".")), F(17))
     im = h.bitir()
     satir = [("CCB", AD["CCB"]), ("SUB", AD["SUB"]), ("OSR", AD["OSR"]), ("CRB", AD["CRB"]), ("CTF", "dönüşüm fayı (yanal)"),
-             ("NAF", "Kuzey Anadolu benzeri sağ yanal fay (levha içi)"), ("ESKI", "eski kenet (etkin değil)"),
-             ("TR", "gerilme havzası (geri çekilen levha arkası)"), ("VK", "etkin / sönmüş volkan"), ("HIZ", "levha hızı (Kuzey'e göre)")]
-    zaman = ["ZAMAN ÇİZELGESİ (eskiden yeniye, göreli)",
-             "1. Çok eski: İber bloğunun dağları aşındı (Meseta). Alt kıtanın iki parçası kaynaştı, 11 yükseldi.",
-             "2. Eski: alt kıtanın doğusunda dalma; 7 yükseldi, sonra Karadeniz benzeri havza açılıp",
-             "    doğudaki yarımadayı (volkan yayı) kopardı. Batıda And tipi dalma, 10 kuşağı başladı.",
-             "3. Büyük yakınlaşma (Tetis kapanışı): alt kıta Duvar'a çarptı (1, 3, 2, plato); İber bloğu çarptı (5);",
-             "    yarımada batıya savrulup 4'ü yükseltti; küçük kıta batıdan geldi, plato 10 kabardı.",
-             "4. Kaçış: kuzeydoğu bloğu doğuya itildi; arkasında (9) Baykal tipi yarık açıldı.",
-             "5. Bugün: iç deniz levhası geri çekiliyor (takımada, Ege, Tiren gerilir); 6'da çarpışma sürüyor;",
-             "    Kuzey Anadolu benzeri fay, doğu ve batı dalmaları etkin; depremler ve volkanlar oralarda."]
+             ("HIZ", "levha hızı (Kuzey Levhası'na göre)")]
+    zaman = ["ZAMAN ÇİZELGESİ (eskiden yeniye; ayrıntı HIKAYE.md)"]
+    for d_, s_ in ozet.OLAYLAR[-6:]:
+        zaman.append("%s: %s" % (d_, s_[:96] + ("…" if len(s_) > 96 else "")))
     aciklama(im, "Dünyam levhaları — kıta", satir, zaman, genislik=720).convert("RGB").save(cikti)
 
 def kureler(duz, cikti, merkezler=((20, 0), (-20, 180)), cap=1100):
@@ -290,9 +251,7 @@ def kureler(duz, cikti, merkezler=((20, 0), (-20, 180)), cap=1100):
         tuval.paste(Image.fromarray(img.astype(np.uint8)), (60 + k * (cap + 60), 70))
     d = ImageDraw.Draw(tuval)
     d.text((60, 18), "Dünyam levhaları — kıtaya bakan yüz ve arka yüz", font=F(34, True), fill=(255, 255, 255))
-    etiket = {"Kuzey": (62, -20), "Kuzeydoğu": (47, 33), "İber": (37, -30), "Ege": (26, -12), "Güneybatı": (-18, -25),
-              "Yarımada": (6, -3), "Alt Kıta": (-18, 18), "Batı Okyanusu": (5, -62), "Doğu Okyanusu": (5, 58),
-              "Büyük Okyanus": (10, 138), "Uzak Okyanus": (5, -150), "Kuzey Kutup": (80, 0), "Güney Kutup": (-66, 0)}
+    etiket = etiketler()
     for k, (f0, l0) in enumerate(merkezler):
         f0r = np.radians(f0)
         for ad, (la, lo) in etiket.items():

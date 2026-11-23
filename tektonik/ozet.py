@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """Levha modelinin kendi basina anlasilir ozeti: OZET.md (insan / baska yapay zeka) ve
-ozet.json (makine). Modelden uretilir; harita degisince yeniden kos:
+ozet.json (makine). Modelden uretilir; harita ya da hikaye degisince yeniden kos:
     python tektonik/ozet.py
+Hikayenin tamami (donemler, olaylar) tektonik/HIKAYE.md'de; bu ozet levhalari,
+sinirlari ve Bird siniflarini modelden yazar.
 """
 import json, os, sys
 from collections import defaultdict
 import numpy as np
+from scipy import ndimage
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import levhalar as M  # noqa: E402
 
@@ -13,70 +16,63 @@ D = os.path.join(M.KOK, "tektonik")
 YON = ["kuzeye", "kuzeydoğuya", "doğuya", "güneydoğuya", "güneye", "güneybatıya", "batıya", "kuzeybatıya"]
 def yon(v):
     return YON[int(round((np.degrees(np.arctan2(v[0], v[1])) % 360) / 45)) % 8]
-TUR = {"Kuzey": "kıta + okyanus", "Kuzeydoğu": "kıta (küçük)", "İber": "kıta (küçük)", "Ege": "kıta parçaları + deniz (mikro)",
-       "Güneybatı": "kıta + okyanus", "Yarımada": "kıta (mikro)", "Alt Kıta": "kıta + okyanus", "Batı Okyanusu": "okyanus (üstünde küçük kıta)",
-       "Doğu Okyanusu": "okyanus", "Büyük Okyanus": "okyanus", "Uzak Okyanus": "okyanus", "Kuzey Kutup": "okyanus", "Güney Kutup": "okyanus"}
-ANLAM = {
-    "duvar": "Büyük çarpışma cephesi: Alt Kıta kuzeye, Kuzey levhasının altına giriyor (Himalaya benzeri). Duvar dağları (3) bunun ürünü.",
-    "pireneler": "İber bloğu kuzeye, Kuzey levhasına çarpmış; 5 dağları (Pireneler benzeri).",
-    "alpler": "Yarımada batıya, Güneybatı bloğuna çarpıyor; 4 dağları (Alpler benzeri). Yarımada üst levha.",
-    "bati_cukur": "Batı Okyanusu, Güneybatı bloğunun altına dalıyor (And tipi); kıyıda volkanlar.",
-    "alti": "Batı Okyanusu'nun taşıdığı küçük kıta Güneybatı bloğuna çarpıyor (6, etkin); güneyinde okyanusal dalma.",
-    "ege_cukur": "İç deniz tabanı (Güneybatı levhası) kuzeye, Ege'nin altına dalıyor; adaların güneyinde volkan yayı.",
-    "ege_dogu": "Ege ile Alt Kıta arası, çoğunlukla yanal (Alt Kıta kuzeye, Ege güneye).",
-    "ege_kuzey": "Ege güneye çekilirken arkasında açılan yay ardı yarığı (iç denizin kuzeyi).",
-    "ege_bati": "Ege ile İber arası, çoğunlukla yanal.",
-    "bogaz": "İber ile Güneybatı arası boğaz; yavaş yakınlaşma (Cebelitarık benzeri).",
-    "iber_bati": "İber bloğunun batı kıyısı, yanal.",
-    "yar_kuzey": "Yarımadanın kuzeyi, yanal; kuzeyindeki körfez Tiren benzeri gerilme havzası.",
-    "yar_dogu": "Yarımada ile Alt Kıta arası boğaz: açılan yarık (yarımada Alt Kıta'dan kopuyor).",
-    "yar_guney": "Yarımadanın güneyi, çoğunlukla yanal.",
-    "gb_altkita": "Güneybatı ile Alt Kıta arası, yanal.",
-    "gb_altkita_guney": "Güneye uzanan yanal fay: iki levha aynı yönde farklı hızla kuzeye gidiyor.",
-    "dogu_cukur": "Doğu Okyanusu batıya, Alt Kıta'nın altına dalıyor; doğudaki yarımada volkan yayı.",
-    "duvar_dogu": "Duvar'ın doğu ucu, kıyıya kadar.",
-    "kuzey_dogu": "Doğu Okyanusu, Kuzey ve Kuzeydoğu levhalarının altına dalıyor.",
-    "kd_bati": "Kuzeydoğu kaçış bloğunun batı sınırı (9): blok doğuya giderken açılan Baykal tipi yarık.",
-    "kd_kuzey": "Kaçış bloğunun kuzey sınırı (2 dağları), çoğunlukla yanal.",
-    "kd_guney": "Kaçış bloğunun güney sınırı (Duvar'ın kuzey eteği), yanal.",
-    "kuzey27": "27°K boyunca uzun dönüşüm fayı: Batı Okyanusu doğuya kayıyor.",
-    "bati_sirt": "Batı okyanus ortası sırtı (Atlas ortası sırtı benzeri, S biçimli).",
-    "dogu_sirt": "Doğu okyanus ortası sırtı.",
-    "orta_cukur": "Uzak Okyanus batıya, Büyük Okyanus'un altına dalıyor (Pasifik batısı benzeri ada yayları).",
-    "guney_sirt": "Kıtanın güneyinden geçen sırt (Hint Okyanusu güneyi benzeri).",
-    "guney_sirt2": "Güneydoğu sırtı.", "guney_sirt3": "Uzak güney sırtı.", "guney_sirt3b": "Uzak güney sırtı.",
-    "kuzey_halka": "Kuzey Kutup levhasının sınırı; çoğu yerde güneydeki okyanus levhaları onun altına dalıyor."}
-DAGLAR = [
-    ("1", "Kuzey batı kolu", (51.8, -2.2), 7000, "Pamir", "Dünyanın en yüksek noktası. Çarpan Alt Kıta'nın kuzeybatı köşesinde sıkışan düğüm."),
-    ("2", "Kuzeydoğu kıyı sırası", (55.2, 30.2), 6760, "Altay", "Kaçış bloğunun kuzey sınırı; çarpışmanın uzak etkisi."),
-    ("3", "Duvar", (39.0, 20.0), 6729, "Himalaya", "~11.400 km'lik çarpışma kuşağı; güneyinde önülke ovası (Ganj benzeri)."),
-    ("9", "Plato doğusu sırası", (47.3, 26.5), 4683, "Tanrı Dağları + Baykal", "Önce sıkışmayla yükseldi; bugün doğu eteğinde yarık açılıyor."),
-    ("plato", "Plato çanağı", (46.4, 10.1), 880, "Tarım / Moğol platosu", "3,8 milyon km², kıvrılmamış sert eski blok; bozkır."),
-    ("5", "İber kuzey sırası", (46.5, -26.3), 6563, "Pireneler", "İber bloğunun kuzeye çarpmasıyla."),
-    ("meseta", "İber yaylası", (43.0, -22.0), 535, "Meseta (İspanya)", "Çok eski dağların aşınmış kökleri; düz yayla."),
-    ("4", "Yay biçimli sıra", (10.9, -13.9), 6706, "Alpler", "Yarımadanın batıya çarpmasıyla; iç bükeyinde Po benzeri ova (8,6°K −10,3°)."),
-    ("yarımada", "Yarımada omurgası", (6.8, -4.4), 5143, "Apeninler / İtalya", "Alt Kıta'nın kopan çıkıntısı."),
-    ("10", "Güneybatı platosu", (12.3, -32.1), 4621, "Altiplano / And", "Küçük kıtanın altına sokulmasıyla kalınlaşan kabuk; ort. 2.278 m."),
-    ("6", "Güney çarpışma noktası", (1.5, -19.2), 5924, "St. Elias (Alaska)", "Küçük kıtanın hâlâ çarptığı yer; en keskin kesim."),
-    ("küçük kıta", "Güneybatı düz yarımada", (-2.0, -30.0), 712, "Zelandia", "Batı Okyanusu'nun taşıdığı hafif kıta parçası; 1,13 milyon km², düz."),
-    ("7", "Alt Kıta doğu kıyısı sırası", (14.0, 14.6), 5892, "Pontidler", "Doğudaki dalmanın eski kenarı; doğusundaki körfez Karadeniz benzeri."),
-    ("8", "Alt Kıta batı kıyısı sıraları", (15.0, 4.0), 5594, "Batı Anadolu / Ege", "Kısa, dik parçalar; aralarında denize açılan çöküntü vadileri (gerilme)."),
-    ("11", "Alt Kıta orta kuşağı", (12.3, 10.5), 3488, "Kırşehir / İzmir-Ankara kenedi", "En eski kuşak: Alt Kıta'nın iki parçasının dikişi; aşınmış."),
-    ("takımada", "İç deniz takımadası", (25.0, -12.0), 6443, "Yunanistan / Ege adaları", "Güneye çekilip gerilen kabuk; en yüksek nokta büyük bir volkan."),
-]
+AMAC = {frozenset(s["levhalar"]): s for s in json.load(open(os.path.join(M.KAYNAK, "sinirlar_hikaye.json"), encoding="utf-8"))}
+YER_TUTUCU = {"Batı Okyanusu Levhası", "Kutup Levhası", "Güney Okyanusu Levhası", "Büyük Okyanus Levhası"}
+
+def tur(ad):
+    k = M.LEVHALAR[ad]["kimlik"]
+    if k == 11: return "okyanus (atlasın kendi levhası)"
+    if k >= 7: return "okyanus"
+    return "kıta + okyanus" if M.levhalar_json_kara(ad) > 0.02 else "okyanus"
+
 OLAYLAR = [
-    ("çok eski", "İber bloğunun eski dağları aşındı (Meseta). Alt Kıta'nın iki parçası kaynaştı, 11 yükseldi."),
-    ("eski", "Alt Kıta'nın doğusunda dalma; 7 yükseldi, sonra Karadeniz benzeri körfez açılıp doğudaki yarımadayı kopardı. Batıda And tipi dalma, 10 kuşağı başladı."),
-    ("büyük yakınlaşma", "Güneydeki bütün parçalar kuzeye yürüdü (Tetis kapanışı benzeri): Alt Kıta Duvar'a çarptı (1, 2, 3, plato); İber bloğu çarptı (5); yarımada batıya savrulup 4'ü yükseltti; küçük kıta batıdan geldi, plato 10 kabardı."),
-    ("kaçış", "Kuzeydoğu bloğu çarpışmanın basıncıyla doğuya itildi; arkasında (9) Baykal tipi yarık açıldı."),
-    ("bugün", "İç deniz levhası geri çekiliyor (takımada, Ege, Tiren gerilir); 6'da çarpışma sürüyor; Kuzey Anadolu benzeri fay, doğu ve batı dalmaları etkin."),
+    ("3400-2500 MYÖ", "Kalkanların doğuşu: Ak Kalkan (1'in kuzeyi), Boz Kalkan (2'nin doğusu), Kır Çekirdeği (2'nin batısı), Kızıl Kalkan (3'ün ortası)."),
+    ("2100-1700 MYÖ", "Kaynak orojenleri: Kır Çekirdeği ile Boz Kalkan birleşir; 2'nin içi tek parça olur."),
+    ("1150-750 MYÖ", "İlk Birlik süper kıtası; 1'in batısında Ulu Dağlar. Parçalanınca 1 ile 2 arasında Ata Okyanusu açılır."),
+    ("750-520 MYÖ", "İki büyük buzullaşma; Ata Okyanusu kıyılarında kalın çökeller."),
+    ("520-400 MYÖ", "Mavi orojeni: Ata Okyanusu kapanır, 430 MYÖ'de 1 ile 2 çarpışır (Mavi Dağlar, Kaledonya benzeri)."),
+    ("400-290 MYÖ", "Köz orojeni: Güney Kıtası çarpar, 4'ün temeli kıvrılır; Büyük Birlik. Doğuda Mor Okyanusu kaması açık kalır."),
+    ("290-200 MYÖ", "İnce Şerit Güney Kıtası'ndan kopup 210 MYÖ'de 2'nin güneyine yapışır; 252 MYÖ Kuzey Tuzakları."),
+    ("200-130 MYÖ", "Büyük Birlik parçalanır: Batı ve Güney okyanusları açılır; 3, 5 ve 7'yi taşıyan Doğu Parça kuzeye yola çıkar."),
+    ("130-85 MYÖ", "Makas açılması: 4 ve 6, 1'den ayrılıp ~29° saat yönünde döner; iç denizin batısı açılır, Köprü Dağları başlar."),
+    ("85-50 MYÖ", "Kuzeye koşu: Doğu Parça yılda ~6,5 cm ilerler; 66 MYÖ Kızıl Basamaklar; Doğu Okyanusu 3'ün altına dalmaya başlar."),
+    ("50-25 MYÖ", "Mor çarpışması: 3, 2'nin altına girer (Mor Sıradağları, Şerit Yaylası); Tuzak Çanağı kalkar; doğu iç deniz kuşatılır."),
+    ("25-2,6 MYÖ", "İç deniz evresi: Ada Hendeği, 6 güneye çekilir; 5 kopar ve 8 MYÖ'de 4'e çarpar (Sarı Sıradağları); 7 Kanal Fayı boyunca kayar; 3 MYÖ Köprü Kıstağı kapanır."),
+    ("2,6-0 MYÖ", "Buzul çağları; bugün iki etkin çarpışma (3 ile 2, 5 ile 4), bir yanal fay, bir yay ardı gerilmesi, bir yarık."),
 ]
 
-TASARIM = {"bati_sirt", "dogu_sirt", "orta_cukur", "guney_sirt", "guney_sirt2", "guney_sirt3", "guney_sirt3b", "kuzey_halka", "kuzey27"}
+def _sinir_maske(a, b):
+    i, j = M.LEVHALAR[a]["kimlik"], M.LEVHALAR[b]["kimlik"]
+    A = M.kimlik == i; B = M.kimlik == j
+    return (A & ndimage.binary_dilation(B)) | (B & ndimage.binary_dilation(A))
+
+def daglar():
+    """adlandirilmis yer sekilleri: en yuksek nokta arazide olculur"""
+    out = []
+    km_hucre = M.RKM * np.radians(180 / M.H)
+    def tepe(maske, ad, benzer, koken):
+        if not maske.any(): return
+        z = np.where(maske, M.e, -1); r, c = np.unravel_index(np.argmax(z), z.shape)
+        out.append((ad, (round(float(M.lat[r]), 1), round(float(M.lon[c]), 1)), int(round(z[r, c])), benzer, koken))
+    yakin = lambda a, b, km: ndimage.distance_transform_edt(~_sinir_maske(a, b)) * km_hucre < km
+    lv = lambda ad: M.kimlik == M.LEVHALAR[ad]["kimlik"]
+    tepe(M.land & yakin("Kuzey Levhası", "Doğu Dil Levhası", 400) & lv("Kuzey Levhası"), "Mor Sıradağları", "Kafkas ölçeğinde Himalaya benzeri",
+         "3, 2'nin altına giriyor (50 MYÖ'den beri); arkasında ~1 km'lik Şerit Yaylası.")
+    tepe(M.land & yakin("Kuzey Levhası", "Orta Blok", 300), "Sarı Sıradağları", "Zagros / Tayvan benzeri",
+         "5, 4'ün altına giriyor (8 MYÖ'den beri); genç, dik, en yüksek güney orta kesim.")
+    tepe(M.land & yakin("Doğu Dil Levhası", "Doğu Okyanusu Levhası", 450) & lv("Doğu Dil Levhası"), "Doğu Yay Dağları", "And benzeri yay",
+         "Doğu Okyanusu, Doğu Hendeği'nde 3'ün altına dalıyor.")
+    tepe(M.land & lv("Uzun Yarımada Bloğu"), "Uzun Yarımada sırtı", "Ölü Deniz fayı kıyısı",
+         "7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt.")
+    tepe(M.land & lv("Ada Bloğu"), "İç denizdeki ada (6)", "Ege / Tiren benzeri",
+         "Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde.")
+    out.append(("Köprü Kıstağı", (25.2, -27.7), 400, "Panama benzeri", "3 MYÖ'de 1 ile 4 arasındaki boğazı kapattı; 80-400 m."))
+    return out
+
 def cumle(sinif, cift, ust, yak):
     a, b = cift; r = abs(yak)
     if sinif in ("SUB", "OCB"):
-        alt = b if ust == a else a; return "%s, %s levhasının altına dalıyor (%.1f cm/yıl)." % (alt, ust, r)
+        alt = b if ust == a else a; return "%s, %s altına dalıyor (%.1f cm/yıl)." % (alt, ust, r)
     if sinif == "CCB":
         alt = b if ust == a else a; return "%s, %s levhasına çarpıyor, altına giriyor (%.1f cm/yıl)." % (alt, ust, r)
     if sinif in ("OSR", "CRB"): return "%s ile %s birbirinden ayrılıyor (%.1f cm/yıl)." % (a, b, r)
@@ -85,16 +81,18 @@ def cumle(sinif, cift, ust, yak):
 
 def uret():
     o = M.yaz()
+    M.levhalar_json_kara = lambda ad: o["levhalar"][ad]["kara_payi"]
     kom = defaultdict(float)
     for a in M.ADIMLAR: kom[tuple(sorted((a["sol"], a["sag"])))] += a["km"]
     lev = []
-    for ad, L in M.LEVHALAR.items():
-        v = np.array(L["hiz"]); j = o["levhalar"][ad]
+    for ad in M.ADLAR:
+        L = M.LEVHALAR[ad]; v = np.array(L["hiz"]); j = o["levhalar"][ad]
         komsu = sorted({b for (a, b) in kom if a == ad} | {a for (a, b) in kom if b == ad})
-        lev.append({"ad": ad, "tur": TUR[ad], "alan_milyon_km2": j["alan_milyon_km2"], "kara_payi": j["kara_payi"],
-                    "tohum_enlem_boylam": L["tohum"], "hiz_cm_yil": round(float(np.hypot(*v)), 2),
-                    "yon": yon(v) if np.hypot(*v) > 0.05 else "sabit (çerçeve)", "euler_kutbu": j["euler_kutbu"],
-                    "euler_hizi_derece_My": j["euler_hizi_derece_My"], "komsular": komsu})
+        lev.append({"kimlik": L["kimlik"], "ad": ad, "tur": tur(ad), "kapsam": L["kapsam"], "alan_milyon_km2": j["alan_milyon_km2"],
+                    "kara_payi": j["kara_payi"], "tohum_enlem_boylam": L["tohum"], "hiz_cm_yil": round(float(np.hypot(*v)), 2),
+                    "yon": (yon(v) if np.hypot(*v) > 0.05 else "sabit (çerçeve)") + (" (dönerek)" if ad in M.DONME else ""),
+                    "euler_kutbu": j["euler_kutbu"], "euler_hizi_derece_My": j["euler_hizi_derece_My"], "komsular": komsu,
+                    "yer_tutucu": ad in YER_TUTUCU})
     grup = defaultdict(list)
     for a in M.ADIMLAR: grup[(a["sinir"], tuple(sorted((a["sol"], a["sag"]))))].append(a)
     sin = []
@@ -107,75 +105,96 @@ def uret():
             if a["ust"]: ust[a["ust"]] += a["km"]
         pts = [ad_[0]["p"]] + [a["q"] for a in ad_]; nk = pts[::max(1, len(pts) // 12)] + [pts[-1]]
         u_ = max(ust, key=ust.get) if (ust and bas in ("SUB", "OCB", "CCB")) else None
-        not_ = ("[tasarım] " if ad in TASARIM else "") + cumle(bas, cift, u_, yak) + ("" if ad in TASARIM else " " + ANLAM.get(ad, ""))
-        sin.append({"sinir": ad, "ad": M.AD.get(ad, ad), "levhalar": list(cift), "uzunluk_km": round(km), "baskin_sinif": bas,
-                    "sinif_paylari": {k: round(v / km, 2) for k, v in sorted(sc.items(), key=lambda x: -x[1])},
-                    "ort_yaklasma_cm_yil": round(yak, 2), "ust_levha": u_, "anlam": not_, "kaba_iz_enlem_boylam": [[round(p[0], 1), round(p[1], 1)] for p in nk]})
-    J = {"ne": "Dünyam (kurgusal gezegen) levha tektoniği özeti. Hikâye, sahibin elle çizdiği araziden geriye doğru okundu; "
-               "karadaki sınırlar araziden ölçüldü, okyanustakiler tasarım.",
+        goruntu_km = sum(a["km"] for a in ad_ if a["goruntude"])
+        am = AMAC.get(frozenset(cift))
+        tasarim = goruntu_km < 0.5 * km
+        ad_uzun = (am["aciklama"].split(":")[0] if (am and am["aciklama"]) else " / ".join(cift))
+        not_ = ("[tasarım] " if tasarim else "") + cumle(bas, cift, u_, yak) + \
+               (" Hikâyede: %s, %s." % (am["tur"], am["aciklama"]) if (am and not tasarim and am["aciklama"]) else
+                (" Hikâyede: %s." % am["tur"] if (am and not tasarim) else ""))
+        sin.append({"sinir": ad, "ad": ad_uzun, "levhalar": list(cift), "uzunluk_km": round(km), "hikayede_cizili_km": round(goruntu_km),
+                    "baskin_sinif": bas, "sinif_paylari": {k: round(v / km, 2) for k, v in sorted(sc.items(), key=lambda x: -x[1])},
+                    "ort_yaklasma_cm_yil": round(yak, 2), "ust_levha": u_, "amaclanan_tur": am["tur"] if am else None,
+                    "anlam": not_, "kaba_iz_enlem_boylam": [[round(p[0], 1), round(p[1], 1)] for p in nk]})
+    DG = daglar()
+    J = {"ne": "Dünyam (kurgusal gezegen) levha tektoniği özeti, 23 Kasım hikâyesi (tektonik/HIKAYE.md). "
+               "Kıta levhaları sahibin levha kimliği görüntüsünden; uzak okyanus levhaları atlasın gezegen ölçekli modelinden.",
          "gezegen": {"yaricap_km": M.RKM, "gun_saat": M.w.rotation_period_h, "eksen_egikligi_derece": M.w.axial_tilt_deg,
                      "kara": "tek kıta, yaklaşık 60°K..7°G ve 47°B..43°D; karanın ~%7'si, gerisi okyanus"},
          "kurallar": {"koordinat": "enlem kuzey +, boylam doğu + (−180..180), derece",
-                      "hiz": "cm/yıl, Kuzey levhası sabit kabul edilir (göreli çerçeve)",
+                      "hiz": "cm/yıl, Kuzey Levhası sabit kabul edilir (göreli çerçeve)",
                       "sinif_olcutu": "Bird (2003) PB2002: göreli hız sınıra 20°'den yakınsa yanal, değilse yaklaşma/ayrılma; iki yanı denizse okyanusal",
                       "ust_levha": "dalma/çarpışmada: kıta tarafı; ikisi de aynıysa levha sırası"},
-         "siniflar": M.SINIF_AD, "levhalar": lev, "sinirlar": sin,
-         "dag_ve_yer_sekilleri": [{"no": n, "ad": a, "enlem_boylam": p, "yukseklik_m": h, "gercek_benzeri": g, "koken": k} for n, a, p, h, g, k in DAGLAR],
+         "siniflar": M.SINIF_AD, "levhalar": lev, "sinirlar": sin, "amaclanan_tur_karsilastirma": o["amaclanan_tur_karsilastirma"],
+         "dag_ve_yer_sekilleri": [{"ad": a, "enlem_boylam": p, "yukseklik_m": h, "gercek_benzeri": g, "koken": k} for a, p, h, g, k in DG],
          "tarih_eskiden_yeniye": [{"donem": d, "olay": t} for d, t in OLAYLAR],
-         "dosyalar": {"levha_dunya.png": "tüm gezegen, Equal Earth", "levha_kure.png": "iki küre görünümü",
-                      "levha_haritasi.png": "kıta ayrıntısı, dağ numaraları, zaman çizelgesi",
-                      "sinirlar.geojson": "her sınır adımı bir LineString; özellikler: sinir, sol, sag, sinif, ust, yaklasma, yanal, km",
-                      "levha_kimlik.png": "0,1° ızgara (3600×1800, satır 0 = 90°K), değer = levha kimliği (levhalar.json 'kimlik')",
-                      "levhalar.json": "levha alanları, Euler kutupları", "TEKTONIK.md": "kararların tarihçesi (düzeltmeler dahil)"}}
+         "dosyalar": {"HIKAYE.md": "hikâyenin tamamı: dönemler, olaylar (sahibin)",
+                      "levha_dunya.png": "tüm gezegen, Equal Earth", "levha_kure.png": "iki küre görünümü",
+                      "levha_haritasi.png": "kıta ayrıntısı, zaman çizelgesi",
+                      "sinirlar.geojson": "her sınır adımı bir LineString; özellikler: sinir, sol, sag, sinif, ust, yaklasma, yanal, km, goruntude",
+                      "levha_kimlik.png": "kaynak çözünürlüğünde ızgara (4096×2048, satır 0 = 90°K), değer = levha kimliği",
+                      "levhalar.json": "levha alanları, Euler kutupları, amaçlanan türle karşılaştırma",
+                      "kaynak/": "sahibin girdileri (levha_kimlik_8k.png, levhalar_hikaye.json, sinirlar_hikaye.json), 16k kaydı, uzak okyanus levhaları",
+                      "TEKTONIK.md": "kararların tarihçesi (eski hikâye geçersiz işaretli)"}}
     json.dump(J, open(os.path.join(D, "ozet.json"), "w"), ensure_ascii=False, indent=1)
     # ---------------- OZET.md
     L = []
     L += ["# Dünyam levha tektoniği — özet", "",
           "Bu belge kendi başına okunacak biçimde yazıldı (başka bir kişi ya da yapay zekâ sohbeti için). "
-          "Aynı bilgi makine için `ozet.json`'da. Kararların tarihçesi ve düzeltmeler `../TEKTONIK.md`'de. "
+          "Aynı bilgi makine için `ozet.json`'da. Hikâyenin tamamı `HIKAYE.md`'de, kararların tarihçesi `../TEKTONIK.md`'de. "
           "Belge `tektonik/ozet.py` ile modelden üretilir; elle düzenleme, betiği koş.", "",
           "## 1. Kısaca", "",
           "Dünyam kurgusal bir gezegen: yarıçap %.0f km, gün %g saat, eksen eğikliği %g°. Tek bir kıtası var "
-          "(yaklaşık 60°K ile 7°G, 47°B ile 43°D arası); gerisi okyanus. Kıtanın arazisini sahibi elle çizdi; "
-          "levha hikâyesi bu araziden geriye doğru okundu: dağların yeri, yüksekliği, keskinliği ve gerçek Dünya'daki "
-          "benzerleri. Hikâyenin omurgası: güneydeki bütün parçalar kuzeye yürüyüp kuzeydeki ana karaya çarpıyor "
-          "(Afrika ve Hindistan'ın Avrasya'ya çarpması, yani Tetis'in kapanması gibi)." % (M.RKM, M.w.rotation_period_h, M.w.axial_tilt_deg), "",
+          "(yaklaşık 60°K ile 7°G, 47°B ile 43°D arası); gerisi okyanus. Kıta yedi parçadan oluşur ve bugün iki çarpışma etkindir: "
+          "3, 2'nin altına giriyor (Mor Sıradağları); 5, 4'ün altına giriyor (Sarı Sıradağları). 3 milyon yıl önce 1 ile 4 arasındaki "
+          "boğaz Köprü Kıstağı ile kapandı. Eski hikâyenin adları (Duvar, Alt Kıta, İber, Ege, Yarımada, Güneybatı, And tipi batı çarpışması) "
+          "geçersizdir." % (M.RKM, M.w.rotation_period_h, M.w.axial_tilt_deg), "",
           "![tüm gezegen](levha_dunya.png)", "",
           "## 2. Okuma kuralları", "",
           "- Koordinat: enlem kuzey +, boylam doğu + (−180..180), derece.",
-          "- Hız: cm/yıl, **Kuzey levhası sabit** kabul edilir; diğer hızlar ona göredir.",
-          "- Sınır türü elle yazılmadı: her ~27 km'lik sınır adımında iki levhanın göreli hızından hesaplandı "
+          "- Hız: cm/yıl, **Kuzey Levhası sabit** kabul edilir; diğer hızlar ona göredir (sahibin `kaynak/levhalar_hikaye.json`'u).",
+          "- Kıta levhaları (1-7) sahibin levha kimliği görüntüsünden kayıtla enlem ve boylama çevrildi. Kıta ile uzak sırtlar arasındaki "
+          "okyanus en yakın kıta levhasına verildi (edilgen kenar). Batı Okyanusu, Kutup ve Güney Okyanusu levhaları hikâyede yer tutucu; "
+          "yerleri atlasın eski gezegen ölçekli modelinden (sırtlar aynı), Büyük Okyanus Levhası yalnız atlasta var.",
+          "- Sınır türü elle yazılmadı: her ~55 km'lik sınır adımında iki levhanın göreli hızından hesaplandı "
           "(Bird 2003, PB2002 ölçütü): göreli hız sınıra 20°'den yakınsa **yanal**, değilse **yaklaşma** ya da **ayrılma**; "
-          "iki yanı denizse okyanusal, değilse kıtasal.",
-          "- **Ölçülen** (güvenilir): karadaki sınırlar, dağların yeri ve yüksekliği. **Tasarım** (değiştirilebilir): "
-          "okyanustaki sınırlar, okyanus levhalarının hızları, okyanus tabanı derinliği.", "",
+          "iki yanı denizse okyanusal, değilse kıtasal. Hikâyedeki amaçlanan türle karşılaştırma bölüm 5'te.",
+          "- [tasarım] işaretli sınırlar sahibin görüntüsünde yok: görüntü çerçevesinin dışındaki uzantılar ya da uzak okyanus sınırları.", "",
           "| kısaltma | anlamı |", "|---|---|"]
     L += ["| %s | %s |" % (k, v) for k, v in M.SINIF_AD.items()]
-    L += ["", "## 3. Levhalar", "", "| levha | tür | alan (milyon km²) | kara payı | hareket (Kuzey'e göre) | komşular |", "|---|---|---|---|---|---|"]
+    L += ["", "## 3. Levhalar", "", "| no | levha | tür | kapsam | alan (milyon km²) | kara payı | hareket (Kuzey'e göre) | komşular |", "|---|---|---|---|---|---|---|---|"]
     for x in lev:
-        L.append("| %s | %s | %.1f | %%%d | %s | %s |" % (x["ad"], x["tur"], x["alan_milyon_km2"], round(100 * x["kara_payi"]),
-                 ("%s %.1f cm/yıl" % (x["yon"], x["hiz_cm_yil"])) if x["hiz_cm_yil"] > 0.05 else x["yon"], ", ".join(x["komsular"])))
-    L += ["", "## 4. Sınırlar", "", "Uzunluğa göre sıralı; 150 km'den kısa parçalar tabloda yok (hepsi `ozet.json`'da). 'yaklaşma' artıysa levhalar birbirine yaklaşıyor, eksiyse ayrılıyor. Aynı sınır birden çok levha çiftine değiyorsa her çift ayrı satır. [tasarım] işaretli sınırlar okyanusta, araziyle sınanmadı.", "",
-          "| sınır | arasındaki levhalar | baskın tür | uzunluk (km) | yaklaşma (cm/yıl) | üst levha | anlamı |", "|---|---|---|---|---|---|---|"]
+        L.append("| %d | %s%s | %s | %s | %.1f | %%%d | %s | %s |" % (x["kimlik"], x["ad"], " (yer tutucu)" if x["yer_tutucu"] else "", x["tur"], x["kapsam"],
+                 x["alan_milyon_km2"], round(100 * x["kara_payi"]), ("%s %.1f cm/yıl" % (x["yon"], x["hiz_cm_yil"])) if x["hiz_cm_yil"] > 0.05 else x["yon"],
+                 ", ".join(x["komsular"])))
+    L += ["", "## 4. Sınırlar", "", "Uzunluğa göre sıralı; 150 km'den kısa parçalar tabloda yok (hepsi `ozet.json`'da). 'yaklaşma' artıysa levhalar "
+          "birbirine yaklaşıyor, eksiyse ayrılıyor. Aynı levha çifti birden çok parçaya bölünmüşse her parça ayrı satır.", "",
+          "| sınır | arasındaki levhalar | baskın tür (Bird) | uzunluk (km) | yaklaşma (cm/yıl) | üst levha | anlamı |", "|---|---|---|---|---|---|---|"]
     for x in sin:
         if x["uzunluk_km"] < 150: continue
         L.append("| %s | %s | %s (%%%d) | %d | %+.1f | %s | %s |" % (x["ad"], " / ".join(x["levhalar"]), M.SINIF_AD[x["baskin_sinif"]],
                  round(100 * x["sinif_paylari"][x["baskin_sinif"]]), x["uzunluk_km"], x["ort_yaklasma_cm_yil"], x["ust_levha"] or "—", x["anlam"]))
-    L += ["", "## 5. Dağlar ve yer şekilleri (kıta)", "", "![kıta](levha_haritasi.png)", "",
-          "| no | ad | yer (enlem, boylam) | yükseklik (m) | gerçek benzeri | kökeni |", "|---|---|---|---|---|---|"]
-    for n, a, p, h, g, k in DAGLAR:
-        L.append("| %s | %s | %.1f, %.1f | %d | %s | %s |" % (n, a, p[0], p[1], h, g, k))
-    L += ["", "Levha içi yapılar: Alt Kıta'nın yaylasıyla kuzeyindeki ova arasında, kabaca doğu-batı uzanan **Kuzey Anadolu benzeri "
-          "sağ yanal fay**. Gerilme havzaları: iç denizin kuzeyi (yay ardı), takımada ile Alt Kıta arası (**Ege**), yarımadanın "
-          "kuzeyindeki körfez (**Tiren benzeri**), Alt Kıta'nın doğusundaki kapalı körfez (**Karadeniz benzeri**).", "",
-          "## 6. Tarih (eskiden yeniye, göreli)", ""]
+    L += ["", "## 5. Amaçlanan tür ile Bird sınıfı", "",
+          "Sahibin `sinirlar_hikaye.json`'undaki tür ile yeni hızlardan hesaplanan Bird sınıfı, levha çifti başına; yalnız sahibin görüntüsünde "
+          "çizili kesimler sayıldı ('görüntüde km'), görüntü dışındaki uzantı ayrı. 'uyum' = amaçlanan türe uyan sınıfların uzunluk payı "
+          "(kıta çarpışmasında CCB ve kıyı kesimindeki SUB uyar). Hikâyenin kuralı: ayrılırsa **tablo esas alınır**, fark not edilir.", "",
+          "| levhalar | amaçlanan | Bird baskın | uyum | görüntüde km | dışarıda km | sınıf payları |", "|---|---|---|---|---|---|---|"]
+    for x in o["amaclanan_tur_karsilastirma"]:
+        L.append("| %s | %s | %s | %s | %d | %d | %s |" % (" / ".join(x["levhalar"]), x["amac"], M.SINIF_AD.get(x["bird"], "—") if x["bird"] else "— (yer tutucu, çizilmedi)",
+                 ("%%%d" % round(100 * x["uyum"])) if x["uyum"] is not None else "—", x["km"], x["disarida_km"],
+                 ", ".join("%s %%%d" % (k, round(100 * v)) for k, v in x["paylar"].items()) or "—"))
+    L += ["", "## 6. Dağlar ve yer şekilleri (kıta)", "", "![kıta](levha_haritasi.png)", "",
+          "En yüksek noktalar araziden ölçüldü (sınırın 300-450 km'si içinde ya da levhanın karasında).", "",
+          "| ad | yer (enlem, boylam) | yükseklik (m) | gerçek benzeri | kökeni |", "|---|---|---|---|---|"]
+    for a, p, h, g, k in DG:
+        L.append("| %s | %.1f, %.1f | %d | %s | %s |" % (a, p[0], p[1], h, g, k))
+    L += ["", "## 7. Tarih (eskiden yeniye)", "", "Ayrıntı ve tek tek olaylar `HIKAYE.md`'de.", ""]
     L += ["%d. **%s**: %s" % (i + 1, d, t) for i, (d, t) in enumerate(OLAYLAR)]
-    L += ["", "Rakam (milyon yıl) verilmedi: arazi yalnız göreli sırayı söyler.", "",
-          "## 7. Açık kararlar", "",
-          "- Okyanus levhalarının sayısı, sırtların yeri ve hızlar tasarım; okyanus tabanı verisi yok.",
-          "- Buzul çağı geçmişi (Alp tipi buzul gölleri için) henüz karar verilmedi.",
-          "- Göller ve nehirler bu modelden sonra gelecek (yarık gölleri: 9, Alt Kıta'nın kapalı havzaları).", "",
-          "## 8. Dosyalar", ""]
+    L += ["", "## 8. Açık kararlar", "",
+          "- Uzak okyanus levhalarının (8-11) yeri ve Büyük Okyanus'un hızı tasarım; hikâyede yer tutucu.",
+          "- Kaçış Bloğu (2'nin güneydoğu köşesi, doğuya 1,2 cm/yıl) çok küçük olduğu için levha haritasında yok (hikâye kararı).",
+          "- Doğu Dil Levhası dönerek ilerliyor (doğu ucu ~2,4, batı ucu ~1,2 cm/yıl); modelde Euler vektörüne 0,3°/My dönme eklendi.", "",
+          "## 9. Dosyalar", ""]
     L += ["- `%s`: %s" % (k, v) for k, v in J["dosyalar"].items()]
     open(os.path.join(D, "OZET.md"), "w").write("\n".join(L) + "\n")
     print("yazildi: OZET.md, ozet.json;", len(sin), "sinir grubu")

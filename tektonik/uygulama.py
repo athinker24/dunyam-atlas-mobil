@@ -22,9 +22,8 @@ Volkan kuşakları (27 Eylül, sahibi: "volkan kuşakları ile birlikte"):
   sınıfı çarpışma olan sınırın dalma parçaları da sayılmaz.
 - Yarık volkanları: kıta yarığı adımlarında, sınırın üstünde (Doğu Afrika
   yarığı bol, Baykal seyrek; burada "seyrek" diye gösterilir).
-- Sönmüş: güneybatı bloğunun batı kıyısında 12°K güneyi (TEKTONIK.md bölüm
-  4: küçük kıta dalma hattına gelince volkanlar sustu; levha haritasındaki
-  işaretlerle aynı sınır).
+- Sönmüş kuşak: eski hikâyede güneybatı bloğunun batı kıyısındaydı; 23 Kasım
+  hikâyesinde o dalma yok, sönmüş kuşak çizilmez (alan uygulamada duruyor).
 Okyanus sırtları da volkaniktir ama su altındadır; ayrı kuşak çizilmez.
 """
 import json, math, os
@@ -79,6 +78,9 @@ def main():
     # baskın sınıfı kıta çarpışması olan sınırda yay yok (Duvar dikişinin
     # denize değen kısa ucu dalma sayılıyor ama cephe Himalaya gibi)
     baskin = {s["sinir"]: s["baskin_sinif"] for s in sorted(oz["sinirlar"], key=lambda s: s["uzunluk_km"])}
+    # hikâye tablosu esas (HIKAYE.md "Sınırlar"): amaçlanan türü dalma olmayan çiftte yay yok,
+    # Bird hesabı orada dalma bulsa bile (fark OZET.md bölüm 5'te)
+    amac = {frozenset(s["levhalar"]): s["tur"] for s in json.load(open(os.path.join(BURASI, "kaynak", "sinirlar_hikaye.json"), encoding="utf-8"))}
     for s in oz["sinirlar"]:
         ad_sinir[s["sinir"]] = s["ad"]
         anlam[(s["sinir"], frozenset(s["levhalar"]))] = s["anlam"]
@@ -139,6 +141,9 @@ def main():
             yariklar.append((p["sinir"], lo, la)); continue
         if p["sinif"] not in ("SUB", "OCB") or p["yaklasma"] < YAY_ESIK or not p["ust"] or baskin.get(p["sinir"]) == "CCB":
             continue
+        tur = amac.get(frozenset((p["sol"], p["sag"])))
+        if tur and not tur.startswith("dalma"):
+            continue
         # sınır doğrultusu (km) ve iki normal; üst levha hangi taraftaysa
         te = (lo2 - lo1) * 111.2 * math.cos(math.radians(la)); tn = (la2 - la1) * 111.2
         L = math.hypot(te, tn) or 1; te, tn = te / L, tn / L
@@ -152,7 +157,7 @@ def main():
             continue
         on = kaydir(la, lo, (secilen[0] * CEPHE_KM, secilen[1] * CEPHE_KM))
         arka = kaydir(la, lo, (secilen[0] * KUSAK_KM, secilen[1] * KUSAK_KM))
-        sonuk = p["sinir"] == "bati_cukur" and on[0] < 12
+        sonuk = False      # eski hikâyenin sönmüş batı kuşağı (23 Kasım'da geçersiz); yeni hikâyede sönmüş yay yok
         yaylar.append(dict(sinir=p["sinir"], on=on, arka=arka, sonuk=sonuk, y=p["yaklasma"]))
     # ardışık yay noktalarını kuşak çizgilerine bağla (aynı sınır, aynı durum, 60 km'den yakın)
     kusaklar = []; cur = None

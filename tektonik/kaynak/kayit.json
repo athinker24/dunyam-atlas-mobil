@@ -1,0 +1,8 @@
+{
+ "ne": "dunyam_ana_16k.png pikseli (X saga, Y asagi) -> tuval pikseli (dunya/dunyam_heightmap.png, 4096x2048). tuval sutunu = ox + sx*X, satiri = oy + sy*Y; enlem = 90 - (satir+0.5)*180/2048, boylam = -180 + (sutun+0.5)*360/4096. Kara maskesi IoU'su en buyuk olcek+kayma (0.951).",
+ "sx": 0.321581,
+ "sy": 0.323385,
+ "ox": -533.436,
+ "oy": -213.616,
+ "kara_esigi_16k": 13996
+}

@@ -2,11 +2,88 @@
 
 **Hızlı ve kendi başına anlaşılır özet: `tektonik/OZET.md`** (makine için `tektonik/ozet.json`). Bu dosya kararların tarihçesi; düzeltmeler dahil, sonuç için özete bak.
 
-Dünyanın sahibiyle adım adım kuruluyor. Arazi elle çizildi; hikâye araziden
-geriye doğru okunuyor. Motor levha bilmez, iklimi etkilemez. Numaralar
+Dünyanın sahibiyle adım adım kuruluyor. 23 Kasım'dan beri hikâye sahibinin kendi kaynağından
+geliyor (aşağıda "YENİ HİKÂYE"); eskiden arazi elle çizilip hikâye araziden geriye doğru okunuyordu. Motor levha bilmez, iklimi etkilemez. Numaralar
 26 Eylül dağ ölçümündeki sıradağlar (tepe yüksekliğine göre sıralı).
 
-## 1. Büyük Çarpışma (KARARLAŞTI, 26 Eylül)
+## YENİ HİKÂYE (23 Kasım, sahibi: "tektonik hikâye değişti; atlastaki tektonik katmanı bu yeni hikâyeye geçir")
+
+**Bu bölüm geçerli olandır. Aşağıdaki 1-8 numaralı bölümler ve "Levha haritası" eski hikâyedir, GEÇERSİZ;
+karar tarihçesi olarak duruyor.** Eski adlar (Duvar, Alt Kıta, İber, Ege, Yarımada, Güneybatı, And tipi batı
+çarpışması) artık kullanılmaz.
+
+**Kaynak.** Sahibin Merakproject deposundaki `tarih/olaylar.py` (tek kaynak); atlasa paket olarak geldi:
+`tektonik/HIKAYE.md` (hikâyenin tamamı, kendi başına okunur), `tektonik/kaynak/levha_kimlik_8k.png` (her piksel
+levha kimliği, 16k ana haritanın yarısı), `kaynak/levhalar_hikaye.json` (hızlar, yönler, Kuzey sabit),
+`kaynak/sinirlar_hikaye.json` (amaçlanan sınır türleri). Yeni ana arazi `worldinfo/dunyam_ana_16k.png`.
+
+**Özet.** Kıta yedi parçadır; bugün iki çarpışma etkin: 3, 2'nin altına (Mor Sıradağları, 50 MYÖ'den beri);
+5, 4'ün altına (Sarı Sıradağları, 8 MYÖ'den beri). Doğu Okyanusu Doğu Hendeği'nde 3'ün altına dalar; iç
+denizdeki ada (6) yay ardı gerilmesiyle güneye çekilir (Ada Hendeği); Güneydoğu Kanalı açılan yarık; 7 Kanal
+Fayı boyunca kuzeybatıya kayar. 3 MYÖ'de Köprü Kıstağı 1 ile 4 arasındaki boğazı kapattı.
+
+**Arazi (Köprü Kıstağı).** `_mk_heightmap.py`, `_egri_kur.py` ve `_akinti_kur.py` bu repoda yok (DURUM.md
+"Çalışma biçimi"), o yüzden aynı ilkeyle elle girildi: 16k harita tuvale kara maskesi IoU'su en büyük
+ölçek+kayma ile kaydedildi (`tektonik/kaynak/kayit.json`, IoU 0.951; 16k'da kara > 13996, 13996 sığ deniz).
+Yalnız kıstak değişti: 25.2°K 27.7°B, 164 tuval pikseli, 80-400 m, mevcut `elev_curve`'ün tersiyle griye.
+Eğri değişmedi, `_egri_kur.py --yaz` koşulmadı (CLAUDE.md §9). Tuvalde körfez ile iç deniz zaten bağlı
+değildi (aradaki en dar kara ~35 km) ve hiçbir akıntı yolu boğazdan geçmiyor: akıntılar değişmedi.
+Ayrıntı `dunya/dunyam.json` → `_heightmap_kaynak`.
+
+**Levha modeli (`tektonik/levhalar.py`, yeniden yazıldı).**
+- Kıta levhaları 1-7 sahibin görüntüsünden, `kayit.json` ile enlem ve boylama (piksel ×2 ile 16k).
+- 16k çerçeve küreden büyük (kayıtla 108°K..110°G, 227°B..225°D'ye düşer); 8, 9, 10 o çerçevede düz
+  çizgilerle bölünmüş yer tutucu. Bu yüzden uzak okyanus levhaları atlasın eski gezegen ölçekli modelinden
+  korundu (`kaynak/uzak_okyanus.png`): Batı Okyanusu Levhası = eski Uzak Okyanus, Kutup Levhası = eski Kuzey
+  Kutup, Güney Okyanusu Levhası = eski Güney Kutup, Büyük Okyanus Levhası (11) yalnız atlasta. Sırtlar ve
+  çukur eskisiyle aynı yerde.
+- Kıta ile uzak sırtlar arasındaki okyanus en yakın kıta levhasına verildi (edilgen kenar: kıta ile
+  önündeki okyanus aynı levha). Sonuç: çerçevenin dışında Orta Blok ve Uzun Yarımada güneye uzanan şeritler,
+  Kuzey Levhası batı ve kuzey okyanusunu kaplar (123.6 milyon km²).
+- Hızlar sahibin tablosundan; Euler vektörü tohum noktasındaki hızdan. Doğu Dil Levhası dönerek ilerler:
+  Euler vektörüne saat yönünün tersine 0,3°/My eklendi. Doğu Okyanusu'nun tohumu kayıtla Büyük Okyanus'a
+  düşüyordu; levhanın ortasına (7.8°K 65.3°D) alındı.
+- Sınırlar kimlik rasterından çıkarılır (komşu levhalar arası kenar, zincir, ~55 km'lik adımlar); sınıf
+  Bird (2003) ölçütüyle hesaptan. Uzunluklar sahibin tablosundakinden ~%15-25 uzun: raster kenarı basamaklı.
+- Volkan yayları (`uygulama.py`) hikâye tablosunu esas alır: amaçlanan türü dalma olmayan çiftte yay
+  çizilmez (Bird orada dalma bulsa bile). Eski "sönmüş batı kuşağı" kuralı kalktı.
+
+**Bird sınıfı ile amaçlanan tür (madde 4).** Yalnız sahibin görüntüsünde çizili kesimler sayıldı; uyum =
+amaçlanan türe uyan sınıfların uzunluk payı. Hikâyenin kuralı: ayrılırsa tablo esas.
+
+| levhalar | amaçlanan | Bird baskın | uyum | görüntüde km | sınıf payları |
+|---|---|---|---|---|---|
+| Kuzey Levhası / Doğu Okyanusu Levhası | yanal | dalma | %4 | 5734 | SUB %78, CCB %12, CRB %6, CTF %4 |
+| Doğu Dil Levhası / Doğu Okyanusu Levhası | dalma | dalma | %100 | 4484 | SUB %100 |
+| Kuzey Levhası / Ada Bloğu | ayrılma | okyanus sırtı | %49 | 3565 | OSR %45, SUB %29, OTF %19, CRB %5, CCB %3 |
+| Doğu Dil Levhası / Uzun Yarımada Bloğu | ayrılma | okyanus sırtı | %71 | 3620 | OSR %68, OTF %24, SUB %3, CRB %3, CTF %2 |
+| Doğu Okyanusu Levhası / Kutup Levhası | yanal | okyanusal yakınlaşma | %0 | 109 | OCB %100 |
+| Kuzey Levhası / Doğu Dil Levhası | kıta çarpışması | kıta çarpışması | %81 | 3445 | CCB %79, OTF %18, SUB %2, CTF %2 |
+| Kuzey Levhası / Orta Blok | kıta çarpışması | kıta çarpışması | %100 | 3738 | CCB %51, SUB %49 |
+| Kuzey Levhası / Doğu Havza Levhası | yanal | dalma | %21 | 2570 | SUB %49, CRB %22, CTF %15, OTF %7, CCB %6, OSR %2 |
+| Doğu Dil Levhası / Doğu Havza Levhası | yanal | dalma | %25 | 3009 | SUB %49, CTF %22, OSR %11, CCB %11, CRB %4, OTF %4 |
+| Orta Blok / Uzun Yarımada Bloğu | yanal | okyanus dönüşüm fayı | %63 | 3419 | OTF %52, SUB %13, CTF %11, OSR %10, CRB %10, CCB %5 |
+| Ada Bloğu / Doğu Havza Levhası | dalma | dalma | %74 | 1900 | SUB %74, OTF %26 |
+| Orta Blok / Doğu Havza Levhası | yanal | kıta yarığı | %18 | 1284 | CRB %74, OTF %13, CCB %8, CTF %4 |
+| Doğu Dil Levhası / Orta Blok | ayrılma | okyanus sırtı | %100 | 55 | OSR %100 |
+
+Ayrılanlar (uyum %50'nin altı):
+- **Kuzey / Doğu Okyanusu (2'nin doğu açığı):** amaçlanan yanal, Bird %79 dalma. Doğu Okyanusu batıya
+  6,5 cm/yıl gidiyor, sınır ise kuzey-güney uzanıyor: hareket sınıra dik, yakınlaşma ~3,9 cm/yıl. Yanal olması
+  için ya Doğu Okyanusu'nun bu kesimde kuzey ya da güneye gitmesi ya da sınırın doğu-batı uzanması gerekir.
+- **Doğu Havza'nın üç sınırı** (Kuzey, Doğu Dil, Orta Blok ile): amaçlanan yanal, Bird karışık (dalma,
+  yarık, yanal). Doğu Havza yavaş (0,8 cm/yıl kuzeybatı) ve sınırları kıvrımlı: yönün küçük değişimi sınıfı
+  değiştiriyor. Orta Blok / Doğu Havza'da Bird %74 kıta yarığı (Orta Blok batıya, Doğu Havza kuzeybatıya,
+  aradaki sınır onları ayırıyor).
+- **Kuzey / Ada Bloğu:** amaçlanan ayrılma, Bird %45 sırt + %5 yarık, %29 dalma. Ada güneye 0,7 cm/yıl
+  gidiyor; adanın kuzeyi ayrılıyor ama güneybatı kesimde Kuzey Levhası adanın güneyinde kaldığı için
+  aynı hareket yakınlaşma oluyor.
+- Uyanlar: Mor Sıradağları (%81), Sarı Sıradağları (%100, kıyı kesimi dalma), Doğu Hendeği (%100), Ada Hendeği
+  (%74), Güneydoğu Kanalı (%71), Kanal fayı (%63).
+- Yer tutucu sınırlar (8, 9, 10 ile) görüntüde çizgi olarak var ama çerçeve kenarında; kürede yerleri eski
+  modelden, karşılaştırılmadı.
+
+## 1. Büyük Çarpışma (KARARLAŞTI, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 **Karar (sahip):** Duvar (3) ve çevresindeki dağlar, platolar, havzalar
 (1, 2, 9 dahil) tek bir çarpışmanın ürünü: güneydoğudaki blok (sahibin
@@ -43,7 +120,7 @@ bloğun kendi dağları (7, 8, 11) ayrı ele alınacak.
 Himalaya'da çarpan kıtaya bakan güney yamaç diktir. Arazinin elle
 çizilmesinden; istenirse güney yamaç dikleştirilir.
 
-## 2. Alt kıta: Anadolu benzeri kolaj (KARARLAŞTI, 26 Eylül)
+## 2. Alt kıta: Anadolu benzeri kolaj (KARARLAŞTI, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 **Sahibin tasarımı:** blok Anadolu örnek alınarak çizildi; doğu ve batı
 kıyısına paralel sıralar, arada platolar, havzalar, vadiler.
@@ -77,7 +154,7 @@ doğudaki körfezden batı kıyısına kabaca doğu-batı uzanır. Sağ yönlü:
 fayın güneyi batıya, serbest kenara (geri çekilen iç deniz levhasına)
 kaçar; kuzeyi Duvar'a bağlı kalır. Büyük deprem hattı.
 
-## 3. Yarımada ve 4: İtalya-Alpler benzeri (KARARLAŞTI, 26 Eylül)
+## 3. Yarımada ve 4: İtalya-Alpler benzeri (KARARLAŞTI, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 Sahibin tasarımı: güneybatı bloğunun doğusundaki yarımada İtalya'dan
 esinli, omurgasında Apenin benzeri sıra; batıdaki kıtaya (güneybatı
@@ -102,7 +179,7 @@ kıtanın güneybatı köşesine dar bir boğazla hâlâ değiyor.
 **Sonraya:** Alp tipi büyük buzul gölleri için buzul çağı geçmişi gerekir
 (4 ~11°K'de); tektonikten sonra ayrı karar.
 
-## 4. 10 ve 6: batıdan gelen devasa çarpışma (KARARLAŞTI, 26 Eylül)
+## 4. 10 ve 6: batıdan gelen devasa çarpışma (KARARLAŞTI, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 Sahibin tasarımı: çizdiği güneybatı kıyı kuşağının tamamı tek bir devasa
 çarpışma; içindeki düzlük onun platosu; çarpan batıdaki okyanus levhası,
@@ -130,7 +207,7 @@ Güneybatı bloğu doğudan (4) ve batıdan (bu çarpışma) sıkışan bir kıt
 Tuz düzlüğü / Titikaka benzeri göl istenirse plato ortasına sığ çanak
 açmak gerekir (plato yüzeyi şu an dışarı akıyor); arazi kararı, sonraya.
 
-## 5. 5 ve daire içi: İber Yarımadası benzeri (KARARLAŞTI, 26 Eylül)
+## 5. 5 ve daire içi: İber Yarımadası benzeri (KARARLAŞTI, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 Sahibin tasarımı: 5 klasik alt kıta / üst kıta çarpışması; güneyindeki
 yükseltiler eski çarpışmaların kalıntısı; bölge İber Yarımadası'ndan esinli.
@@ -150,7 +227,7 @@ kalıntısı olarak kalıyor (bölüm 1, yol A).
 blok, alt kıta, İtalya benzeri yarımada, batıdaki küçük kıta) aynı kuzeye
 yakınlaşmanın içinde. Tetis kapanışının Dünyam karşılığı.
 
-## 6. İç denizdeki takımadalar: Yunanistan-Ege benzeri (KARARLAŞTI, 26 Eylül)
+## 6. İç denizdeki takımadalar: Yunanistan-Ege benzeri (KARARLAŞTI, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 Sahibin tasarımı: Yunanistan'dan esinli, dağlık, iç denizin batıya yakın
 ortasında.
@@ -172,7 +249,7 @@ gerilmesiyle birlikte iki yanlı Ege.
 takımadanın altına dalar; takımada ile Duvar arasındaki deniz, geri
 çekilmenin arkasında açılan gerilme havzasıdır.
 
-## 7. Kuzeydoğu kaçış bloğu (sahip ekledi, 26 Eylül)
+## 7. Kuzeydoğu kaçış bloğu (sahip ekledi, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 **Sahip:** 9, 3 ve 2 arasına bir levha daha; ayrıntıyı Claude belirler.
 **Ölçüler:** ~5,1 milyon km², ort. 1.567 m, %43'ü 1.500 m üstü, %42'si
@@ -185,7 +262,7 @@ sınırı 2 boyunca sol yanal, güney sınırı Duvar'ın kuzey eteği boyunca
 sağ yanal faylar. Dağlık ve yüksek olması sınırlarının hepsinin etkin
 olmasından.
 
-## 8. Bölüm 2'ye geometri düzeltmesi (Claude, 26 Eylül)
+## 8. Bölüm 2'ye geometri düzeltmesi (Claude, 26 Eylül) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 Bölüm 2'de "7'nin doğusundaki körfez dalmanın arkasında açıldı" yazıyordu;
 bu sıra ters: yay ardı havzası çukurun öbür tarafında açılır. Doğru sıra
@@ -195,7 +272,7 @@ havzası) → 7 (aynı dalmanın körfez açılmadan önce yükselttiği eski ke
 Körfez açılırken yarımadayı 7'den kopardı (Japon Denizi'nin Japonya'yı
 Asya'dan koparması gibi; Batı Karadeniz de benzer biçimde açıldı).
 
-## Levha haritası (ilk sürüm, yerini aşağıdaki modele bıraktı)
+## Levha haritası (ilk sürüm, yerini aşağıdaki modele bıraktı) — GEÇERSİZ (23 Kasım, yeni hikâye)
 
 `tektonik/levha_haritasi.png`, üreten betik `tektonik/harita.py` (çizgiler
 araziden ölçülür, adlar elle). Levhalar: Kuzey, Kuzeydoğu kaçış bloğu,
@@ -203,7 +280,7 @@ araziden ölçülür, adlar elle). Levhalar: Kuzey, Kuzeydoğu kaçış bloğu,
 okyanusu levhasının üstünde), Batı okyanusu, Doğu okyanusu, İç deniz.
 Okyanus ortası sırtları çizilmedi: okyanus tabanı verisi yok, karar sahibin.
 
-## Levha modeli (26 Eylül, sahip istedi: bütün gezegeni saran, sınırları tam)
+## Levha modeli (26 Eylül, sahip istedi: bütün gezegeni saran, sınırları tam) — GEOMETRİSİ GEÇERSİZ (23 Kasım); Bird yöntemi ve uzak okyanus sınırları geçerli
 
 **Yöntem** (gerçek dünyadaki sayısallaştırmanın iki standardı birleştirildi):
 - *GPlates kapalı levha çokgenleri* (Gurnis vd. 2012): levhalar sınır
@@ -271,7 +348,7 @@ gösteriyordu.
 levha kimliği rasterı), `levha_dunya.png`, `levha_kure.png`, `levha_haritasi.png`.
 
 
-## Uygulamada (27 Eylül, sahibi: "tektonik haritasını uygulamaya yükle, volkan kuşakları ile birlikte")
+## Uygulamada (27 Eylül, sahibi: "tektonik haritasını uygulamaya yükle, volkan kuşakları ile birlikte") — geçerli; sönmüş batı kuşağı kuralı GEÇERSİZ (23 Kasım)
 
 Arazi sekmesi → **Levhalar**. Veri `tektonik/uygulama.py`'den (`data/tektonik.json`,
 `data/levha.png`); levha modeli yeniden koşulmaz, bu klasörün çıktıları okunur.
