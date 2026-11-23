@@ -31,3 +31,21 @@ ve `dunya/dunyam.currents.json` bellekte değiştirilir, dosyalar değişmez.
 
 Akıntılar bölgeye neredeyse etkisiz. En güçlü kol convective_c (bedeli dünya genelinde kurak payı);
 bölge dışına en az dokunan engellenme.
+
+## 2. birleşimler (23 Kasım)
+
+0.5°'de: engellenme 600 + yayılım 2000 %36.1 (dışı %8.8); 450 + 2000 %42.3 (%11.1); 600 + 2000 + muson 1.1
+%46.9 (%13.6). 0.25°'de engellenme çok daha sert (§7.2), hedefi aştı; daha yumuşakları 0.25°'de doğrudan
+denendi (`deney_2.png`):
+
+| deneme (0.25°) | bölge bozkırı | bölge yağışı | B | bölge dışı sınıf değişen |
+|---|---|---|---|---|
+| şimdiki | 32 | 474 | 10.1 | — |
+| blocking_dz_m 700 | 36.8 | 462 | 11.3 | 3.4 |
+| blocking_dz_m 750 + blocking_spread_km 1600 | 40.3 | 416 | 12.0 | 6.4 |
+| blocking_spread_km 2000 | 40.0 | 410 | 12.5 | 7.6 |
+| 600 + 2000 | 52.5 | 396 | 15.4 | 11.4 |
+| 600 + 2000 + monsoon 1.1 | 59.0 | 381 | 16.5 | 15.3 |
+
+Hedefe (main %43) en yakın, bedeli en düşük: blocking_dz_m 750 + blocking_spread_km 1600. Bozkır
+platonun güneyindeki şeride de yayılıyor (B'nin artışının bir kısmı oradan).

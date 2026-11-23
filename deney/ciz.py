@@ -12,12 +12,12 @@ for f in ("sonuc.jsonl",):
         for l in open(p):
             if l.startswith("{"):
                 j = json.loads(l); sonuc[j["ad"]] = j
-w = uret.dunya_yukle(); g = uret.grid_kur(w, 0.5)
+w = uret.dunya_yukle(); g = uret.grid_kur(w, float(sys.argv[1].split("|")[0].rsplit("_", 1)[1]))
 land = g.land.astype(bool); lat = np.asarray(g.lat); lon = np.asarray(g.lon)
 ii, jj = np.where(land); i0, i1, j0, j1 = ii.min() - 2, ii.max() + 3, jj.min() - 2, jj.max() + 3
 pal = np.zeros((256, 3), np.uint8); pal[:] = (14, 22, 30)
 for k, (ad, rgb, _) in uret.LEG.items(): pal[k] = rgb
-F = 3
+F = 3 if "0.5" in sys.argv[1] else 2
 try:
     fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 20); f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 16)
 except Exception:
@@ -45,4 +45,4 @@ for k, p in enumerate(pan): c.paste(p, ((k % kol) * (W_ + 10), 44 + (k // kol) *
 lx = 8
 for k in (7, 6, 21, 22, 25, 26, 3, 8, 11):
     ad, rgb, _ = uret.LEG[k]; dc.rectangle([lx, 12, lx + 18, 30], fill=rgb); dc.text((lx + 24, 12), ad, fill=(220, 220, 210), font=f); lx += 90
-c.save(os.path.join(S, "deney_1.png")); print(c.size)
+c.save(os.path.join(S, os.environ.get("CIKTI", "deney_1.png"))); print(c.size)
