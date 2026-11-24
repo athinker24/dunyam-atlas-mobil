@@ -260,3 +260,10 @@ değişen kara %3.4. Akıntılar ve muson denendi, seçilmedi.
 `deney-iklim` (engellenme 700) + `storm_contrast_sigma_k` 10 → 5 (gerekçe `_firtina`, tarama `deney/DENEY.md`
 bölüm 3). Bütün katmanlar yeniden üretildi; 12/12, 36/36. Akdeniz Cs %18.2 → %16.6 (Cw 25.9 → 27.4),
 bozkır bölgesi %36.8 → %35.5, B 11.3 → 12.0, kara yağışı 934 → 944 mm. İki dalın önizlemesi yan yana durur.
+
+## İklim denemesi: Akdeniz 2 (24 Kasım, `deney-akdeniz-2` dalı, YAYINDA DEĞİL)
+
+`deney-akdeniz` + `storm_c` 60 → 40 (gerekçe `_firtina`, `deney/DENEY.md` bölüm 4). 12/12, 36/36.
+Engellenme 700'e göre: Cs %18.2 → %14.9 (30-40°K 2.2 → 1.0, 20-30°K 10.1 → 8.7, 10-20°K 5.8 → 5.1),
+Cw 25.9 → 28.8, B 11.3 → 13.8, bozkır bölgesi %36.8 → %36.1. Kış (Ara-Şub) yağışı 40-60°K 67 → 62 mm,
+25-40°K 105 → 90 mm. Üç önizleme yan yana: deney-iklim, deney-akdeniz, deney-akdeniz-2.
