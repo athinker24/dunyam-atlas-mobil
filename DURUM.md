@@ -254,3 +254,9 @@ arazi) → %32; yağış ~460 → ~700 → ~495 mm (0.25° koşuda 474 mm). Göl
 (gerekçe `_yagis_ayari`, tarama `deney/DENEY.md`). Bütün katmanlar yeniden üretildi; 12/12, 36/36.
 Bozkır bölgesi %32 → %36.8 (main %43), yağış 474 → 462 mm; dünyada B 10.1 → 11.3, bölge dışında sınıfı
 değişen kara %3.4. Akıntılar ve muson denendi, seçilmedi.
+
+## İklim denemesi: Akdeniz'i azaltma (24 Kasım, `deney-akdeniz` dalı, YAYINDA DEĞİL)
+
+`deney-iklim` (engellenme 700) + `storm_contrast_sigma_k` 10 → 5 (gerekçe `_firtina`, tarama `deney/DENEY.md`
+bölüm 3). Bütün katmanlar yeniden üretildi; 12/12, 36/36. Akdeniz Cs %18.2 → %16.6 (Cw 25.9 → 27.4),
+bozkır bölgesi %36.8 → %35.5, B 11.3 → 12.0, kara yağışı 934 → 944 mm. İki dalın önizlemesi yan yana durur.
