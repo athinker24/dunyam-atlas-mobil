@@ -1,6 +1,6 @@
 # DURUM — aktif durum (her oturumun başında oku)
 
-Son güncelleme: 26 Eylül 2026, bulut oturumu (masaüstü sonuçları dahil). Bu dosya "şu an
+Son güncelleme: 24 Kasım 2026, bulut oturumu (`deney-akdeniz-2` main'e birleşti). Bu dosya "şu an
 neredeyiz" sorusunun cevabıdır; kalıcı bilgi `CLAUDE.md`'de, gece bakımının
 ayrıntısı `GECE.md`'de. Oturumu bitirirken bu dosyayı güncelle.
 
@@ -224,7 +224,7 @@ eğri ve akıntılar değişmedi (gerekçe `_heightmap_kaynak`). Diğer katmanla
 hayvan) kıstak için yeniden üretilmedi. Bird ile amaçlanan türün ayrıldığı yerler TEKTONIK.md'de: en belirgini
 Kuzey / Doğu Okyanusu (hikâyede yanal, hızlarla dalma).
 
-## Yeni ana arazi (23 Kasım, `arazi-ana` dalı, YAYINDA DEĞİL)
+## Yeni ana arazi (23 Kasım, `arazi-ana` dalı; 24 Kasım main'e girdi, yerini `arazi-ana-2` aldı)
 
 Sahibin paketi (`atlas_ana_paket.zip`): Merak ana haritasından (16k, Köprü Kıstağı dahil, kıyı v2) sahibin
 kendi kaydıyla üretilmiş tuval, doğrusal eğri (en yüksek 5390 m), yeni kabartma görseli. Akıntılar elle
@@ -239,7 +239,7 @@ Düzeltmeler: `tektonik/ozet.py` dağ listesine `no` geri eklendi (`su/uret_su.p
 okuyor; yeni tektonik özette düşmüştü, main'de de bozuk); `su/duzelt.py` deneme dallarındaki tatlı göl
 düzeltmeleriyle (yoksa 95 milyon km²'lik sahte göl).
 
-## Ana arazi son sürüm (23 Kasım, `arazi-ana-2` dalı, YAYINDA DEĞİL)
+## Ana arazi son sürüm (23 Kasım, `arazi-ana-2` dalı, 24 Kasım main'e birleşti, YAYINDA)
 
 Sahibin bozkır düzeltmeli son sürümü: Kaynak Sırası'nın güney ucunda iç deniz kıyısı yükseltildi (34.4-38.3°K,
 8.9°B-1.2°D ortalama +700 m, 36°K gediği kapandı); doğrusal eğri, en yüksek 5490 m. `arazi-ana`nın düzeltmeleri
@@ -248,20 +248,20 @@ Main'e göre: kara payı %6.9 → %6.6; A 11.5 → 11.7, B 13.0 → 10.1 (BS 12.
 D 26.4 → 29.5, E 7.8 → 3.9; ortak karada sınıf değişen %60. Bozkır bölgesi: BS %43 (main) → %20 (ilk ana
 arazi) → %32; yağış ~460 → ~700 → ~495 mm (0.25° koşuda 474 mm). Göller 34, karanın %1.1'i.
 
-## İklim denemesi: engellenme 700 (23 Kasım, `deney-iklim` dalı, YAYINDA DEĞİL)
+## İklim denemesi: engellenme 700 (23 Kasım, `deney-iklim` dalı, 24 Kasım main'e birleşti, YAYINDA)
 
 `arazi-ana-2`'nin arazisi değişmeden; sahibi "engellenme 700 güzel" dedi: `blocking_dz_m` 900 → 700
 (gerekçe `_yagis_ayari`, tarama `deney/DENEY.md`). Bütün katmanlar yeniden üretildi; 12/12, 36/36.
 Bozkır bölgesi %32 → %36.8 (main %43), yağış 474 → 462 mm; dünyada B 10.1 → 11.3, bölge dışında sınıfı
 değişen kara %3.4. Akıntılar ve muson denendi, seçilmedi.
 
-## İklim denemesi: Akdeniz'i azaltma (24 Kasım, `deney-akdeniz` dalı, YAYINDA DEĞİL)
+## İklim denemesi: Akdeniz'i azaltma (24 Kasım, `deney-akdeniz` dalı, sigma 5 kaldı; 24 Kasım main'e birleşti, YAYINDA)
 
 `deney-iklim` (engellenme 700) + `storm_contrast_sigma_k` 10 → 5 (gerekçe `_firtina`, tarama `deney/DENEY.md`
 bölüm 3). Bütün katmanlar yeniden üretildi; 12/12, 36/36. Akdeniz Cs %18.2 → %16.6 (Cw 25.9 → 27.4),
 bozkır bölgesi %36.8 → %35.5, B 11.3 → 12.0, kara yağışı 934 → 944 mm. İki dalın önizlemesi yan yana durur.
 
-## İklim denemesi: Akdeniz 2 (24 Kasım, `deney-akdeniz-2` dalı, YAYINDA DEĞİL; sahibi: "bu güzel")
+## İklim denemesi: Akdeniz 2 (24 Kasım, `deney-akdeniz-2` dalı, sahibi: "bu güzel"; 24 Kasım main'e birleşti, YAYINDA)
 
 `deney-akdeniz` + `storm_c` 60 → 40 (gerekçe `_firtina`, `deney/DENEY.md` bölüm 4). 12/12, 36/36.
 Engellenme 700'e göre: Cs %18.2 → %14.9 (30-40°K 2.2 → 1.0, 20-30°K 10.1 → 8.7, 10-20°K 5.8 → 5.1),
