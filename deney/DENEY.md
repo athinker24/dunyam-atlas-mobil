@@ -49,3 +49,21 @@ denendi (`deney_2.png`):
 
 Hedefe (main %43) en yakın, bedeli en düşük: blocking_dz_m 750 + blocking_spread_km 1600. Bozkır
 platonun güneyindeki şeride de yayılıyor (B'nin artışının bir kısmı oradan).
+
+## 3. Akdeniz'i azaltmak (24 Kasım, taban engellenme 700)
+
+Akdeniz (Cs) kuşak salınımından (k_itcz, yazı kurutur) ve kış fırtına yağışından (storm_c, kışı ıslatır) gelir.
+0.5°'de (taban Cs %18.8, bölge bozkırı %28.6): storm_c 40 Cs %16.4 (bozkır %29.4, B +2.0, dışı %7.2);
+storm_c 25 %14.4 (%29.7, B +3.3, %12.1); storm_contrast_sigma_k 5 %17.0 (%27.7, B +0.8, %6.6).
+Bozkırı geri götürenler (elendi): k_itcz 0.55 (bozkır %21), belt_shift_decay 0.1 (%15), convective_c 0.32
+(%20), monsoon 1.6 (%22.5). Akdeniz'den çıkan alan çoğunlukla Cwa'ya geçer (kış kurak olur).
+
+0.25° (`deney_3.png`; taban Cs %18.2, bozkır %36.8, B %11.3):
+
+| deneme | Cs | bölge bozkırı | B | bölge dışı değişen |
+|---|---|---|---|---|
+| storm_c 40 | 16.1 | 37.1 | 13.4 | 6.7 |
+| storm_contrast_sigma_k 5 | 16.6 | 35.5 | 12.0 | 5.7 |
+
+İkisinde de kurağa geçen alanın çoğu ~45°K 10°B çevresi (Dsc, Dsb, Dfb, ET: kışı fırtına yağışıyla ıslanan
+kuzeybatı). storm_c sahibinin "kış yağışı ve kar çok az" isteğinden (`_firtina`); azaltmak kışı kurutur.
