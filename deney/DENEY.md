@@ -67,3 +67,24 @@ Bozkırı geri götürenler (elendi): k_itcz 0.55 (bozkır %21), belt_shift_deca
 
 İkisinde de kurağa geçen alanın çoğu ~45°K 10°B çevresi (Dsc, Dsb, Dfb, ET: kışı fırtına yağışıyla ıslanan
 kuzeybatı). storm_c sahibinin "kış yağışı ve kar çok az" isteğinden (`_firtina`); azaltmak kışı kurutur.
+
+## 4. Akdeniz neden az değişti (24 Kasım, `deney-akdeniz` tabanı: engellenme 700 + sigma 5)
+
+Akdeniz'in enlem dağılımı (0.5°, karanın yüzdesi): 30-40°K 2.3, 20-30°K 9.2, 10-20°K 5.2. Kış yağışı ayarları
+yalnız 30-40°K ve 20-30°K'nin kuzeyine ulaşır; kullanıcının telefonda gördüğü "yalnız kuzeybatı kıyısında
+küçük değişim" bu. 0.25°'de 20-30°K Cs'nin çoğu gerçek (yazın 3-5 ay < 40 mm); 10-20°K Cs'nin yarısı tek ya da
+iki kurak ay: yağış Haziran-Ağustos 104-137 mm, yalnız Nisan ~3 mm (kuşakların katı kayması, CLAUDE.md §8);
+Köppen Nisan'ı yaz yarıyılı saydığı için Cs. Bütün Cs içinde tek kurak yaz ayı olan 2.9 puan (toplam 16.6).
+
+| deneme (0.5°) | Cs | 20-30°K | 10-20°K | bölge bozkırı | B |
+|---|---|---|---|---|---|
+| sigma 5 (taban) | 17.0 | 9.2 | 5.2 | 27.7 | 8.7 |
+| + storm_c 40 | 15.0 | 8.2 | 5.1 | 28.3 | 10.4 |
+| + storm_c 30 | 14.1 | 7.8 | 5.0 | 28.7 | 11.0 |
+| monsoon 2.0 | 15.0 | 7.6 | 5.2 | 17.7 | 5.5 |
+| monsoon 2.0 + blocking 500 | 14.9 | 7.6 | 5.2 | 18.4 | 6.2 |
+| convective 0.34 + blocking 500 | 17.5 | 10.3 | 4.9 | 18.9 | 5.8 |
+| monsoon 2.6 + blocking 450 | 13.6 | 6.9 | 5.1 | 13.7 | 4.9 |
+
+Yazı ıslatan kollar (muson, konvektif) güneydeki Cs'yi azaltır ama bozkırı da ıslatır; sert engellenme
+kurtarmaz (nem havzaya batı sırtından değil güneyden ve iç denizden girer). 10-20°K hiçbir kola tepki vermez.
