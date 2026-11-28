@@ -2,12 +2,12 @@
  "ne": "Dünyam tarımsal verimlilik endeksi (tarim/tarim.py); yöntem TARIM.md",
  "kesit": [
   -44.47265625,
-  -7.03125,
+  2.98828125,
   43.154296875,
-  60.029296875
+  70.048828125
  ],
- "ortalama": 47.7,
- "ortalama_yagmur": 46.6,
+ "ortalama": 31.2,
+ "ortalama_yagmur": 31.0,
  "yukseklik": 763,
  "kodlar": "tarim.png (sulamalı, varsayılan) ve tarim_yagmur.png (yalnız yağmur); tarim*_veri.png dikey 3 bölüm: 0 = R sınıf + 16 * sulanan, G puan * 2.5, B en zayıf etken (0-3); 1 = RGB ısı, su, toprak 0-255; 2 = R arazi",
  "etkenler": [
@@ -39,8 +39,8 @@
     70
    ],
    "alt": 0,
-   "pay": 0.3021,
-   "pay_yagmur": 0.3079
+   "pay": 0.4386,
+   "pay_yagmur": 0.4397
   },
   "2": {
    "ad": "Çok düşük",
@@ -52,8 +52,8 @@
     78
    ],
    "alt": 15,
-   "pay": 0.062,
-   "pay_yagmur": 0.064
+   "pay": 0.138,
+   "pay_yagmur": 0.1384
   },
   "3": {
    "ad": "Düşük",
@@ -65,8 +65,8 @@
     92
    ],
    "alt": 35,
-   "pay": 0.1404,
-   "pay_yagmur": 0.1418
+   "pay": 0.1011,
+   "pay_yagmur": 0.1013
   },
   "4": {
    "ad": "Orta",
@@ -78,8 +78,8 @@
     100
    ],
    "alt": 55,
-   "pay": 0.24,
-   "pay_yagmur": 0.2436
+   "pay": 0.1512,
+   "pay_yagmur": 0.1531
   },
   "5": {
    "ad": "Yüksek",
@@ -91,8 +91,8 @@
     90
    ],
    "alt": 78,
-   "pay": 0.0898,
-   "pay_yagmur": 0.1021
+   "pay": 0.0454,
+   "pay_yagmur": 0.0462
   },
   "6": {
    "ad": "Çok yüksek",
@@ -104,8 +104,8 @@
     82
    ],
    "alt": 92,
-   "pay": 0.154,
-   "pay_yagmur": 0.129
+   "pay": 0.0866,
+   "pay_yagmur": 0.0821
   },
   "7": {
    "ad": "Buz",
@@ -117,8 +117,8 @@
     240
    ],
    "alt": null,
-   "pay": 0.0117,
-   "pay_yagmur": 0.0117
+   "pay": 0.0391,
+   "pay_yagmur": 0.0391
   }
  }
 }
