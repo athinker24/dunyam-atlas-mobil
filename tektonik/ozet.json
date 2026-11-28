@@ -2,8 +2,8 @@
  "ne": "Dünyam (kurgusal gezegen) levha tektoniği özeti, 23 Kasım hikâyesi (tektonik/HIKAYE.md). Kıta levhaları sahibin levha kimliği görüntüsünden; uzak okyanus levhaları atlasın gezegen ölçekli modelinden.",
  "gezegen": {
   "yaricap_km": 6371.0,
-  "gun_saat": 15.0,
-  "eksen_egikligi_derece": 28.0,
+  "gun_saat": 23.934,
+  "eksen_egikligi_derece": 23.44,
   "kara": "tek kıta, yaklaşık 60°K..7°G ve 47°B..43°D; karanın ~%7'si, gerisi okyanus"
  },
  "kurallar": {
@@ -28,10 +28,10 @@
    "ad": "Kuzey Levhası",
    "tur": "kıta + okyanus",
    "kapsam": "1, 2 (şerit dahil), 4; Köprü Kıstağı; iç denizin batısı; kuzey, batı ve güney sahanlıkları",
-   "alan_milyon_km2": 123.62,
-   "kara_payi": 0.199,
+   "alan_milyon_km2": 113.0,
+   "kara_payi": 0.188,
    "tohum_enlem_boylam": [
-    39.44,
+    49.46,
     -21.36
    ],
    "hiz_cm_yil": 0.0,
@@ -55,17 +55,17 @@
    "ad": "Doğu Dil Levhası",
    "tur": "kıta + okyanus",
    "kapsam": "3 ve doğu kıyısının önü, Doğu Hendeği'ne kadar",
-   "alan_milyon_km2": 13.95,
-   "kara_payi": 0.481,
+   "alan_milyon_km2": 13.32,
+   "kara_payi": 0.465,
    "tohum_enlem_boylam": [
-    14.14,
+    24.16,
     14.99
    ],
    "hiz_cm_yil": 1.8,
    "yon": "kuzeye (dönerek)",
    "euler_kutbu": [
-    12.41,
-    -14.1
+    21.11,
+    -15.61
    ],
    "euler_hizi_derece_My": 0.3409,
    "komsular": [
@@ -82,17 +82,17 @@
    "ad": "Orta Blok",
    "tur": "kıta + okyanus",
    "kapsam": "5 (Sarı Sıradağları'nın doğu şeridi, Sarı Ön Havzası)",
-   "alan_milyon_km2": 4.97,
-   "kara_payi": 0.281,
+   "alan_milyon_km2": 4.99,
+   "kara_payi": 0.268,
    "tohum_enlem_boylam": [
-    -0.58,
+    9.44,
     -5.93
    ],
    "hiz_cm_yil": 2.8,
    "yon": "batıya",
    "euler_kutbu": [
-    -89.42,
-    174.07
+    -80.56,
+    -5.93
    ],
    "euler_hizi_derece_My": 0.2518,
    "komsular": [
@@ -110,17 +110,17 @@
    "ad": "Uzun Yarımada Bloğu",
    "tur": "kıta + okyanus",
    "kapsam": "7 (Uzun Yarımada)",
-   "alan_milyon_km2": 1.99,
-   "kara_payi": 0.208,
+   "alan_milyon_km2": 1.95,
+   "kara_payi": 0.204,
    "tohum_enlem_boylam": [
-    2.03,
+    12.05,
     2.83
    ],
    "hiz_cm_yil": 4.6,
    "yon": "kuzeybatıya",
    "euler_kutbu": [
-    -44.96,
-    -85.14
+    -43.75,
+    -75.38
    ],
    "euler_hizi_derece_My": 0.4133,
    "komsular": [
@@ -134,10 +134,10 @@
    "ad": "Ada Bloğu",
    "tur": "kıta + okyanus",
    "kapsam": "6 (iç denizdeki ada)",
-   "alan_milyon_km2": 2.12,
-   "kara_payi": 0.365,
+   "alan_milyon_km2": 1.9,
+   "kara_payi": 0.366,
    "tohum_enlem_boylam": [
-    26.02,
+    36.04,
     -11.3
    ],
    "hiz_cm_yil": 0.7,
@@ -158,17 +158,17 @@
    "ad": "Doğu Havza Levhası",
    "tur": "okyanus",
    "kapsam": "iç denizin doğusu ve güneyi (eski Mor Okyanusu kalıntısı)",
-   "alan_milyon_km2": 1.92,
+   "alan_milyon_km2": 1.75,
    "kara_payi": 0.001,
    "tohum_enlem_boylam": [
-    22.95,
+    32.97,
     -1.86
    ],
    "hiz_cm_yil": 0.81,
    "yon": "kuzeybatıya",
    "euler_kutbu": [
-    -40.63,
-    -70.56
+    -36.39,
+    -63.3
    ],
    "euler_hizi_derece_My": 0.0725,
    "komsular": [
@@ -184,16 +184,16 @@
    "ad": "Doğu Okyanusu Levhası",
    "tur": "okyanus",
    "kapsam": "Doğu Hendeği'nin dışındaki okyanus",
-   "alan_milyon_km2": 78.21,
+   "alan_milyon_km2": 73.73,
    "kara_payi": 0.0,
    "tohum_enlem_boylam": [
-    7.78,
+    17.8,
     65.26
    ],
    "hiz_cm_yil": 6.5,
    "yon": "batıya",
    "euler_kutbu": [
-    -82.22,
+    -72.2,
     65.26
    ],
    "euler_hizi_derece_My": 0.5846,
@@ -212,16 +212,16 @@
    "ad": "Batı Okyanusu Levhası",
    "tur": "okyanus",
    "kapsam": "batıda, uzak sırtın ötesi",
-   "alan_milyon_km2": 101.39,
+   "alan_milyon_km2": 95.94,
    "kara_payi": 0.0,
    "tohum_enlem_boylam": [
-    25.74,
+    35.76,
     -139.84
    ],
    "hiz_cm_yil": 2.4,
    "yon": "batıya",
    "euler_kutbu": [
-    -64.26,
+    -54.24,
     -139.84
    ],
    "euler_hizi_derece_My": 0.2158,
@@ -238,16 +238,16 @@
    "ad": "Kutup Levhası",
    "tur": "okyanus",
    "kapsam": "kuzeyde, uzak sırtın ötesi",
-   "alan_milyon_km2": 11.57,
+   "alan_milyon_km2": 2.25,
    "kara_payi": 0.0,
    "tohum_enlem_boylam": [
-    87.19,
+    97.21,
     -91.17
    ],
    "hiz_cm_yil": 0.6,
    "yon": "kuzeye",
    "euler_kutbu": [
-    -0.0,
+    0.0,
     178.83
    ],
    "euler_hizi_derece_My": 0.054,
@@ -264,10 +264,10 @@
    "ad": "Güney Okyanusu Levhası",
    "tur": "okyanus",
    "kapsam": "güneyde, uzak sırtın ötesi",
-   "alan_milyon_km2": 85.25,
+   "alan_milyon_km2": 120.28,
    "kara_payi": 0.0,
    "tohum_enlem_boylam": [
-    -62.32,
+    -52.3,
     -103.04
    ],
    "hiz_cm_yil": 1.5,
@@ -291,7 +291,7 @@
    "ad": "Büyük Okyanus Levhası",
    "tur": "okyanus (atlasın kendi levhası)",
    "kapsam": "uzak yarıküre; atlasın gezegen ölçekli okyanus levhası (hikâyede yok)",
-   "alan_milyon_km2": 85.06,
+   "alan_milyon_km2": 80.96,
    "kara_payi": 0.0,
    "tohum_enlem_boylam": [
     0.0,
@@ -321,74 +321,74 @@
     "Batı Okyanusu Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 17349,
+   "uzunluk_km": 17003,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
-    "OSR": 0.91,
-    "OTF": 0.08,
-    "SUB": 0.0
+    "OSR": 0.95,
+    "OTF": 0.04,
+    "SUB": 0.01
    },
-   "ort_yaklasma_cm_yil": -1.52,
+   "ort_yaklasma_cm_yil": -1.55,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
-   "anlam": "[tasarım] Batı Okyanusu Levhası ile Kuzey Levhası birbirinden ayrılıyor (1.5 cm/yıl).",
+   "anlam": "[tasarım] Batı Okyanusu Levhası ile Kuzey Levhası birbirinden ayrılıyor (1.6 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -44.1,
-     -128.3
+     88.9,
+     -150.0
     ],
     [
-     -32.9,
-     -122.1
+     76.6,
+     -136.7
     ],
     [
-     -26.1,
-     -114.3
+     65.4,
+     -119.9
     ],
     [
-     -15.6,
-     -111.1
+     54.3,
+     -109.0
     ],
     [
-     -7.7,
-     -102.3
+     43.7,
+     -98.9
     ],
     [
-     3.4,
-     -97.5
-    ],
-    [
-     11.6,
-     -91.9
-    ],
-    [
-     22.7,
+     31.9,
      -94.8
     ],
     [
-     34.5,
-     -99.8
+     21.2,
+     -91.9
     ],
     [
-     44.9,
-     -109.8
+     13.3,
+     -97.6
     ],
     [
-     56.0,
-     -120.5
+     2.7,
+     -102.2
     ],
     [
-     66.3,
-     -136.5
+     -4.6,
+     -111.0
     ],
     [
-     78.4,
-     -149.9
+     -14.5,
+     -114.3
     ],
     [
-     78.9,
-     -150.0
+     -22.0,
+     -120.1
+    ],
+    [
+     -30.7,
+     -127.3
+    ],
+    [
+     -34.1,
+     -128.3
     ]
    ]
   },
@@ -399,69 +399,72 @@
     "Büyük Okyanus Levhası",
     "Doğu Okyanusu Levhası"
    ],
-   "uzunluk_km": 16486,
+   "uzunluk_km": 16156,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
-    "OSR": 0.86,
-    "OTF": 0.14,
-    "OCB": 0.0
+    "OSR": 0.87,
+    "OTF": 0.13
    },
-   "ort_yaklasma_cm_yil": -4.62,
+   "ort_yaklasma_cm_yil": -4.51,
    "ust_levha": null,
    "amaclanan_tur": null,
-   "anlam": "[tasarım] Büyük Okyanus Levhası ile Doğu Okyanusu Levhası birbirinden ayrılıyor (4.6 cm/yıl).",
+   "anlam": "[tasarım] Büyük Okyanus Levhası ile Doğu Okyanusu Levhası birbirinden ayrılıyor (4.5 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     80.1,
-     72.0
+     89.9,
+     72.4
     ],
     [
-     68.0,
-     80.0
+     78.0,
+     80.1
     ],
     [
-     56.9,
-     90.6
+     66.7,
+     91.0
+    ],
+    [
+     57.2,
+     100.8
     ],
     [
      48.2,
-     100.6
+     106.3
     ],
     [
-     38.8,
-     105.4
-    ],
-    [
-     27.5,
+     36.8,
      108.5
     ],
     [
-     15.6,
+     25.4,
      110.3
     ],
     [
-     7.0,
+     17.0,
      105.9
     ],
     [
-     -2.6,
-     101.8
+     7.7,
+     102.1
     ],
     [
-     -10.9,
-     96.4
+     -0.7,
+     97.3
     ],
     [
-     -21.3,
+     -9.8,
      93.7
     ],
     [
-     -31.0,
-     90.0
+     -18.8,
+     90.1
     ],
     [
-     -40.2,
+     -27.9,
+     86.0
+    ],
+    [
+     -30.2,
      85.3
     ]
    ]
@@ -473,72 +476,72 @@
     "Batı Okyanusu Levhası",
     "Büyük Okyanus Levhası"
    ],
-   "uzunluk_km": 14662,
+   "uzunluk_km": 14515,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OCB",
    "sinif_paylari": {
-    "OCB": 0.93,
-    "OTF": 0.07
+    "OCB": 0.89,
+    "OTF": 0.11
    },
-   "ort_yaklasma_cm_yil": 2.67,
+   "ort_yaklasma_cm_yil": 2.64,
    "ust_levha": "Batı Okyanusu Levhası",
    "amaclanan_tur": null,
-   "anlam": "[tasarım] Büyük Okyanus Levhası, Batı Okyanusu Levhası altına dalıyor (2.7 cm/yıl).",
+   "anlam": "[tasarım] Büyük Okyanus Levhası, Batı Okyanusu Levhası altına dalıyor (2.6 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     71.0,
+     81.0,
      150.3
     ],
     [
-     60.8,
+     70.7,
      159.3
     ],
     [
-     51.2,
-     165.8
+     61.0,
+     165.9
     ],
     [
-     41.4,
-     170.1
+     51.3,
+     170.2
     ],
     [
-     30.9,
-     172.8
+     41.2,
+     172.6
     ],
     [
-     20.5,
-     175.0
+     31.1,
+     175.1
     ],
     [
-     9.9,
-     173.8
+     20.9,
+     174.2
     ],
     [
-     0.0,
+     11.5,
      170.4
     ],
     [
-     -9.6,
+     2.0,
+     166.6
+    ],
+    [
+     -7.8,
      165.4
     ],
     [
-     -20.1,
-     164.5
+     -16.9,
+     164.1
     ],
     [
-     -29.8,
-     165.2
+     -26.6,
+     165.0
     ],
     [
-     -39.4,
-     168.1
+     -35.5,
+     170.6
     ],
     [
-     -50.0,
-     170.0
-    ],
-    [
-     -50.0,
+     -39.9,
      170.0
     ]
    ]
@@ -550,7 +553,7 @@
     "Güney Okyanusu Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 11135,
+   "uzunluk_km": 12419,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
@@ -558,65 +561,65 @@
     "OTF": 0.07,
     "SUB": 0.03
    },
-   "ort_yaklasma_cm_yil": -1.02,
+   "ort_yaklasma_cm_yil": -1.0,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
    "anlam": "[tasarım] Güney Okyanusu Levhası ile Kuzey Levhası birbirinden ayrılıyor (1.0 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -44.2,
+     -34.1,
      -128.2
     ],
     [
-     -45.9,
-     -117.4
+     -35.8,
+     -117.6
     ],
     [
-     -46.1,
-     -106.2
+     -36.2,
+     -106.7
     ],
     [
-     -45.0,
-     -94.9
+     -35.2,
+     -95.7
     ],
     [
-     -45.4,
-     -84.3
+     -35.3,
+     -85.3
     ],
     [
-     -45.8,
-     -73.0
+     -35.7,
+     -74.3
     ],
     [
-     -43.6,
-     -62.6
+     -33.8,
+     -64.0
     ],
     [
-     -40.3,
-     -52.8
+     -30.7,
+     -54.0
     ],
     [
-     -36.4,
-     -44.0
+     -26.7,
+     -44.8
     ],
     [
-     -32.8,
-     -35.5
+     -22.9,
+     -36.0
     ],
     [
-     -30.5,
-     -26.5
+     -20.6,
+     -26.7
     ],
     [
-     -27.9,
-     -18.0
+     -17.9,
+     -17.7
     ],
     [
-     -26.3,
-     -9.9
+     -16.0,
+     -9.2
     ],
     [
-     -27.2,
+     -17.2,
      -5.5
     ]
    ]
@@ -628,152 +631,74 @@
     "Doğu Okyanusu Levhası",
     "Güney Okyanusu Levhası"
    ],
-   "uzunluk_km": 8678,
+   "uzunluk_km": 9422,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OCB",
    "sinif_paylari": {
-    "OCB": 0.53,
-    "OTF": 0.43,
-    "OSR": 0.04
+    "OCB": 0.65,
+    "OTF": 0.32,
+    "OSR": 0.03
    },
-   "ort_yaklasma_cm_yil": 2.1,
+   "ort_yaklasma_cm_yil": 2.39,
    "ust_levha": "Güney Okyanusu Levhası",
    "amaclanan_tur": "yanal (Transform)",
-   "anlam": "[tasarım] Doğu Okyanusu Levhası, Güney Okyanusu Levhası altına dalıyor (2.1 cm/yıl).",
+   "anlam": "[tasarım] Doğu Okyanusu Levhası, Güney Okyanusu Levhası altına dalıyor (2.4 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -40.3,
+     -30.2,
      85.3
     ],
     [
-     -41.3,
-     77.1
+     -31.2,
+     77.4
     ],
     [
-     -42.0,
-     68.4
+     -32.0,
+     69.2
     ],
     [
-     -39.7,
-     60.4
+     -30.0,
+     61.5
     ],
     [
-     -37.1,
-     52.9
+     -27.5,
+     54.1
     ],
     [
-     -35.3,
-     45.4
+     -25.7,
+     46.6
     ],
     [
-     -31.8,
-     39.1
+     -21.9,
+     40.4
     ],
     [
-     -29.0,
-     33.5
+     -18.8,
+     34.5
     ],
     [
-     -28.2,
-     26.6
+     -18.7,
+     27.5
     ],
     [
-     -24.9,
-     20.9
+     -14.9,
+     21.7
     ],
     [
-     -26.5,
+     -15.9,
      14.7
     ],
     [
-     -28.9,
-     9.5
+     -18.8,
+     10.0
     ],
     [
-     -28.1,
-     2.1
+     -18.2,
+     2.6
     ],
     [
-     -28.1,
+     -18.1,
      1.6
-    ]
-   ]
-  },
-  {
-   "sinir": "kuzey_kutup",
-   "ad": "kuzey okyanus sırtı (uzak)",
-   "levhalar": [
-    "Kutup Levhası",
-    "Kuzey Levhası"
-   ],
-   "uzunluk_km": 7916,
-   "hikayede_cizili_km": 0,
-   "baskin_sinif": "OSR",
-   "sinif_paylari": {
-    "OSR": 0.57,
-    "OTF": 0.26,
-    "SUB": 0.17
-   },
-   "ort_yaklasma_cm_yil": -0.2,
-   "ust_levha": null,
-   "amaclanan_tur": "ayrılma (Divergent)",
-   "anlam": "[tasarım] Kutup Levhası ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl).",
-   "kaba_iz_enlem_boylam": [
-    [
-     79.0,
-     -150.0
-    ],
-    [
-     74.3,
-     -134.2
-    ],
-    [
-     71.0,
-     -118.9
-    ],
-    [
-     70.4,
-     -104.2
-    ],
-    [
-     72.6,
-     -87.8
-    ],
-    [
-     70.2,
-     -71.0
-    ],
-    [
-     72.8,
-     -55.0
-    ],
-    [
-     72.4,
-     -36.9
-    ],
-    [
-     69.2,
-     -21.8
-    ],
-    [
-     67.8,
-     -7.8
-    ],
-    [
-     71.1,
-     6.2
-    ],
-    [
-     70.0,
-     22.2
-    ],
-    [
-     71.3,
-     36.4
-    ],
-    [
-     71.3,
-     36.4
     ]
    ]
   },
@@ -784,73 +709,69 @@
     "Büyük Okyanus Levhası",
     "Güney Okyanusu Levhası"
    ],
-   "uzunluk_km": 6911,
+   "uzunluk_km": 7955,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
-    "OSR": 0.62,
-    "OTF": 0.38
+    "OSR": 0.58,
+    "OTF": 0.42
    },
-   "ort_yaklasma_cm_yil": -0.69,
+   "ort_yaklasma_cm_yil": -0.66,
    "ust_levha": null,
    "amaclanan_tur": null,
    "anlam": "[tasarım] Büyük Okyanus Levhası ile Güney Okyanusu Levhası birbirinden ayrılıyor (0.7 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -50.0,
-     169.9
+     -30.3,
+     85.4
     ],
     [
-     -52.7,
-     163.5
+     -32.5,
+     91.9
     ],
     [
-     -53.7,
-     155.6
+     -35.3,
+     98.3
     ],
     [
-     -51.9,
-     148.4
+     -38.4,
+     104.6
     ],
     [
-     -51.6,
-     142.4
+     -39.1,
+     112.3
     ],
     [
-     -50.4,
-     135.6
-    ],
-    [
-     -50.0,
-     127.9
-    ],
-    [
-     -51.9,
-     120.6
-    ],
-    [
-     -49.5,
-     113.9
-    ],
-    [
-     -48.7,
-     106.4
-    ],
-    [
-     -46.2,
-     100.2
-    ],
-    [
-     -43.7,
-     94.2
-    ],
-    [
-     -40.9,
-     88.6
+     -41.6,
+     119.3
     ],
     [
      -40.3,
-     85.4
+     126.9
+    ],
+    [
+     -40.3,
+     134.6
+    ],
+    [
+     -41.2,
+     141.9
+    ],
+    [
+     -41.9,
+     148.3
+    ],
+    [
+     -43.7,
+     155.7
+    ],
+    [
+     -42.7,
+     163.7
+    ],
+    [
+     -40.0,
+     169.9
     ]
    ]
   },
@@ -861,73 +782,73 @@
     "Doğu Dil Levhası",
     "Doğu Okyanusu Levhası"
    ],
-   "uzunluk_km": 6756,
-   "hikayede_cizili_km": 4484,
+   "uzunluk_km": 6808,
+   "hikayede_cizili_km": 4426,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.82,
-    "OTF": 0.18
+    "SUB": 0.66,
+    "OTF": 0.34
    },
-   "ort_yaklasma_cm_yil": 4.71,
+   "ort_yaklasma_cm_yil": 4.29,
    "ust_levha": "Doğu Dil Levhası",
    "amaclanan_tur": "dalma (Subduction)",
-   "anlam": "Doğu Okyanusu Levhası, Doğu Dil Levhası altına dalıyor (4.7 cm/yıl). Hikâyede: dalma (Subduction), Doğu Hendeği: Doğu Okyanusu 3'ün altına dalıyor; Doğu Yay Dağları.",
+   "anlam": "Doğu Okyanusu Levhası, Doğu Dil Levhası altına dalıyor (4.3 cm/yıl). Hikâyede: dalma (Subduction), Doğu Hendeği: Doğu Okyanusu 3'ün altına dalıyor; Doğu Yay Dağları.",
    "kaba_iz_enlem_boylam": [
     [
-     23.4,
-     32.4
-    ],
-    [
-     19.2,
-     29.7
-    ],
-    [
-     14.5,
-     27.9
-    ],
-    [
-     9.7,
-     26.6
-    ],
-    [
-     4.8,
-     25.9
-    ],
-    [
-     -0.0,
-     24.9
-    ],
-    [
-     -4.3,
-     22.3
-    ],
-    [
-     -9.2,
-     21.6
-    ],
-    [
-     -14.1,
-     21.3
-    ],
-    [
-     -17.0,
-     17.0
-    ],
-    [
-     -19.8,
-     12.7
-    ],
-    [
-     -22.8,
-     8.4
-    ],
-    [
-     -25.9,
-     4.1
-    ],
-    [
-     -26.5,
+     -16.5,
      3.3
+    ],
+    [
+     -13.5,
+     7.4
+    ],
+    [
+     -10.6,
+     11.5
+    ],
+    [
+     -7.8,
+     15.7
+    ],
+    [
+     -5.1,
+     19.9
+    ],
+    [
+     -0.8,
+     21.5
+    ],
+    [
+     4.1,
+     21.8
+    ],
+    [
+     8.6,
+     24.0
+    ],
+    [
+     13.2,
+     25.6
+    ],
+    [
+     18.1,
+     26.3
+    ],
+    [
+     23.0,
+     27.4
+    ],
+    [
+     27.8,
+     28.7
+    ],
+    [
+     32.1,
+     31.6
+    ],
+    [
+     33.4,
+     32.4
     ]
    ]
   },
@@ -938,79 +859,152 @@
     "Doğu Okyanusu Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 6459,
-   "hikayede_cizili_km": 5734,
+   "uzunluk_km": 6319,
+   "hikayede_cizili_km": 5598,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.9,
+    "SUB": 0.92,
     "CRB": 0.06,
-    "CTF": 0.03,
-    "OTF": 0.01
+    "CTF": 0.02
    },
-   "ort_yaklasma_cm_yil": 3.91,
+   "ort_yaklasma_cm_yil": 3.86,
    "ust_levha": "Kuzey Levhası",
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "Doğu Okyanusu Levhası, Kuzey Levhası altına dalıyor (3.9 cm/yıl). Hikâyede: yanal (Transform), 2'nin doğu açığı.",
    "kaba_iz_enlem_boylam": [
     [
-     71.2,
+     81.3,
      36.5
     ],
     [
-     67.2,
-     42.2
-    ],
-    [
-     62.9,
-     44.5
-    ],
-    [
-     58.4,
-     43.8
-    ],
-    [
-     53.9,
-     43.1
-    ],
-    [
-     49.4,
-     42.3
-    ],
-    [
-     45.0,
-     41.8
-    ],
-    [
-     40.7,
+     76.9,
      42.6
     ],
     [
-     36.3,
-     42.5
+     72.5,
+     44.4
     ],
     [
-     34.5,
-     39.8
+     68.0,
+     43.7
     ],
     [
-     30.0,
-     40.0
+     63.5,
+     43.0
     ],
     [
-     28.4,
-     37.7
+     59.1,
+     42.3
     ],
     [
-     27.3,
-     35.1
+     54.6,
+     41.6
     ],
     [
-     23.5,
+     50.3,
+     42.6
+    ],
+    [
+     45.9,
+     42.3
+    ],
+    [
+     43.8,
+     39.9
+    ],
+    [
+     39.4,
+     39.9
+    ],
+    [
+     38.8,
+     36.9
+    ],
+    [
+     36.6,
+     34.5
+    ],
+    [
+     33.5,
      32.5
+    ]
+   ]
+  },
+  {
+   "sinir": "kuzey_kutup",
+   "ad": "kuzey okyanus sırtı (uzak)",
+   "levhalar": [
+    "Kutup Levhası",
+    "Kuzey Levhası"
+   ],
+   "uzunluk_km": 5263,
+   "hikayede_cizili_km": 0,
+   "baskin_sinif": "OSR",
+   "sinif_paylari": {
+    "OSR": 0.49,
+    "SUB": 0.3,
+    "OTF": 0.21
+   },
+   "ort_yaklasma_cm_yil": -0.1,
+   "ust_levha": null,
+   "amaclanan_tur": "ayrılma (Divergent)",
+   "anlam": "[tasarım] Kutup Levhası ile Kuzey Levhası birbirinden ayrılıyor (0.1 cm/yıl).",
+   "kaba_iz_enlem_boylam": [
+    [
+     89.0,
+     -150.0
     ],
     [
-     23.5,
-     32.5
+     85.1,
+     -136.0
+    ],
+    [
+     81.5,
+     -124.1
+    ],
+    [
+     79.5,
+     -108.0
+    ],
+    [
+     82.7,
+     -92.3
+    ],
+    [
+     80.5,
+     -73.6
+    ],
+    [
+     82.5,
+     -56.6
+    ],
+    [
+     82.4,
+     -37.0
+    ],
+    [
+     79.3,
+     -22.2
+    ],
+    [
+     77.6,
+     -8.3
+    ],
+    [
+     80.7,
+     4.8
+    ],
+    [
+     80.2,
+     20.6
+    ],
+    [
+     80.9,
+     35.0
+    ],
+    [
+     81.3,
+     36.4
     ]
    ]
   },
@@ -1021,8 +1015,8 @@
     "Kuzey Levhası",
     "Orta Blok"
    ],
-   "uzunluk_km": 5191,
-   "hikayede_cizili_km": 3738,
+   "uzunluk_km": 5189,
+   "hikayede_cizili_km": 3736,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
     "SUB": 0.62,
@@ -1034,146 +1028,146 @@
    "anlam": "Orta Blok, Kuzey Levhası altına dalıyor (2.6 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Sarı Sıradağları: 5, 4'ün altına giriyor (Zagros benzeri, 8 MYÖ'den beri).",
    "kaba_iz_enlem_boylam": [
     [
-     17.4,
+     27.4,
      -10.3
     ],
     [
-     14.3,
+     24.2,
      -12.0
     ],
     [
-     10.8,
+     20.8,
      -12.6
     ],
     [
-     7.3,
+     17.3,
      -12.7
     ],
     [
-     3.8,
+     13.8,
      -12.3
     ],
     [
-     0.4,
+     10.4,
      -11.6
     ],
     [
-     -2.8,
+     7.1,
      -10.6
     ],
     [
-     -6.3,
+     3.7,
      -9.9
     ],
     [
-     -9.4,
-     -8.5
+     0.5,
+     -8.4
     ],
     [
-     -12.4,
+     -2.4,
      -6.5
     ],
     [
-     -15.6,
+     -5.6,
      -5.4
     ],
     [
-     -19.2,
+     -9.1,
      -5.4
     ],
     [
-     -22.7,
+     -12.7,
      -5.4
     ],
     [
-     -26.2,
+     -16.2,
      -5.4
     ],
     [
-     -27.2,
+     -17.2,
      -5.4
     ]
    ]
   },
   {
-   "sinir": "batiok_guneyok",
+   "sinir": "batiok_guneyok_2",
    "ad": "Batı Okyanusu Levhası / Güney Okyanusu Levhası",
    "levhalar": [
     "Batı Okyanusu Levhası",
     "Güney Okyanusu Levhası"
    ],
-   "uzunluk_km": 4418,
+   "uzunluk_km": 5044,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
-    "OSR": 0.74,
-    "OCB": 0.18,
+    "OSR": 0.71,
+    "OCB": 0.2,
     "OTF": 0.09
    },
-   "ort_yaklasma_cm_yil": -0.53,
+   "ort_yaklasma_cm_yil": -0.52,
    "ust_levha": null,
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "[tasarım] Batı Okyanusu Levhası ile Güney Okyanusu Levhası birbirinden ayrılıyor (0.5 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -44.1,
+     -44.9,
+     -180.0
+    ],
+    [
+     -43.1,
+     -175.8
+    ],
+    [
+     -43.2,
+     -171.8
+    ],
+    [
+     -41.4,
+     -167.8
+    ],
+    [
+     -41.9,
+     -163.3
+    ],
+    [
+     -40.3,
+     -159.4
+    ],
+    [
+     -39.3,
+     -155.6
+    ],
+    [
+     -39.6,
+     -151.1
+    ],
+    [
+     -39.9,
+     -146.6
+    ],
+    [
+     -38.0,
+     -143.0
+    ],
+    [
+     -36.7,
+     -139.2
+    ],
+    [
+     -36.1,
+     -135.1
+    ],
+    [
+     -33.6,
+     -132.1
+    ],
+    [
+     -34.1,
      -128.4
     ],
     [
-     -43.5,
-     -132.0
-    ],
-    [
-     -45.8,
-     -134.8
-    ],
-    [
-     -46.7,
-     -138.5
-    ],
-    [
-     -47.5,
-     -142.5
-    ],
-    [
-     -49.7,
-     -145.6
-    ],
-    [
-     -49.6,
-     -150.1
-    ],
-    [
-     -49.6,
-     -154.7
-    ],
-    [
-     -49.8,
-     -158.5
-    ],
-    [
-     -51.8,
-     -161.9
-    ],
-    [
-     -51.9,
-     -166.7
-    ],
-    [
-     -52.7,
-     -170.6
-    ],
-    [
-     -53.5,
-     -174.5
-    ],
-    [
-     -54.3,
-     -178.6
-    ],
-    [
-     -54.9,
-     -180.0
+     -34.1,
+     -128.4
     ]
    ]
   },
@@ -1184,80 +1178,79 @@
     "Doğu Dil Levhası",
     "Uzun Yarımada Bloğu"
    ],
-   "uzunluk_km": 3730,
-   "hikayede_cizili_km": 3620,
+   "uzunluk_km": 3692,
+   "hikayede_cizili_km": 3581,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
     "OSR": 0.66,
-    "OTF": 0.24,
+    "OTF": 0.26,
     "SUB": 0.06,
-    "CRB": 0.03,
-    "CTF": 0.01
+    "CRB": 0.03
    },
-   "ort_yaklasma_cm_yil": -2.73,
+   "ort_yaklasma_cm_yil": -2.77,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
-   "anlam": "Doğu Dil Levhası ile Uzun Yarımada Bloğu birbirinden ayrılıyor (2.7 cm/yıl). Hikâyede: ayrılma (Divergent), Güneydoğu Kanalı: 22 MYÖ'den beri açılan yarık, kuzeyinde okyanus kabuğu (Kızıldeniz benzeri).",
+   "anlam": "Doğu Dil Levhası ile Uzun Yarımada Bloğu birbirinden ayrılıyor (2.8 cm/yıl). Hikâyede: ayrılma (Divergent), Güneydoğu Kanalı: 22 MYÖ'den beri açılan yarık, kuzeyinde okyanus kabuğu (Kızıldeniz benzeri).",
    "kaba_iz_enlem_boylam": [
     [
-     -13.6,
-     3.3
+     22.7,
+     -1.2
     ],
     [
-     -11.3,
-     4.3
+     20.6,
+     -0.4
     ],
     [
-     -9.1,
-     5.5
+     20.1,
+     1.3
     ],
     [
-     -7.0,
+     17.9,
+     2.4
+    ],
+    [
+     16.4,
+     4.5
+    ],
+    [
+     15.3,
      6.8
     ],
     [
-     -4.7,
-     7.7
+     13.7,
+     8.1
     ],
     [
-     -2.3,
-     8.2
-    ],
-    [
-     0.2,
+     11.3,
      8.6
     ],
     [
-     2.6,
+     8.8,
      8.4
     ],
     [
-     4.3,
-     7.1
+     6.3,
+     7.9
     ],
     [
-     6.1,
-     5.7
+     3.9,
+     7.4
     ],
     [
-     7.0,
-     3.5
+     1.7,
+     6.1
     ],
     [
-     8.9,
-     1.9
+     -0.4,
+     4.8
     ],
     [
-     10.9,
-     0.5
+     -2.7,
+     3.7
     ],
     [
-     11.6,
-     -0.2
-    ],
-    [
-     12.7,
-     -1.2
+     -3.6,
+     3.3
     ]
    ]
   },
@@ -1268,77 +1261,77 @@
     "Orta Blok",
     "Uzun Yarımada Bloğu"
    ],
-   "uzunluk_km": 3474,
-   "hikayede_cizili_km": 3419,
+   "uzunluk_km": 3445,
+   "hikayede_cizili_km": 3389,
    "baskin_sinif": "OTF",
    "sinif_paylari": {
     "OTF": 0.52,
     "SUB": 0.14,
-    "CTF": 0.11,
-    "OSR": 0.11,
+    "OSR": 0.13,
+    "CTF": 0.1,
     "CRB": 0.08,
     "CCB": 0.03
    },
-   "ort_yaklasma_cm_yil": -0.11,
+   "ort_yaklasma_cm_yil": -0.07,
    "ust_levha": null,
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "Orta Blok ile Uzun Yarımada Bloğu yan yana kayıyor. Hikâyede: yanal (Transform), Kanal fayı: 7, 5'e göre kuzeybatıya kayıyor (Ölü Deniz fayı benzeri).",
    "kaba_iz_enlem_boylam": [
     [
-     -13.6,
-     3.3
-    ],
-    [
-     -11.2,
-     2.7
-    ],
-    [
-     -8.7,
-     2.2
-    ],
-    [
-     -6.3,
-     1.8
-    ],
-    [
-     -3.9,
-     1.2
-    ],
-    [
-     -1.4,
-     0.6
-    ],
-    [
-     1.0,
-     0.0
-    ],
-    [
-     3.1,
-     -1.1
-    ],
-    [
-     4.4,
-     -3.2
-    ],
-    [
-     6.2,
-     -4.9
-    ],
-    [
-     8.5,
-     -5.8
-    ],
-    [
-     10.5,
-     -4.6
-    ],
-    [
-     11.3,
-     -2.2
-    ],
-    [
-     12.5,
+     22.5,
      -1.5
+    ],
+    [
+     21.1,
+     -3.3
+    ],
+    [
+     19.7,
+     -5.5
+    ],
+    [
+     17.3,
+     -5.5
+    ],
+    [
+     15.2,
+     -4.2
+    ],
+    [
+     13.7,
+     -2.1
+    ],
+    [
+     12.0,
+     -0.4
+    ],
+    [
+     9.6,
+     0.4
+    ],
+    [
+     7.2,
+     0.9
+    ],
+    [
+     4.8,
+     1.5
+    ],
+    [
+     2.3,
+     2.0
+    ],
+    [
+     -0.1,
+     2.5
+    ],
+    [
+     -2.6,
+     3.0
+    ],
+    [
+     -3.6,
+     3.3
     ]
    ]
   },
@@ -1349,74 +1342,83 @@
     "Doğu Dil Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 3445,
-   "hikayede_cizili_km": 3445,
+   "uzunluk_km": 3127,
+   "hikayede_cizili_km": 3127,
    "baskin_sinif": "CCB",
    "sinif_paylari": {
-    "CCB": 0.77,
-    "OTF": 0.19,
-    "SUB": 0.03
+    "CCB": 0.75,
+    "OTF": 0.2,
+    "SUB": 0.04,
+    "CTF": 0.02
    },
-   "ort_yaklasma_cm_yil": 1.36,
+   "ort_yaklasma_cm_yil": 1.31,
    "ust_levha": "Kuzey Levhası",
    "amaclanan_tur": "kıta çarpışması (Continental collision)",
-   "anlam": "Doğu Dil Levhası, Kuzey Levhası levhasına çarpıyor, altına giriyor (1.4 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri).",
+   "anlam": "Doğu Dil Levhası, Kuzey Levhası levhasına çarpıyor, altına giriyor (1.3 cm/yıl). Hikâyede: kıta çarpışması (Continental collision), Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri).",
    "kaba_iz_enlem_boylam": [
     [
-     23.5,
-     32.4
+     43.5,
+     3.2
     ],
     [
-     25.9,
-     31.8
+     44.9,
+     5.2
     ],
     [
-     28.4,
-     31.5
+     45.1,
+     7.9
     ],
     [
-     30.1,
-     29.6
+     45.0,
+     10.7
     ],
     [
-     30.8,
-     26.9
+     44.6,
+     13.5
     ],
     [
-     31.6,
-     24.1
+     43.9,
+     16.1
     ],
     [
-     32.4,
+     43.2,
+     18.7
+    ],
+    [
+     42.4,
      21.3
     ],
     [
-     33.2,
-     18.5
+     41.7,
+     23.8
     ],
     [
-     34.0,
-     15.7
+     41.0,
+     26.3
     ],
     [
-     34.8,
-     12.8
+     40.3,
+     28.8
     ],
     [
-     35.0,
-     9.8
+     39.4,
+     31.1
     ],
     [
-     35.2,
-     6.7
+     37.5,
+     31.6
     ],
     [
-     34.1,
-     4.2
+     35.5,
+     31.9
     ],
     [
      33.5,
-     3.2
+     32.4
+    ],
+    [
+     33.5,
+     32.4
     ]
    ]
   },
@@ -1427,164 +1429,79 @@
     "Ada Bloğu",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 3117,
-   "hikayede_cizili_km": 3117,
+   "uzunluk_km": 2929,
+   "hikayede_cizili_km": 2929,
    "baskin_sinif": "OSR",
    "sinif_paylari": {
-    "OSR": 0.53,
-    "SUB": 0.23,
-    "OTF": 0.21,
-    "CRB": 0.03
+    "OSR": 0.49,
+    "OTF": 0.23,
+    "SUB": 0.22,
+    "CRB": 0.06
    },
-   "ort_yaklasma_cm_yil": -0.25,
+   "ort_yaklasma_cm_yil": -0.24,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
    "anlam": "Ada Bloğu ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor.",
    "kaba_iz_enlem_boylam": [
     [
-     31.7,
-     -5.1
+     29.1,
+     -16.2
     ],
     [
-     32.6,
-     -7.2
+     30.6,
+     -17.7
     ],
     [
-     33.4,
-     -9.3
-    ],
-    [
-     33.8,
-     -11.6
-    ],
-    [
-     33.6,
-     -13.9
-    ],
-    [
-     32.8,
-     -15.9
-    ],
-    [
-     31.2,
-     -17.3
-    ],
-    [
-     29.2,
-     -17.5
-    ],
-    [
-     27.3,
-     -17.5
-    ],
-    [
-     26.1,
-     -18.9
-    ],
-    [
-     25.1,
-     -20.6
-    ],
-    [
-     23.9,
-     -20.2
-    ],
-    [
-     22.6,
+     32.3,
      -18.8
     ],
     [
-     20.8,
-     -18.0
+     33.9,
+     -20.0
     ],
     [
-     19.5,
-     -16.5
+     35.1,
+     -20.8
     ],
     [
-     19.1,
-     -16.2
-    ]
-   ]
-  },
-  {
-   "sinir": "kutup_buyukok",
-   "ad": "Büyük Okyanus Levhası / Kutup Levhası",
-   "levhalar": [
-    "Büyük Okyanus Levhası",
-    "Kutup Levhası"
-   ],
-   "uzunluk_km": 3024,
-   "hikayede_cizili_km": 0,
-   "baskin_sinif": "OCB",
-   "sinif_paylari": {
-    "OCB": 0.8,
-    "OTF": 0.2
-   },
-   "ort_yaklasma_cm_yil": 1.26,
-   "ust_levha": "Büyük Okyanus Levhası",
-   "amaclanan_tur": null,
-   "anlam": "[tasarım] Kutup Levhası, Büyük Okyanus Levhası altına dalıyor (1.3 cm/yıl).",
-   "kaba_iz_enlem_boylam": [
-    [
-     71.0,
-     150.2
+     36.1,
+     -18.9
     ],
     [
-     71.7,
-     144.4
+     37.5,
+     -17.5
     ],
     [
-     72.3,
-     138.3
+     39.4,
+     -17.5
     ],
     [
-     73.4,
-     132.8
+     41.4,
+     -17.2
     ],
     [
-     73.7,
-     126.4
+     43.1,
+     -15.7
     ],
     [
-     73.3,
-     119.7
+     43.9,
+     -13.2
     ],
     [
-     72.1,
-     114.3
+     43.6,
+     -10.6
     ],
     [
-     71.2,
-     109.2
+     43.0,
+     -8.0
     ],
     [
-     72.3,
-     103.8
+     42.0,
+     -5.7
     ],
     [
-     73.5,
-     98.5
-    ],
-    [
-     74.6,
-     92.5
-    ],
-    [
-     75.8,
-     86.2
-    ],
-    [
-     77.4,
-     81.8
-    ],
-    [
-     79.1,
-     76.1
-    ],
-    [
-     80.2,
-     72.0
+     41.7,
+     -5.1
     ]
    ]
   },
@@ -1595,80 +1512,158 @@
     "Doğu Dil Levhası",
     "Doğu Havza Levhası"
    ],
-   "uzunluk_km": 3009,
-   "hikayede_cizili_km": 3009,
+   "uzunluk_km": 2915,
+   "hikayede_cizili_km": 2915,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.6,
-    "CTF": 0.22,
+    "SUB": 0.64,
+    "CTF": 0.17,
     "OSR": 0.11,
-    "CRB": 0.04,
-    "OTF": 0.04
+    "CRB": 0.06,
+    "OTF": 0.02
    },
-   "ort_yaklasma_cm_yil": 0.16,
+   "ort_yaklasma_cm_yil": 0.21,
    "ust_levha": "Doğu Dil Levhası",
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "Doğu Havza Levhası, Doğu Dil Levhası altına dalıyor (0.2 cm/yıl). Hikâyede: yanal (Transform).",
    "kaba_iz_enlem_boylam": [
     [
-     33.4,
+     43.5,
      3.2
     ],
     [
-     31.5,
+     41.5,
      3.8
     ],
     [
-     29.9,
-     3.6
+     39.9,
+     3.5
     ],
     [
-     31.2,
-     2.0
+     41.4,
+     1.8
     ],
     [
-     30.3,
-     1.3
+     40.1,
+     1.6
     ],
     [
-     28.8,
+     38.4,
      2.6
     ],
     [
+     36.9,
+     4.2
+    ],
+    [
+     35.3,
+     5.0
+    ],
+    [
+     33.5,
+     4.0
+    ],
+    [
+     31.7,
+     3.0
+    ],
+    [
+     29.9,
+     1.9
+    ],
+    [
+     28.7,
+     0.1
+    ],
+    [
      27.2,
-     3.8
-    ],
-    [
-     25.9,
-     5.2
-    ],
-    [
-     24.1,
-     4.3
-    ],
-    [
-     22.3,
-     3.4
-    ],
-    [
-     20.5,
-     2.4
-    ],
-    [
-     19.2,
-     0.9
-    ],
-    [
-     18.1,
-     -0.8
-    ],
-    [
-     16.2,
      -1.2
     ],
     [
-     14.7,
+     25.2,
      -1.2
+    ],
+    [
+     24.7,
+     -1.2
+    ]
+   ]
+  },
+  {
+   "sinir": "kutup_buyukok",
+   "ad": "Büyük Okyanus Levhası / Kutup Levhası",
+   "levhalar": [
+    "Büyük Okyanus Levhası",
+    "Kutup Levhası"
+   ],
+   "uzunluk_km": 1935,
+   "hikayede_cizili_km": 0,
+   "baskin_sinif": "OCB",
+   "sinif_paylari": {
+    "OCB": 0.52,
+    "OTF": 0.26,
+    "OSR": 0.23
+   },
+   "ort_yaklasma_cm_yil": 0.52,
+   "ust_levha": "Kutup Levhası",
+   "amaclanan_tur": null,
+   "anlam": "[tasarım] Büyük Okyanus Levhası, Kutup Levhası altına dalıyor (0.5 cm/yıl).",
+   "kaba_iz_enlem_boylam": [
+    [
+     90.0,
+     73.4
+    ],
+    [
+     88.5,
+     78.4
+    ],
+    [
+     87.0,
+     82.8
+    ],
+    [
+     85.5,
+     87.4
+    ],
+    [
+     84.2,
+     94.7
+    ],
+    [
+     82.9,
+     101.4
+    ],
+    [
+     81.6,
+     106.9
+    ],
+    [
+     81.7,
+     112.9
+    ],
+    [
+     83.0,
+     118.1
+    ],
+    [
+     83.9,
+     128.0
+    ],
+    [
+     83.0,
+     135.1
+    ],
+    [
+     81.9,
+     142.4
+    ],
+    [
+     81.0,
+     150.2
+    ],
+    [
+     81.0,
+     150.2
     ]
    ]
   },
@@ -1679,178 +1674,89 @@
     "Ada Bloğu",
     "Doğu Havza Levhası"
    ],
-   "uzunluk_km": 1900,
-   "hikayede_cizili_km": 1900,
+   "uzunluk_km": 1840,
+   "hikayede_cizili_km": 1840,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.74,
-    "OTF": 0.26
+    "SUB": 0.76,
+    "OTF": 0.24
    },
-   "ort_yaklasma_cm_yil": 0.72,
+   "ort_yaklasma_cm_yil": 0.71,
    "ust_levha": "Ada Bloğu",
    "amaclanan_tur": "dalma (Subduction)",
    "anlam": "Doğu Havza Levhası, Ada Bloğu altına dalıyor (0.7 cm/yıl). Hikâyede: dalma (Subduction), Ada Hendeği: doğu iç deniz tabanı 6'nın altına dalıyor.",
    "kaba_iz_enlem_boylam": [
     [
-     31.6,
+     41.6,
      -5.1
     ],
     [
-     30.7,
+     40.7,
      -4.8
     ],
     [
-     29.8,
-     -4.2
+     39.8,
+     -4.1
     ],
     [
-     28.9,
-     -3.6
-    ],
-    [
-     28.0,
-     -3.1
-    ],
-    [
-     27.0,
-     -3.1
-    ],
-    [
-     26.0,
-     -3.1
-    ],
-    [
-     25.0,
-     -3.2
-    ],
-    [
-     24.0,
-     -3.3
-    ],
-    [
-     23.0,
-     -3.4
-    ],
-    [
-     22.0,
+     38.9,
      -3.5
     ],
     [
-     21.1,
-     -3.8
+     38.0,
+     -3.0
     ],
     [
-     20.8,
-     -4.8
+     37.0,
+     -3.1
     ],
     [
-     20.5,
-     -5.9
+     35.9,
+     -3.1
     ],
     [
-     20.3,
-     -6.9
+     34.9,
+     -3.3
     ],
     [
-     20.1,
-     -7.9
+     33.9,
+     -3.3
     ],
     [
-     19.8,
-     -9.0
+     32.9,
+     -3.4
     ],
     [
-     19.3,
+     31.9,
+     -3.5
+    ],
+    [
+     31.1,
+     -3.9
+    ],
+    [
+     30.8,
+     -5.0
+    ],
+    [
+     30.5,
+     -6.1
+    ],
+    [
+     30.2,
+     -7.3
+    ],
+    [
+     30.0,
+     -8.4
+    ],
+    [
+     29.7,
+     -9.5
+    ],
+    [
+     29.3,
      -9.8
-    ],
-    [
-     19.3,
-     -9.8
-    ]
-   ]
-  },
-  {
-   "sinir": "doguok_kutup",
-   "ad": "Doğu Okyanusu Levhası / Kutup Levhası",
-   "levhalar": [
-    "Doğu Okyanusu Levhası",
-    "Kutup Levhası"
-   ],
-   "uzunluk_km": 1511,
-   "hikayede_cizili_km": 109,
-   "baskin_sinif": "OCB",
-   "sinif_paylari": {
-    "OCB": 0.94,
-    "OSR": 0.06
-   },
-   "ort_yaklasma_cm_yil": 1.96,
-   "ust_levha": "Doğu Okyanusu Levhası",
-   "amaclanan_tur": "yanal (Transform)",
-   "anlam": "[tasarım] Kutup Levhası, Doğu Okyanusu Levhası altına dalıyor (2.0 cm/yıl).",
-   "kaba_iz_enlem_boylam": [
-    [
-     80.2,
-     71.9
-    ],
-    [
-     80.9,
-     69.6
-    ],
-    [
-     80.0,
-     67.0
-    ],
-    [
-     79.1,
-     65.0
-    ],
-    [
-     78.2,
-     63.0
-    ],
-    [
-     77.3,
-     60.7
-    ],
-    [
-     76.7,
-     57.5
-    ],
-    [
-     76.0,
-     54.6
-    ],
-    [
-     75.3,
-     51.6
-    ],
-    [
-     74.8,
-     48.5
-    ],
-    [
-     74.1,
-     45.8
-    ],
-    [
-     73.4,
-     43.2
-    ],
-    [
-     72.7,
-     40.9
-    ],
-    [
-     72.1,
-     38.6
-    ],
-    [
-     71.3,
-     36.5
-    ],
-    [
-     71.3,
-     36.5
     ]
    ]
   },
@@ -1867,148 +1773,70 @@
    "sinif_paylari": {
     "OSR": 1.0
    },
-   "ort_yaklasma_cm_yil": -4.61,
+   "ort_yaklasma_cm_yil": -4.56,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
    "anlam": "[tasarım] Doğu Dil Levhası ile Orta Blok birbirinden ayrılıyor (4.6 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -13.7,
+     -16.5,
      3.3
     ],
     [
-     -14.7,
+     -15.5,
      3.3
     ],
     [
-     -15.6,
+     -14.5,
      3.3
     ],
     [
-     -16.6,
+     -13.5,
      3.3
     ],
     [
-     -17.6,
+     -12.5,
      3.3
     ],
     [
-     -18.6,
+     -11.5,
      3.3
     ],
     [
-     -19.6,
+     -10.6,
      3.3
     ],
     [
-     -20.6,
+     -9.6,
      3.3
     ],
     [
-     -21.6,
+     -8.6,
      3.3
     ],
     [
-     -22.6,
+     -7.6,
      3.3
     ],
     [
-     -23.5,
+     -6.6,
      3.3
     ],
     [
-     -24.5,
+     -5.6,
      3.3
     ],
     [
-     -25.5,
+     -4.6,
      3.3
     ],
     [
-     -26.5,
+     -3.6,
      3.3
     ],
     [
-     -26.5,
+     -3.6,
      3.3
-    ]
-   ]
-  },
-  {
-   "sinir": "batiok_kutup_2",
-   "ad": "Batı Okyanusu Levhası / Kutup Levhası",
-   "levhalar": [
-    "Batı Okyanusu Levhası",
-    "Kutup Levhası"
-   ],
-   "uzunluk_km": 1319,
-   "hikayede_cizili_km": 0,
-   "baskin_sinif": "OCB",
-   "sinif_paylari": {
-    "OCB": 0.46,
-    "OSR": 0.42,
-    "OTF": 0.12
-   },
-   "ort_yaklasma_cm_yil": -0.13,
-   "ust_levha": "Kutup Levhası",
-   "amaclanan_tur": "yanal (Transform)",
-   "anlam": "[tasarım] Batı Okyanusu Levhası, Kutup Levhası altına dalıyor (0.1 cm/yıl).",
-   "kaba_iz_enlem_boylam": [
-    [
-     76.0,
-     -180.0
-    ],
-    [
-     75.4,
-     -177.0
-    ],
-    [
-     74.7,
-     -174.1
-    ],
-    [
-     74.1,
-     -171.1
-    ],
-    [
-     73.6,
-     -168.1
-    ],
-    [
-     73.1,
-     -165.2
-    ],
-    [
-     73.9,
-     -163.2
-    ],
-    [
-     74.8,
-     -161.4
-    ],
-    [
-     75.5,
-     -158.9
-    ],
-    [
-     76.3,
-     -156.6
-    ],
-    [
-     77.2,
-     -154.3
-    ],
-    [
-     78.0,
-     -152.2
-    ],
-    [
-     78.9,
-     -150.1
-    ],
-    [
-     78.9,
-     -150.1
     ]
    ]
   },
@@ -2019,8 +1847,8 @@
     "Doğu Havza Levhası",
     "Orta Blok"
    ],
-   "uzunluk_km": 1284,
-   "hikayede_cizili_km": 1284,
+   "uzunluk_km": 1240,
+   "hikayede_cizili_km": 1240,
    "baskin_sinif": "CRB",
    "sinif_paylari": {
     "CRB": 0.74,
@@ -2028,62 +1856,62 @@
     "SUB": 0.08,
     "CTF": 0.04
    },
-   "ort_yaklasma_cm_yil": -1.28,
+   "ort_yaklasma_cm_yil": -1.29,
    "ust_levha": null,
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "Doğu Havza Levhası ile Orta Blok birbirinden ayrılıyor (1.3 cm/yıl). Hikâyede: yanal (Transform).",
    "kaba_iz_enlem_boylam": [
     [
-     17.4,
-     -10.2
-    ],
-    [
-     17.0,
-     -9.2
-    ],
-    [
-     16.1,
-     -8.8
-    ],
-    [
-     15.2,
-     -8.4
-    ],
-    [
-     14.7,
-     -7.6
-    ],
-    [
-     14.8,
-     -6.5
-    ],
-    [
-     15.4,
-     -5.9
-    ],
-    [
-     14.7,
-     -5.2
-    ],
-    [
-     14.1,
-     -4.3
-    ],
-    [
-     13.3,
-     -3.7
-    ],
-    [
-     12.6,
-     -3.1
-    ],
-    [
-     12.6,
-     -2.1
-    ],
-    [
-     12.6,
+     22.6,
      -1.5
+    ],
+    [
+     22.6,
+     -2.6
+    ],
+    [
+     22.9,
+     -3.5
+    ],
+    [
+     23.8,
+     -3.9
+    ],
+    [
+     24.4,
+     -4.8
+    ],
+    [
+     25.1,
+     -5.5
+    ],
+    [
+     25.2,
+     -6.2
+    ],
+    [
+     24.6,
+     -7.0
+    ],
+    [
+     24.8,
+     -8.1
+    ],
+    [
+     25.7,
+     -8.6
+    ],
+    [
+     26.6,
+     -9.0
+    ],
+    [
+     27.3,
+     -9.7
+    ],
+    [
+     27.4,
+     -10.2
     ]
    ]
   },
@@ -2094,229 +1922,316 @@
     "Doğu Havza Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 1196,
-   "hikayede_cizili_km": 1139,
+   "uzunluk_km": 1127,
+   "hikayede_cizili_km": 1033,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.73,
-    "OSR": 0.09,
-    "OTF": 0.09,
-    "CTF": 0.04,
-    "CRB": 0.04
+    "SUB": 0.68,
+    "OSR": 0.15,
+    "CTF": 0.09,
+    "OTF": 0.08
    },
-   "ort_yaklasma_cm_yil": 0.46,
+   "ort_yaklasma_cm_yil": 0.38,
    "ust_levha": "Kuzey Levhası",
    "amaclanan_tur": "yanal (Transform)",
-   "anlam": "Doğu Havza Levhası, Kuzey Levhası altına dalıyor (0.5 cm/yıl). Hikâyede: yanal (Transform).",
+   "anlam": "Doğu Havza Levhası, Kuzey Levhası altına dalıyor (0.4 cm/yıl). Hikâyede: yanal (Transform).",
    "kaba_iz_enlem_boylam": [
     [
-     33.5,
-     3.1
+     41.7,
+     -5.1
     ],
     [
-     34.0,
-     3.0
-    ],
-    [
-     34.5,
-     2.8
-    ],
-    [
-     34.8,
-     2.4
-    ],
-    [
-     34.7,
-     1.8
-    ],
-    [
-     34.2,
-     1.6
-    ],
-    [
-     33.7,
-     1.5
-    ],
-    [
-     33.8,
-     1.2
-    ],
-    [
-     34.3,
-     1.0
-    ],
-    [
-     34.5,
-     0.5
-    ],
-    [
-     34.8,
-     0.0
-    ],
-    [
-     34.7,
-     -0.6
-    ],
-    [
-     34.6,
-     -1.1
-    ],
-    [
-     34.8,
-     -1.7
-    ],
-    [
-     34.8,
-     -2.3
-    ],
-    [
-     34.7,
-     -2.9
-    ],
-    [
-     34.3,
-     -3.3
-    ],
-    [
-     33.9,
-     -3.6
-    ],
-    [
-     33.4,
-     -3.9
-    ],
-    [
-     33.0,
-     -4.2
-    ],
-    [
-     32.5,
-     -4.5
-    ],
-    [
-     32.1,
+     42.1,
      -4.8
     ],
     [
-     31.6,
-     -5.1
+     42.6,
+     -4.5
     ],
     [
-     31.6,
-     -5.1
+     43.0,
+     -4.2
+    ],
+    [
+     43.5,
+     -3.9
+    ],
+    [
+     43.9,
+     -3.6
+    ],
+    [
+     44.4,
+     -3.3
+    ],
+    [
+     44.8,
+     -2.9
+    ],
+    [
+     44.8,
+     -2.2
+    ],
+    [
+     44.8,
+     -1.5
+    ],
+    [
+     44.6,
+     -0.8
+    ],
+    [
+     44.8,
+     -0.2
+    ],
+    [
+     44.7,
+     0.4
+    ],
+    [
+     44.3,
+     0.8
+    ],
+    [
+     43.9,
+     1.1
+    ],
+    [
+     43.6,
+     1.4
+    ],
+    [
+     44.1,
+     1.6
+    ],
+    [
+     44.6,
+     1.8
+    ],
+    [
+     44.8,
+     2.4
+    ],
+    [
+     44.5,
+     2.8
+    ],
+    [
+     44.0,
+     3.0
+    ],
+    [
+     43.5,
+     3.1
+    ],
+    [
+     43.5,
+     3.1
     ]
    ]
   },
   {
-   "sinir": "batiok_kutup",
+   "sinir": "batiok_kutup_2",
    "ad": "Batı Okyanusu Levhası / Kutup Levhası",
    "levhalar": [
     "Batı Okyanusu Levhası",
     "Kutup Levhası"
    ],
-   "uzunluk_km": 1137,
+   "uzunluk_km": 1010,
    "hikayede_cizili_km": 0,
-   "baskin_sinif": "OTF",
+   "baskin_sinif": "OCB",
    "sinif_paylari": {
-    "OTF": 0.67,
-    "OSR": 0.33
+    "OCB": 0.64,
+    "OSR": 0.36
    },
-   "ort_yaklasma_cm_yil": -0.27,
-   "ust_levha": null,
+   "ort_yaklasma_cm_yil": 0.13,
+   "ust_levha": "Kutup Levhası",
    "amaclanan_tur": "yanal (Transform)",
-   "anlam": "[tasarım] Batı Okyanusu Levhası ile Kutup Levhası yan yana kayıyor.",
+   "anlam": "[tasarım] Batı Okyanusu Levhası, Kutup Levhası altına dalıyor (0.1 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     71.1,
-     150.3
+     86.0,
+     -180.0
     ],
     [
-     71.1,
-     151.8
+     85.6,
+     -178.0
     ],
     [
-     71.2,
-     153.3
+     85.1,
+     -175.9
     ],
     [
-     71.2,
-     154.8
+     84.7,
+     -173.8
     ],
     [
-     71.3,
-     156.2
+     84.2,
+     -171.6
     ],
     [
-     71.5,
-     157.7
+     83.8,
+     -169.0
     ],
     [
-     71.7,
-     159.0
+     83.4,
+     -167.0
     ],
     [
-     72.1,
-     160.1
+     83.2,
+     -164.7
     ],
     [
-     72.4,
-     161.3
+     83.7,
+     -163.7
     ],
     [
-     72.6,
-     162.7
+     84.2,
+     -162.7
     ],
     [
-     72.9,
-     164.1
+     84.6,
+     -161.8
     ],
     [
-     73.1,
-     165.5
+     85.1,
+     -160.4
     ],
     [
-     73.3,
-     167.0
+     85.6,
+     -158.8
     ],
     [
-     73.5,
-     168.6
+     86.0,
+     -157.3
     ],
     [
-     73.8,
-     170.1
+     86.5,
+     -156.1
     ],
     [
-     74.1,
-     171.5
+     87.0,
+     -154.8
     ],
     [
-     74.4,
-     172.9
+     87.5,
+     -153.4
     ],
     [
-     74.7,
-     174.4
+     88.0,
+     -152.4
     ],
     [
-     75.0,
-     175.9
+     88.5,
+     -151.4
     ],
     [
-     75.3,
-     177.2
+     88.9,
+     -150.1
     ],
     [
-     75.7,
-     178.5
+     88.9,
+     -150.1
+    ]
+   ]
+  },
+  {
+   "sinir": "doguok_kutup",
+   "ad": "Doğu Okyanusu Levhası / Kutup Levhası",
+   "levhalar": [
+    "Doğu Okyanusu Levhası",
+    "Kutup Levhası"
+   ],
+   "uzunluk_km": 1006,
+   "hikayede_cizili_km": 112,
+   "baskin_sinif": "OCB",
+   "sinif_paylari": {
+    "OCB": 1.0
+   },
+   "ort_yaklasma_cm_yil": 2.55,
+   "ust_levha": "Kutup Levhası",
+   "amaclanan_tur": "yanal (Transform)",
+   "anlam": "[tasarım] Doğu Okyanusu Levhası, Kutup Levhası altına dalıyor (2.5 cm/yıl).",
+   "kaba_iz_enlem_boylam": [
+    [
+     81.3,
+     36.5
     ],
     [
-     76.0,
-     180.0
+     81.8,
+     37.8
     ],
     [
-     76.0,
-     180.0
+     82.3,
+     39.3
+    ],
+    [
+     82.7,
+     40.9
+    ],
+    [
+     83.2,
+     42.4
+    ],
+    [
+     83.7,
+     43.9
+    ],
+    [
+     84.1,
+     45.7
+    ],
+    [
+     84.6,
+     47.6
+    ],
+    [
+     85.0,
+     50.0
+    ],
+    [
+     85.5,
+     52.2
+    ],
+    [
+     86.0,
+     54.6
+    ],
+    [
+     86.5,
+     56.7
+    ],
+    [
+     87.0,
+     59.0
+    ],
+    [
+     87.4,
+     60.9
+    ],
+    [
+     87.9,
+     62.4
+    ],
+    [
+     88.4,
+     63.7
+    ],
+    [
+     88.9,
+     64.7
+    ],
+    [
+     89.5,
+     65.6
+    ],
+    [
+     90.0,
+     66.9
+    ],
+    [
+     90.0,
+     66.9
     ]
    ]
   },
@@ -2327,196 +2242,199 @@
     "Doğu Havza Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 1050,
-   "hikayede_cizili_km": 995,
+   "uzunluk_km": 991,
+   "hikayede_cizili_km": 936,
    "baskin_sinif": "CRB",
    "sinif_paylari": {
-    "CRB": 0.47,
-    "OTF": 0.22,
-    "CTF": 0.15,
-    "SUB": 0.15
+    "CRB": 0.49,
+    "OTF": 0.23,
+    "SUB": 0.17,
+    "CTF": 0.11
    },
-   "ort_yaklasma_cm_yil": -0.21,
+   "ort_yaklasma_cm_yil": -0.18,
    "ust_levha": null,
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "Doğu Havza Levhası ile Kuzey Levhası birbirinden ayrılıyor (0.2 cm/yıl). Hikâyede: yanal (Transform).",
    "kaba_iz_enlem_boylam": [
     [
-     19.0,
-     -16.3
+     27.5,
+     -10.3
     ],
     [
-     19.0,
-     -16.8
-    ],
-    [
-     18.9,
-     -17.3
-    ],
-    [
-     18.4,
-     -17.2
-    ],
-    [
-     18.0,
-     -16.9
-    ],
-    [
-     17.7,
-     -16.4
-    ],
-    [
-     17.5,
-     -16.0
-    ],
-    [
-     17.2,
-     -15.5
-    ],
-    [
-     17.2,
-     -15.0
-    ],
-    [
-     17.5,
-     -14.7
-    ],
-    [
-     18.0,
-     -14.5
-    ],
-    [
-     17.7,
-     -14.1
-    ],
-    [
-     17.4,
-     -13.7
-    ],
-    [
-     17.1,
-     -13.3
-    ],
-    [
-     17.4,
-     -12.8
-    ],
-    [
-     17.5,
-     -12.3
-    ],
-    [
-     17.6,
-     -11.8
-    ],
-    [
-     17.4,
-     -11.3
-    ],
-    [
-     17.3,
+     27.3,
      -10.8
     ],
     [
-     17.4,
-     -10.3
+     27.5,
+     -11.4
     ],
     [
-     17.4,
-     -10.3
+     27.6,
+     -11.9
+    ],
+    [
+     27.5,
+     -12.5
+    ],
+    [
+     27.3,
+     -13.0
+    ],
+    [
+     27.2,
+     -13.5
+    ],
+    [
+     27.6,
+     -13.9
+    ],
+    [
+     27.9,
+     -14.3
+    ],
+    [
+     27.8,
+     -14.7
+    ],
+    [
+     27.3,
+     -14.8
+    ],
+    [
+     27.2,
+     -15.3
+    ],
+    [
+     27.4,
+     -15.8
+    ],
+    [
+     27.7,
+     -16.3
+    ],
+    [
+     28.0,
+     -16.8
+    ],
+    [
+     28.4,
+     -17.2
+    ],
+    [
+     28.8,
+     -17.4
+    ],
+    [
+     29.0,
+     -16.8
+    ],
+    [
+     29.0,
+     -16.3
+    ],
+    [
+     29.0,
+     -16.3
     ]
    ]
   },
   {
-   "sinir": "batiok_guneyok_2",
+   "sinir": "batiok_guneyok",
    "ad": "Batı Okyanusu Levhası / Güney Okyanusu Levhası",
    "levhalar": [
     "Batı Okyanusu Levhası",
     "Güney Okyanusu Levhası"
    ],
-   "uzunluk_km": 869,
+   "uzunluk_km": 984,
    "hikayede_cizili_km": 0,
-   "baskin_sinif": "OTF",
+   "baskin_sinif": "OCB",
    "sinif_paylari": {
-    "OTF": 0.75,
-    "OCB": 0.25
+    "OCB": 1.0
    },
-   "ort_yaklasma_cm_yil": 0.13,
-   "ust_levha": null,
+   "ort_yaklasma_cm_yil": 0.52,
+   "ust_levha": "Batı Okyanusu Levhası",
    "amaclanan_tur": "yanal (Transform)",
-   "anlam": "[tasarım] Batı Okyanusu Levhası ile Güney Okyanusu Levhası yan yana kayıyor.",
+   "anlam": "[tasarım] Güney Okyanusu Levhası, Batı Okyanusu Levhası altına dalıyor (0.5 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     -54.9,
-     180.0
+     -40.0,
+     170.0
     ],
     [
-     -54.7,
-     179.2
-    ],
-    [
-     -54.4,
-     178.5
-    ],
-    [
-     -54.2,
-     177.8
-    ],
-    [
-     -53.9,
-     177.1
-    ],
-    [
-     -53.6,
-     176.4
-    ],
-    [
-     -53.3,
-     175.8
-    ],
-    [
-     -53.0,
-     175.2
-    ],
-    [
-     -52.6,
-     174.6
-    ],
-    [
-     -52.3,
-     174.1
-    ],
-    [
-     -51.9,
-     173.6
-    ],
-    [
-     -51.6,
-     172.9
-    ],
-    [
-     -51.3,
-     172.3
-    ],
-    [
-     -51.0,
-     171.8
-    ],
-    [
-     -50.6,
-     171.2
-    ],
-    [
-     -50.3,
+     -40.3,
      170.6
     ],
     [
-     -50.0,
-     170.0
+     -40.5,
+     171.1
     ],
     [
-     -50.0,
-     170.0
+     -40.9,
+     171.6
+    ],
+    [
+     -41.2,
+     172.1
+    ],
+    [
+     -41.5,
+     172.6
+    ],
+    [
+     -41.7,
+     173.2
+    ],
+    [
+     -42.0,
+     173.7
+    ],
+    [
+     -42.3,
+     174.2
+    ],
+    [
+     -42.7,
+     174.7
+    ],
+    [
+     -43.0,
+     175.2
+    ],
+    [
+     -43.3,
+     175.8
+    ],
+    [
+     -43.5,
+     176.3
+    ],
+    [
+     -43.8,
+     176.9
+    ],
+    [
+     -44.0,
+     177.5
+    ],
+    [
+     -44.3,
+     178.1
+    ],
+    [
+     -44.5,
+     178.7
+    ],
+    [
+     -44.7,
+     179.3
+    ],
+    [
+     -44.9,
+     180.0
+    ],
+    [
+     -44.9,
+     180.0
     ]
    ]
   },
@@ -2527,72 +2445,157 @@
     "Güney Okyanusu Levhası",
     "Orta Blok"
    ],
-   "uzunluk_km": 689,
+   "uzunluk_km": 741,
    "hikayede_cizili_km": 0,
    "baskin_sinif": "OTF",
    "sinif_paylari": {
     "OTF": 1.0
    },
-   "ort_yaklasma_cm_yil": 0.7,
+   "ort_yaklasma_cm_yil": 0.6,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
    "anlam": "[tasarım] Güney Okyanusu Levhası ile Orta Blok yan yana kayıyor.",
    "kaba_iz_enlem_boylam": [
     [
-     -27.2,
+     -17.2,
      -5.4
     ],
     [
-     -27.3,
-     -4.8
+     -17.3,
+     -4.9
     ],
     [
-     -27.4,
+     -17.4,
      -4.3
     ],
     [
-     -27.5,
-     -3.7
+     -17.4,
+     -3.8
     ],
     [
-     -27.5,
-     -3.1
+     -17.5,
+     -3.3
     ],
     [
-     -27.6,
-     -2.5
+     -17.6,
+     -2.7
     ],
     [
-     -27.7,
-     -1.9
+     -17.6,
+     -2.2
     ],
     [
-     -27.7,
-     -1.4
+     -17.7,
+     -1.7
     ],
     [
-     -27.8,
-     -0.8
+     -17.7,
+     -1.1
     ],
     [
-     -27.9,
-     -0.2
+     -17.8,
+     -0.6
     ],
     [
-     -27.9,
-     0.4
+     -17.9,
+     -0.1
     ],
     [
-     -28.0,
+     -17.9,
+     0.5
+    ],
+    [
+     -18.0,
      1.0
     ],
     [
-     -28.0,
+     -18.0,
      1.5
     ],
     [
-     -28.0,
+     -18.0,
      1.5
+    ]
+   ]
+  },
+  {
+   "sinir": "batiok_kutup",
+   "ad": "Batı Okyanusu Levhası / Kutup Levhası",
+   "levhalar": [
+    "Batı Okyanusu Levhası",
+    "Kutup Levhası"
+   ],
+   "uzunluk_km": 714,
+   "hikayede_cizili_km": 0,
+   "baskin_sinif": "OTF",
+   "sinif_paylari": {
+    "OTF": 0.78,
+    "OSR": 0.22
+   },
+   "ort_yaklasma_cm_yil": -0.18,
+   "ust_levha": null,
+   "amaclanan_tur": "yanal (Transform)",
+   "anlam": "[tasarım] Batı Okyanusu Levhası ile Kutup Levhası yan yana kayıyor.",
+   "kaba_iz_enlem_boylam": [
+    [
+     81.1,
+     150.3
+    ],
+    [
+     81.2,
+     153.3
+    ],
+    [
+     81.4,
+     156.2
+    ],
+    [
+     81.6,
+     158.8
+    ],
+    [
+     82.1,
+     160.2
+    ],
+    [
+     82.5,
+     162.1
+    ],
+    [
+     82.9,
+     164.3
+    ],
+    [
+     83.3,
+     166.9
+    ],
+    [
+     83.7,
+     169.7
+    ],
+    [
+     84.2,
+     171.8
+    ],
+    [
+     84.6,
+     174.2
+    ],
+    [
+     85.1,
+     176.2
+    ],
+    [
+     85.6,
+     178.0
+    ],
+    [
+     86.0,
+     180.0
+    ],
+    [
+     86.0,
+     180.0
     ]
    ]
   },
@@ -2603,68 +2606,64 @@
     "Ada Bloğu",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 617,
-   "hikayede_cizili_km": 448,
+   "uzunluk_km": 575,
+   "hikayede_cizili_km": 460,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.91,
-    "CCB": 0.09
+    "SUB": 0.9,
+    "CCB": 0.1
    },
    "ort_yaklasma_cm_yil": 0.65,
    "ust_levha": "Kuzey Levhası",
    "amaclanan_tur": "ayrılma (Divergent)",
-   "anlam": "Ada Bloğu, Kuzey Levhası altına dalıyor (0.7 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor.",
+   "anlam": "Ada Bloğu, Kuzey Levhası altına dalıyor (0.6 cm/yıl). Hikâyede: ayrılma (Divergent), adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor.",
    "kaba_iz_enlem_boylam": [
     [
-     19.1,
+     29.1,
      -15.5
     ],
     [
-     19.3,
-     -15.0
+     29.4,
+     -14.9
     ],
     [
-     19.6,
-     -14.5
+     29.6,
+     -14.4
     ],
     [
-     19.7,
-     -14.0
+     29.7,
+     -13.8
     ],
     [
-     19.7,
-     -13.4
+     29.8,
+     -13.3
     ],
     [
-     20.0,
-     -13.0
+     30.1,
+     -12.7
     ],
     [
-     20.0,
-     -12.5
+     30.1,
+     -12.1
     ],
     [
-     20.0,
-     -11.9
+     30.0,
+     -11.5
     ],
     [
-     19.9,
-     -11.4
+     29.7,
+     -11.1
     ],
     [
-     19.6,
-     -11.0
-    ],
-    [
-     19.4,
+     29.5,
      -10.5
     ],
     [
-     19.2,
+     29.3,
      -10.0
     ],
     [
-     19.2,
+     29.3,
      -10.0
     ]
    ]
@@ -2676,68 +2675,64 @@
     "Doğu Havza Levhası",
     "Kuzey Levhası"
    ],
-   "uzunluk_km": 594,
-   "hikayede_cizili_km": 436,
+   "uzunluk_km": 550,
+   "hikayede_cizili_km": 335,
    "baskin_sinif": "SUB",
    "sinif_paylari": {
-    "SUB": 0.91,
-    "CTF": 0.09
+    "SUB": 0.9,
+    "CTF": 0.1
    },
-   "ort_yaklasma_cm_yil": 0.5,
+   "ort_yaklasma_cm_yil": 0.48,
    "ust_levha": "Kuzey Levhası",
    "amaclanan_tur": "yanal (Transform)",
    "anlam": "Doğu Havza Levhası, Kuzey Levhası altına dalıyor (0.5 cm/yıl). Hikâyede: yanal (Transform).",
    "kaba_iz_enlem_boylam": [
     [
-     19.0,
+     29.0,
      -9.9
     ],
     [
-     19.0,
+     29.0,
      -10.4
     ],
     [
-     19.3,
+     29.4,
      -10.8
     ],
     [
-     19.4,
-     -11.3
+     29.4,
+     -11.4
     ],
     [
-     19.3,
-     -11.8
+     29.4,
+     -12.0
     ],
     [
-     19.3,
-     -12.3
+     29.3,
+     -12.6
     ],
     [
-     19.3,
-     -12.8
+     29.2,
+     -13.1
     ],
     [
-     19.2,
-     -13.4
+     29.2,
+     -13.7
     ],
     [
-     19.2,
-     -13.9
+     29.2,
+     -14.3
     ],
     [
-     19.2,
-     -14.4
-    ],
-    [
-     19.1,
+     29.1,
      -14.9
     ],
     [
-     19.1,
+     29.1,
      -15.4
     ],
     [
-     19.1,
+     29.1,
      -15.4
     ]
    ]
@@ -2749,40 +2744,40 @@
     "Doğu Okyanusu Levhası",
     "Orta Blok"
    ],
-   "uzunluk_km": 228,
+   "uzunluk_km": 237,
    "hikayede_cizili_km": 0,
-   "baskin_sinif": "SUB",
+   "baskin_sinif": "OTF",
    "sinif_paylari": {
-    "SUB": 1.0
+    "OTF": 1.0
    },
-   "ort_yaklasma_cm_yil": 1.52,
-   "ust_levha": "Orta Blok",
+   "ort_yaklasma_cm_yil": 0.7,
+   "ust_levha": null,
    "amaclanan_tur": null,
-   "anlam": "[tasarım] Doğu Okyanusu Levhası, Orta Blok altına dalıyor (1.5 cm/yıl).",
+   "anlam": "[tasarım] Doğu Okyanusu Levhası ile Orta Blok yan yana kayıyor.",
    "kaba_iz_enlem_boylam": [
     [
-     -26.6,
-     3.3
+     -18.0,
+     1.6
     ],
     [
-     -26.9,
-     2.8
-    ],
-    [
-     -27.3,
-     2.4
-    ],
-    [
-     -27.6,
+     -17.6,
      2.0
     ],
     [
-     -28.0,
-     1.6
+     -17.2,
+     2.4
     ],
     [
-     -28.0,
-     1.6
+     -16.9,
+     2.8
+    ],
+    [
+     -16.6,
+     3.3
+    ],
+    [
+     -16.6,
+     3.3
     ]
    ]
   },
@@ -2799,29 +2794,29 @@
    "sinif_paylari": {
     "OSR": 1.0
    },
-   "ort_yaklasma_cm_yil": -2.6,
+   "ort_yaklasma_cm_yil": -2.53,
    "ust_levha": null,
    "amaclanan_tur": "ayrılma (Divergent)",
-   "anlam": "[tasarım] Doğu Dil Levhası ile Orta Blok birbirinden ayrılıyor (2.6 cm/yıl).",
+   "anlam": "[tasarım] Doğu Dil Levhası ile Orta Blok birbirinden ayrılıyor (2.5 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     14.7,
+     24.7,
      -1.2
     ],
     [
-     14.2,
+     24.3,
      -1.1
     ],
     [
-     13.8,
+     23.8,
      -1.1
     ],
     [
-     13.4,
+     23.4,
      -1.2
     ],
     [
-     13.4,
+     23.4,
      -1.2
     ]
    ]
@@ -2845,19 +2840,19 @@
    "anlam": "[tasarım] Doğu Havza Levhası, Orta Blok altına dalıyor (2.1 cm/yıl).",
    "kaba_iz_enlem_boylam": [
     [
-     14.6,
+     23.4,
      -1.2
     ],
     [
-     14.0,
+     24.0,
      -1.2
     ],
     [
-     13.4,
+     24.7,
      -1.2
     ],
     [
-     13.4,
+     24.7,
      -1.2
     ]
    ]
@@ -2873,7 +2868,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 2456,
+   "disarida_km": 1724,
    "paylar": {},
    "aciklama": ""
   },
@@ -2886,7 +2881,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 5287,
+   "disarida_km": 6028,
    "paylar": {},
    "aciklama": ""
   },
@@ -2899,7 +2894,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 7916,
+   "disarida_km": 5263,
    "paylar": {},
    "aciklama": "kuzey okyanus sırtı (uzak)"
   },
@@ -2912,7 +2907,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 8678,
+   "disarida_km": 9422,
    "paylar": {},
    "aciklama": ""
   },
@@ -2925,7 +2920,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 17349,
+   "disarida_km": 17003,
    "paylar": {},
    "aciklama": "batı okyanus sırtı (uzak)"
   },
@@ -2936,14 +2931,13 @@
    ],
    "amac": "yanal",
    "bird": "SUB",
-   "uyum": 0.04,
-   "km": 5734,
-   "disarida_km": 725,
+   "uyum": 0.03,
+   "km": 5598,
+   "disarida_km": 721,
    "paylar": {
-    "SUB": 0.89,
+    "SUB": 0.91,
     "CRB": 0.06,
-    "CTF": 0.04,
-    "OTF": 0.01
+    "CTF": 0.03
    },
    "aciklama": "2'nin doğu açığı"
   },
@@ -2955,8 +2949,8 @@
    "amac": "dalma",
    "bird": "SUB",
    "uyum": 1.0,
-   "km": 4484,
-   "disarida_km": 2271,
+   "km": 4426,
+   "disarida_km": 2382,
    "paylar": {
     "SUB": 1.0
    },
@@ -2969,14 +2963,14 @@
    ],
    "amac": "ayrılma",
    "bird": "OSR",
-   "uyum": 0.49,
-   "km": 3565,
-   "disarida_km": 169,
+   "uyum": 0.47,
+   "km": 3389,
+   "disarida_km": 115,
    "paylar": {
-    "OSR": 0.46,
+    "OSR": 0.43,
     "SUB": 0.31,
-    "OTF": 0.19,
-    "CRB": 0.03,
+    "OTF": 0.2,
+    "CRB": 0.05,
     "CCB": 0.02
    },
    "aciklama": "adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor"
@@ -2990,7 +2984,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 11135,
+   "disarida_km": 12419,
    "paylar": {},
    "aciklama": "güney okyanus sırtı (uzak)"
   },
@@ -3001,15 +2995,14 @@
    ],
    "amac": "ayrılma",
    "bird": "OSR",
-   "uyum": 0.71,
-   "km": 3620,
-   "disarida_km": 110,
+   "uyum": 0.69,
+   "km": 3581,
+   "disarida_km": 112,
    "paylar": {
-    "OSR": 0.68,
-    "OTF": 0.24,
-    "SUB": 0.03,
-    "CRB": 0.03,
-    "CTF": 0.02
+    "OSR": 0.66,
+    "OTF": 0.26,
+    "SUB": 0.04,
+    "CRB": 0.03
    },
    "aciklama": "Güneydoğu Kanalı: 22 MYÖ'den beri açılan yarık, kuzeyinde okyanus kabuğu (Kızıldeniz benzeri)"
   },
@@ -3021,8 +3014,8 @@
    "amac": "yanal",
    "bird": "OCB",
    "uyum": 0.0,
-   "km": 109,
-   "disarida_km": 1401,
+   "km": 112,
+   "disarida_km": 894,
    "paylar": {
     "OCB": 1.0
    },
@@ -3035,13 +3028,14 @@
    ],
    "amac": "kıta çarpışması",
    "bird": "CCB",
-   "uyum": 0.81,
-   "km": 3445,
+   "uyum": 0.79,
+   "km": 3127,
    "disarida_km": 0,
    "paylar": {
-    "CCB": 0.77,
-    "OTF": 0.19,
-    "SUB": 0.03
+    "CCB": 0.75,
+    "OTF": 0.2,
+    "SUB": 0.04,
+    "CTF": 0.02
    },
    "aciklama": "Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri)"
   },
@@ -3053,7 +3047,7 @@
    "amac": "kıta çarpışması",
    "bird": "CCB",
    "uyum": 1.0,
-   "km": 3738,
+   "km": 3736,
    "disarida_km": 1453,
    "paylar": {
     "CCB": 0.52,
@@ -3068,15 +3062,15 @@
    ],
    "amac": "yanal",
    "bird": "SUB",
-   "uyum": 0.21,
-   "km": 2570,
-   "disarida_km": 270,
+   "uyum": 0.22,
+   "km": 2304,
+   "disarida_km": 363,
    "paylar": {
     "SUB": 0.55,
     "CRB": 0.19,
-    "OTF": 0.13,
-    "CTF": 0.08,
-    "OSR": 0.04
+    "OTF": 0.12,
+    "CTF": 0.09,
+    "OSR": 0.05
    },
    "aciklama": ""
   },
@@ -3087,15 +3081,15 @@
    ],
    "amac": "yanal",
    "bird": "SUB",
-   "uyum": 0.25,
-   "km": 3009,
+   "uyum": 0.19,
+   "km": 2915,
    "disarida_km": 0,
    "paylar": {
-    "SUB": 0.6,
-    "CTF": 0.22,
+    "SUB": 0.64,
+    "CTF": 0.17,
     "OSR": 0.11,
-    "CRB": 0.04,
-    "OTF": 0.04
+    "CRB": 0.06,
+    "OTF": 0.02
    },
    "aciklama": ""
   },
@@ -3106,14 +3100,14 @@
    ],
    "amac": "yanal",
    "bird": "OTF",
-   "uyum": 0.63,
-   "km": 3419,
-   "disarida_km": 55,
+   "uyum": 0.61,
+   "km": 3389,
+   "disarida_km": 56,
    "paylar": {
-    "OTF": 0.52,
-    "SUB": 0.14,
-    "CTF": 0.11,
-    "OSR": 0.11,
+    "OTF": 0.51,
+    "SUB": 0.15,
+    "OSR": 0.13,
+    "CTF": 0.1,
     "CRB": 0.08,
     "CCB": 0.03
    },
@@ -3126,12 +3120,12 @@
    ],
    "amac": "dalma",
    "bird": "SUB",
-   "uyum": 0.74,
-   "km": 1900,
+   "uyum": 0.76,
+   "km": 1840,
    "disarida_km": 0,
    "paylar": {
-    "SUB": 0.74,
-    "OTF": 0.26
+    "SUB": 0.76,
+    "OTF": 0.24
    },
    "aciklama": "Ada Hendeği: doğu iç deniz tabanı 6'nın altına dalıyor"
   },
@@ -3143,7 +3137,7 @@
    "amac": "yanal",
    "bird": "CRB",
    "uyum": 0.18,
-   "km": 1284,
+   "km": 1240,
    "disarida_km": 137,
    "paylar": {
     "CRB": 0.74,
@@ -3175,7 +3169,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 689,
+   "disarida_km": 741,
    "paylar": {},
    "aciklama": ""
   },
@@ -3200,7 +3194,7 @@
    "no": "1",
    "ad": "Mor Sıradağları",
    "enlem_boylam": [
-    32.2,
+    42.2,
     25.3
    ],
    "yukseklik_m": 5490,
@@ -3211,7 +3205,7 @@
    "no": "2",
    "ad": "Sarı Sıradağları",
    "enlem_boylam": [
-    8.1,
+    18.1,
     -13.0
    ],
    "yukseklik_m": 3057,
@@ -3222,7 +3216,7 @@
    "no": "3",
    "ad": "Doğu Yay Dağları",
    "enlem_boylam": [
-    7.4,
+    17.4,
     22.1
    ],
    "yukseklik_m": 1021,
@@ -3233,7 +3227,7 @@
    "no": "4",
    "ad": "Uzun Yarımada sırtı",
    "enlem_boylam": [
-    8.7,
+    18.8,
     -4.8
    ],
    "yukseklik_m": 1539,
@@ -3244,7 +3238,7 @@
    "no": "5",
    "ad": "İç denizdeki ada (6)",
    "enlem_boylam": [
-    28.6,
+    38.6,
     -11.5
    ],
    "yukseklik_m": 1708,
@@ -3255,7 +3249,7 @@
    "no": "6",
    "ad": "Köprü Kıstağı",
    "enlem_boylam": [
-    25.2,
+    35.2,
     -27.7
    ],
    "yukseklik_m": 400,

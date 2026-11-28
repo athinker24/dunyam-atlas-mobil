@@ -6,7 +6,7 @@
   "Kuzey Levhası": {
    "kimlik": 1,
    "tohum": [
-    39.44,
+    49.46,
     -21.36
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -16,13 +16,13 @@
    "sira": 10,
    "euler_kutbu": null,
    "euler_hizi_derece_My": 0.0,
-   "alan_milyon_km2": 123.62,
-   "kara_payi": 0.199
+   "alan_milyon_km2": 113.0,
+   "kara_payi": 0.188
   },
   "Doğu Dil Levhası": {
    "kimlik": 2,
    "tohum": [
-    14.14,
+    24.16,
     14.99
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -31,17 +31,17 @@
    ],
    "sira": 6,
    "euler_kutbu": [
-    12.41,
-    -14.1
+    21.11,
+    -15.61
    ],
    "euler_hizi_derece_My": 0.3409,
-   "alan_milyon_km2": 13.95,
-   "kara_payi": 0.481
+   "alan_milyon_km2": 13.32,
+   "kara_payi": 0.465
   },
   "Orta Blok": {
    "kimlik": 3,
    "tohum": [
-    -0.58,
+    9.44,
     -5.93
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -50,17 +50,17 @@
    ],
    "sira": 5,
    "euler_kutbu": [
-    -89.42,
-    174.07
+    -80.56,
+    -5.93
    ],
    "euler_hizi_derece_My": 0.2518,
-   "alan_milyon_km2": 4.97,
-   "kara_payi": 0.281
+   "alan_milyon_km2": 4.99,
+   "kara_payi": 0.268
   },
   "Uzun Yarımada Bloğu": {
    "kimlik": 4,
    "tohum": [
-    2.03,
+    12.05,
     2.83
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -69,17 +69,17 @@
    ],
    "sira": 4,
    "euler_kutbu": [
-    -44.96,
-    -85.14
+    -43.75,
+    -75.38
    ],
    "euler_hizi_derece_My": 0.4133,
-   "alan_milyon_km2": 1.99,
-   "kara_payi": 0.208
+   "alan_milyon_km2": 1.95,
+   "kara_payi": 0.204
   },
   "Ada Bloğu": {
    "kimlik": 5,
    "tohum": [
-    26.02,
+    36.04,
     -11.3
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -92,13 +92,13 @@
     78.7
    ],
    "euler_hizi_derece_My": 0.063,
-   "alan_milyon_km2": 2.12,
-   "kara_payi": 0.365
+   "alan_milyon_km2": 1.9,
+   "kara_payi": 0.366
   },
   "Doğu Havza Levhası": {
    "kimlik": 6,
    "tohum": [
-    22.95,
+    32.97,
     -1.86
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -107,17 +107,17 @@
    ],
    "sira": 3,
    "euler_kutbu": [
-    -40.63,
-    -70.56
+    -36.39,
+    -63.3
    ],
    "euler_hizi_derece_My": 0.0725,
-   "alan_milyon_km2": 1.92,
+   "alan_milyon_km2": 1.75,
    "kara_payi": 0.001
   },
   "Doğu Okyanusu Levhası": {
    "kimlik": 7,
    "tohum": [
-    7.78,
+    17.8,
     65.26
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -126,17 +126,17 @@
    ],
    "sira": 2,
    "euler_kutbu": [
-    -82.22,
+    -72.2,
     65.26
    ],
    "euler_hizi_derece_My": 0.5846,
-   "alan_milyon_km2": 78.21,
+   "alan_milyon_km2": 73.73,
    "kara_payi": 0.0
   },
   "Batı Okyanusu Levhası": {
    "kimlik": 8,
    "tohum": [
-    25.74,
+    35.76,
     -139.84
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -145,17 +145,17 @@
    ],
    "sira": 2,
    "euler_kutbu": [
-    -64.26,
+    -54.24,
     -139.84
    ],
    "euler_hizi_derece_My": 0.2158,
-   "alan_milyon_km2": 101.39,
+   "alan_milyon_km2": 95.94,
    "kara_payi": 0.0
   },
   "Kutup Levhası": {
    "kimlik": 9,
    "tohum": [
-    87.19,
+    97.21,
     -91.17
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -164,17 +164,17 @@
    ],
    "sira": 2,
    "euler_kutbu": [
-    -0.0,
+    0.0,
     178.83
    ],
    "euler_hizi_derece_My": 0.054,
-   "alan_milyon_km2": 11.57,
+   "alan_milyon_km2": 2.25,
    "kara_payi": 0.0
   },
   "Güney Okyanusu Levhası": {
    "kimlik": 10,
    "tohum": [
-    -62.32,
+    -52.3,
     -103.04
    ],
    "hiz_tohumda_dogu_kuzey": [
@@ -187,7 +187,7 @@
     -13.04
    ],
    "euler_hizi_derece_My": 0.1349,
-   "alan_milyon_km2": 85.25,
+   "alan_milyon_km2": 120.28,
    "kara_payi": 0.0
   },
   "Büyük Okyanus Levhası": {
@@ -206,20 +206,20 @@
     45.0
    ],
    "euler_hizi_derece_My": 0.1621,
-   "alan_milyon_km2": 85.06,
+   "alan_milyon_km2": 80.96,
    "kara_payi": 0.0
   }
  },
  "sinif_uzunluk_km": {
-  "OTF": 23712.0,
-  "CCB": 4807.0,
-  "SUB": 23640.0,
-  "OSR": 59922.0,
-  "CRB": 2470.0,
-  "CTF": 1634.0,
-  "OCB": 23822.0
+  "SUB": 22542.0,
+  "CCB": 4477.0,
+  "CTF": 1360.0,
+  "OTF": 22538.0,
+  "OSR": 60115.0,
+  "CRB": 2478.0,
+  "OCB": 23807.0
  },
- "adim_sayisi": 2531,
+ "adim_sayisi": 2475,
  "amaclanan_tur_karsilastirma": [
   {
    "levhalar": [
@@ -230,7 +230,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 2456,
+   "disarida_km": 1724,
    "paylar": {},
    "aciklama": ""
   },
@@ -243,7 +243,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 5287,
+   "disarida_km": 6028,
    "paylar": {},
    "aciklama": ""
   },
@@ -256,7 +256,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 7916,
+   "disarida_km": 5263,
    "paylar": {},
    "aciklama": "kuzey okyanus sırtı (uzak)"
   },
@@ -269,7 +269,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 8678,
+   "disarida_km": 9422,
    "paylar": {},
    "aciklama": ""
   },
@@ -282,7 +282,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 17349,
+   "disarida_km": 17003,
    "paylar": {},
    "aciklama": "batı okyanus sırtı (uzak)"
   },
@@ -293,14 +293,13 @@
    ],
    "amac": "yanal",
    "bird": "SUB",
-   "uyum": 0.04,
-   "km": 5734,
-   "disarida_km": 725,
+   "uyum": 0.03,
+   "km": 5598,
+   "disarida_km": 721,
    "paylar": {
-    "SUB": 0.89,
+    "SUB": 0.91,
     "CRB": 0.06,
-    "CTF": 0.04,
-    "OTF": 0.01
+    "CTF": 0.03
    },
    "aciklama": "2'nin doğu açığı"
   },
@@ -312,8 +311,8 @@
    "amac": "dalma",
    "bird": "SUB",
    "uyum": 1.0,
-   "km": 4484,
-   "disarida_km": 2271,
+   "km": 4426,
+   "disarida_km": 2382,
    "paylar": {
     "SUB": 1.0
    },
@@ -326,14 +325,14 @@
    ],
    "amac": "ayrılma",
    "bird": "OSR",
-   "uyum": 0.49,
-   "km": 3565,
-   "disarida_km": 169,
+   "uyum": 0.47,
+   "km": 3389,
+   "disarida_km": 115,
    "paylar": {
-    "OSR": 0.46,
+    "OSR": 0.43,
     "SUB": 0.31,
-    "OTF": 0.19,
-    "CRB": 0.03,
+    "OTF": 0.2,
+    "CRB": 0.05,
     "CCB": 0.02
    },
    "aciklama": "adanın kuzey ve batısı: yay ardı gerilmesi, 6 güneye çekiliyor"
@@ -347,7 +346,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 11135,
+   "disarida_km": 12419,
    "paylar": {},
    "aciklama": "güney okyanus sırtı (uzak)"
   },
@@ -358,15 +357,14 @@
    ],
    "amac": "ayrılma",
    "bird": "OSR",
-   "uyum": 0.71,
-   "km": 3620,
-   "disarida_km": 110,
+   "uyum": 0.69,
+   "km": 3581,
+   "disarida_km": 112,
    "paylar": {
-    "OSR": 0.68,
-    "OTF": 0.24,
-    "SUB": 0.03,
-    "CRB": 0.03,
-    "CTF": 0.02
+    "OSR": 0.66,
+    "OTF": 0.26,
+    "SUB": 0.04,
+    "CRB": 0.03
    },
    "aciklama": "Güneydoğu Kanalı: 22 MYÖ'den beri açılan yarık, kuzeyinde okyanus kabuğu (Kızıldeniz benzeri)"
   },
@@ -378,8 +376,8 @@
    "amac": "yanal",
    "bird": "OCB",
    "uyum": 0.0,
-   "km": 109,
-   "disarida_km": 1401,
+   "km": 112,
+   "disarida_km": 894,
    "paylar": {
     "OCB": 1.0
    },
@@ -392,13 +390,14 @@
    ],
    "amac": "kıta çarpışması",
    "bird": "CCB",
-   "uyum": 0.81,
-   "km": 3445,
+   "uyum": 0.79,
+   "km": 3127,
    "disarida_km": 0,
    "paylar": {
-    "CCB": 0.77,
-    "OTF": 0.19,
-    "SUB": 0.03
+    "CCB": 0.75,
+    "OTF": 0.2,
+    "SUB": 0.04,
+    "CTF": 0.02
    },
    "aciklama": "Mor Sıradağları: 3, 2'nin altına giriyor (Himalaya benzeri, 50 MYÖ'den beri)"
   },
@@ -410,7 +409,7 @@
    "amac": "kıta çarpışması",
    "bird": "CCB",
    "uyum": 1.0,
-   "km": 3738,
+   "km": 3736,
    "disarida_km": 1453,
    "paylar": {
     "CCB": 0.52,
@@ -425,15 +424,15 @@
    ],
    "amac": "yanal",
    "bird": "SUB",
-   "uyum": 0.21,
-   "km": 2570,
-   "disarida_km": 270,
+   "uyum": 0.22,
+   "km": 2304,
+   "disarida_km": 363,
    "paylar": {
     "SUB": 0.55,
     "CRB": 0.19,
-    "OTF": 0.13,
-    "CTF": 0.08,
-    "OSR": 0.04
+    "OTF": 0.12,
+    "CTF": 0.09,
+    "OSR": 0.05
    },
    "aciklama": ""
   },
@@ -444,15 +443,15 @@
    ],
    "amac": "yanal",
    "bird": "SUB",
-   "uyum": 0.25,
-   "km": 3009,
+   "uyum": 0.19,
+   "km": 2915,
    "disarida_km": 0,
    "paylar": {
-    "SUB": 0.6,
-    "CTF": 0.22,
+    "SUB": 0.64,
+    "CTF": 0.17,
     "OSR": 0.11,
-    "CRB": 0.04,
-    "OTF": 0.04
+    "CRB": 0.06,
+    "OTF": 0.02
    },
    "aciklama": ""
   },
@@ -463,14 +462,14 @@
    ],
    "amac": "yanal",
    "bird": "OTF",
-   "uyum": 0.63,
-   "km": 3419,
-   "disarida_km": 55,
+   "uyum": 0.61,
+   "km": 3389,
+   "disarida_km": 56,
    "paylar": {
-    "OTF": 0.52,
-    "SUB": 0.14,
-    "CTF": 0.11,
-    "OSR": 0.11,
+    "OTF": 0.51,
+    "SUB": 0.15,
+    "OSR": 0.13,
+    "CTF": 0.1,
     "CRB": 0.08,
     "CCB": 0.03
    },
@@ -483,12 +482,12 @@
    ],
    "amac": "dalma",
    "bird": "SUB",
-   "uyum": 0.74,
-   "km": 1900,
+   "uyum": 0.76,
+   "km": 1840,
    "disarida_km": 0,
    "paylar": {
-    "SUB": 0.74,
-    "OTF": 0.26
+    "SUB": 0.76,
+    "OTF": 0.24
    },
    "aciklama": "Ada Hendeği: doğu iç deniz tabanı 6'nın altına dalıyor"
   },
@@ -500,7 +499,7 @@
    "amac": "yanal",
    "bird": "CRB",
    "uyum": 0.18,
-   "km": 1284,
+   "km": 1240,
    "disarida_km": 137,
    "paylar": {
     "CRB": 0.74,
@@ -532,7 +531,7 @@
    "bird": null,
    "uyum": null,
    "km": 0,
-   "disarida_km": 689,
+   "disarida_km": 741,
    "paylar": {},
    "aciklama": ""
   },
