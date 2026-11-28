@@ -66,7 +66,7 @@ def daglar():
          "7, 5'e bastırarak kuzeybatıya kayıyor; dar, dik sırt.")
     tepe(M.land & lv("Ada Bloğu"), "İç denizdeki ada (6)", "Ege / Tiren benzeri",
          "Yay ardı gerilmesi: parmak biçimli horst ve grabenler; Ada Hendeği güneyinde.")
-    out.append(("Köprü Kıstağı", (25.2, -27.7), 400, "Panama benzeri", "3 MYÖ'de 1 ile 4 arasındaki boğazı kapattı; 80-400 m."))
+    out.append(("Köprü Kıstağı", (35.2, -27.7), 400, "Panama benzeri", "3 MYÖ'de 1 ile 4 arasındaki boğazı kapattı; 80-400 m."))
     return out
 
 def cumle(sinif, cift, ust, yak):

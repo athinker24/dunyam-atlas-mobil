@@ -97,8 +97,8 @@ def buzul_golleri(zr, lat, lon):
 # nehir: İndus, Arun, Kolorado gibi). Buzul erimesinde taşan plato suyu da
 # boğazı derinleştirdi.
 KURGU_NEHIRLER = {
-    "plato_kolu": [(49.44, 17.45), (47.68, 12.61), (47.24, 7.25), (47.77, 1.1),
-                   (46.45, -2.5), (44.17, -5.14), (41.09, -7.16), (38.36, -8.04), (35.73, -8.31)],
+    "plato_kolu": [(59.46, 17.45), (57.70, 12.61), (57.26, 7.25), (57.79, 1.1),
+                   (56.47, -2.5), (54.19, -5.14), (51.11, -7.16), (48.38, -8.04), (45.75, -8.31)],
 }
 KORIDOR_HUCRE = 10       # çizilen hattan en çok ~100 km sapabilir
 # Platoda yatak bu seviyenin altına inmez: plato çanağının dibindeki tuz
@@ -278,7 +278,7 @@ def tatli_gol(z2, z, yol, lat, lon):
 # büyüklükte dengelenir (~5.800 km², Büyük Tuz Gölü türü) ve taşmaz. Kolun
 # gölden sonraki kısmı kurur; plato koluna katılmaz. Havza bu dengeden
 # büyük oyulur (tam dolu alanı ~9.000 km²): göl seviyesini su belirler.
-TUZ_GOLU = dict(merkez=(48.3, 14.5), havza_km2=9000.0, derinlik_m=250.0, yataktan_uzak_hucre=3)
+TUZ_GOLU = dict(merkez=(58.32, 14.5), havza_km2=9000.0, derinlik_m=250.0, yataktan_uzak_hucre=3)
 
 
 def tuz_golu(z2, z, yatak, lat, lon):

@@ -31,7 +31,7 @@ SIGMA = 5.0
 DDF_KAR, DDF_BUZ, YENIDEN = 3.0, 8.0, 0.6
 AY_GUN = 365.25 / 12
 KAR_ALT, KAR_UST = -2.0, 4.0
-KUTU = (70.0, -15.0, -56.0, 56.0)   # kuzey, güney, batı, doğu
+KUTU = (80.0, -5.0, -56.0, 56.0)   # kuzey, güney, batı, doğu
 
 
 def arazi(deniz=0.0):
