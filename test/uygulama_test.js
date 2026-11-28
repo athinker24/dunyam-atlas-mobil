@@ -243,7 +243,7 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-arazimod=levha]").click());
       await p.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))); await bekle(300);
       const acik = await tkPiksel();
-      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 22;  // deney-dunya-k10: kita 10 derece kuzeyde
         return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
       await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
       const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-tk")].map(e => e.textContent).join(" | "));
@@ -267,7 +267,7 @@ const OLC = () => {
       await p.waitForFunction(() => { const c = document.querySelector("#bitki"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
       const acik = await bkPiksel();
-      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 22;  // deney-dunya-k10: kita 10 derece kuzeyde
         return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
       await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
       const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
@@ -289,7 +289,7 @@ const OLC = () => {
       await p.waitForFunction(() => { const c = document.querySelector("#toprak"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
       const acik = await tpPiksel();
-      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 22;  // deney-dunya-k10: kita 10 derece kuzeyde
         return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
       await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
       const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
@@ -311,7 +311,7 @@ const OLC = () => {
       await p.waitForFunction(() => { const c = document.querySelector("#yasam"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
       const acik = await ysPiksel();
-      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 22;  // deney-dunya-k10: kita 10 derece kuzeyde
         return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
       await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
       const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
@@ -345,7 +345,7 @@ const OLC = () => {
       await p.waitForFunction(() => { const c = document.querySelector("#tarim"); if (c.hidden || !c.width) return false; const x = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
         let n = 0; for (let i = 3; i < x.length; i += 4) if (x[i] > 30 && ++n > 50000) return true; return false; }, null, { timeout: 8000 }).catch(() => {});
       const acik = await trPiksel(), srenk = await trRenk();
-      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 22;  // deney-dunya-k10: kita 10 derece kuzeyde
         return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
       await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
       const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
@@ -370,7 +370,7 @@ const OLC = () => {
       await p.evaluate(() => document.querySelector("[data-g=yasam]").click()); await bekle(250);
       await p.evaluate(() => document.querySelector("[data-arazimod=hayvan]").click()); await bekle(1200);
       const [n1, r1] = await hyRenk();
-      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 12;
+      const hedef = await p.evaluate(() => { const A = window.__atlas, D = A.D, s = A.durum(), B = D.B, lo = 12, la = 22;  // deney-dunya-k10: kita 10 derece kuzeyde
         return { x: s.ox + (lo - B[0]) / (B[2] - B[0]) * D.W * s.olcek, y: s.oy + (B[3] - la) / (B[3] - B[1]) * D.H * s.olcek }; });
       await p.touchscreen.tap(hedef.x, hedef.y); await bekle(700);
       const t = await p.evaluate(() => [...document.querySelectorAll("#kart-icerik .k-bk")].map(e => e.textContent).join(" | "));
