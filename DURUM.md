@@ -267,3 +267,9 @@ bozkır bölgesi %36.8 → %35.5, B 11.3 → 12.0, kara yağışı 934 → 944 m
 Engellenme 700'e göre: Cs %18.2 → %14.9 (30-40°K 2.2 → 1.0, 20-30°K 10.1 → 8.7, 10-20°K 5.8 → 5.1),
 Cw 25.9 → 28.8, B 11.3 → 13.8, bozkır bölgesi %36.8 → %36.1. Kış (Ara-Şub) yağışı 40-60°K 67 → 62 mm,
 25-40°K 105 → 90 mm. Üç önizleme yan yana: deney-iklim, deney-akdeniz, deney-akdeniz-2.
+
+## Deney: Dünya parametreleri (28 Kasım, `deney-dunya` dalı, YAYINDA DEĞİL)
+
+Ana arazi aynı (arazi-ana-2, en yüksek 5490 m). Gezegen Dünya: gün 23.934 saat (yıldız günü), eğiklik 23.44°, deniz seviyesi ortalaması 14 °C (zaten Dünya, NASA 1951-1980). `params` boş: bütün düğmeler motorun Dünya'da doğrulanmış varsayılanında (nem korunumu, fırtına yolu, deniz buzu havası kapalı; `k_itcz` 0.20, `convective_c` 0.42, `rh_ocean` 0.80). Akıntılar DEĞİŞMEDİ; dosya 15 saatin üç jirine göre çizili, bu deneyde Dünya'ya uygun değil. 12/12 tutarlılık, 36/36 test, bütün katmanlar yeniden üretildi.
+
+Sonuç (alan ağırlıklı kara payı, yayındaki → deney): A 11.7 → 13.5, B 13.8 → 29.1, C 44.1 → 22.4, D 27.0 → 27.2, E 3.5 → 7.7; Af 0 → 4.5, Aw 10.0 → 5.5, BW 0.3 → 11.1, BS 13.4 → 18.0, Cs 14.9 → 1.9; bozkır bölgesinde BS %36 → %8. Kara yağışı 938 → 1153 mm. Karanın %71'i sınıf, %41'i ana grup değiştirir. Çöl 20-35°K'ye (Hadley kenarı 30°) iner, plato ılıman/karasal olur.
