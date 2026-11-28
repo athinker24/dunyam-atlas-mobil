@@ -267,3 +267,7 @@ bozkır bölgesi %36.8 → %35.5, B 11.3 → 12.0, kara yağışı 934 → 944 m
 Engellenme 700'e göre: Cs %18.2 → %14.9 (30-40°K 2.2 → 1.0, 20-30°K 10.1 → 8.7, 10-20°K 5.8 → 5.1),
 Cw 25.9 → 28.8, B 11.3 → 13.8, bozkır bölgesi %36.8 → %36.1. Kış (Ara-Şub) yağışı 40-60°K 67 → 62 mm,
 25-40°K 105 → 90 mm. Üç önizleme yan yana: deney-iklim, deney-akdeniz, deney-akdeniz-2.
+
+## Yeni bozkır hedefi (28 Kasım, `bozkir-hedef` dalı)
+
+Sahibi Büyük Duvar'ın kuzeyindeki iç platoyu işaretledi: "Yeni bozkır hedefi burası". Poligon `deney/bozkir_hedef.json` ([boylam, enlem]; ekran görüntüsü tuvale kara örtüşmesi 0.974 ile oturtuldu), görsel `deney/bozkir_hedef.png`. Alan ~4.3 milyon km², 31.4-48.7°K, −7.9..34.8°D. Bundan sonra bozkır ölçümü bu poligonla yapılır (eski kutu 37-49°K, −5..28°D). Yayındaki iklimde poligonun %43'ü BS (BSk 43, Dwa 26, Dfa 17); kuzey yarısı Dwa, doğusu Dfa. Dünya parametreleriyle %19.
